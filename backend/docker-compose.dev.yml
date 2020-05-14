@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+    mongo:
+        image: mongo:4.2
+        restart: always
+        volumes:
+            - ./docker-entrypoint.sh:/docker-entrypoint-initdb.d/init.sh
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: ${DB_USER:-mongouseradmin}
+            MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD:-mongopassadmin}
+            MONGO_INITDB_DATABASE: ${DB_NAME:-fairbundled}
+        ports:
+            - "27017:27017"
