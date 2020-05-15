@@ -1,9 +1,9 @@
 import express from 'express';
-import item from './routes/item.routes';
+import product from './routes/product.routes';
 
 const router = express.Router();
 
 // define sub-routes in dedicated routes-files
-router.use('/item', item);
+router.use('/product', product);
 
 export default router;
