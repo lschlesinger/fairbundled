@@ -8,5 +8,8 @@ export default {
         user: process.env.DB_USER || 'mongouseradmin',
         password: process.env.DB_PASSWORD || 'mongopassadmin',
         name: process.env.DB_NAME || 'fairbundled'
+    },
+    auth: {
+        jwtSecret: process.env.JWT_SECRET || 'verysecret'
     }
 };

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const User = new mongoose.Schema({
     email: {
@@ -26,13 +27,8 @@ const User = new mongoose.Schema({
 
 // define method on user objects which allows password comparison with bcrypt
 User.method({
-    comparePassword: function (password, cb) {
-        bcrypt.compare(password, this.password, (err, isMatch) => {
-            if (err) {
-                return cb(err);
-            }
-            cb(null, isMatch);
-        });
+    comparePassword: function (password) {
+        return bcrypt.compareSync(password, this.password);
     }
 });
 
