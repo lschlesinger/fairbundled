@@ -4,7 +4,7 @@
 
 
 
-![UML](../Fairbundled_UML.pdf)
+![UML](../Fairbundled_UML.png)
 
 
 
