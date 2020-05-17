@@ -20,10 +20,10 @@ const Product = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Supplier'
     },
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
+    category: [{
+        type: mongoose.Schema.Types.ObjectId,cd
         ref: 'Category'
-    }
+    }]
 
 }, {
     timestamps: true

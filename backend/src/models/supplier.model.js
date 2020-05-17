@@ -9,7 +9,8 @@ const Supplier = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    address: String,
+    billingAddress: String,
+    bankAccount: String,
 }, {
     timestamps: true
 });
