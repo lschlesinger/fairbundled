@@ -4,7 +4,7 @@
 
 
 
-![UML](/Users/lschlesinger/Documents/Workspace/fairbundled/docs/Fairbundled_UML.pdf)
+![UML](../Fairbundled_UML.pdf)
 
 
 
