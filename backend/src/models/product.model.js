@@ -21,7 +21,7 @@ const Product = new mongoose.Schema({
         ref: 'Supplier'
     },
     category: [{
-        type: mongoose.Schema.Types.ObjectId,cd
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
     }]
 
