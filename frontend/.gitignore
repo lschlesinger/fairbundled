@@ -111,4 +111,4 @@ lerna-debug.log
 Thumbs.db
 
 # IDE
-.idea
+*.iml
