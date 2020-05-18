@@ -1,5 +1,3 @@
-# Fairbundled - Project for sustainable procurement in municipalities
-
 <!-- PROJECT LOGO -->
 <br />
 
