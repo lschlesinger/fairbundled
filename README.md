@@ -9,7 +9,6 @@
   </a>
 
 
-  <h3 align="center">YOGA Board Munich</h3>
 
   <p align="center">
     This is a Web Application Engineering Project at TUM University, Munich
