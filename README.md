@@ -5,7 +5,7 @@
 
 <p align="center">
   <a href="https://github.com/lschlesinger/fairbundled">
-    <img src="frontend/src/logo.jpg" alt="Logo" width="120">
+    <img src="frontend/src/logo.jpg" alt="Logo" width="420">
   </a>
 
 
@@ -25,15 +25,24 @@
 ## Table of Contents
 
 * [About the Project](#about-the-project)
+
+  * [Description](#description)
   * [Built With](#built-with)
+
 * [Getting Started](#getting-started)
+
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
+
 * [License](#license)
+
+  
 
 <!-- ABOUT THE PROJECT -->
 
+## About the Project
 
+### Description
 
 **Fairbundled** is an online marketplace to enable municipalities to acquire sustainable and certified supplies by gathering offered sustainable products and bundling the demands of multiple buyers to achieve more affordable prices.
 
