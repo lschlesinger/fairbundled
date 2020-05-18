@@ -12,7 +12,7 @@
 
 The UML Class Diagram displays a data model implemented with a NoSQL MongoDB.
 
-The field `id` is automatically created (as `_id` field), when respective entity is modeled as database table. This is the case for all entities except for `PriceLevel`  (defined inline in `Product` model's field).
+The field `id` is automatically created (as `_id` field), when respective entity is modeled as database collection. This is the case for all entities except for `PriceLevel`  (defined inline in `Product` model's field).
 
 The grayish displayed id-fields represent a foreign key, i.e. a reference to a certain entity.
 
