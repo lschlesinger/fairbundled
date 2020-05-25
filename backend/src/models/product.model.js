@@ -7,7 +7,7 @@ const Product = new mongoose.Schema({
     },
     description: String,
     ean: String,
-    image: String,
+    images: [String],
     deliveryDays: Number,
     priceLevel: [{
         unitPrice: Number,

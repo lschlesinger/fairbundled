@@ -1,35 +1,68 @@
 import React from 'react';
-import logo from "./logo.jpg";
-import {BrowserRouter as Router, Link, Route} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 
-import './App.css';
+import 'antd/dist/antd.css';
 
-function App() {
-    return (
-        <Router>
-            <div className="container">
+import AuthService from "./services/AuthService";
+import {LandingView} from "./views/landing/LandingView";
+import {LoginView} from "./views/login/LoginView";
+import {RegisterView} from "./views/register/RegisterView";
+import {ProductListView} from "./views/product-list/ProductListView";
+import {ProductDetailView} from "./views/product-detail/ProductDetailView";
+import {ProductCreateView} from "./views/product-create/ProductCreateView";
+import {AccountView} from "./views/account/AccountView";
+import Header from "./components/Header";
 
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <a className="navbar-brand" href="https://codingthesmartway.com" target="_blank">
-                        <img src={logo} width="30" height="30" alt=""/>
-                    </a>
-                    <Link to="/" className="navbar-brand">MERN-Stack Todo App</Link>
-                    <div className="collpase nav-collapse">
-                        <ul className="navbar-nav mr-auto">
-                            <li className="navbar-item">
-                                <Link to="/" className="nav-link">Todos</Link>
-                            </li>
-                            <li className="navbar-item">
-                                <Link to="/create" className="nav-link">Create Todo</Link>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+export default class App extends React.Component {
+    constructor(props) {
+        super(props);
 
-                <Route path="/register" exact component={Register}/>
+        this.state = {
+            title: 'Fairbundled',
+            routes: [
+                {component: LandingView, path: '/', exact: true},
+                {component: LoginView, path: '/login'},
+                {component: RegisterView, path: '/register'},
+                {component: ProductListView, path: '/product'},
+                {component: ProductDetailView, path: '/product/:id'},
+                {
+                    render: (props) => {
+                        if (AuthService.isAuthenticated()) {
+                            return (<ProductCreateView {...props} />)
+                        } else {
+                            return (<Redirect to={'/login'}/>)
+                        }
+                    }, path: '/product/create'
+                },
+                {
+                    render: (props) => {
+                        if (AuthService.isAuthenticated()) {
+                            return (<AccountView {...props} />)
+                        } else {
+                            return (<Redirect to={'/login'}/>)
+                        }
+                    }, path: '/account',
+                },
+
+            ]
+        };
+    }
+
+    componentDidMount() {
+        document.title = this.state.title;
+    }
+
+    render() {
+        return (
+            <div>
+                <Header/>
+                <Router>
+                    <Switch>
+                        {this.state.routes.map((route, i) => (<Route key={i} {...route}/>))}
+                    </Switch>
+                </Router>
             </div>
-        </Router>
-    );
-}
+        );
+    }
 
-export default App;
+}
