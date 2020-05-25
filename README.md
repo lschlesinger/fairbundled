@@ -11,7 +11,6 @@
   <p align="center">
     This is a Web Application Engineering Project at TUM University, Munich
     <br />
-    <a href="...">View Demo</a>
   </p>
 
 </p>
@@ -25,6 +24,8 @@
 
   * [Description](#description)
   * [Built With](#built-with)
+
+* [Technical Documentation](#documentation)
 
 * [Getting Started](#getting-started)
 
@@ -61,10 +62,28 @@ Check out the [fairbundled.de]()
 ### Built With
 
 * [NodeJs](https://nodejs.org/en/)
+
+* [Express](https://expressjs.com/)
+
 * [React](https://reactjs.org/)
+
+* [Ant Design](https://ant.design/docs/react/introduce)
+
 * [MongoDB](https://www.mongodb.com/de)
+
 * [Heroku](https://www.heroku.com/)
+
 * [Docker](https://www.docker.com/)
+
+  
+
+<!-- DOCUMENTATION -->
+
+## Technical Documentation
+
+Additional material documenting technical decisions, such as the UML Class Diagram, are collected in the [`docs`](./docs) folder on the project's top level and explained in the respective [`README.md`](./docs/README.de) file.
+
+
 
 <!-- GETTING STARTED -->
 
@@ -72,54 +91,13 @@ Check out the [fairbundled.de]()
 
 To get a local copy up and running follow these simple steps.
 
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-
-* npm
-
-```sh
-npm install npm@latest -g
-```
-
-* [docker](https://docs.docker.com/docker-for-mac/install/)
-
-
-### Installation
-
 1. Clone the repo
 
 ```sh
 git clone git@github.com:lschlesinger/fairbundled.git
 ```
 
-2. Install NPM packages
-
-```sh
-cd frontend
-npm install
-```
-
-### Run
-
-1. Start database, e.g. with docker
-
-```sh
-docker-compose -f docker-compose.dev.yml up
-```
-
-2. Start backend (can also be done from IDE), will run on port `5000`
-
-```sh
-npm start
-```
-
-3. Start frontend (with proxy to backend), will run on port `4200`
-
-```sh
-cd frontend
-npm start
-```
+2. Navigate into subfolders to find out about requirements and further installation steps
 
 <!-- LICENSE -->
 

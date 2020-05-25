@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Order from './order.model';
 
-const BundleOrder = new mongoose.Schema({
+const Fairbundle = new mongoose.Schema({
     ...Order.obj,
     expiration: Date,
     expirationAction: String,
@@ -20,4 +20,4 @@ const BundleOrder = new mongoose.Schema({
 });
 
 
-export default mongoose.model('BundleOrder', BundleOrder);
+export default mongoose.model('Fairbundle', Fairbundle);

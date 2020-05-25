@@ -1,10 +1,20 @@
 # Fairbundled - Backend
 
-## Setup
+## Requirements
 
-- Install Node.js
-- Install Docker
-- Instal Robo3T
+- Node.js
+- npm
+- Docker or local MongoDB
+- Robo3T (optional)
+
+## Installation
+
+Install NPM packages
+
+```sh
+cd backend
+npm install
+```
 
 ## Run
 

@@ -6,7 +6,8 @@ const Product = new mongoose.Schema({
         required: true
     },
     description: String,
-    picture: String,
+    ean: String,
+    image: String,
     deliveryDays: Number,
     priceLevel: [{
         unitPrice: Number,
@@ -23,7 +24,7 @@ const Product = new mongoose.Schema({
     category: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
-    }]
+    }],
 
 }, {
     timestamps: true
