@@ -81,7 +81,7 @@ Check out the [fairbundled.de]()
 
 ## Technical Documentation
 
-Additional material documenting technical decisions, such as the UML Class Diagram, are collected in the [`docs`](./docs) folder on the project's top level and explained in the respective [`README.md`](./docs/README.de) file.
+Additional material documenting technical decisions, such as the UML Class Diagram, are collected in the [`docs`](./docs) folder on the project's top level and explained in the respective [`README.md`](./docs/README.md) file.
 
 
 
