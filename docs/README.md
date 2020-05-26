@@ -1,10 +1,26 @@
+# Table of Contents
+
+* [Data Model](#data-model)
+  * [UML Class Diagram](#uml-class-diagram)
+  * [Entities](#entities)
+* [Project Folder Structure](#project-folder-structure)
+  * [Backend](#backend)
+  * [Frontend](#frontend)
+* [Routes](#routes)
+  * [Backend](#backend-endpoints)
+  * [Frontend](#frontend-urls)
+
+<!-- DATA MODEL -->
+
 # Data Model
+
+<!-- UML -->
 
 ## UML Class Diagram
 
 
 
-![UML](../docs/Fairbundled_UML.pdf)
+![UML](../docs/Fairbundled_UML.png)
 
 
 
@@ -17,8 +33,11 @@ The field `id` is automatically created (as `_id` field), when respective entity
 The grayish displayed id-fields represent a foreign key, i.e. a reference to a certain entity.
 
 
+<!-- ENTITIES -->
 
-## Entities (by logical units)
+## Entities
+
+Introduced by logical units
 
 ### User / Supplier / Municipality
 
@@ -45,3 +64,144 @@ A `User` who is associated with a municipality having (`municipalityId`) can add
 As the main feature of the online platform for sustainable procurement, municipalities are enabled to bundle the demand for **one** `Product`. This behaviour is mapped by the entity `Fairbundle`. It extends a regular `Order` and allows other municipalities to join the bundled order until a certain `expirationDate` and under the predefined conditions. These are set by the `Municipality` creating the `Fairbundle` and include a `targetPrice`, which can be chosen of all `PriceLevels` exhibited by the respective `Product`, and an `expirationAction`. More precisely, the creator of a bundle decides in advance what action should be taken as soon as the `expirationDate` is reached and the `targetPrice` is not, i.e., due to missing volume to actually match the `minQuantity` associated to the targeted `unitPrice`. The invariant of a Fairbundle is that every associated `OrderPosition` refers to one and the same `Product` which is identified by its `productId`.
 
 Since a `User` that adds a `OrderPosition` to an existing  `Fairbundle` is associated with a `municipalityId`, the  `BundleOrder` records all involved `Municipality` as `bundlers` in a dedicated field. 
+
+<!-- PROJECT FOLDER STRUCTURE -->
+
+# Project Folder Structure 
+
+This section includes the folder structure in `/src` for each, the backend and frontend project folder.
+
+Additionally to the structure, the meaning and function of files contained in the folder is explained briefly.
+
+<!-- BACKEND -->
+
+## Backend
+
+Most important files and folders in `fairbundled/backend/src`
+
+```bash
+├── config.js
+├── controllers
+│   ├── ...
+├── index.js
+├── middlewares.js
+├── models
+│   ├── category.model.js
+│   ├── certificate.model.js
+│   ├── faribundle.model.js
+│   ├── municipality.model.js
+│   ├── order-position.model.js
+│   ├── order.model.js
+│   ├── product.model.js
+│   ├── supplier.model.js
+│   └── user.model.js
+├── routes
+│   ├── ...
+├── routes.js
+└── services
+    └── ...
+```
+
+`config.js` specifies configurations for backend server (`port`), database (`host`, `user`, `name`, ...) and auth (`jwtSecret`); if set, the values are retrieved from environment variables
+
+`/controllers` contains one file per route (backend route = request) defined in `routes.js` whereas the respective files in the `/routes` registers the sub-routes  with HTTP verb and function to be executed (defined in respective file in `/controllers`).
+
+`index.js` sets up the express server and passes the express app to the http server instance; creates database connection
+
+`middlewares.js` specifies functions to check for authentication using JWT token, check for municipality ID, check for supplier ID to allow certain backend request only for authenticated user
+
+`/models` contains one files per entity in the UML Class diagram
+
+`/services` captures certain helper functions, e.g. `x.service.js` used in a controller `x.controller.js`
+
+
+
+<!-- FRONTEND -->
+
+## Frontend
+
+Most important files and folders in `fairbundled/frontend/src`
+
+```bash
+├── App.js
+├── components
+│   ├── ...
+├── index.js
+├── services
+│   ├── HttpService.js
+│   ├── ...
+└── views
+    ├── account
+    │   └── ...
+    ├── landing
+    │   └── ...
+    ├── login
+    │   └── ...
+    ├── product-create
+    │   └── ...
+    ├── product-detail
+    │   └── ...
+    ├── product-list
+    │   └── ...
+    └── register
+        └── ...
+```
+
+`App.js` is the file where registration of the routes is done, i.e. each route is linked to a view and in certain cases (e.g. `ProductCreateView.js`) it is ensured at this point that this view is only reached if the AuthService returns true for isAuthenticated(), otherwise it is forwarded to route `/login` and the respective `LoginView`
+
+`/components` contains react components, which serve visualization components mostly only containing HTML and CSS code (no service calls)
+
+`index.js` renders the ReactDOM, containing the HTML Tag of the App Entry point, i.e. `App.js`
+
+`/services` contains classes in which requests to the backend are logically bundled. For example the `AuthService.js` are functions that execute all backend requests dealing with authentication. For the login function, the entered user data is to be sent to the backend and stored in the database.
+All services use the obligatory `HTTPService.js`, which finally forwards the service requests with the HTTP verbs GET, PUT, POST, DELETE to the backend. In this example, login, this would be the POST function defined in the HTTPService
+
+`/views` contains react components, which serve as wrapper components associated with a route. There is one subfolder per route with respective views and modal views. Important: These components can be described as intelligent components, using services to retrieve data from the backend
+
+
+
+<!-- ROUTES -->
+
+# Routes
+
+This section explains the routing logic in backend (request endpoints) and frontend (URLs).
+
+
+
+<!-- BACKEND ENDPOINTS -->
+
+## Backend Endpoints
+
+(to be constantly updated)
+
+The table should be read as tree from left to right, e.g. one endpoint is `/api/auth/register`
+
+| Base URL | Route          | Endpoint    | HTTP Verb |
+| -------- | -------------- | ----------- | --------- |
+| `/api`   | `/product`     | `/`         | GET, POST |
+|          | `/auth`        | `/login`    | POST      |
+|          |                | `/register` | POST      |
+|          | `/certificate` | `/`         | GET       |
+
+Note:
+
+- Base URL is defined in `index.js`
+- Routes (1st Level) are defined in `routes.js`
+- Endpoints (2nd Level) are defined in respective `routeX.routes.js` file in  `/routes` folder; in these files, the mapping of the endpoint to HTTP verbs and controller functions is done
+
+
+
+<!-- FRONTEND URLS -->
+
+## Frontend URLs
+
+| URL               | Param  | Query Param                    | Associated View incl. Modal                                  |
+| ----------------- | ------ | ------------------------------ | ------------------------------------------------------------ |
+| `/`               |        |                                | `LandingView`                                                |
+| `/register`       |        |                                | `RegisterView`                                               |
+| `/login`          |        |                                | `LoginView`                                                  |
+| `/product`        |        | `?category=A`<br/>`?query=abc` | `ProductListView`                                            |
+| `/product`        | `/:id` |                                | `ProductDetailView` <br>`CreateFairbundleModalView`<br/> `JoinFairbundleModalView` <br/>`FairbundleCreatedModalView` <br/>`FairbundleJoinedModalView` |
+| `/product/create` |        |                                | `ProductCreateView`<br> `ProductPreviewModalView`            |
+| `/account`        |        |                                | `AccountView`                                                |
+

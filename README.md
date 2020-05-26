@@ -3,16 +3,13 @@
 
 <p align="center">
   <a href="https://github.com/lschlesinger/fairbundled">
-    <img src="frontend/src/logo.jpg" alt="Logo" width="420">
+    <img src="frontend/src/logo.jpg" alt="Logo" width="641">
   </a>
-
-
 
   <p align="center">
     This is a Web Application Engineering Project at TUM University, Munich
     <br />
   </p>
-
 </p>
 
 
@@ -21,20 +18,11 @@
 ## Table of Contents
 
 * [About the Project](#about-the-project)
-
   * [Description](#description)
   * [Built With](#built-with)
-
-* [Technical Documentation](#documentation)
-
+* [Technical Documentation](#technical-documentation)
 * [Getting Started](#getting-started)
-
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
-
 * [License](#license)
-
-  
 
 <!-- ABOUT THE PROJECT -->
 
@@ -75,15 +63,11 @@ Check out the [fairbundled.de]()
 
 * [Docker](https://www.docker.com/)
 
-  
-
-<!-- DOCUMENTATION -->
+<!-- TECHNICAL DOCUMENTATION -->
 
 ## Technical Documentation
 
 Additional material documenting technical decisions, such as the UML Class Diagram, are collected in the [`docs`](./docs) folder on the project's top level and explained in the respective [`README.md`](./docs/README.md) file.
-
-
 
 <!-- GETTING STARTED -->
 
