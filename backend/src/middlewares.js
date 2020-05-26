@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import config from "./config";
 
 const checkAuthentication = (req, res, next) => {
-    // check authorization header for bearer token
+    // check "Authorization" header for bearer token
     let token = "";
     if (req.headers.authorization) {
         const tokenType = "Bearer ";
@@ -25,7 +25,7 @@ const checkAuthentication = (req, res, next) => {
             });
         }
 
-        // if verification suceeds, save userId to request for use in other routes
+        // if verification succeeds, save userId to request for use in other routes
         req.userId = decoded.id;
         req.municipalityId = decoded.municipalityId;
         req.supplierId = decoded.supplierId;
