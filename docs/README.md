@@ -69,7 +69,7 @@ Since a `User` that adds a `OrderPosition` to an existing  `Fairbundle` is assoc
 
 # Project Folder Structure 
 
-This section includes the folder structure in `/src` for each, the backend and frontend project folder.
+This section includes the folder structure in `/src` for each, the backend and frontend project folder.
 
 Additionally to the structure, the meaning and function of files contained in the folder is explained briefly.
 
