@@ -1,0 +1,12 @@
+@import '~antd/dist/antd.css';
+
+.ant-layout-header {
+    height: 136px;
+    background-color: #ffffff;
+    padding: 0;
+}
+
+.site-layout {
+    padding: 0 50px;
+    margin-top: 140px;
+}

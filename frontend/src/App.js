@@ -1,7 +1,8 @@
 import React from 'react';
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+import { Layout } from 'antd';
 
-import 'antd/dist/antd.css';
+import './App.css';
 
 import AuthService from "./services/AuthService";
 import {LandingView} from "./views/landing/LandingView";
@@ -11,7 +12,11 @@ import {ProductListView} from "./views/product-list/ProductListView";
 import {ProductDetailView} from "./views/product-detail/ProductDetailView";
 import {ProductCreateView} from "./views/product-create/ProductCreateView";
 import {AccountView} from "./views/account/AccountView";
-import Header from "./components/Header";
+import FairbundledHeader from "./components/FairbundledHeader";
+import CategoryService from "./services/CategoryService";
+
+const { Header, Footer, Content } = Layout;
+
 
 export default class App extends React.Component {
     constructor(props) {
@@ -44,25 +49,40 @@ export default class App extends React.Component {
                     }, path: '/account',
                 },
 
-            ]
+            ],
+            categories: []
         };
+
+        this.getCategories();
     }
 
     componentDidMount() {
         document.title = this.state.title;
     }
 
+    async getCategories() {
+        this.setState({
+            categories: await CategoryService.getCategories()
+        })
+    }
+
     render() {
         return (
             <div>
-                <Header/>
-                <Router>
-                    <Switch>
-                        {this.state.routes.map((route, i) => (<Route key={i} {...route}/>))}
-                    </Switch>
-                </Router>
+                <Layout>
+                    <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+                        <FairbundledHeader categories={this.state.categories}/>
+                    </Header>
+                    <Content className="site-layout">
+                        <Router>
+                            <Switch>
+                                {this.state.routes.map((route, i) => (<Route key={i} {...route}/>))}
+                            </Switch>
+                        </Router>
+                    </Content>
+                    <Footer style={{ textAlign: 'center' }}>Footer</Footer>
+                </Layout>
             </div>
         );
     }
-
 }
