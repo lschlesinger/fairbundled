@@ -2,7 +2,14 @@ import Product from "../models/product.model";
 
 class ProductController {
     static getProducts(req, res) {
-        Product.find({})
+        const query = {};
+        if (!!req.query.category) {
+            query['categories.name'] = req.query.category;
+        }
+        if (!!req.query.searchString) {
+            query['$text'] = {$search: req.query.searchString};
+        }
+        Product.find(query)
             .then((products) => {
                 res.status(200).json(products);
             })

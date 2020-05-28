@@ -21,7 +21,7 @@ const Product = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Supplier'
     },
-    category: [{
+    categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
     }],
@@ -29,5 +29,7 @@ const Product = new mongoose.Schema({
 }, {
     timestamps: true
 });
+
+Product.index({name: 'text'});
 
 export default mongoose.model('Product', Product);
