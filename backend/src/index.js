@@ -21,7 +21,8 @@ const server = http.createServer(app);
 mongoose
     .connect(['mongodb://', config.database.host, ':', config.database.port, '/', config.database.name].join(''), {
         user: config.database.user,
-        pass: config.database.password
+        pass: config.database.password,
+        useFindAndModify: false
     })
     .then(() => {
         // start server once db connection is established

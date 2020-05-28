@@ -3,9 +3,11 @@ import mongoose from 'mongoose';
 const Category = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
-    subCategories: [{
+    root: Boolean,
+    subcategories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
     }],
