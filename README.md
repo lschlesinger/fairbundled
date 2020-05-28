@@ -50,17 +50,11 @@ Check out the [fairbundled.de]()
 ### Built With
 
 * [NodeJs](https://nodejs.org/en/)
-
 * [Express](https://expressjs.com/)
-
 * [React](https://reactjs.org/)
-
 * [Ant Design](https://ant.design/docs/react/introduce)
-
 * [MongoDB](https://www.mongodb.com/de)
-
 * [Heroku](https://www.heroku.com/)
-
 * [Docker](https://www.docker.com/)
 
 <!-- TECHNICAL DOCUMENTATION -->
