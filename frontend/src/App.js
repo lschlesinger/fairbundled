@@ -1,21 +1,21 @@
 import React from 'react';
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
-import { Layout } from 'antd';
+import {Layout} from 'antd';
 
-import './App.css';
+import './App.less';
 
 import AuthService from "./services/AuthService";
 import {LandingView} from "./views/landing/LandingView";
 import {LoginView} from "./views/login/LoginView";
 import {RegisterView} from "./views/register/RegisterView";
-import {ProductListView} from "./views/product-list/ProductListView";
+import ProductListView from "./views/product-list/ProductListView";
 import {ProductDetailView} from "./views/product-detail/ProductDetailView";
 import {ProductCreateView} from "./views/product-create/ProductCreateView";
 import {AccountView} from "./views/account/AccountView";
 import FairbundledHeader from "./components/FairbundledHeader";
 import CategoryService from "./services/CategoryService";
 
-const { Header, Footer, Content } = Layout;
+const {Header, Footer, Content} = Layout;
 
 
 export default class App extends React.Component {
@@ -68,21 +68,21 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div>
-                <Layout>
-                    <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+            <Layout>
+                <Router>
+                    <Header style={{position: 'fixed', zIndex: 1, width: '100%'}}>
                         <FairbundledHeader categories={this.state.categories}/>
                     </Header>
                     <Content className="site-layout">
-                        <Router>
-                            <Switch>
-                                {this.state.routes.map((route, i) => (<Route key={i} {...route}/>))}
-                            </Switch>
-                        </Router>
+
+                        <Switch>
+                            {this.state.routes.map((route, i) => (<Route key={i} {...route}/>))}
+                        </Switch>
+
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>Footer</Footer>
-                </Layout>
-            </div>
+                    <Footer style={{textAlign: 'center'}}>Footer</Footer>
+                </Router>
+            </Layout>
         );
     }
 }

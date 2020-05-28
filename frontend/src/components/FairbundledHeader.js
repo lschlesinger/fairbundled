@@ -1,7 +1,7 @@
 import React from 'react';
 import CategoryHeaderMenu from "./CategoryHeaderMenu";
 import SearchBar from "./SearchBar";
-import {Col, Divider, Row} from 'antd';
+import {Col, Divider, Row, Space} from 'antd';
 import logo from '../logo.png';
 import HeaderIconMenu from "./HeaderIconMenu";
 import './FairbundledHeader.css';
@@ -29,10 +29,8 @@ export default class FairbundledHeader extends React.Component {
                     </Col>
                 </Row>
                 <Divider className="header__custom-divider"/>
-                <Row>
-                    <Col span={24}>
+                <Row justify="space-around">
                         <CategoryHeaderMenu categories={this.props.categories}/>
-                    </Col>
                 </Row>
             </div>
         );

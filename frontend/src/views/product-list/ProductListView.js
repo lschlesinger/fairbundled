@@ -2,8 +2,7 @@ import React from 'react';
 import ProductService from "../../services/ProductService";
 import {List, message} from 'antd';
 
-
-export class ProductListView extends React.Component {
+export default class ProductListView extends React.Component {
 
     constructor(props) {
         super(props);
@@ -16,10 +15,18 @@ export class ProductListView extends React.Component {
         this.getProducts();
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.location !== prevProps.location) {
+            this.getProducts();
+        }
+    }
+
+
     async getProducts() {
         try {
+            const {location: {search}} = this.props;
             this.setState({
-                products: await ProductService.getProducts()
+                products: await ProductService.getProducts(search)
             });
         } catch (e) {
             message.error("Error fetching products.");

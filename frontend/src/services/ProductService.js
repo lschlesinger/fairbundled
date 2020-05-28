@@ -7,8 +7,8 @@ export default class ProductService {
     constructor() {
     }
 
-    static async getProducts() {
-        return HttpService.get(`${this.BASE_URL}/`);
+    static async getProducts(search = '') {
+        return HttpService.get(`${this.BASE_URL}/${search}`);
     }
 
     static async createProduct(name, description, ean, images, deliveryDays, priceLevel, certificates, category) {

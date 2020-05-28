@@ -1,5 +1,6 @@
 import React from 'react';
 import {Menu} from "antd";
+import {Link} from "react-router-dom";
 
 const {SubMenu} = Menu;
 
@@ -29,7 +30,9 @@ export default class CategoryHeaderMenu extends React.Component {
         }
         return (
             <Menu.Item key={category._id}>
-                {category.name}
+                <Link to={`/product?category=${category.name}`}>
+                    {category.name}
+                </Link>
             </Menu.Item>
         );
     }
@@ -38,6 +41,7 @@ export default class CategoryHeaderMenu extends React.Component {
         return (
             <Menu mode="horizontal">
                 {this.props.categories.map((c) => this.getMenuItems(c))}
+                <Menu.Item key="Angebote" style={{fontWeight: 'bold'}}> Alle Angebote </Menu.Item>
             </Menu>
         )
     }
