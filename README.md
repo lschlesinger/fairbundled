@@ -3,7 +3,7 @@
 
 <p align="center">
   <a href="https://github.com/lschlesinger/fairbundled">
-    <img src="frontend/src/logo.png" alt="Logo" width="641">
+    <img src="frontend/src/logo.jpg" alt="Logo" width="500">
   </a>
 
   <p align="center">
