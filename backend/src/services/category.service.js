@@ -82,6 +82,67 @@ const CATEGORIES = [
             {name: "Buswartehaus"},
             {name: "Schwimmbadtechnik & Ausstattung"},
         ]
+    },
+    {
+        name: "IT & Zubehör",
+        root: true,
+        subcategories: [
+            {name: "Computer & Endgeräte"},
+            {name: "Telefone & Zubehör"},
+            {name: "Drucker, Multifunktionsgeräte"},
+            {name: "Massenspeicher"},
+            {name: "Eingabegeräte für Computer"},
+            {name: "Ausgabegeräte für Computer"},
+            {name: "Multimedia-, Unterhaltungstechnik"},
+            {name: "Computerkomponente"},
+        ]
+    },
+    {
+        name: "Sport",
+        root: true,
+        subcategories: [
+            {name: "Fitnessgeräte"},
+            {name: "Turngeräte"},
+            {name: "Freizeitspiele"},
+            {name: "Schwimmen"},
+            {name: "Objektausstattung"},
+            {name: "Gymnastik"},
+            {name: "Therapie"},
+            {name: "Teamsport"},
+            {name: "Vereinsbedarf"},
+            {name: "E-Scooter"},
+        ]
+    },
+    {
+        name: "Hygiene & Haushalt",
+        root: true,
+        subcategories: [
+            {name: "Coronakrise"},
+            {name: "Reinigungs-, Pflegemittel"},
+            {name: "Reinigungstücher"},
+            {name: "Reinigungsgeräte für Betriebe"},
+            {name: "Reinigungsgeräte für den Haushalt"},
+            {name: "Kaffee & Teeküche"},
+            {name: "Abfallkübel & Spender"},
+            {name: "Schutzfangmatten"},
+            {name: "Körperpflege"},
+            {name: "Arbeitshandschuhe"},
+
+        ]
+    },
+    {
+        name: "Holz & Holzprodukte",
+        root: true,
+        subcategories: [
+            {name: "Büromöbel"},
+            {name: "Schulmöbel"},
+            {name: "Pfähle"},
+            {name: "Türen"},
+            {name: "Büchereieinrichtung"},
+            {name: "Brennholz"},
+            {name: "Stühle"},
+            {name: "Verkleidung"},
+        ]
     }
 ];
 
