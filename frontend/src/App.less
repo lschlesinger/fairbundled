@@ -1,12 +1,22 @@
 @import '~antd/dist/antd.less';
 
+@header-height: 136px;
 .ant-layout-header {
-    height: 136px;
+    height: @header-height;
     background-color: #ffffff;
     padding: 0;
 }
 
+@footer-height: 80px;
+.ant-layout-footer {
+    height: @footer-height;
+    background-color: #ffffff;
+}
+
+@layout-padding: 20px 50px;
 .site-layout {
-    padding: 0 50px;
-    margin-top: 140px;
+    padding: @layout-padding;
+    background-color: #ffffff;
+    margin-top: calc(@header-height + 4px);
+    min-height: calc(100vh - @header-height - @footer-height);
 }

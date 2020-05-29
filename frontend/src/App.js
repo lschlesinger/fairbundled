@@ -14,6 +14,7 @@ import {ProductCreateView} from "./views/product-create/ProductCreateView";
 import {AccountView} from "./views/account/AccountView";
 import FairbundledHeader from "./components/FairbundledHeader";
 import CategoryService from "./services/CategoryService";
+import FairbunbledFooter from "./components/FairbunbledFooter";
 
 const {Header, Footer, Content} = Layout;
 
@@ -80,7 +81,9 @@ export default class App extends React.Component {
                         </Switch>
 
                     </Content>
-                    <Footer style={{textAlign: 'center'}}>Footer</Footer>
+                    <Footer style={{textAlign: 'center'}}>
+                        <FairbunbledFooter/>
+                    </Footer>
                 </Router>
             </Layout>
         );
