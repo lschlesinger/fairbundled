@@ -30,7 +30,7 @@ export default class CategoryHeaderMenu extends React.Component {
         }
         return (
             <Menu.Item key={category._id}>
-                <Link to={`/product?category=${category.name}`}>
+                <Link to={`/product?category=${category._id}`}>
                     {category.name}
                 </Link>
             </Menu.Item>

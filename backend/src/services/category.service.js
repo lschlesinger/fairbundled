@@ -150,7 +150,6 @@ const CATEGORIES = [
 class CategoryService {
 
     static async createCategories() {
-        await Category.remove({});
         // get copy of all categories
         const categories = [...CATEGORIES];
 

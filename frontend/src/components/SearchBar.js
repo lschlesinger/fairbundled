@@ -32,7 +32,7 @@ class SearchBar extends React.Component {
                 }}>
                 <Option value=''> Alle Kategorien </Option>
                 {
-                    categories.map((c) => <Option key={c._id}value={c.name}> {c.name} </Option>)
+                    categories.map((c) => <Option key={c._id} value={c._id}> {c.name} </Option>)
                 }
             </Select>
         );
