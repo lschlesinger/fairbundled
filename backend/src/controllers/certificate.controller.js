@@ -1,8 +1,4 @@
 import Certificate from "../models/certificate.model";
-import CertificateService from "../services/certificate.service";
-
-// do this once when this file is loaded
-CertificateService.fetchCertificates();
 
 class CertificateController {
     static getCertificates(req, res) {

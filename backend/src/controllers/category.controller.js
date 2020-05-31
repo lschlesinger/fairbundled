@@ -1,8 +1,4 @@
 import Category from "../models/category.model";
-import CategoryService from "../services/category.service";
-
-// do this once when this file is loaded
-CategoryService.createCategories();
 
 class CategoryController {
     static getCategories(req, res) {

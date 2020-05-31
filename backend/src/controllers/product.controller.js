@@ -4,7 +4,7 @@ class ProductController {
     static getProducts(req, res) {
         const query = {};
         if (!!req.query.category) {
-            query['categories.name'] = req.query.category;
+            query['categories'] = req.query.category;
         }
         if (!!req.query.searchString) {
             query['$text'] = {$search: req.query.searchString};

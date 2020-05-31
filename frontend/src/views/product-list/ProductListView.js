@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductService from "../../services/ProductService";
 import {List, message} from 'antd';
+import ProductListCard from "../../components/ProductListCard";
 
 export default class ProductListView extends React.Component {
 
@@ -36,13 +37,7 @@ export default class ProductListView extends React.Component {
     render() {
         return (
             <div>
-                <p>Hello from ProductList</p>
-                <List
-                    size="small"
-                    bordered
-                    dataSource={this.state.products}
-                    renderItem={product => <List.Item>{product.name}</List.Item>}
-                />
+                <ProductListCard products={this.state.products}/>
             </div>
         );
     }
