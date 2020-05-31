@@ -32,6 +32,7 @@ export default class FairbundledHeader extends React.Component {
                 <Row justify="space-around">
                         <CategoryHeaderMenu categories={this.props.categories}/>
                 </Row>
+                <Divider className="header__custom-divider-bottom"/>
             </div>
         );
     }
