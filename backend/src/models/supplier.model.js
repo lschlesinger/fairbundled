@@ -1,13 +1,10 @@
 import mongoose from 'mongoose';
 
+// note: responsible was deleted as not required
 const Supplier = new mongoose.Schema({
     name: {
         type: String,
         required: true
-    },
-    responsible: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
     },
     billingAddress: String,
     bankAccount: String,
