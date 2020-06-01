@@ -19,10 +19,9 @@ app.use('/api', routes);
 const server = http.createServer(app);
 
 // create db connection
+let connectionURI = config.database.uri || `mongodb://${config.database.user}:${config.database.password}@${config.database.host}:${config.database.port}/${config.database.name}`;
 mongoose
-    .connect(['mongodb://', config.database.host, ':', config.database.port, '/', config.database.name].join(''), {
-        user: config.database.user,
-        pass: config.database.password,
+    .connect(connectionURI, {
         useFindAndModify: false
     })
     .then(() => {
@@ -37,9 +36,9 @@ mongoose
             console.log(`Server is listening at http://${address}:${port}`);
 
             // create initial data with bootstrap service
-            BootstrapService.loadInitialData().then(()=> {
+            BootstrapService.loadInitialData().then(() => {
                 console.log('Created initial data.')
-            }).catch((err)=> {
+            }).catch((err) => {
                 console.log(err);
                 console.log('Failed to initialize data.')
             })
