@@ -32,7 +32,6 @@ class SearchBar extends React.Component {
         return (
             <Select className="search-bar__select"
                 labelInValue
-                defaultValue={{key: this.state.category}}
                 onSelect={(category) => {
                     // update state asynchronously with selection
                     this.setState({category: category.key}, () => {
