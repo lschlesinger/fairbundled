@@ -12,6 +12,8 @@
   </p>
 </p>
 
+![Heroku](https://heroku-badge.herokuapp.com/?app=fairbundled)
+
 
 <!-- TABLE OF CONTENTS -->
 
@@ -44,7 +46,7 @@ These are addressed by the following main features of **Fairbundled**:
 
 So don't hesitate:
 
-Check out the [fairbundled.de]()
+Check out the [Fairbundled](https://fairbundled.herokuapp.com/)
 
 
 ### Built With
