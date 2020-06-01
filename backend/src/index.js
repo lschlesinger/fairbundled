@@ -1,5 +1,6 @@
 import express from 'express';
 import http from 'http';
+import path from 'path';
 import config from "./config";
 import routes from "./routes";
 import mongoose from 'mongoose';
@@ -14,6 +15,15 @@ app.use(bodyParser.json());
 
 // add routes to express app
 app.use('/api', routes);
+
+// all static content in `public/` will be served
+app.use(express.static(path.resolve(__dirname, '..', 'public')));
+
+// handle every other route with index.html, which will contain
+// a script tag to your application's JavaScript file(s).
+app.get('*', (request, response) => {
+    response.sendFile(path.resolve(path.resolve(__dirname, '..', 'public', 'index.html')));
+});
 
 // pass express app to http server instance
 const server = http.createServer(app);
