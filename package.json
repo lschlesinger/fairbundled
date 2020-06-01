@@ -6,9 +6,6 @@
         "postinstall": "cd backend && npm install",
         "serve": "cd backend && npm run serve"
     },
-    "engines": {
-        "node": "10.16.x"
-    },
     "author": "",
     "license": "MIT",
     "devDependencies": {
