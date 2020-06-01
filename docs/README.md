@@ -1,14 +1,19 @@
 # Table of Contents
 
 * [Data Model](#data-model)
+  
   * [UML Class Diagram](#uml-class-diagram)
   * [Entities](#entities)
+  
 * [Project Folder Structure](#project-folder-structure)
   * [Backend](#backend)
   * [Frontend](#frontend)
+  
 * [Routes](#routes)
   * [Backend](#backend-endpoints)
   * [Frontend](#frontend-urls)
+  
+  
 
 <!-- DATA MODEL -->
 
@@ -125,10 +130,15 @@ Most important files and folders in `fairbundled/frontend/src`
 ```bash
 ├── App.js
 ├── components
-│   ├── ...
+│   ├── FairbundledHeader
+		│   └── ... # js file
+		│   └── ... # less file
+│   ├── FairbundledFooter
+│   ├── ..
 ├── index.js
 ├── services
 │   ├── HttpService.js
+│   ├── bootstrapService.js
 │   ├── ...
 └── views
     ├── account
@@ -151,10 +161,14 @@ Most important files and folders in `fairbundled/frontend/src`
 
 `/components` contains react components, which serve visualization components mostly only containing HTML and CSS code (no service calls)
 
+Note: for maintainability purposes, the component directory is structured in sub-directories once a `.js` file and a `.less` are created for one component. Logically associated component `.js` files can be put in one sub-directory with the respective `.less` files. E.g., for the `FairbundledHeader` , several composing components are encapsulated.
+
 `index.js` renders the ReactDOM, containing the HTML Tag of the App Entry point, i.e. `App.js`
 
 `/services` contains classes in which requests to the backend are logically bundled. For example the `AuthService.js` are functions that execute all backend requests dealing with authentication. For the login function, the entered user data is to be sent to the backend and stored in the database.
 All services use the obligatory `HTTPService.js`, which finally forwards the service requests with the HTTP verbs GET, PUT, POST, DELETE to the backend. In this example, login, this would be the POST function defined in the HTTPService
+
+Note: The `bootstrap.service.js` triggers initial sample data creation.
 
 `/views` contains react components, which serve as wrapper components associated with a route. There is one subfolder per route with respective views and modal views. Important: These components can be described as intelligent components, using services to retrieve data from the backend
 
@@ -204,4 +218,6 @@ Note:
 | `/product`        | `/:id` |                                | `ProductDetailView` <br>`CreateFairbundleModalView`<br/> `JoinFairbundleModalView` <br/>`FairbundleCreatedModalView` <br/>`FairbundleJoinedModalView` |
 | `/product/create` |        |                                | `ProductCreateView`<br> `ProductPreviewModalView`            |
 | `/account`        |        |                                | `AccountView`                                                |
+
+
 

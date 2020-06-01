@@ -49,7 +49,7 @@ Check out the [fairbundled.de]()
 
 ### Built With
 
-* [NodeJs](https://nodejs.org/en/)
+* [NodeJs](https://nodejs.org/en/) (≥10)
 * [Express](https://expressjs.com/)
 * [React](https://reactjs.org/)
 * [Ant Design](https://ant.design/docs/react/introduce)
