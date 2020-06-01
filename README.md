@@ -12,7 +12,7 @@
   </p>
 </p>
 
-![Heroku](https://heroku-badge.herokuapp.com/?app=fairbundled)
+[![Heroku](https://heroku-badge.herokuapp.com/?app=fairbundled&style=flat&svg=1)](https://fairbundled.herokuapp.com/)
 
 
 <!-- TABLE OF CONTENTS -->
