@@ -21,14 +21,17 @@ export default class AuthService {
             const res = await HttpService.post(`${this.BASE_URL}/login`, {email, password});
             if (res.token) {
                 TokenService.setToken(res.token);
+            } else {
+                throw new Error("Login failed.");
             }
         } catch (error) {
             throw new Error("Login failed.");
         }
     }
 
-    static logout(){
+    static logout() {
         window.localStorage.removeItem('jwtToken');
+        window.location = '/';
     }
 
     static isAuthenticated() {

@@ -62,7 +62,7 @@ export default class HttpService {
             window.location = '/login';
             throw new Error("Unauthorized request.");
         } else {
-            return await response.json();
+            return response.json();
         }
     }
 

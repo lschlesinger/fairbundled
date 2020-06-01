@@ -1,15 +1,13 @@
 import React from 'react';
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import {Layout} from 'antd';
-
 // override style
 import './App.less';
-
 // import all components and views
 import AuthService from "./services/AuthService";
 import {LandingView} from "./views/landing/LandingView";
-import {LoginView} from "./views/login/LoginView";
-import {RegisterView} from "./views/register/RegisterView";
+import LoginView from "./views/login/LoginView";
+import RegisterView from "./views/register/RegisterView";
 import ProductListView from "./views/product-list/ProductListView";
 import {ProductDetailView} from "./views/product-detail/ProductDetailView";
 import {ProductCreateView} from "./views/product-create/ProductCreateView";
@@ -31,10 +29,28 @@ export default class App extends React.Component {
             // connect routes (url) and components
             routes: [
                 {component: LandingView, path: '/', exact: true},
-                {component: LoginView, path: '/login'},
-                {component: RegisterView, path: '/register'},
                 {component: ProductListView, path: '/product'},
                 {component: ProductDetailView, path: '/product/:id'},
+                {
+                    // allow rendering of certain views only for non-authenticated user
+                    render: (props) => {
+                        if (!AuthService.isAuthenticated()) {
+                            return (<LoginView/>)
+                        } else {
+                            return (<Redirect to={'/'}/>)
+                        }
+                    }, path: '/login'
+                },
+                {
+                    // allow rendering of certain views only for non-authenticated user
+                    render: (props) => {
+                        if (!AuthService.isAuthenticated()) {
+                            return (<RegisterView/>)
+                        } else {
+                            return (<Redirect to={'/'}/>)
+                        }
+                    }, path: '/register'
+                },
                 {
                     // allow rendering of certain views only for authenticated user
                     render: (props) => {
@@ -46,6 +62,7 @@ export default class App extends React.Component {
                     }, path: '/product/create'
                 },
                 {
+                    // allow rendering of certain views only for authenticated user
                     render: (props) => {
                         if (AuthService.isAuthenticated()) {
                             return (<AccountView {...props} />)

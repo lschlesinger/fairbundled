@@ -1,7 +1,7 @@
 import User from "../models/user.model";
 import jwt from "jsonwebtoken";
 import config from "../config";
-import bcrypt from "bcrypt";
+import UserService from "../services/user.service";
 
 
 class AuthController {
@@ -32,11 +32,7 @@ class AuthController {
     }
 
     static register(req, res) {
-        const user = {
-            ...req.body,
-            password: bcrypt.hashSync(req.body.password, 8)
-        };
-        User.create(user)
+        UserService.registerUser(req.body)
             .then((user) => {
                 res.status(200).json({});
             })
