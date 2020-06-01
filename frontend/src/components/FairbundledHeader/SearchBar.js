@@ -32,6 +32,7 @@ class SearchBar extends React.Component {
         return (
             <Select className="search-bar__select"
                 labelInValue
+                defaultValue={{key: ''}}
                 onSelect={(category) => {
                     // update state asynchronously with selection
                     this.setState({category: category.key}, () => {
@@ -39,7 +40,7 @@ class SearchBar extends React.Component {
                         this.routeToPath();
                     });
                 }}>
-                <Option value=''> Alle Kategorien </Option>
+                <Option key='' value=''> Alle Kategorien </Option>
                 {
                     categories.map((c) => <Option key={c._id} value={c._id}> {c.name} </Option>)
                 }
