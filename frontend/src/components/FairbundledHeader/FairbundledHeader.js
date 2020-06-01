@@ -2,7 +2,7 @@ import React from 'react';
 import CategoryHeaderMenu from "./CategoryHeaderMenu";
 import SearchBar from "./SearchBar";
 import {Col, Divider, Row} from 'antd';
-import logo from '../logo.png';
+import logo from '../../logo.png';
 import HeaderIconMenu from "./HeaderIconMenu";
 import './FairbundledHeader.less';
 
@@ -14,11 +14,13 @@ export default class FairbundledHeader extends React.Component {
 
     render() {
         return (
+            // render all child components composing the header and pass on state variables if required
             <div>
                 <Row justify="space-around" align="middle">
                     <Col span={5}>
                         <Row align="middle" justify="start">
-                            <img style={{maxWidth: '100%'}} src={logo} width="210"/>
+                            <img className="header__logo"
+                                 src={logo} alt="LOGO"/>
                         </Row>
                     </Col>
                     <Col span={14}>

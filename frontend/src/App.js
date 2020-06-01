@@ -2,8 +2,10 @@ import React from 'react';
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import {Layout} from 'antd';
 
+// override style
 import './App.less';
 
+// import all components and views
 import AuthService from "./services/AuthService";
 import {LandingView} from "./views/landing/LandingView";
 import {LoginView} from "./views/login/LoginView";
@@ -12,10 +14,11 @@ import ProductListView from "./views/product-list/ProductListView";
 import {ProductDetailView} from "./views/product-detail/ProductDetailView";
 import {ProductCreateView} from "./views/product-create/ProductCreateView";
 import {AccountView} from "./views/account/AccountView";
-import FairbundledHeader from "./components/FairbundledHeader";
+import FairbundledHeader from "./components/FairbundledHeader/FairbundledHeader";
 import CategoryService from "./services/CategoryService";
-import FairbunbledFooter from "./components/FairbunbledFooter";
+import FairbunbledFooter from "./components/FairbundledFooter/FairbunbledFooter";
 
+// decide on overall layout structure (ANT)
 const {Header, Footer, Content} = Layout;
 
 
@@ -25,6 +28,7 @@ export default class App extends React.Component {
 
         this.state = {
             title: 'Fairbundled',
+            // connect routes (url) and components
             routes: [
                 {component: LandingView, path: '/', exact: true},
                 {component: LoginView, path: '/login'},
@@ -32,6 +36,7 @@ export default class App extends React.Component {
                 {component: ProductListView, path: '/product'},
                 {component: ProductDetailView, path: '/product/:id'},
                 {
+                    // allow rendering of certain views only for authenticated user
                     render: (props) => {
                         if (AuthService.isAuthenticated()) {
                             return (<ProductCreateView {...props} />)
@@ -53,7 +58,7 @@ export default class App extends React.Component {
             ],
             categories: []
         };
-
+        // fetch categories in background to further pass them to child components
         this.getCategories();
     }
 
@@ -71,17 +76,16 @@ export default class App extends React.Component {
         return (
             <Layout>
                 <Router>
-                    <Header style={{position: 'fixed', zIndex: 1, width: '100%'}}>
+                    <Header className="app__header">
                         <FairbundledHeader categories={this.state.categories}/>
                     </Header>
-                    <Content className="site-layout">
-
+                    <Content className="app__content">
+                        {/*dynamically load `Content` through router*/}
                         <Switch>
                             {this.state.routes.map((route, i) => (<Route key={i} {...route}/>))}
                         </Switch>
-
                     </Content>
-                    <Footer style={{textAlign: 'center'}}>
+                    <Footer>
                         <FairbunbledFooter/>
                     </Footer>
                 </Router>
