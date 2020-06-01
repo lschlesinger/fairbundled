@@ -24,7 +24,22 @@ Before running any of the commands below, go into `backend/` directory (here).
 
 This will start a mongodb server running on port `27017`:
 ```sh
-docker-compose -f docker-compose.dev.yml up -d # -d to run as daemon in background 
+docker-compose -f docker-compose.dev.yml up
+```
+
+Note: There should not run a local instance of MongoDB on the same port
+
+Helpful commands:
+
+```shell
+# list open tcp connections on port `27017` (default mongo port)
+lsof -nP -iTCP:27017 | grep LISTEN
+
+# open tcp connections on port `27017`
+nc -zvv localhost 27017
+
+# terminate docker container orchestration
+docker-compose -f docker-compose.dev.yml down --volumes --remove-orphans
 ```
 
 ### Start Backend
