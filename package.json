@@ -4,7 +4,7 @@
     "description": "",
     "scripts": {
         "postinstall": "cd backend && npm install",
-        "serve": "cd backend && npm run build"
+        "serve": "cd backend && npm run serve"
     },
     "author": "",
     "license": "MIT",
