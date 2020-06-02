@@ -102,7 +102,7 @@ export default class App extends React.Component {
                             {this.state.routes.map((route, i) => (<Route key={i} {...route}/>))}
                         </Switch>
                     </Content>
-                    <Footer>
+                    <Footer className="app__footer">
                         <FairbunbledFooter/>
                     </Footer>
                 </Router>

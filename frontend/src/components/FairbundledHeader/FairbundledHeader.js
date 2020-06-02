@@ -19,8 +19,10 @@ export default class FairbundledHeader extends React.Component {
                 <Row justify="space-around" align="middle">
                     <Col span={5}>
                         <Row align="middle" justify="start">
-                            <img className="header__logo"
-                                 src={logo} alt="LOGO"/>
+                            <a href="/">
+                                <img className="header__logo"
+                                     src={logo} alt="LOGO"/>
+                            </a>
                         </Row>
                     </Col>
                     <Col span={14}>
@@ -32,7 +34,7 @@ export default class FairbundledHeader extends React.Component {
                 </Row>
                 <Divider className="header__custom-divider"/>
                 <Row justify="space-around">
-                        <CategoryHeaderMenu categories={this.props.categories}/>
+                    <CategoryHeaderMenu categories={this.props.categories}/>
                 </Row>
                 <Divider className="header__custom-divider-bottom"/>
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import LoginForm from "../../components/LoginForm/LoginForm";
-import {Row, message} from "antd";
+import {message, Row} from "antd";
 import AuthService from "../../services/AuthService";
 import {withRouter} from "react-router-dom";
 
@@ -24,7 +24,9 @@ class LoginView extends React.Component {
 
     render() {
         return (
-            <Row justify="center" align="middle">
+            <Row className="padding--md"
+                 justify="center"
+                 align="middle">
                 <LoginForm onFinish={this.onFinish.bind(this)}/>
             </Row>
 

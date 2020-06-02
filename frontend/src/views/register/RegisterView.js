@@ -59,7 +59,9 @@ class RegisterView extends React.Component {
 
     render() {
         return (
-            <Row justify="center" align="middle">
+            <Row className="padding--md"
+                 justify="center"
+                 align="middle">
                 <RegisterForm onFinish={this.onFinish.bind(this)}
                               municipalities={this.state.municipalities}
                               suppliers={this.state.suppliers}/>
