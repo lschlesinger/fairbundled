@@ -32,7 +32,7 @@ export default class ProductListCard extends React.Component {
                             </Paragraph>
                         </Col>
                         <Col span={7}>
-                            <Link to={`/product/:id${product._id}`}>
+                            <Link to={`/product/${product._id}`}>
                                 <Button shape="round" size="large" type="primary">
                                     Details
                                 </Button>
