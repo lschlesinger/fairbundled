@@ -2,6 +2,7 @@ import CategoryService from "./category.service";
 import CertificateService from "./certificate.service";
 import ProductService from "./product.service";
 import UserService from "./user.service";
+import FairbundleService from "./fairbundle.service";
 
 class BootstrapService {
 
@@ -17,6 +18,9 @@ class BootstrapService {
 
         // 4. create products
         await ProductService.createInitialProducts();
+
+        // 5. create fairbundle
+        await FairbundleService.createInitialFairbundles();
     }
 
 }

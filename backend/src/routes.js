@@ -5,6 +5,7 @@ import certificate from './routes/certificate.routes';
 import category from './routes/category.routes';
 import municipality from './routes/municipality.routes';
 import supplier from './routes/supplier.routes';
+import fairbundle from './routes/fairbundle.routes'
 
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.use('/certificate', certificate);
 router.use('/category', category);
 router.use('/supplier', supplier);
 router.use('/municipality', municipality);
+router.use('/fairbundle', fairbundle);
 
 export default router;
