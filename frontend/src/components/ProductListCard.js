@@ -28,7 +28,7 @@ export default class ProductListCard extends React.Component {
                             </Paragraph>
                             <Paragraph ellipsis>
                                 {/*TODO: create a label `Fairbundle` inside the card in case hasFairbundle == true */}
-                                {product.hasFairbundle ? "hat Fairbundle" : "hat keine Fairbundle"}
+                                {product.hasFairbundle ? "hat Fairbundle" : "hat kein Fairbundle"}
                             </Paragraph>
                         </Col>
                         <Col span={7}>

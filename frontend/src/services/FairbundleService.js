@@ -18,7 +18,7 @@ export default class FairbundleService {
             product.hasFairbundle = false;
             for (const f in fairbundles) {
                 const fairbundle = fairbundles[f];
-                if (fairbundle.expirationTime > new Date() && fairbundle.product === product._id) {
+                if (new Date(fairbundle.expiration) > new Date() && fairbundle.product === product._id) {
                     product.hasFairbundle = true;
                     break;
                 }
