@@ -1,8 +1,6 @@
-import mongoose from "mongoose";
-
 const FAIRBUNDLES = [
     {
-        expiration: '2020-10-01T17:00:00',
+        expiration: new Date('2020-10-01T17:00:00'),
         expirationAction: "Cancel",
         targetPrice: 50,
         bundlers: [{
