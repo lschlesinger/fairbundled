@@ -29,8 +29,9 @@ export default class App extends React.Component {
             // connect routes (url) and components
             routes: [
                 {component: LandingView, path: '/', exact: true},
-                {component: ProductListView, path: '/product'},
                 {component: ProductDetailView, path: '/product/:id'},
+                {component: ProductListView, path: '/product'},
+                ,
                 {
                     // allow rendering of certain views only for non-authenticated user
                     render: (props) => {
