@@ -21,7 +21,7 @@ export default class CategoryHeaderMenu extends React.Component {
 
     render() {
         return (
-            <Row gutter={16} className="product-list-card__cards">
+            <Row gutter={16, 16}>
                 {this.props.products.map((p) => this.getCardItem(p))}
             </Row>
         )

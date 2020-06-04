@@ -1,7 +1,11 @@
 import React from 'react';
 import ProductService from "../../services/ProductService";
-import {message} from 'antd';
+import {message, Layout} from 'antd';
 import ProductListCard from "../../components/ProductListCard";
+import ProductFilterBar from "../../components/ProductFilterBar/ProductFilterBar"
+import './ProductListView.less';
+
+const {Content, Sider } = Layout;
 
 export default class ProductListView extends React.Component {
 
@@ -36,7 +40,10 @@ export default class ProductListView extends React.Component {
 
     render() {
         return (
-            <ProductListCard products={this.state.products}/>
+            <Layout className="layout">
+                <Sider className="sider" width="30%"><ProductFilterBar/></Sider>
+                <Content><ProductListCard products={this.state.products}/></Content>
+            </Layout>
         );
     }
 }
