@@ -3,20 +3,36 @@ import React from "react";
 import {Menu, Checkbox, message} from 'antd';
 import "./ProductFilterBarStyles.less"
 import CertificateService from "../../services/CertificateService";
+import {withRouter} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const { SubMenu } = Menu;
 
-export default class FilterBar extends React.Component {
+class FilterBar extends React.Component {
 
     rootSubmenuKeys = ['certificates'];
 
-    state = {
-        openKeys: ['certificates'],
-        certificates: []
-    };
-
     constructor(props, context) {
         super(props, context);
+
+        this.initState();
+    }
+
+    initState() {
+        const category = this.props.location.search.includes('category') ? this.props.location.search.split('category=')[1].split("&")[0] : "";
+        const searchString = this.props.location.search.includes('searchString') ? this.props.location.search.split('searchString=')[1].split("&")[0] : "";
+        const selectedCerts = this.props.location.search.includes('certificate') ? this.props.location.search.split('certificate=')[1].split("&")[0].split("|") : [];
+        this.state = {
+            category: category,
+            searchString: searchString,
+            selectedCerts: selectedCerts,
+            openKeys: ['certificates'],
+            certificates: []
+        }
+
+        console.log(`Category: ${category}`);
+        console.log(`Search: ${searchString}`);
+        console.log(`Certs: ${selectedCerts.length}`);
     }
 
     componentWillMount() {
@@ -25,6 +41,7 @@ export default class FilterBar extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.location !== prevProps.location) {
+            //this.initState();
             this.getCertificates();
         }
     }
@@ -35,12 +52,8 @@ export default class FilterBar extends React.Component {
                 certificates: await CertificateService.getCertificates()
             });
         } catch (e) {
-            message.error("Error fetching certificates.");
+            message.error("Error fetching certificates." + " " + e.message);
         }
-    }
-
-    onChange = e => {
-        console.log(`checked = ${e.target.checked}`);
     }
 
     onOpenChange = openKeys => {
@@ -50,10 +63,21 @@ export default class FilterBar extends React.Component {
         });
     };
 
+    onSelect = (item, key, keyPath, selectedKeys, domEvent) => {
+        let certs = this.state.selectedCerts.filter(c => c !== item.key);
+        this.setState({
+            selectedCerts: certs.concat(item.key)
+        })
+    }
+
     getMenuItem(certificate) {
         return (
-            <Menu.Item key={certificate.name} className="menuItem">
-                <Checkbox onChange={this.onChange}>{certificate.name}</Checkbox>
+            <Menu.Item key={certificate._id} className="menuItem">
+                <Link to={`/product?searchString=${this.state.searchString}&category=${this.state.category}&certificate=${this.state.selectedCerts.join("|")}`}>
+                    <Checkbox>
+                        {certificate.name}
+                    </Checkbox>
+                </Link>
             </Menu.Item>
         );
     }
@@ -65,6 +89,7 @@ export default class FilterBar extends React.Component {
                 openKeys={this.state.openKeys}
                 onOpenChange={this.onOpenChange}
                 className="menuTitle"
+                onSelect={this.onSelect}
             >
                 <SubMenu
                 key="certificates"
@@ -75,3 +100,5 @@ export default class FilterBar extends React.Component {
         )
     }
 }
+
+export default withRouter(FilterBar);
