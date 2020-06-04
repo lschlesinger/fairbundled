@@ -1,21 +1,47 @@
 import React from "react";
 
-import {Menu} from 'antd';
+import {Menu, Checkbox, message} from 'antd';
 import "./ProductFilterBarStyles.less"
+import CertificateService from "../../services/CertificateService";
 
 const { SubMenu } = Menu;
 
 export default class FilterBar extends React.Component {
 
-    constructor(props, context) {
-        super(props, context);
-    }
-
     rootSubmenuKeys = ['certificates'];
 
     state = {
         openKeys: ['certificates'],
+        certificates: []
     };
+
+    constructor(props, context) {
+        super(props, context);
+    }
+
+    componentWillMount() {
+        this.getCertificates();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.location !== prevProps.location) {
+            this.getCertificates();
+        }
+    }
+
+    async getCertificates() {
+        try {
+            this.setState({
+                certificates: await CertificateService.getCertificates()
+            });
+        } catch (e) {
+            message.error("Error fetching certificates.");
+        }
+    }
+
+    onChange = e => {
+        console.log(`checked = ${e.target.checked}`);
+    }
 
     onOpenChange = openKeys => {
         const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
@@ -24,22 +50,26 @@ export default class FilterBar extends React.Component {
         });
     };
 
+    getMenuItem(certificate) {
+        return (
+            <Menu.Item key={certificate.name} className="menuItem">
+                <Checkbox onChange={this.onChange}>{certificate.name}</Checkbox>
+            </Menu.Item>
+        );
+    }
+
     render() {
         return (
             <Menu
                 mode="inline"
                 openKeys={this.state.openKeys}
                 onOpenChange={this.onOpenChange}
-                multiple="true"
                 className="menuTitle"
             >
                 <SubMenu
                 key="certificates"
-                title="Produktsiegel">                
-                <Menu.Item key="1" className="menuItem">Option 1</Menu.Item>
-                <Menu.Item key="2" className="menuItem">Option 2</Menu.Item>
-                <Menu.Item key="3" className="menuItem">Option 3</Menu.Item>
-                <Menu.Item key="4" className="menuItem">Option 4</Menu.Item>
+                title="Produktsiegel">    
+                    {this.state.certificates.map((c) => this.getMenuItem(c))}            
                 </SubMenu>
             </Menu>
         )
