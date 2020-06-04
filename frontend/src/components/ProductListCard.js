@@ -10,7 +10,23 @@ export default class ProductListCard extends React.Component {
         super(props, context);
     }
 
+    getLowestPrice(product) {
+        if (product.priceLevel.length < 2) {
+            return <Paragraph>{product.priceLevel[0].unitPrice} €</Paragraph>;
+        } else {
+            let lowestPrice = Number.MAX_VALUE;
+            for (var i = 0; i < product.priceLevel.length; i++) {
+                lowestPrice = Math.min(
+                    lowestPrice,
+                    product.priceLevel[i].unitPrice
+                );
+            }
+            return <Paragraph>Ab {lowestPrice} €</Paragraph>;
+        }
+    }
+
     getCardItem(product) {
+        const price = this.getLowestPrice(product);
         return (
             <Col span={8}>
                 <Card title={product.name} key={product._id} bordered={true}>
@@ -29,12 +45,12 @@ export default class ProductListCard extends React.Component {
                             <Paragraph ellipsis text-align="center">
                                 {product.description}
                             </Paragraph>
+                            {price}
                             <Link to={`/product/${product._id}`}>
                                 <Button
                                     shape="round"
                                     size="middle"
                                     type="primary"
-                                    ali
                                 >
                                     Details
                                 </Button>
