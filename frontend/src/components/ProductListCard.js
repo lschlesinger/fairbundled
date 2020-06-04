@@ -3,16 +3,22 @@ import { Button, Card, Col, Row, Typography, Tag } from "antd";
 import example_image from "../feuerwehr-einsatzjacke.jpg";
 import { Link } from "react-router-dom";
 
-const { Paragraph } = Typography;
+const { Paragraph, Text, Title } = Typography;
+const { Meta } = Card;
 
 export default class ProductListCard extends React.Component {
     constructor(props, context) {
         super(props, context);
     }
 
+    //function to determine the lowest price and to differentiate between one and multiple price level (Difference: Ab)
     getLowestPrice(product) {
         if (product.priceLevel.length < 2) {
-            return <Paragraph>{product.priceLevel[0].unitPrice} €</Paragraph>;
+            return (
+                <Paragraph ellipsis>
+                    <Text strong>{product.priceLevel[0].unitPrice} €</Text>
+                </Paragraph>
+            );
         } else {
             let lowestPrice = Number.MAX_VALUE;
             for (var i = 0; i < product.priceLevel.length; i++) {
@@ -21,7 +27,11 @@ export default class ProductListCard extends React.Component {
                     product.priceLevel[i].unitPrice
                 );
             }
-            return <Paragraph>Ab {lowestPrice} €</Paragraph>;
+            return (
+                <Paragraph ellipsis>
+                    <Title level={4}>Ab {lowestPrice} €</Title>
+                </Paragraph>
+            );
         }
     }
 
@@ -29,32 +39,54 @@ export default class ProductListCard extends React.Component {
         const price = this.getLowestPrice(product);
         return (
             <Col span={8}>
-                <Card title={product.name} key={product._id} bordered={true}>
-                    <Row gutter={16} justify="center">
-                        <Col span={10} align="left">
-                            <img src={example_image} alt="bild" width="100%" />
+                {/* <Card
+                    hoverable
+                    cover={<img src={example_image} alt={product.name} />}
+                >
+                    <Meta title={product.name} key={product._id} />
+                    <Row>
+                        <Col></Col>
+                    </Row>
+                </Card> */}
+                <Card>
+                    {/* title={product.name} key={product._id} bordered={true} */}
+                    <Row>
+                        <Col span={18}>
+                            <Paragraph>
+                                <Title level={4}>{product.name}</Title>
+                            </Paragraph>
                         </Col>
-                        <Col span={14}>
+                        <Col span={6}>
                             {product.hasFairbundle ? (
-                                <Paragraph ellipsis text-align="right">
-                                    <Tag color="#78A262">Fairbundle</Tag>
-                                </Paragraph>
+                                <Tag color="#78A262">Fairbundle</Tag>
                             ) : (
                                 ""
                             )}
-                            <Paragraph ellipsis text-align="center">
-                                {product.description}
-                            </Paragraph>
-                            {price}
-                            <Link to={`/product/${product._id}`}>
-                                <Button
-                                    shape="round"
-                                    size="middle"
-                                    type="primary"
-                                >
-                                    Details
-                                </Button>
-                            </Link>
+                        </Col>
+                    </Row>
+                    <Row gutter={8}>
+                        <Col span={10}>
+                            <img src={example_image} alt="bild" width="100%" />
+                        </Col>
+                        <Col span={14}>
+                            <Row justify="center">
+                                <Paragraph>
+                                    <Text strong>{product.description}</Text>
+                                </Paragraph>
+                            </Row>
+                            <Row justify="center">{price}</Row>
+                            <Row justify="center">
+                                {" "}
+                                <Link to={`/product/${product._id}`}>
+                                    <Button
+                                        shape="round"
+                                        size="middle"
+                                        type="primary"
+                                    >
+                                        Details
+                                    </Button>
+                                </Link>
+                            </Row>
                         </Col>
                     </Row>
                 </Card>
