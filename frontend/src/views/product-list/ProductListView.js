@@ -1,24 +1,21 @@
-import React from 'react';
+import React from "react";
 import ProductService from "../../services/ProductService";
 import FairbundleService from "../../services/FairbundleService";
-import {Layout, message} from 'antd';
-import ProductListCard from "../../components/ProductListCard";
-import './ProductListView.less';
+import { Layout, message } from "antd";
+import ProductListCard from "../../components/ProductListCard/ProductListCard";
+import "./ProductListView.less";
 
 // decide on overall layout structure (ANT)
-const {Sider, Content} = Layout;
+const { Sider, Content } = Layout;
 
 export default class ProductListView extends React.Component {
-
-
     constructor(props) {
         super(props);
         this.state = {
             products: [],
-            fairbundles: []
+            fairbundles: [],
         };
     }
-
 
     componentWillMount() {
         this.getProductsAndFairbundles();
@@ -32,35 +29,39 @@ export default class ProductListView extends React.Component {
 
     async getProductsAndFairbundles() {
         try {
-            const {location: {search}} = this.props;
+            const {
+                location: { search },
+            } = this.props;
             // get fairbundles
-            let fairbundles =  await FairbundleService.getFairbundles();
+            let fairbundles = await FairbundleService.getFairbundles();
             // get products
             let products = await ProductService.getProducts(search);
             // update products with flagged (hasFairbundle) products
-            products = FairbundleService.getFairbundleFlags(products, fairbundles);
+            products = FairbundleService.getFairbundleFlags(
+                products,
+                fairbundles
+            );
             //set state variables
             this.setState({
                 fairbundles: fairbundles,
-                products: products
-            })
+                products: products,
+            });
         } catch (e) {
             message.error("Error fetching products and fairbundles.");
         }
     }
 
-
     render() {
         return (
             <Layout className="product-list-view__layout">
-                <Sider className="product-list-view__sider">
-                    Sider
-                </Sider>
+                <Sider className="product-list-view__sider">Sider</Sider>
                 <Content className="product-list-view__content">
-                    <ProductListCard fairbundles={this.state.fairbundles} products={this.state.products} />
+                    <ProductListCard
+                        fairbundles={this.state.fairbundles}
+                        products={this.state.products}
+                    />
                 </Content>
             </Layout>
-
         );
     }
 }

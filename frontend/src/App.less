@@ -1,4 +1,4 @@
-@import '~antd/dist/antd.less';
+@import "~antd/dist/antd.less";
 
 .ant-layout {
     background-color: #ffffff;
@@ -28,12 +28,20 @@
     padding: 0;
 }
 
+.ant-card-body {
+    padding: 10px;
+}
+
+h4.ant-typography {
+    font-size: 16px;
+}
+
 // function for padding/margin classes
 @sizes: {
     sm: 8px;
     md: 16px;
     lg: 24px;
-}
+};
 
 // will output classes padding--sm, padding--md, padding--lg
 each(@sizes, {
