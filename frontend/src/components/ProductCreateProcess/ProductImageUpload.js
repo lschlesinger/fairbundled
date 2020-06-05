@@ -1,7 +1,6 @@
 import React from 'react';
-import {Button, Form, Modal, Upload} from 'antd';
+import {Form, Modal, Upload} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
-import './ProductImageUpload.less'
 
 function getBase64(file) {
     return new Promise((resolve, reject) => {
@@ -48,9 +47,8 @@ export default class ProductImageUpload extends React.Component {
             </div>
         );
         return (
-            <Form
-                onFinish={this.props.onFinish}
-                className="clearfix product-create-process__image-upload">
+            <div>
+                <h3 className="margin-vertical--md">Fügen Sie Produktbilder hinzu</h3>
                 <Form.Item name="images"
                            value={this.state.fileList}>
                     <Upload
@@ -73,13 +71,7 @@ export default class ProductImageUpload extends React.Component {
                 >
                     <img alt="example" style={{width: '100%'}} src={previewImage}/>
                 </Modal>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit" className="register-form__submit-button">
-                        Speichern
-                        {console.log(this.state.fileList)}
-                    </Button>
-                </Form.Item>
-            </Form>
+            </div>
         );
     }
 }

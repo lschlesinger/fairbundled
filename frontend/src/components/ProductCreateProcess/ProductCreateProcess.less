@@ -1,8 +1,15 @@
-@process-content-height: 300px;
-.product-create-process__steps-content {
+@process-content-min-height: 400px;
+.product-create-process__steps-wrapper {
     border: 1px dashed #e9e9e9;
     border-radius: 2px;
     background-color: #fafafa;
     text-align: center;
-    min-height: @process-content-height;
+    min-height: @process-content-min-height;
+
+    @process-content-width: 960px;
+
+    .product-create-process__step-form {
+        width: @process-content-width;
+        max-width: 100%;
+    }
 }

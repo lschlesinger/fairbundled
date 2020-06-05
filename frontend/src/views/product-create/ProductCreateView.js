@@ -36,9 +36,9 @@ export class ProductCreateView extends React.Component {
 
     }
 
-    getThumbUrls(images){
+    getThumbUrls(images) {
         const thumbUrls = [];
-        for (const f in images.fileList){
+        for (const f in images.fileList) {
             const file = images.fileList[f];
             const thumbUrl = file.thumbUrl;
             thumbUrls.push(thumbUrl);
@@ -47,6 +47,7 @@ export class ProductCreateView extends React.Component {
     }
 
     onFinish(values) {
+        console.log(values);
         const {categories, name, description, ean, deliveryDays, priceLevel, certificates, images} = values;
         this.setState(prevState => ({
             product: {
@@ -60,9 +61,7 @@ export class ProductCreateView extends React.Component {
                 "certificates": certificates ? certificates : prevState.product.certificates,
                 "categories": categories ? categories : prevState.product.categories
             }
-        }));
-        console.log(this.state.product)
-        message.success("Produkt Detail gespeichert.")
+        }), () => console.log(this.state.product));
     }
 
     async getCertificatesAndCategoriesAndMapping() {

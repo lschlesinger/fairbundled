@@ -1,12 +1,12 @@
 import React from 'react';
-import {Button, Checkbox, Col, Form, Row} from 'antd';
+import {Avatar, Checkbox, Col, Form, Row} from 'antd';
 
 export default class ProductCertificateSelection extends React.Component {
 
     constructor(props, context) {
         super(props, context);
         this.state = {
-            value: undefined,
+            value: props.product.certificates,
         }
     }
 
@@ -20,34 +20,31 @@ export default class ProductCertificateSelection extends React.Component {
         // the mapped categories for the certificate
         if (cert.categories.some(i => this.props.product.categories.indexOf(i) >= 0)) {
             return (
-                <Checkbox value={cert._id}>
-                    {cert.name}
-                </Checkbox>);
+                <Col span="12">
+                    <Checkbox value={cert._id}>
+                        <Avatar shape="square"
+                                size="medium"
+                                src={cert.logo}/>
+                        <span className="padding--sm">{cert.name}</span>
+                    </Checkbox>
+                </Col>);
         }
     }
 
-
+    // <Avatar shape="square" size="large" src={src} />
     render() {
         return (
-            <Form onFinish={this.props.onFinish}>
+            <div>
+                <h3 className="margin-vertical--md">Wählen Sie die Nachhaltigkeitssiegel für Ihr Produkt</h3>
                 <Form.Item name="certificates"
-                           className="product-create-process__certificate-multiple-select padding--md"
-                           value={this.state.value}
-                >
-                    <Checkbox.Group onChange={this.onChange}>
-                        <Row>
-                            <Col span={8}>
-                                {this.props.certificates.map((c) => this.getCheckboxes(c))}
-                            </Col>
+                           value={this.state.value}>
+                    <Checkbox.Group onChange={this.onChange} style={{width: '100%'}}>
+                        <Row style={{textAlign: 'left'}} gutter={[0, 6]}>
+                            {this.props.certificates.map((c) => this.getCheckboxes(c))}
                         </Row>
                     </Checkbox.Group>
                 </Form.Item>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit" className="register-form__submit-button">
-                        Speichern
-                    </Button>
-                </Form.Item>
-            </Form>
+            </div>
         );
     }
 }

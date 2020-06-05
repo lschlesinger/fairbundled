@@ -1,53 +1,48 @@
 import React from 'react';
-import "./ProductDescriptionInput.less"
-import {Button, Form, Input, InputNumber} from 'antd';
-
-const validateMessages = {
-    required: '${label} Pflichtangabe',
-    types: {
-        number: '${label} Keine gültige Nummer',
-    },
-    number: {
-        range: '${label} muss zwischen ${min} and ${max} liegen',
-    },
-};
-
-const layout = {
-    labelCol: {span: 8},
-    wrapperCol: {span: 16},
-};
+import {Form, Input, InputNumber, Row} from 'antd';
 
 
 export default class ProductDescriptionInput extends React.Component {
 
     constructor(props, context) {
         super(props, context);
+
     }
 
 
     render() {
         return (
-            <Form {...layout} onFinish={this.props.onFinish} className="product-create-process__description-input"
-                  validateMessages={validateMessages}>
-                <Form.Item name="name" label="Name" rules={[{required: true}]}>
+            <div style={{textAlign: "left"}}>
+                <Row justify="space-around" align="middle">
+                    <h3 className="margin-vertical--md">Beschreiben Sie Ihr neues Produkt</h3>
+                </Row>
+                <Form.Item name="name"
+                           label="Name"
+                           rules={[{required: true}]}
+                           labelAlign="right"
+                           labelCol={{span: 5, offset: 0}}>
                     <Input/>
                 </Form.Item>
-                <Form.Item name="ean" label="EAN">
+                <Form.Item name="ean"
+                           label="EAN"
+                           labelAlign="right"
+                           labelCol={{span: 5, offset: 0}}>
                     <Input/>
                 </Form.Item>
-                <Form.Item name="deliverDays" label="Lieferbar in (Tagen)"
+                <Form.Item name="deliverDays"
+                           label="Lieferbar in (Tagen)"
+                           labelAlign="right"
+                           labelCol={{span: 5, offset: 0}}
                            rules={[{type: 'number', min: 0, max: 99}]}>
                     <InputNumber/>
                 </Form.Item>
-                <Form.Item name="description" label="Beschreibung">
+                <Form.Item name="description"
+                           label="Beschreibung"
+                           labelAlign="right"
+                           labelCol={{span: 5, offset: 0}}>
                     <Input.TextArea autoSize={{minRows: 3, maxRows: 8}}/>
                 </Form.Item>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit" className="register-form__submit-button">
-                        Speichern
-                    </Button>
-                </Form.Item>
-            </Form>
+            </div>
         );
     }
 }
