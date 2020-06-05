@@ -25,7 +25,7 @@ export class ProductCreateView extends React.Component {
                 "priceLevel": [],
                 "certificates": [],
                 "supplier": null,
-                "categories": []
+                "categories": [],
             }
         };
     }
@@ -36,6 +36,16 @@ export class ProductCreateView extends React.Component {
 
     }
 
+    getThumbUrls(images){
+        const thumbUrls = [];
+        for (const f in images.fileList){
+            const file = images.fileList[f];
+            const thumbUrl = file.thumbUrl;
+            thumbUrls.push(thumbUrl);
+        }
+        return thumbUrls;
+    }
+
     onFinish(values) {
         const {categories, name, description, ean, deliveryDays, priceLevel, certificates, images} = values;
         this.setState(prevState => ({
@@ -44,7 +54,7 @@ export class ProductCreateView extends React.Component {
                 "name": name ? name : prevState.product.name,
                 "description": description ? description : prevState.product.description,
                 "ean": ean ? ean : prevState.product.ean,
-                "images": images ? images : prevState.product.images,
+                "images": images ? this.getThumbUrls(images) : prevState.product.imagesUrl,
                 "deliveryDays": deliveryDays ? deliveryDays : prevState.product.deliveryDays,
                 "priceLevel": priceLevel ? priceLevel : prevState.product.priceLevel,
                 "certificates": certificates ? certificates : prevState.product.certificates,
@@ -52,6 +62,7 @@ export class ProductCreateView extends React.Component {
             }
         }));
         console.log(this.state.product)
+        message.success("Produkt Detail gespeichert.")
     }
 
     async getCertificatesAndCategoriesAndMapping() {
@@ -94,7 +105,12 @@ export class ProductCreateView extends React.Component {
 
 
     async publishProduct() {
-        await ProductService.createProduct(this.state.product)
+        try {
+            await ProductService.createProduct(this.state.product);
+            message.success("Produkt erfolgreich veröffentlicht")
+        } catch (e) {
+            message.warn("Produkt konnte nicht veröffentlicht werden.")
+        }
     }
 
 

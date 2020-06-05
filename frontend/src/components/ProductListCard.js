@@ -20,7 +20,7 @@ export default class ProductListCard extends React.Component {
                       bordered={true}>
                     <Row gutter={16}>
                         <Col span={6}>
-                            <img src={logo} alt="bild" width="100%"/>
+                            <img src={product.images[0]} alt="bild" width="100%"/>
                         </Col>
                         <Col span={11}>
                             <Paragraph ellipsis>

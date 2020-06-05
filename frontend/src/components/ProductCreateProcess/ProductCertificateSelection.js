@@ -13,13 +13,11 @@ export default class ProductCertificateSelection extends React.Component {
 
     onChange = value => {
         this.setState({value});
-        console.log(value);
     };
 
     getCheckboxes(cert) {
         //only show certificate checkbox if at least on of the previously product categories matches
         // the mapped categories for the certificate
-        console.log(cert);
         if (cert.categories.some(i => this.props.product.categories.indexOf(i) >= 0)) {
             return (
                 <Checkbox value={cert._id}>

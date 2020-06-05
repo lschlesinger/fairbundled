@@ -1,10 +1,9 @@
 import React from 'react';
-import {Button, Col, message, Row, Steps} from 'antd';
+import {Button, Col, Row, Steps} from 'antd';
 import ProductCategorySelection from "./ProductCategorySelection";
 import ProductDescriptionInput from "./ProductDescriptionInput";
 import ProductPriceLevelInput from "./ProductPriceLevelInput";
 import ProductImageUpload from "./ProductImageUpload";
-import ProductPreviewModal from "./ProductPreviewModal";
 import './ProductCreateProcess.less'
 import ProductCertificateSelection from "./ProductCertificateSelection";
 
@@ -54,7 +53,8 @@ export default class ProductCreateProcess extends React.Component {
                 return (<ProductPriceLevelInput product={this.props.product}
                                                 onFinish={this.props.onFinish}/>);
             case 'certificate':
-                return (<ProductCertificateSelection categories={this.props.categories} certificates={this.props.certificates} product={this.props.product}
+                return (<ProductCertificateSelection categories={this.props.categories}
+                                                     certificates={this.props.certificates} product={this.props.product}
                                                      onFinish={this.props.onFinish}/>)
             case 'image':
                 return (<ProductImageUpload product={this.props.product}

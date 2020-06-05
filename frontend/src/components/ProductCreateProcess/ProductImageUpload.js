@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, Upload} from 'antd';
+import {Button, Form, Modal, Upload} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
 import './ProductImageUpload.less'
 
@@ -13,12 +13,15 @@ function getBase64(file) {
 }
 
 export default class ProductImageUpload extends React.Component {
-    state = {
-        previewVisible: false,
-        previewImage: '',
-        previewTitle: '',
-        fileList: [],
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            previewVisible: false,
+            previewImage: '',
+            previewTitle: '',
+            fileList: [],
+        };
+    }
 
     handleCancel = () => this.setState({previewVisible: false});
 
@@ -45,16 +48,23 @@ export default class ProductImageUpload extends React.Component {
             </div>
         );
         return (
-            <div className="clearfix product-create-process__image-upload">
-                <Upload
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                    listType="picture-card"
-                    fileList={fileList}
-                    onPreview={this.handlePreview}
-                    onChange={this.handleChange}
-                >
-                    {fileList.length >= 8 ? null : uploadButton}
-                </Upload>
+            <Form
+                onFinish={this.props.onFinish}
+                className="clearfix product-create-process__image-upload">
+                <Form.Item name="images"
+                           value={this.state.fileList}>
+                    <Upload
+                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                        listType="picture-card"
+                        fileList={fileList}
+                        onPreview={this.handlePreview}
+                        onChange={this.handleChange}
+                        multiple
+                    >
+                        {fileList.length >= 4 ? null : uploadButton}
+                    </Upload>
+                </Form.Item>
+
                 <Modal
                     visible={previewVisible}
                     title={previewTitle}
@@ -63,7 +73,13 @@ export default class ProductImageUpload extends React.Component {
                 >
                     <img alt="example" style={{width: '100%'}} src={previewImage}/>
                 </Modal>
-            </div>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit" className="register-form__submit-button">
+                        Speichern
+                        {console.log(this.state.fileList)}
+                    </Button>
+                </Form.Item>
+            </Form>
         );
     }
 }
