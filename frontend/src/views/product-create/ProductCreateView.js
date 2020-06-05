@@ -4,6 +4,8 @@ import CategoryService from "../../services/CategoryService";
 import AuthService from "../../services/AuthService";
 import ProductPreviewModal from "../../components/ProductCreateProcess/ProductPreviewModal";
 import ProductService from "../../services/ProductService";
+import CertificateService from "../../services/CertificateService";
+import {message} from "antd";
 
 export class ProductCreateView extends React.Component {
 
@@ -13,6 +15,7 @@ export class ProductCreateView extends React.Component {
         this.state = {
             modalVisible: false,
             categories: [],
+            certificates: [],
             product: {
                 "name": null,
                 "description": null,
@@ -28,8 +31,9 @@ export class ProductCreateView extends React.Component {
     }
 
     componentWillMount() {
-        this.getCategories();
+        this.getCertificatesAndCategoriesAndMapping();
         this.getSupplierId();
+
     }
 
     onFinish(values) {
@@ -40,7 +44,7 @@ export class ProductCreateView extends React.Component {
                 "name": name ? name : prevState.product.name,
                 "description": description ? description : prevState.product.description,
                 "ean": ean ? ean : prevState.product.ean,
-                "images": images ? images : prevState.product.images ,
+                "images": images ? images : prevState.product.images,
                 "deliveryDays": deliveryDays ? deliveryDays : prevState.product.deliveryDays,
                 "priceLevel": priceLevel ? priceLevel : prevState.product.priceLevel,
                 "certificates": certificates ? certificates : prevState.product.certificates,
@@ -50,10 +54,21 @@ export class ProductCreateView extends React.Component {
         console.log(this.state.product)
     }
 
-    async getCategories() {
-        this.setState({
-            categories: await CategoryService.getCategories()
-        })
+    async getCertificatesAndCategoriesAndMapping() {
+        try {
+            // get categories
+            let categories = await CategoryService.getCategories();
+            // get certificates
+            let certificates = await CertificateService.getCertificates();
+            // map certificates to categories to enable category specific certificate display
+            certificates = CertificateService.getCertificateCategoryMapping(categories, certificates);
+            this.setState({
+                categories: categories,
+                certificates: certificates
+            })
+        } catch (e) {
+            message.error("Error fetching certificates and categories.");
+        }
     }
 
     getSupplierId() {
@@ -87,12 +102,14 @@ export class ProductCreateView extends React.Component {
         return (
             <div>
                 <ProductCreateProcess categories={this.state.categories}
+                                      certificates={this.state.certificates}
                                       product={this.state.product}
                                       onFinish={this.onFinish.bind(this)}
                                       onPreview={this.showModal.bind(this)}
                                       onPublish={this.publishProduct.bind(this)}
                 />
-                <ProductPreviewModal onClose={this.hideModal.bind(this)} modalVisible={this.state.modalVisible} product={this.state.product}/>
+                <ProductPreviewModal onClose={this.hideModal.bind(this)} modalVisible={this.state.modalVisible}
+                                     product={this.state.product}/>
             </div>
         );
     }

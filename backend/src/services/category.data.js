@@ -42,7 +42,7 @@ const CATEGORIES = [
         ]
     },
     {
-        name: "Straße und Verkehr",
+        name: "Straße & Verkehr",
         root: true,
         subcategories: [
             {name: "Verkehrsspiegel"},

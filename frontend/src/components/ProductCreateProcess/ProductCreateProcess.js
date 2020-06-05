@@ -6,6 +6,7 @@ import ProductPriceLevelInput from "./ProductPriceLevelInput";
 import ProductImageUpload from "./ProductImageUpload";
 import ProductPreviewModal from "./ProductPreviewModal";
 import './ProductCreateProcess.less'
+import ProductCertificateSelection from "./ProductCertificateSelection";
 
 
 const {Step} = Steps;
@@ -22,6 +23,10 @@ const steps = [
     {
         title: 'Stückpreis festlegen',
         content: 'price',
+    },
+    {
+        title: 'Produktsiegel auswählen',
+        content: 'certificate',
     },
     {
         title: 'Bilder hinzufügen',
@@ -48,6 +53,9 @@ export default class ProductCreateProcess extends React.Component {
             case 'price':
                 return (<ProductPriceLevelInput product={this.props.product}
                                                 onFinish={this.props.onFinish}/>);
+            case 'certificate':
+                return (<ProductCertificateSelection categories={this.props.categories} certificates={this.props.certificates} product={this.props.product}
+                                                     onFinish={this.props.onFinish}/>)
             case 'image':
                 return (<ProductImageUpload product={this.props.product}
                                             onFinish={this.props.onFinish}/>);
