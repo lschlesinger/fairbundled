@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col} from "antd";
+import {Row, Col} from "antd";
 
 
 export class MunicipalityAccountView extends React.Component {
@@ -13,17 +13,19 @@ export class MunicipalityAccountView extends React.Component {
 
     render() {
         return (
-            <div>
-                <Col span={8}>
+            <Row className="padding--md"
+                 justify="space-around"
+                 align="middle">
+                <Col>
                     Municipality Col 1
                 </Col>
-                <Col span={8}>
+                <Col>
                     Municipality Col 2
                 </Col>
-                <Col span={8}>
+                <Col>
                     Municipality Col 3
                 </Col>
-            </div>
+            </Row>
         );
     }
 }

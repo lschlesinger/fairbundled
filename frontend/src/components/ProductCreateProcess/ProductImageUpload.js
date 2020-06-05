@@ -41,7 +41,7 @@ export default class ProductImageUpload extends React.Component {
         const uploadButton = (
             <div>
                 <PlusOutlined/>
-                <div className="ant-upload-text">Upload</div>
+                <div className="ant-upload-text">Hochladen</div>
             </div>
         );
         return (

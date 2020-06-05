@@ -1,6 +1,6 @@
 import React from 'react';
 import "./ProductDescriptionInput.less"
-import {Form, Input, InputNumber} from 'antd';
+import {Button, Form, Input, InputNumber} from 'antd';
 
 const validateMessages = {
     required: '${label} Pflichtangabe',
@@ -27,20 +27,25 @@ export default class ProductDescriptionInput extends React.Component {
 
     render() {
         return (
-            <Form {...layout} className="product-create-process__description-input"
+            <Form {...layout} onFinish={this.props.onFinish} className="product-create-process__description-input"
                   name="nest-messages" validateMessages={validateMessages}>
-                <Form.Item name={['product', 'name']} label="Name" rules={[{required: true}]}>
+                <Form.Item name="name" label="Name" rules={[{required: true}]}>
                     <Input/>
                 </Form.Item>
-                <Form.Item name={['product', 'ean']} label="EAN">
+                <Form.Item name="ean" label="EAN">
                     <Input/>
                 </Form.Item>
-                <Form.Item name={['product', 'delivery']} label="Lieferbar in (Tagen)"
+                <Form.Item name="deliverDays" label="Lieferbar in (Tagen)"
                            rules={[{type: 'number', min: 0, max: 99}]}>
                     <InputNumber/>
                 </Form.Item>
-                <Form.Item name={['product', 'description']} label="Beschreibung">
+                <Form.Item name="description" label="Beschreibung">
                     <Input.TextArea autoSize={{minRows: 3, maxRows: 8}}/>
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit" className="register-form__submit-button">
+                        Speichern
+                    </Button>
                 </Form.Item>
             </Form>
         );

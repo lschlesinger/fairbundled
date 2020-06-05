@@ -29,7 +29,7 @@ export class AccountView extends React.Component {
             user: user,
             municipality: user.municipality,
             supplier: user.supplier,
-            name: user.supplier.name ? user.supplier.name : user.municipality.name
+            name: user.supplier ? user.supplier.name : user.municipality.name
         })
     }
 

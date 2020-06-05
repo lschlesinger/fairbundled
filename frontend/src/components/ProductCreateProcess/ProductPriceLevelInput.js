@@ -3,10 +3,6 @@ import {Button, Form, Input, Space} from 'antd';
 import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
 import './ProductPriceLevelInput.less';
 
-const onFinish = values => {
-    console.log('Received values of form:', values)
-};
-
 
 export default class ProductPriceLevelInput extends React.Component {
 
@@ -18,7 +14,7 @@ export default class ProductPriceLevelInput extends React.Component {
     render() {
         return (
             <Form className="product-create-process__price-level-input-form"
-                  name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off">
+                   onFinish={this.props.onFinish} autoComplete="off">
                 <Form.List
                     name="priceLevel">
                     {(fields, {add, remove}) => {
@@ -28,16 +24,16 @@ export default class ProductPriceLevelInput extends React.Component {
                                     <Space key={field.key} style={{display: 'flex', marginBottom: 8}} align="start">
                                         <Form.Item
                                             {...field}
-                                            name={[field.name, 'price']}
-                                            fieldKey={[field.fieldKey, 'price']}
+                                            name={[field.name, 'unitPrice']}
+                                            fieldKey={[field.fieldKey, 'unitPrice']}
                                             rules={[{required: true, message: 'Fehlender Preis je Einheit'}]}
                                         >
                                             <Input placeholder="Preis (€) je Einheit"/>
                                         </Form.Item>
                                         <Form.Item
                                             {...field}
-                                            name={[field.name, 'units']}
-                                            fieldKey={[field.fieldKey, 'units']}
+                                            name={[field.name, 'minQty']}
+                                            fieldKey={[field.fieldKey, 'minQty']}
                                             rules={[{required: true, message: 'Fehlende Mindesmenge'}]}
                                         >
                                             <Input placeholder="Mindestmenge"/>
@@ -66,10 +62,9 @@ export default class ProductPriceLevelInput extends React.Component {
                         );
                     }}
                 </Form.List>
-
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                        Hinterlegen
+                    <Button type="primary" htmlType="submit" className="register-form__submit-button">
+                        Speichern
                     </Button>
                 </Form.Item>
             </Form>

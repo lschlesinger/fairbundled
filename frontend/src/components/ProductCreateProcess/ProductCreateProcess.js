@@ -39,13 +39,13 @@ export default class ProductCreateProcess extends React.Component {
     getCurrentContent(key) {
         switch (key) {
             case 'category':
-                return (<ProductCategorySelection categories={this.props.categories}/>);
+                return (<ProductCategorySelection categories={this.props.categories} product={this.props.product} onFinish={this.props.onFinish}/>);
             case 'description':
-                return (<ProductDescriptionInput categories={this.props.categories}/>);
+                return (<ProductDescriptionInput categories={this.props.categories} product={this.props.product} onFinish={this.props.onFinish}/>);
             case 'price':
-                return (<ProductPriceLevelInput categories={this.props.categories}/>);
+                return (<ProductPriceLevelInput categories={this.props.categories} product={this.props.product} onFinish={this.props.onFinish}/>);
             case 'image':
-                return (<ProductImageUpload categories={this.props.categories}/>);
+                return (<ProductImageUpload categories={this.props.categories} product={this.props.product} onFinish={this.props.onFinish}/>);
         }
     }
 
@@ -60,10 +60,19 @@ export default class ProductCreateProcess extends React.Component {
         this.setState({current});
     }
 
+    renderPreview() {
+        <ProductPreviewModelView product={}/>
+    }
+
     render() {
         const {current} = this.state;
         return (
             <Col className="padding--md">
+                Test Produkt:
+                <p>{this.props.product.supplier}</p>
+                <p>{this.props.product.categories}</p>
+                <p>{this.props.product.name}</p>
+                <p>{this.props.product.ean}</p>
                 <Row>
                     <Steps current={current} className="margin-vertical--md">
                         {steps.map(item => (
@@ -78,14 +87,26 @@ export default class ProductCreateProcess extends React.Component {
                 </Row>
                 <Row justify="center" className="product-create-process__navigation margin-vertical--md">
                     {current < steps.length - 1 && (
-                        <Button type="primary" onClick={() => this.next()}>
+                            <Col>
+                        <Button type="primary" onClick={() => this.next()} >
                             Weiter
                         </Button>
+                            </Col>
                     )}
                     {current === steps.length - 1 && (
-                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
-                            Vorschau
-                        </Button>
+                        <Col>
+                            <Col>
+                                <Button type="primary" onClick={() => renderPreview()}>
+                                    Vorschau
+                                </Button>
+                            </Col>
+                            <Col>
+                                <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                                    Produkt veröffentlichen
+                                </Button>
+                            </Col>
+                        </Col>
+
                     )}
                     {current > 0 && (
                         <Button style={{margin: '0 8px'}} onClick={() => this.prev()}>

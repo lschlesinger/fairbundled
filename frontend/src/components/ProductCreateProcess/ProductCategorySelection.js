@@ -1,6 +1,6 @@
 import React from 'react';
 import "./ProductCategorySelection.less"
-import {TreeSelect} from 'antd';
+import {Button, Form, TreeSelect} from 'antd';
 
 
 const {TreeNode} = TreeSelect;
@@ -47,20 +47,31 @@ export default class ProductCategorySelection extends React.Component {
 
     onChange = value => {
         this.setState({value});
+        console.log(value);
     };
+
 
     render() {
         return (
-            <TreeSelect
-                className="product-create-process__category-multiple-select padding--md"
-                value={this.state.value}
-                dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
-                placeholder="Wählen Sie eine oder mehrere Kategorien"
-                multiple
-                onChange={this.onChange}
-            >
-                {this.props.categories.map((c) => this.getTreeNodes(c))}
-            </TreeSelect>
+            <Form onFinish={this.props.onFinish}>
+                <Form.Item name="categories">
+                    <TreeSelect
+                        className="product-create-process__category-multiple-select padding--md"
+                        value={this.state.value}
+                        dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+                        placeholder="Wählen Sie eine oder mehrere Kategorien"
+                        multiple
+                        onChange={this.onChange}
+                    >
+                        {this.props.categories.map((c) => this.getTreeNodes(c))}
+                    </TreeSelect>
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit" className="register-form__submit-button">
+                        Speichern
+                    </Button>
+                </Form.Item>
+            </Form>
         );
     }
 }
