@@ -28,7 +28,7 @@ export default class ProductDescriptionInput extends React.Component {
     render() {
         return (
             <Form {...layout} onFinish={this.props.onFinish} className="product-create-process__description-input"
-                  name="nest-messages" validateMessages={validateMessages}>
+                  validateMessages={validateMessages}>
                 <Form.Item name="name" label="Name" rules={[{required: true}]}>
                     <Input/>
                 </Form.Item>
