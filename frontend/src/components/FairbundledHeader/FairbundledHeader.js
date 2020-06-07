@@ -2,7 +2,7 @@ import React from 'react';
 import CategoryHeaderMenu from "./CategoryHeaderMenu";
 import SearchBar from "./SearchBar";
 import {Col, Divider, Row} from 'antd';
-import logo from '../../logo.png';
+import logo from '../../assets/logo.png';
 import HeaderIconMenu from "./HeaderIconMenu";
 import './FairbundledHeader.less';
 

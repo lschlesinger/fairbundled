@@ -1,22 +1,12 @@
-import React, { useState } from "react";
-import {
-    Button,
-    Card,
-    Cascader,
-    Col,
-    Space,
-    Row,
-    Typography,
-    Tag,
-    Switch,
-} from "antd";
-import example_image from "../../feuerwehr-einsatzjacke.jpg";
-import { Link } from "react-router-dom";
+import React from "react";
+import {Button, Card, Cascader, Col, Row, Space, Switch, Tag, Typography,} from "antd";
+import {Link} from "react-router-dom";
 import "./ProductListCard.less";
+import placeholder from "../../assets/placeholder.png";
 
-const { Paragraph, Text, Title } = Typography;
+const {Paragraph, Text, Title} = Typography;
 const options = [
-    { value: "Niedrigster Preis", label: "Niedrigster Preis" },
+    {value: "Niedrigster Preis", label: "Niedrigster Preis"},
     {
         value: "Höchster Preis",
         label: "Höchster Preis",
@@ -69,7 +59,7 @@ export default class ProductListCard extends React.Component {
                         <Col span={10}>
                             <Row id="product_image" align="middle">
                                 <img
-                                    src={example_image}
+                                    src={product.images?.length > 0 ? product.images[0] : placeholder}
                                     alt="bild"
                                     width="100%"
                                 />
@@ -113,12 +103,13 @@ export default class ProductListCard extends React.Component {
             </Col>
         );
     }
+
     handleChange(checked) {
-        this.setState({ checked });
+        this.setState({checked});
     }
 
     handleOrdering(ordering) {
-        this.setState({ ordering });
+        this.setState({ordering});
     }
 
     hasFairbundle(p) {
@@ -164,7 +155,7 @@ export default class ProductListCard extends React.Component {
                                 {this.props.products.length === 1
                                     ? this.props.products.length + " Ergebnis"
                                     : this.props.products.length +
-                                      " Ergebnisse"}
+                                    " Ergebnisse"}
                             </Text>
                         </Row>
                     </Col>
@@ -182,8 +173,8 @@ export default class ProductListCard extends React.Component {
                 <Row gutter={[16, 16]} className="product-list-card__cards">
                     {this.state.checked
                         ? this.hasFairbundle(this.sortProducts()).map((p) =>
-                              this.getCardItem(p)
-                          )
+                            this.getCardItem(p)
+                        )
                         : this.sortProducts().map((p) => this.getCardItem(p))}
                 </Row>
             </div>
