@@ -52,7 +52,7 @@ export default class ProductListCard extends React.Component {
     getCardItem(product) {
         const price = this.getLowestPrice(product);
         return (
-            <Col span={8}>
+            <Col span={8} key={product._id}>
                 <Card>
                     {/* title={product.name} key={product._id} bordered={true} */}
                     <Row gutter={8}>
