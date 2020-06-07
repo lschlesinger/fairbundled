@@ -8,6 +8,9 @@ export default class ProductCategorySelection extends React.Component {
 
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            categories: props.categories || []
+        }
     }
 
     getSubTreeNodeItem(category) {
@@ -39,6 +42,32 @@ export default class ProductCategorySelection extends React.Component {
         );
     }
 
+    onChange(categories) {
+        // check if any of selected IDs is child ID and parent is not in state.categories
+        const flatCategories = this.props.categories
+            .flatMap((c) => [c, ...(c.subcategories.map((s) => {
+                return {...s, parent: c._id}
+            }))]);
+
+        //
+        for (const c in categories) {
+            const categoryId = categories[c];
+            // find category by id in categories
+            const category = flatCategories
+                .find((category) => category._id === categoryId);
+            if (!category.root) {
+                // if parentId not in selected categories, add it to list
+                if (category && categories.indexOf(category.parent) === -1) {
+                    categories.push(category.parent);
+                }
+            }
+        }
+        // setState accordingly
+        this.setState({
+            categories
+        })
+    }
+
     render() {
         return (
             <div>
@@ -47,6 +76,8 @@ export default class ProductCategorySelection extends React.Component {
                     <TreeSelect
                         dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
                         placeholder="Wählen Sie eine oder mehrere Kategorien"
+                        value={this.state.categories}
+                        onChange={this.onChange.bind(this)}
                         multiple
                     >
                         {this.props.categories.map((c) => this.getTreeNodes(c))}

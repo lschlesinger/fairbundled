@@ -52,7 +52,7 @@ export class ProductCreateView extends React.Component {
      */
     async getCertificatesAndCategoriesAndMapping() {
         try {
-            // get categories
+            // get categories (with parent nested into subcategories)
             let categories = await CategoryService.getCategories();
             // get certificates
             let certificates = await CertificateService.getCertificates();
