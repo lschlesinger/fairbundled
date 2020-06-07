@@ -196,6 +196,9 @@ The table should be read as tree from left to right, e.g. one endpoint is `/api/
 |          | `/auth`        | `/login`    | POST      |
 |          |                | `/register` | POST      |
 |          | `/certificate` | `/`         | GET       |
+|          | `/fairbundle`  | `/`         | GET       |
+|          | `/fairbundle`  | `/`         | POST      |
+|          | `/municipatliy`| `/`         | GET       |
 
 Note:
 
