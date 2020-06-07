@@ -161,7 +161,10 @@ export default class ProductListCard extends React.Component {
                             className="upperRow"
                         >
                             <Text strong>
-                                {this.props.products.length} Ergebnisse
+                                {this.props.products.length === 1
+                                    ? this.props.products.length + " Ergebnis"
+                                    : this.props.products.length +
+                                      " Ergebnisse"}
                             </Text>
                         </Row>
                     </Col>
