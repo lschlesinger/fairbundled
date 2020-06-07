@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, Card, Col, Row, Typography} from "antd";
-import logo from '../logo.png';
+import logo from '../assets/logo.png';
 import {Link} from "react-router-dom";
 
 const {Paragraph} = Typography;

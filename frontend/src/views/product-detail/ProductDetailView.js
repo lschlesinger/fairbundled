@@ -1,4 +1,5 @@
 import React from 'react';
+import ProductDetails from "../../components/ProductDetails/ProductDetails";
 
 export class ProductDetailView extends React.Component {
 
@@ -11,7 +12,7 @@ export class ProductDetailView extends React.Component {
 
     render() {
         return (
-            <p>Hello from ProductDetail</p>
+           <ProductDetails/>
         );
     }
 }

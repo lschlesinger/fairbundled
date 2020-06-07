@@ -1,7 +1,7 @@
 import React from 'react';
 import {Col, Divider, Modal, Row} from 'antd';
 import "./ProductPreviewModal.less"
-import ProductImage from "../ProductImage/ProductImage";
+import ProductImage from "../ProductDetails/ProductImage";
 
 function onChange(a, b, c) {
     console.log(a, b, c);

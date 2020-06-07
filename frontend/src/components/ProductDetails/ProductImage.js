@@ -1,6 +1,7 @@
 import React from 'react';
 import {Col, Row} from 'antd';
 import './ProductImage.less';
+import placeholder from "../../assets/placeholder.png"
 
 export default class ProductImage extends React.Component {
 
@@ -20,7 +21,7 @@ export default class ProductImage extends React.Component {
             <Col>
                 <Row>
                     <div className="product_image__current-img">
-                        <img src={this.props.images[this.state.currentIdx]} alt="img"/>
+                        <img src={this.props.images && this.props.images.length > this.state.currentIdx ? this.props.images[this.state.currentIdx] : placeholder } alt="img"/>
                     </div>
                 </Row>
                 <Row>
