@@ -1,6 +1,7 @@
 import React from "react";
 import ProductService from "../../services/ProductService";
 import FairbundleService from "../../services/FairbundleService";
+import SmallestPriceService from "../../services/SmallestPriceService";
 import { Layout, message } from "antd";
 import ProductListCard from "../../components/ProductListCard/ProductListCard";
 import "./ProductListView.less";
@@ -36,6 +37,8 @@ export default class ProductListView extends React.Component {
             let fairbundles = await FairbundleService.getFairbundles();
             // get products
             let products = await ProductService.getProducts(search);
+            // update products with smallest Price Information
+            products = SmallestPriceService.getSmallestPrice(products);
             // update products with flagged (hasFairbundle) products
             products = FairbundleService.getFairbundleFlags(
                 products,
