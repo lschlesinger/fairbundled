@@ -30,6 +30,7 @@
 
 // function for padding/margin classes
 @sizes: {
+    xs: 2px;
     sm: 8px;
     md: 16px;
     lg: 24px;
@@ -99,3 +100,9 @@ each(@sizes, {
         margin-bottom: @value;
     }
 });
+
+// custom fixes for Ant components
+
+.ant-upload-list-picture-card .ant-upload-list-item-info::before {
+    left: 0;
+}

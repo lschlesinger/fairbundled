@@ -20,7 +20,8 @@ export default class ProductPriceLevelInput extends React.Component {
                     name="priceLevel">
                     {(fields, {add, remove}) => {
                         return (
-                            <Col>
+                            <Row justify="center">
+                            <Col span={16}>
                                 <Row justify="space-around" align="middle">
                                     {fields.map(field => (
                                         <Space
@@ -65,6 +66,7 @@ export default class ProductPriceLevelInput extends React.Component {
                                     </Form.Item>
                                 </Row>
                             </Col>
+                            </Row>
                         );
                     }}
                 </Form.List>

@@ -5,15 +5,7 @@ export default class ProductCertificateSelection extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            value: props.product.certificates,
-        }
     }
-
-
-    onChange = value => {
-        this.setState({value});
-    };
 
     getCheckboxes(cert) {
         //only show certificate checkbox if at least on of the previously product categories matches
@@ -31,14 +23,13 @@ export default class ProductCertificateSelection extends React.Component {
         }
     }
 
-    // <Avatar shape="square" size="large" src={src} />
     render() {
         return (
             <div>
                 <h3 className="margin-vertical--md">Wählen Sie die Nachhaltigkeitssiegel für Ihr Produkt</h3>
                 <Form.Item name="certificates"
-                           value={this.state.value}>
-                    <Checkbox.Group onChange={this.onChange} style={{width: '100%'}}>
+                >
+                    <Checkbox.Group style={{width: '100%'}}>
                         <Row style={{textAlign: 'left'}} gutter={[0, 6]}>
                             {this.props.certificates.map((c) => this.getCheckboxes(c))}
                         </Row>

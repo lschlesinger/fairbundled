@@ -4,16 +4,11 @@ import {Form, TreeSelect} from 'antd';
 
 const {TreeNode} = TreeSelect;
 
-
 export default class ProductCategorySelection extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            value: props.product.categories,
-        }
     }
-
 
     getSubTreeNodeItem(category) {
         // sub menu item != root level categories
@@ -44,22 +39,15 @@ export default class ProductCategorySelection extends React.Component {
         );
     }
 
-    onChange = value => {
-        this.setState({value});
-    };
-
-
     render() {
         return (
             <div>
                 <h3 className="margin-vertical--md">Wählen Sie die zutreffenden Kategorien</h3>
                 <Form.Item name="categories">
                     <TreeSelect
-                        value={this.state.value}
                         dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
                         placeholder="Wählen Sie eine oder mehrere Kategorien"
                         multiple
-                        onChange={this.onChange}
                     >
                         {this.props.categories.map((c) => this.getTreeNodes(c))}
                     </TreeSelect>

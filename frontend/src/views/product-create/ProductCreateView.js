@@ -13,19 +13,29 @@ export class ProductCreateView extends React.Component {
         super(props);
 
         this.state = {
+            // control visibility of product preview modal
             modalVisible: false,
+            // initialize categories, further specified during product creation in respective components
             categories: [],
+            // initialize certificates, further specified during product creation in respective components
             certificates: [],
+            // initialize product with fields specified during product creation
             product: {
-                "name": null,
-                "description": null,
-                "ean": null,
-                "images": null,
-                "deliveryDays": null,
-                "priceLevel": [],
-                "certificates": [],
+                // set in view (retrieved from user that is logged in)
                 "supplier": null,
+                // set in ProductCategorySelection Component
                 "categories": [],
+                // set in ProductDescriptionInput Component
+                "name": null,
+                "ean": null,
+                "deliveryDays": null,
+                "description": null,
+                // set in ProductPriceLevel Component
+                "priceLevel": [],
+                // set in ProductCertificateSelection Component (takes categories into account)
+                "certificates": [],
+                // set in ProductImageUpload Component
+                "images": null,
             }
         };
     }
@@ -33,37 +43,13 @@ export class ProductCreateView extends React.Component {
     componentWillMount() {
         this.getCertificatesAndCategoriesAndMapping();
         this.getSupplierId();
-
     }
 
-    getThumbUrls(images) {
-        const thumbUrls = [];
-        for (const f in images.fileList) {
-            const file = images.fileList[f];
-            const thumbUrl = file.thumbUrl;
-            thumbUrls.push(thumbUrl);
-        }
-        return thumbUrls;
-    }
-
-    onFinish(values) {
-        console.log(values);
-        const {categories, name, description, ean, deliveryDays, priceLevel, certificates, images} = values;
-        this.setState(prevState => ({
-            product: {
-                ...prevState.product,
-                "name": name ? name : prevState.product.name,
-                "description": description ? description : prevState.product.description,
-                "ean": ean ? ean : prevState.product.ean,
-                "images": images ? this.getThumbUrls(images) : prevState.product.imagesUrl,
-                "deliveryDays": deliveryDays ? deliveryDays : prevState.product.deliveryDays,
-                "priceLevel": priceLevel ? priceLevel : prevState.product.priceLevel,
-                "certificates": certificates ? certificates : prevState.product.certificates,
-                "categories": categories ? categories : prevState.product.categories
-            }
-        }), () => console.log(this.state.product));
-    }
-
+    /**
+     * Get Certificates and Categories from backend using CategoryService and CertificateService
+     * Includes mapping of certificates to categories
+     * Sets states variables categories and certificates further used in child components
+     */
     async getCertificatesAndCategoriesAndMapping() {
         try {
             // get categories
@@ -82,12 +68,47 @@ export class ProductCreateView extends React.Component {
     }
 
     getSupplierId() {
+        // supplier field in state variable `product`
         this.setState(prevState => ({
             product: {
                 ...prevState.product,
                 supplier: AuthService.getCurrentUser().supplier._id
             }
         }))
+    }
+
+    /**
+     * in every process step, once values are changed, this method is called assigning the values to the state variable `product`
+     * those values that haven't been changed will receive the value of their previous state
+     * @param values
+     */
+    onFinish(values) {
+        console.log(values);
+        const {categories, name, description, ean, deliveryDays, priceLevel, certificates, images} = values;
+        this.setState(prevState => ({
+            product: {
+                ...prevState.product,
+                "name": name ? name : prevState.product.name,
+                "description": description ? description : prevState.product.description,
+                "ean": ean ? ean : prevState.product.ean,
+                "images": images ? this.getThumbUrls(images) : prevState.product.imagesUrl,
+                "deliveryDays": deliveryDays ? deliveryDays : prevState.product.deliveryDays,
+                "priceLevel": priceLevel ? priceLevel : prevState.product.priceLevel,
+                "certificates": certificates ? certificates : prevState.product.certificates,
+                "categories": categories ? categories : prevState.product.categories
+            }
+        }), () => console.log(this.state.product));
+    }
+
+    getThumbUrls(images) {
+        // helper function for getting the base64encoded image out of the value `images` retrieved onChange
+        const thumbUrls = [];
+        for (const f in images.fileList) {
+            const file = images.fileList[f];
+            const thumbUrl = file.thumbUrl;
+            thumbUrls.push(thumbUrl);
+        }
+        return thumbUrls;
     }
 
     showModal = () => {
@@ -102,7 +123,6 @@ export class ProductCreateView extends React.Component {
         });
     };
 
-
     async publishProduct() {
         try {
             await ProductService.createProduct(this.state.product);
@@ -111,7 +131,6 @@ export class ProductCreateView extends React.Component {
             message.warn("Produkt konnte nicht veröffentlicht werden.")
         }
     }
-
 
     render() {
         return (
@@ -123,8 +142,9 @@ export class ProductCreateView extends React.Component {
                                       onPreview={this.showModal.bind(this)}
                                       onPublish={this.publishProduct.bind(this)}
                 />
-                <ProductPreviewModal onClose={this.hideModal.bind(this)} modalVisible={this.state.modalVisible}
-                                     product={this.state.product}/>
+                <ProductPreviewModal
+                    onClose={this.hideModal.bind(this)} modalVisible={this.state.modalVisible}
+                    product={this.state.product}/>
             </div>
         );
     }

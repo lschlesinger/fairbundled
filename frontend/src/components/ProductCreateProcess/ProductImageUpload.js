@@ -1,15 +1,8 @@
 import React from 'react';
-import {Form, Modal, Upload} from 'antd';
+import {Form, Modal, Row, Upload} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
 
-function getBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    });
-}
+const ALLOWED_IMAGE_NUMBER = 4;
 
 export default class ProductImageUpload extends React.Component {
     constructor(props) {
@@ -18,7 +11,7 @@ export default class ProductImageUpload extends React.Component {
             previewVisible: false,
             previewImage: '',
             previewTitle: '',
-            fileList: [],
+            fileList: []
         };
     }
 
@@ -26,7 +19,7 @@ export default class ProductImageUpload extends React.Component {
 
     handlePreview = async file => {
         if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj);
+            file.preview = await this.getBase64(file.originFileObj);
         }
 
         this.setState({
@@ -36,7 +29,18 @@ export default class ProductImageUpload extends React.Component {
         });
     };
 
-    handleChange = ({fileList}) => this.setState({fileList});
+    handleChange = (res) => {
+        this.setState({fileList: res.fileList});
+    };
+
+    getBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    };
 
     render() {
         const {previewVisible, previewImage, fileList, previewTitle} = this.state;
@@ -48,21 +52,24 @@ export default class ProductImageUpload extends React.Component {
         );
         return (
             <div>
-                <h3 className="margin-vertical--md">Fügen Sie Produktbilder hinzu</h3>
-                <Form.Item name="images"
-                           value={this.state.fileList}>
-                    <Upload
-                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                        listType="picture-card"
-                        fileList={fileList}
-                        onPreview={this.handlePreview}
-                        onChange={this.handleChange}
-                        multiple
+                <h3 className="margin-vertical--md">Fügen Sie bis zu vier Produktbilder hinzu</h3>
+                <Row justify="space-around">
+                    <Form.Item name="images"
+                               value={this.state.fileList}
                     >
-                        {fileList.length >= 4 ? null : uploadButton}
-                    </Upload>
-                </Form.Item>
-
+                        <Upload
+                            // TODO: think about coming up with customRequest here...
+                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            listType="picture-card"
+                            fileList={fileList}
+                            onPreview={this.handlePreview}
+                            onChange={this.handleChange}
+                            multiple
+                        >
+                            {fileList.length >= ALLOWED_IMAGE_NUMBER ? null : uploadButton}
+                        </Upload>
+                    </Form.Item>
+                </Row>
                 <Modal
                     visible={previewVisible}
                     title={previewTitle}
