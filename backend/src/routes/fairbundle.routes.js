@@ -8,6 +8,5 @@ const router = express.Router();
 // fairbundle routes
 router.get('/', FairbundleController.getFairbundles);
 router.post('/', middlewares.checkAuthentication, middlewares.checkMunicipality, FairbundleController.createFairbundle);
-
 export default router;
 

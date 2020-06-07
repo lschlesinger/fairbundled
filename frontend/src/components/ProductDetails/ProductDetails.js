@@ -6,12 +6,21 @@ import OrderOptions from "./OrderOptions";
 import ProductInformationText from "./ProductInformationText";
 
 
+/**
+ * props: {
+ *     product
+ *     fairbundles
+ *     onCreateFairbundle
+ *     onJoinFairbundle
+ *     onCreateOrder
+ * }
+ */
 export default class ProductDetails extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(this.props);
     }
-
 
     render() {
         return (
@@ -19,18 +28,18 @@ export default class ProductDetails extends React.Component {
                 <Col>
                     <Row>
                         <Col>
-                            <ProductImage/>
+                            <ProductImage product={this.props.product}/>
                         </Col>
                         <Col>
-                            <ProductInformationText/>
+                            <ProductInformationText product={this.props.product}/>
                         </Col>
                     </Row>
                     <Row>
-                        <CertificateInformation/>
+                        <CertificateInformation product={this.props.product}/>
                     </Row>
                 </Col>
                 <Col>
-                    <OrderOptions/>
+                    <OrderOptions {...this.props}/>
                 </Col>
             </Row>
         )

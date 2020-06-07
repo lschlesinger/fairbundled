@@ -11,7 +11,7 @@ export default class ProductInformationText extends React.Component {
     render() {
         return (
             <div>
-                Product Information Text
+                {this.props.product.name}
             </div>
         )
     }

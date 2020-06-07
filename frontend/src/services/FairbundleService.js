@@ -11,6 +11,10 @@ export default class FairbundleService {
         return HttpService.get(`${this.BASE_URL}/`);
     }
 
+    static async getFairbundlesByProductId(productId) {
+        return HttpService.get(`${this.BASE_URL}/?product=${productId}`);
+    }
+
     static getFairbundleFlags(products, fairbundles) {
         const flaggedProducts = [];
         for (const p in products) {

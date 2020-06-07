@@ -1,10 +1,13 @@
 import Fairbundle from "../models/faribundle.model";
-import Product from "../models/product.model";
 
 class FairbundleController {
 
     static getFairbundles(req, res) {
-        Fairbundle.find({})
+        const query = {};
+        if (!!req.query.product) {
+            query['product'] = req.query.product;
+        }
+        Fairbundle.find(query)
             .then((fairbundles) => {
                 res.status(200).json(fairbundles);
             })
