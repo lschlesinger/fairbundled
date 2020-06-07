@@ -1,7 +1,6 @@
 import React from 'react';
 import {Form, Input, InputNumber, Row} from 'antd';
 
-
 export default class ProductDescriptionInput extends React.Component {
 
     constructor(props, context) {
