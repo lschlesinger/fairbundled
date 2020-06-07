@@ -1,28 +1,108 @@
 @import '~antd/dist/antd.less';
 
-@header-height: 136px;
-.ant-layout-header {
-    height: @header-height;
+.ant-layout {
     background-color: #ffffff;
-    padding: 0;
 }
 
-@footer-height: 80px;
-.ant-layout-footer {
+@footer-height: 60px;
+.app__footer {
     height: @footer-height;
     background-color: #ffffff;
+    padding: @sizes[sm];
 }
 
 @layout-padding: 20px 50px;
 .app__content {
-    padding: @layout-padding;
     background-color: #ffffff;
     margin-top: @header-height;
     min-height: calc(100vh - @header-height - @footer-height);
 }
 
+@header-height: 136px;
 .app__header {
     position: fixed;
     z-index: 2;
     width: 100%;
+    height: @header-height;
+    background-color: #ffffff;
+    padding: 0;
+}
+
+// function for padding/margin classes
+@sizes: {
+    xs: 2px;
+    sm: 8px;
+    md: 16px;
+    lg: 24px;
+}
+
+// will output classes padding--sm, padding--md, padding--lg
+each(@sizes, {
+    .padding--@{key} {
+        padding: @value;
+    }
+
+    .padding-horizontal--@{key} {
+        padding-left: @value;
+        padding-right: @value;
+    }
+
+    .padding-vertical--@{key} {
+        padding-bottom: @value;
+        padding-top: @value;
+    }
+
+    .padding-left--@{key} {
+        padding-left: @value;
+    }
+
+    .padding-right--@{key} {
+        padding-right: @value;
+    }
+
+    .padding-top--@{key} {
+        padding-top: @value;
+    }
+
+    .padding-bottom--@{key} {
+        padding-bottom: @value;
+    }
+});
+
+each(@sizes, {
+    .margin--@{key} {
+        margin: @value;
+    }
+
+    .margin-horizontal--@{key} {
+        margin-left: @value;
+        margin-right: @value;
+    }
+
+    .margin-vertical--@{key} {
+        margin-bottom: @value;
+        margin-top: @value;
+    }
+
+    .margin-left--@{key} {
+        margin-left: @value;
+    }
+
+    .margin-right--@{key} {
+        margin-right: @value;
+    }
+
+    .margin-top--@{key} {
+        margin-top: @value;
+    }
+
+    .margin-bottom--@{key} {
+        margin-bottom: @value;
+    }
+});
+
+// custom fixes for Ant components
+
+.ant-upload-list-picture-card .ant-upload-list-item-info::before {
+    left: 0;
 }

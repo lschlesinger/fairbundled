@@ -10,7 +10,9 @@ export default class FairbundledFooter extends React.Component {
 
     render() {
         return (
-            <Row justify="center" align="middle">
+            <Row className="footer__container"
+                 justify="center"
+                 align="middle">
                 <Divider className="footer__custom-divider"/>
                 Made with&nbsp; <span style={{color: "#4E1C1B"}}>&#9829;</span> &nbsp;for 🌍 in Munich ©2020
             </Row>

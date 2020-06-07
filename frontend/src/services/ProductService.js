@@ -11,8 +11,7 @@ export default class ProductService {
         return HttpService.get(`${this.BASE_URL}/${search}`);
     }
 
-    static async createProduct(name, description, ean, images, deliveryDays, priceLevel, certificates, category) {
-        const product = {name, description, ean, images, deliveryDays, priceLevel, certificates, category};
+    static async createProduct(product) {
         return HttpService.post(`${this.BASE_URL}/`, product);
     }
 }

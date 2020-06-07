@@ -1,42 +1,66 @@
 import React from 'react';
 import ProductService from "../../services/ProductService";
-import {message} from 'antd';
+import FairbundleService from "../../services/FairbundleService";
+import {Layout, message} from 'antd';
 import ProductListCard from "../../components/ProductListCard";
+import './ProductListView.less';
+
+// decide on overall layout structure (ANT)
+const {Sider, Content} = Layout;
 
 export default class ProductListView extends React.Component {
+
 
     constructor(props) {
         super(props);
         this.state = {
-            products: []
+            products: [],
+            fairbundles: []
         };
     }
 
+
     componentWillMount() {
-        this.getProducts();
+        this.getProductsAndFairbundles();
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.location !== prevProps.location) {
-            this.getProducts();
+            this.getProductsAndFairbundles();
         }
     }
 
-
-    async getProducts() {
+    async getProductsAndFairbundles() {
         try {
             const {location: {search}} = this.props;
+            // get fairbundles
+            let fairbundles =  await FairbundleService.getFairbundles();
+            // get products
+            let products = await ProductService.getProducts(search);
+            // update products with flagged (hasFairbundle) products
+            products = FairbundleService.getFairbundleFlags(products, fairbundles);
+            //set state variables
             this.setState({
-                products: await ProductService.getProducts(search)
-            });
+                fairbundles: fairbundles,
+                products: products
+            })
         } catch (e) {
-            message.error("Error fetching products.");
+            message.error("Error fetching products and fairbundles.");
         }
     }
+
 
     render() {
         return (
-            <ProductListCard products={this.state.products}/>
+            <Layout className="product-list-view__layout">
+                <Sider className="product-list-view__sider">
+                    Sider
+                </Sider>
+                <Content className="product-list-view__content">
+                    <ProductListCard fairbundles={this.state.fairbundles} products={this.state.products} />
+                </Content>
+            </Layout>
+
         );
     }
 }

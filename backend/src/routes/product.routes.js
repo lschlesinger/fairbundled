@@ -9,3 +9,4 @@ router.get('/', ProductController.getProducts);
 router.post('/', middlewares.checkAuthentication, middlewares.checkSupplier, ProductController.createProduct);
 
 export default router;
+

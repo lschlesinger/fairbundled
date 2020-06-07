@@ -11,7 +11,7 @@ import BootstrapService from "./services/bootstrap.service";
 const app = express();
 
 // parse application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb', extended: true}));
 
 // add routes to express app
 app.use('/api', routes);
