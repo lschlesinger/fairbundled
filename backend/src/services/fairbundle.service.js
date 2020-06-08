@@ -1,4 +1,4 @@
-import Fairbundle from "../models/faribundle.model";
+import Fairbundle from "../models/fairbundle.model";
 import FAIRBUNDLES from "./fairbundle.data";
 import Municipality from "../models/municipality.model";
 import Product from "../models/product.model";
