@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     Button,
     Card,
     Cascader,
     Col,
-    Space,
     Row,
-    Typography,
-    Tag,
+    Space,
     Switch,
+    Tag,
+    Typography,
 } from "antd";
-import example_image from "../../feuerwehr-einsatzjacke.jpg";
 import { Link } from "react-router-dom";
 import "./ProductListCard.less";
+import placeholder from "../../assets/placeholder.png";
 
 const { Paragraph, Text, Title } = Typography;
 const options = [
@@ -59,7 +59,11 @@ export default class ProductListCard extends React.Component {
                                 align="middle"
                             >
                                 <img
-                                    src={example_image}
+                                    src={
+                                        product.images?.length > 0
+                                            ? product.images[0]
+                                            : placeholder
+                                    }
                                     alt="bild"
                                     width="100%"
                                 />

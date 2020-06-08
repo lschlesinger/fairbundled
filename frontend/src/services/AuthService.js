@@ -39,6 +39,14 @@ export default class AuthService {
         return !!TokenService.getToken();
     }
 
+    static isAuthenticatedMunicipality() {
+        return !!this.getCurrentUser().municipality;
+    }
+
+    static isAuthenticatedSupplier() {
+        return !!this.getCurrentUser().supplier;
+    }
+
     static getCurrentUser() {
         const token = TokenService.getToken();
         if (!token) return {};
@@ -49,8 +57,8 @@ export default class AuthService {
         return {
             id: user.id,
             email: user.email,
-            municipalityId: user.municipality || '',
-            supplierId: user.supplier || ''
+            municipality: user.municipality || null,
+            supplier: user.supplier || null
         };
     }
 

@@ -1,0 +1,31 @@
+@import "../../App.less";
+
+@small-image-size: 40px;
+.product-image__small-img {
+    padding: @sizes[xs];
+    margin: @sizes[xs] @sizes[xs] 0 0;
+    width: @small-image-size;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.5;
+        transition: all 0.3s;
+    }
+}
+
+@current-image-size: calc(4 * @small-image-size + 4 * @sizes[xs] + 4 * 2);
+.product_image__current-img {
+    padding: @sizes[sm];
+    width: @current-image-size;
+}
+
+
+.product_image__current-img, .product-image__small-img {
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    max-width: 100%;
+
+    img {
+        width: 100%;
+    }
+}
