@@ -1,11 +1,10 @@
 import React from 'react';
-import {Col, Divider, Modal, Row} from 'antd';
+import {Col, Modal, Row} from 'antd';
 import "./ProductPreviewModal.less"
 import ProductImage from "../ProductDetails/ProductImage";
 import ProductInformationText from "../ProductDetails/ProductInformationText";
 import CertificateInformation from "../ProductDetails/CertificateInformation";
 import OrderOptions from "../ProductDetails/OrderOptions";
-import '../../App.less';
 
 export default class ProductPreviewModal extends React.Component {
 
@@ -24,6 +23,7 @@ export default class ProductPreviewModal extends React.Component {
                 visible={this.props.modalVisible}
                 onCancel={this.props.onClose}
                 footer={null}
+                width="1160"
             >
                 <Row>
                     <Col span={18}>
@@ -40,7 +40,11 @@ export default class ProductPreviewModal extends React.Component {
                         </Row>
                     </Col>
                     <Col span={6} className="padding--md">
-                        Order Options
+                        <OrderOptions product={this.props.product}
+                                      fairbundles={this.state.fairbundles}
+                                      onCreateFairbundle={()=>{}}
+                                      onJoinFairbundle={()=>{}}
+                                      onCreateOrder={()=>{}}/>
                     </Col>
                 </Row>
             </Modal>

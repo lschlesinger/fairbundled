@@ -57,7 +57,10 @@ export default class ProductListView extends React.Component {
                     Sider
                 </Sider>
                 <Content className="product-list-view__content">
-                    <ProductListCard fairbundles={this.state.fairbundles} products={this.state.products} />
+                    {this.state.products && this.state.fairbundles ? <ProductListCard
+                        fairbundles={this.state.fairbundles}
+                        products={this.state.products}
+                    /> : ""}
                 </Content>
             </Layout>
 
