@@ -36,7 +36,7 @@ export default class OrderOptions extends React.Component {
                     <input/>
                     <button onClick={this.onCreateFairbundle}>Create Fairbundle</button>
                 </Row>
-                {this.props.fairbundles.map((fb) => <Row key={fb._id}>
+                {this.props.fairbundles?.map((fb) => <Row key={fb._id}>
                     {fb._id}
                     <button onClick={() => this.onJoinFairbundle(fb._id)}>Join Fairbundle</button>
                 </Row>)}

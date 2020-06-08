@@ -13,7 +13,7 @@ export default class ProductCertificateSelection extends React.Component {
         if (cert.categories.some(i => this.props.product.categories.indexOf(i) >= 0)) {
             return (
                 <Col span="12">
-                    <Checkbox value={cert._id}>
+                    <Checkbox value={cert}>
                         <Avatar shape="square"
                                 size="medium"
                                 src={cert.logo}/>

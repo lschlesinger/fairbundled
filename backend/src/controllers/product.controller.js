@@ -31,6 +31,7 @@ class ProductController {
     static getProduct(req, res) {
         Product.findById(req.params.id)
             .populate("supplier")
+            .populate("certificates")
             .then((product) => {
             res.status(200).json(product);
         })

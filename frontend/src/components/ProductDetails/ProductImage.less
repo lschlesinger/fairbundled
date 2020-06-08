@@ -1,6 +1,6 @@
 @import "../../App.less";
 
-@small-image-size: 40px;
+@small-image-size: 55px;
 .product-image__small-img {
     padding: @sizes[xs];
     margin: @sizes[xs] @sizes[xs] 0 0;
@@ -13,7 +13,7 @@
     }
 }
 
-@current-image-size: calc(4 * @small-image-size + 4 * @sizes[xs] + 4 * 2);
+@current-image-size: calc(4 * @small-image-size + (4 * @sizes[xs]) + (3 * 2px) - 8px);
 .product_image__current-img {
     padding: @sizes[sm];
     width: @current-image-size;

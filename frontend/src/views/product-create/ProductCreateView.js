@@ -6,6 +6,7 @@ import ProductPreviewModal from "../../components/ProductCreateProcess/ProductPr
 import ProductService from "../../services/ProductService";
 import CertificateService from "../../services/CertificateService";
 import {message} from "antd";
+import "../../App.less";
 
 export class ProductCreateView extends React.Component {
 
@@ -143,7 +144,7 @@ export class ProductCreateView extends React.Component {
                                       onPublish={this.publishProduct.bind(this)}
                 />
                 <ProductPreviewModal
-                    onClose={this.hideModal.bind(this)} modalVisible={this.state.modalVisible}
+                    onClose={this.hideModal} modalVisible={this.state.modalVisible}
                     product={this.state.product}/>
             </div>
         );
