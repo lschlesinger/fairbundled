@@ -50,9 +50,9 @@ export default class ProductListCard extends React.Component {
         const price = this.getLowestPrice(product);
         return (
             <Col span={8} key={product._id}>
-                <Card padding>
+                <Card>
                     {/* title={product.name} key={product._id} bordered={true} */}
-                    <Row gutter={8}>
+                    <Row gutter={12}>
                         <Col span={10}>
                             <Row
                                 className="product-list-card__product-image"
