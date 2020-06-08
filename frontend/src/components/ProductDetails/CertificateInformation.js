@@ -57,8 +57,7 @@ export default class CertificateInformation extends React.Component {
                 <Collapse defaultActiveKey={['1']}>
                     <Panel header="Informationen zur Nachhaltigkeit dieses Produkts" key="1">
                         <Row justify="start" gutter={[0, 6]}>
-                            {console.log(this.props.product)}
-                            {this.props.product.certificates?.length > 0 ? this.props.product.certificates.map((c) => this.getAvatars(c)) : "Keine Informationen verfügbar"}
+                            {this.props.product?.certificates?.length > 0 ? this.props.product.certificates.map((c) => this.getAvatars(c)) : "Keine Informationen verfügbar"}
                         </Row>
                         <Row>
                             {this.renderCertificateInformation(this.state.selectedCert)}

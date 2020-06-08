@@ -1,5 +1,5 @@
 import React from "react";
-import {Col, Row} from "antd";
+import {Col, Form, InputNumber, Row} from "antd";
 
 
 export default class OrderOptions extends React.Component {
@@ -13,7 +13,7 @@ export default class OrderOptions extends React.Component {
 
     onCreateFairbundle = (evt) => {
         if (this.state.qty) {
-            this.props.onCreateFairbundle({qty: this.state.qty});
+            this.props.onCreateFairbundle({productId: this.props.productId, qty: this.state.qty});
         }
     };
 
@@ -31,10 +31,17 @@ export default class OrderOptions extends React.Component {
 
         return (
             <Col>
-                <Row>{this.props.product.name}</Row>
+                <Row>{this.props.product?.name}</Row>
                 <Row>
-                    <input/>
-                    <button onClick={this.onCreateFairbundle}>Create Fairbundle</button>
+                    <Form.Item name="quantitiy"
+                               label="Menge"
+                               labelAlign="right"
+                               rules={[{type: 'number', min: 0, max: 99999}]}>
+                        <InputNumber/>
+                    </Form.Item>
+                </Row>
+                <Row>
+                    <button onClick={this.onCreateFairbundle()}>Create Fairbundle</button>
                 </Row>
                 {this.props.fairbundles?.map((fb) => <Row key={fb._id}>
                     {fb._id}

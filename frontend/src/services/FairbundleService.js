@@ -31,4 +31,12 @@ export default class FairbundleService {
         }
         return flaggedProducts;
     }
+
+    static async joinFairbundle(fairbundleId, qty) {
+        return HttpService.put(`${this.BASE_URL}/${fairbundleId}`, {qty});
+    }
+
+    static async createFairbundle(qty, productId, expirationDate, expirationAction, targetPrice) {
+        return HttpService.post(`${this.BASE_URL}/`, {qty, productId, expirationDate, expirationAction, targetPrice});
+    }
 }

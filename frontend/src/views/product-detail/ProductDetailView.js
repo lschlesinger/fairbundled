@@ -11,8 +11,9 @@ export class ProductDetailView extends React.Component {
         super(props);
         this.state = {
             productId: this.props.match.params.id,
-            product: {},
-            fairbundles: []
+            product: null,
+            fairbundles: null,
+            qty: 0
         };
         console.log(this.props);
     }
@@ -35,15 +36,21 @@ export class ProductDetailView extends React.Component {
     }
 
     onCreateFairbundle = ({qty}) => {
+        this.setState({qty: qty});
+        //TODO: open createFairbundleModal with state variables productId and quantity
         console.log("Create fairbundle", qty);
     };
 
     onJoinFairbundle = ({fairbundleId, qty}) => {
-        console.log("Join fairbundle", fairbundleId, qty);
+        this.setState({qty: qty});
+        //TODO: open joinFairbundleModal with fairbundleId and state variables productId and quantity
+        console.log("Join fairbundle", qty);
     };
 
-    onCreateOrder = (orderQty) => {
-        console.log("Create order", orderQty);
+    onCreateOrder = (qty) => {
+        this.setState({qty: qty});
+        //TODO: open createOrderModal with state variables productId and quantity
+        console.log("Create order", qty);
     };
 
     render() {

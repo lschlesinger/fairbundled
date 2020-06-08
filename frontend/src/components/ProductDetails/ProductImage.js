@@ -22,12 +22,12 @@ export default class ProductImage extends React.Component {
                 <Row>
                     <div className="product_image__current-img">
                         <img
-                            src={this.props.product.images && this.props.product.images.length > this.state.currentIdx ? this.props.product.images[this.state.currentIdx] : placeholder}
+                            src={this.props.product?.images && this.props.product?.images.length > this.state.currentIdx ? this.props.product.images[this.state.currentIdx] : placeholder}
                             alt="img"/>
                     </div>
                 </Row>
                 <Row>
-                    {this.props.product.images?.map((image, idx) =>
+                    {this.props.product?.images?.map((image, idx) =>
                         <Col>
                             <div className="product-image__small-img"
                                  onClick={() => this.changeCurrentIdx(idx)}>

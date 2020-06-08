@@ -30,7 +30,7 @@ export default class ProductDetails extends React.Component {
                         <Col span={7}>
                             <ProductImage product={this.props.product}/>
                         </Col>
-                        <Col span={17}>
+                        <Col span={17} className="padding--md">
                             <ProductInformationText product={this.props.product}/>
                         </Col>
                     </Row>
