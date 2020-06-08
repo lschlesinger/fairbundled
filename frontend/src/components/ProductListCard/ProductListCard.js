@@ -29,45 +29,35 @@ export default class ProductListCard extends React.Component {
         this.state = {
             checked: false,
             ordering: "Bitte auswählen",
+            products: this.props.products,
         };
         this.handleOrdering = this.handleOrdering.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
-    //function to determine the lowest price and to differentiate between one and multiple price level (Difference: Ab)
+    //function to determine the lowest price and to differentiate between one and multiple price levels (Difference: Ab)
     getLowestPrice(product) {
-        if (product.priceLevel.length < 2) {
-            return (
-                <Title level={4} className="price">
-                    {product.smallestPrice} €
-                </Title>
-            );
-        } else {
-            // let lowestPrice = Number.MAX_VALUE;
-            // for (var i = 0; i < product.priceLevel.length; i++) {
-            //     lowestPrice = Math.min(
-            //         lowestPrice,
-            //         product.priceLevel[i].unitPrice
-            //     );
-            // }
-            return (
-                <Title level={4} className="price">
-                    Ab {product.smallestPrice}
-                    {/* Ab {lowestPrice} € */}
-                </Title>
-            );
-        }
+        return (
+            <Title level={4} className="price">
+                {product.priceLevel.length < 2 ? "" : "Ab "}
+                {product.smallestPrice} €
+            </Title>
+        );
     }
 
+    //function to create every single card based on every single product
     getCardItem(product) {
         const price = this.getLowestPrice(product);
         return (
-            <Col span={8}>
-                <Card>
+            <Col span={8} key={product._id}>
+                <Card padding>
                     {/* title={product.name} key={product._id} bordered={true} */}
                     <Row gutter={8}>
                         <Col span={10}>
-                            <Row id="product_image" align="middle">
+                            <Row
+                                className="product-list-card__product-image"
+                                align="middle"
+                            >
                                 <img
                                     src={example_image}
                                     alt="bild"
@@ -75,8 +65,11 @@ export default class ProductListCard extends React.Component {
                                 />
                             </Row>
                         </Col>
-                        <Col id="content_col" span={14}>
-                            <Row id="fairbundle_tag" justify="start">
+                        <Col span={14}>
+                            <Row
+                                className="product-list-card__fairbundle_tag"
+                                justify="start"
+                            >
                                 <Paragraph>
                                     {product.hasFairbundle ? (
                                         <Tag color="#78A262">Fairbundle</Tag>
@@ -85,10 +78,16 @@ export default class ProductListCard extends React.Component {
                                     )}
                                 </Paragraph>
                             </Row>
-                            <Row id="product_title" justify="start">
+                            <Row
+                                className="product-list-card__product_title"
+                                justify="start"
+                            >
                                 <Title level={4}>{product.name}</Title>
                             </Row>
-                            <Row id="product_description" justify="start">
+                            <Row
+                                className="product-list-card__product_description"
+                                justify="start"
+                            >
                                 <Paragraph>
                                     <Text>{product.description}</Text>
                                 </Paragraph>
@@ -113,30 +112,35 @@ export default class ProductListCard extends React.Component {
             </Col>
         );
     }
+    //handles the changes of the Fairbundle switch (top left)
     handleChange(checked) {
         this.setState({ checked });
+        this.setState({
+            products: checked
+                ? this.state.products.filter(
+                      (product) => product.hasFairbundle == true
+                  )
+                : this.props.products,
+        });
     }
-
+    //handles the ordering of the elements based on price ascending and descending (top right)
     handleOrdering(ordering) {
-        this.setState({ ordering });
-    }
-
-    hasFairbundle(p) {
-        return p.filter((product) => product.hasFairbundle == true);
-    }
-
-    sortProducts() {
-        if (this.state.ordering == "Niedrigster Preis") {
-            return this.props.products.sort(
-                (a, b) => a.smallestPrice - b.smallestPrice
-            );
+        this.setState({ ordering: ordering });
+        if (ordering == "Niedrigster Preis") {
+            this.setState({
+                products: this.state.products.sort(
+                    (a, b) => a.smallestPrice - b.smallestPrice
+                ),
+            });
+            console.log(this.state.products);
         }
-        if (this.state.ordering == "Höchster Preis") {
-            return this.props.products.sort(
-                (a, b) => b.smallestPrice - a.smallestPrice
-            );
+        if (ordering == "Höchster Preis") {
+            this.setState({
+                products: this.state.products.sort(
+                    (a, b) => b.smallestPrice - a.smallestPrice
+                ),
+            });
         }
-        return this.props.products;
     }
 
     render() {
@@ -144,7 +148,10 @@ export default class ProductListCard extends React.Component {
             <div>
                 <Row gutter={[16, 16]}>
                     <Col span={8}>
-                        <Row align="middle" className="upperRow">
+                        <Row
+                            align="middle"
+                            className="product-list-card__upperRow"
+                        >
                             <Space align="start" size="middle">
                                 <Text strong>Fairbundle</Text>
                                 <Switch
@@ -158,18 +165,21 @@ export default class ProductListCard extends React.Component {
                         <Row
                             justify="center"
                             align="middle"
-                            className="upperRow"
+                            className="product-list-card__upperRow"
                         >
                             <Text strong>
-                                {this.props.products.length === 1
-                                    ? this.props.products.length + " Ergebnis"
-                                    : this.props.products.length +
+                                {this.state.products.length === 1
+                                    ? this.state.products.length + " Ergebnis"
+                                    : this.state.products.length +
                                       " Ergebnisse"}
                             </Text>
                         </Row>
                     </Col>
                     <Col span={8}>
-                        <Row justify="end" className="upperRow">
+                        <Row
+                            justify="end"
+                            className="product-list-card__upperRow"
+                        >
                             <Cascader
                                 options={options}
                                 onChange={this.handleOrdering}
@@ -180,11 +190,7 @@ export default class ProductListCard extends React.Component {
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]} className="product-list-card__cards">
-                    {this.state.checked
-                        ? this.hasFairbundle(this.sortProducts()).map((p) =>
-                              this.getCardItem(p)
-                          )
-                        : this.sortProducts().map((p) => this.getCardItem(p))}
+                    {this.state.products.map((p) => this.getCardItem(p))}
                 </Row>
             </div>
         );

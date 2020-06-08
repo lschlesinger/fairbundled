@@ -9,7 +9,6 @@ module.exports = {
                     modifyVars: {
                         "@primary-color": "#78A262",
                         "@secondary-color": "#15270E",
-                        "@card-padding-base": "0px",
                     },
                     javascriptEnabled: true,
                 },
