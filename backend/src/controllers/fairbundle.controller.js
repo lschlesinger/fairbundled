@@ -73,8 +73,6 @@ class FairbundleController {
                         res.status(201).json(fairbundle);
                     });
                 });
-
-
             })
             .catch((err) => {
                 console.log(err);
