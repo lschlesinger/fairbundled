@@ -10,7 +10,16 @@ class ProductController {
             query['$text'] = {$search: req.query.searchString};
         }
         Product.find(query)
+            .lean() // get json representation of mongoose docs
             .then((products) => {
+                products = products.map((product) => {
+                    // only return one image too keep response body small
+                    const images = product.images && product.images.length > 0 ? [product.images[0]] : [];
+                    return {
+                        ...product,
+                        images: images
+                    }
+                });
                 res.status(200).json(products);
             })
             .catch((err) => {
