@@ -18,7 +18,7 @@ export default class CertificateInformation extends React.Component {
     getAvatars(cert) {
         // show certificate logo of associated product certificates with short information text and link to page
         return (
-            <Col span="4">
+            <Col span="4" key={cert._id}>
                 <Row justify="center">
                     <div onClick={() => this.setState({selectedCert: cert})}>
                         <Avatar

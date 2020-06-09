@@ -1,10 +1,15 @@
 @import "../../App.less";
 
-@small-image-size: 55px;
+.product-image__small-container {
+    max-width: @small-image-size;
+    flex: 1 1 0;
+}
+
+@small-image-size: 50px;
 .product-image__small-img {
     padding: @sizes[xs];
     margin: @sizes[xs] @sizes[xs] 0 0;
-    width: @small-image-size;
+    width: 100%;
     cursor: pointer;
 
     &:hover {
@@ -18,7 +23,6 @@
     padding: @sizes[sm];
     width: @current-image-size;
 }
-
 
 .product_image__current-img, .product-image__small-img {
     border: 1px solid #d9d9d9;

@@ -140,7 +140,7 @@ export class ProductCreateView extends React.Component {
                                       certificates={this.state.certificates}
                                       product={this.state.product}
                                       onChange={this.onChange.bind(this)}
-                                      onPreview={this.showModal.bind(this)}
+                                      onPreview={this.showModal}
                                       onPublish={this.publishProduct.bind(this)}
                 />
                 <ProductPreviewModalView

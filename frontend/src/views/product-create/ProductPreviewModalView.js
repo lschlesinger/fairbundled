@@ -19,10 +19,10 @@ export default class ProductPreviewModalView extends React.Component {
                 visible={this.props.modalVisible}
                 onCancel={this.props.onClose}
                 footer={null}
-                width="1160"
+                width="960px"
             >
-                <ProductDetails product={this.state.product}
-                                fairbundles={this.state.fairbundles}
+                <ProductDetails product={this.props.product}
+                                fairbundles={this.props.fairbundles}
                                 onCreateFairbundle={() => {}}
                                 onJoinFairbundle={() => {}}
                                 onCreateOrder={() => {}}/>

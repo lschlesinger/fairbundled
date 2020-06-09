@@ -18,7 +18,7 @@ export class ProductDetailView extends React.Component {
         console.log(this.props);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getProductAndFairbundles();
     }
 

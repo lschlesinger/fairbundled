@@ -28,7 +28,7 @@ export default class ProductImage extends React.Component {
                 </Row>
                 <Row>
                     {this.props.product?.images?.map((image, idx) =>
-                        <Col>
+                        <Col className="product-image__small-container" key={idx}>
                             <div className="product-image__small-img"
                                  onClick={() => this.changeCurrentIdx(idx)}>
                                 <img src={image} alt="img"/>
