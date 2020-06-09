@@ -83,7 +83,7 @@ export class ProductCreateView extends React.Component {
      * those values that haven't been changed will receive the value of their previous state
      * @param values
      */
-    onFinish(values) {
+    onChange(values) {
         console.log(values);
         const {categories, name, description, ean, deliveryDays, priceLevel, certificates, images} = values;
         this.setState(prevState => ({
@@ -139,7 +139,7 @@ export class ProductCreateView extends React.Component {
                 <ProductCreateProcess categories={this.state.categories}
                                       certificates={this.state.certificates}
                                       product={this.state.product}
-                                      onFinish={this.onFinish.bind(this)}
+                                      onChange={this.onChange.bind(this)}
                                       onPreview={this.showModal.bind(this)}
                                       onPublish={this.publishProduct.bind(this)}
                 />

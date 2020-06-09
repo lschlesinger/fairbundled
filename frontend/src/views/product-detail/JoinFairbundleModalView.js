@@ -17,7 +17,7 @@ export default class JoinFairbundleModalView extends React.Component {
 
     // TODO: trigger backend with button click (use FairbundleService.joinFairbundle(...))
     onClick = async () => {
-        await FairbundleService.joinFairbundle(this.props.quantity, this.props.productId, this.state.fairbundle.expiration, this.state.fairbundle.expirationAction, this.state.fairbundle.targetPrice)
+        await FairbundleService.joinFairbundle(this.props.qty, this.props.productId, this.state.fairbundle.expiration, this.state.fairbundle.expirationAction, this.state.fairbundle.targetPrice)
     }
 
 }
