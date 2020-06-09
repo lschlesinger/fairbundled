@@ -77,7 +77,7 @@ class FilterBar extends React.Component {
                     <Avatar shape="square"
                             size="small"
                             src={cert.logo}/>
-                    <span className="padding--sm">{cert.name}</span>
+                    <span className="certName">{cert.name}</span>
                 </Checkbox>
             </Row>);
     }
