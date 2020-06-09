@@ -1,12 +1,13 @@
 import React from "react";
 
-import {Menu, message, Avatar, Checkbox, Col, Form, Row} from 'antd';
+import {Menu, message, Avatar, Checkbox, Col, Form, Row, Typography} from 'antd';
 import "./ProductFilterBarStyles.less"
 import CertificateService from "../../services/CertificateService";
 import {withRouter} from "react-router-dom";
 import {Link} from "react-router-dom";
 
 const { SubMenu } = Menu;
+const { Paragraph } = Typography
 
 class FilterBar extends React.Component {
 
@@ -71,14 +72,14 @@ class FilterBar extends React.Component {
 
     getCheckboxes(cert) {
         return (
-            <Col>
+            <Row justify="start" className="margin-vertical--md">
                 <Checkbox value={cert._id}>
                     <Avatar shape="square"
-                            size="medium"
+                            size="small"
                             src={cert.logo}/>
-                    <div className="padding--sm">{cert.name}</div>
+                    <span className="padding--sm">{cert.name}</span>
                 </Checkbox>
-            </Col>);
+            </Row>);
     }
 
     onFinish(values) {
@@ -113,9 +114,7 @@ class FilterBar extends React.Component {
                         title="Produktsiegel">   
                             <Form.Item name="certificates">
                             <Checkbox.Group style={{width: '100%'}}>
-                                <Row style={{textAlign: 'left'}} gutter={[0]}>
-                                    {this.state.certificates.map((c) => this.getCheckboxes(c))}
-                                </Row>
+                                {this.state.certificates.map((c) => this.getCheckboxes(c))}
                             </Checkbox.Group>
                             </Form.Item>    
                     </SubMenu>
