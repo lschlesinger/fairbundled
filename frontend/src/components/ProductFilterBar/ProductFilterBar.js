@@ -100,21 +100,7 @@ class FilterBar extends React.Component {
         let arrays = entries.map(e => e[1]);
         var selectedCerts = [].concat.apply([], arrays);
 
-        console.log(selectedCerts);
-
-        // this.setState(prevState => ({
-        //     product: {
-        //         ...prevState.product,
-        //         "name": name ? name : prevState.product.name,
-        //         "description": description ? description : prevState.product.description,
-        //         "ean": ean ? ean : prevState.product.ean,
-        //         "images": images ? this.getThumbUrls(images) : prevState.product.imagesUrl,
-        //         "deliveryDays": deliveryDays ? deliveryDays : prevState.product.deliveryDays,
-        //         "priceLevel": priceLevel ? priceLevel : prevState.product.priceLevel,
-        //         "certificates": certificates ? certificates : prevState.product.certificates,
-        //         "categories": categories ? categories : prevState.product.categories
-        //     }
-        // }), () => console.log(this.state.product));
+        this.props.onSelectedCertsChanged(selectedCerts);
     }
 
 

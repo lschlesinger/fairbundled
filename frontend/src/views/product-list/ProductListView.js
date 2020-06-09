@@ -1,25 +1,22 @@
-import React from 'react';
+import React from "react";
 import ProductService from "../../services/ProductService";
 import FairbundleService from "../../services/FairbundleService";
 import {Layout, message} from 'antd';
-import ProductListCard from "../../components/ProductListCard";
+import ProductListCard from "../../components/ProductListCard/ProductListCard";
 import ProductFilterBar from "../../components/ProductFilterBar/ProductFilterBar"
 import './ProductListView.less';
 
 // decide on overall layout structure (ANT)
-const {Sider, Content} = Layout;
+const { Sider, Content } = Layout;
 
 export default class ProductListView extends React.Component {
-
-
     constructor(props) {
         super(props);
         this.state = {
-            products: [],
-            fairbundles: []
+            products: null,
+            fairbundles: null,
         };
     }
-
 
     componentWillMount() {
         this.getProductsAndFairbundles();
@@ -31,25 +28,39 @@ export default class ProductListView extends React.Component {
         }
     }
 
-    async getProductsAndFairbundles() {
+    onSelectedCertsChanged(selectedCerts) {
+        this.getProductsAndFairbundles(selectedCerts);
+    }
+
+    async getProductsAndFairbundles(certificates = null) {
         try {
-            const {location: {search}} = this.props;
+            const {
+                location: { search },
+            } = this.props;
             // get fairbundles
-            let fairbundles =  await FairbundleService.getFairbundles();
+            let fairbundles = await FairbundleService.getFairbundles();
             // get products
             let products = await ProductService.getProducts(search);
+            if (certificates != null && certificates.length > 0) {
+                products = products.filter(p => p.certificates.length > 1);
+            }
+            console.log(products.length);
+            // update products with smallest Price Information
+            products = ProductService.getSmallestPrice(products);
             // update products with flagged (hasFairbundle) products
-            products = FairbundleService.getFairbundleFlags(products, fairbundles);
+            products = FairbundleService.getFairbundleFlags(
+                products,
+                fairbundles
+            );
             //set state variables
             this.setState({
                 fairbundles: fairbundles,
-                products: products
-            })
+                products: products,
+            });
         } catch (e) {
             message.error("Error fetching products and fairbundles.");
         }
     }
-
 
     render() {
         return (
@@ -58,13 +69,19 @@ export default class ProductListView extends React.Component {
                     overflow: 'auto',
                     position: 'relative',
                     left: 0}}>
-                    <ProductFilterBar/>
+                    <ProductFilterBar onSelectedCertsChanged={this.onSelectedCertsChanged.bind(this)} />
                 </Sider>
                 <Content className="product-list-view__content">
-                    <ProductListCard fairbundles={this.state.fairbundles} products={this.state.products} />
+                    {this.state.products && this.state.fairbundles ? (
+                        <ProductListCard
+                            fairbundles={this.state.fairbundles}
+                            products={this.state.products}
+                        />
+                    ) : (
+                        ""
+                    )}
                 </Content>
             </Layout>
-
         );
     }
 }
