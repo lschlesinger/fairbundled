@@ -3,6 +3,7 @@ import ProductService from "../../services/ProductService";
 import FairbundleService from "../../services/FairbundleService";
 import {Layout, message} from 'antd';
 import ProductListCard from "../../components/ProductListCard";
+import ProductFilterBar from "../../components/ProductFilterBar/ProductFilterBar"
 import './ProductListView.less';
 
 // decide on overall layout structure (ANT)
@@ -52,13 +53,9 @@ export default class ProductListView extends React.Component {
 
     render() {
         return (
-            <Layout className="layout">
-                <Sider className="sider" width="30%"><ProductFilterBar/></Sider>
-                <Content><ProductListCard products={this.state.products}/></Content>
-            </Layout>
             <Layout className="product-list-view__layout">
-                <Sider className="product-list-view__sider">
-                    Sider
+                <Sider width="30%" className="product-list-view__sider">
+                    <ProductFilterBar/>
                 </Sider>
                 <Content className="product-list-view__content">
                     <ProductListCard fairbundles={this.state.fairbundles} products={this.state.products} />

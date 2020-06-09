@@ -1,6 +1,6 @@
 import React from "react";
 
-import {Menu, Checkbox, message} from 'antd';
+import {Menu, message, Avatar, Checkbox, Col, Form, Row} from 'antd';
 import "./ProductFilterBarStyles.less"
 import CertificateService from "../../services/CertificateService";
 import {withRouter} from "react-router-dom";
@@ -41,7 +41,6 @@ class FilterBar extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.location !== prevProps.location) {
-            //this.initState();
             this.getCertificates();
         }
     }
@@ -70,33 +69,58 @@ class FilterBar extends React.Component {
         })
     }
 
-    getMenuItem(certificate) {
+    getCheckboxes(cert) {
         return (
-            <Menu.Item key={certificate._id} className="menuItem">
-                <Link to={`/product?searchString=${this.state.searchString}&category=${this.state.category}&certificate=${this.state.selectedCerts.join("|")}`}>
-                    <Checkbox>
-                        {certificate.name}
-                    </Checkbox>
-                </Link>
-            </Menu.Item>
-        );
+            <Col>
+                <Checkbox value={cert._id}>
+                    <Avatar shape="square"
+                            size="medium"
+                            src={cert.logo}/>
+                    <div className="padding--sm">{cert.name}</div>
+                </Checkbox>
+            </Col>);
     }
+
+    onFinish(values) {
+        console.log(values);
+        const {certificates} = values;
+        // this.setState(prevState => ({
+        //     product: {
+        //         ...prevState.product,
+        //         "name": name ? name : prevState.product.name,
+        //         "description": description ? description : prevState.product.description,
+        //         "ean": ean ? ean : prevState.product.ean,
+        //         "images": images ? this.getThumbUrls(images) : prevState.product.imagesUrl,
+        //         "deliveryDays": deliveryDays ? deliveryDays : prevState.product.deliveryDays,
+        //         "priceLevel": priceLevel ? priceLevel : prevState.product.priceLevel,
+        //         "certificates": certificates ? certificates : prevState.product.certificates,
+        //         "categories": categories ? categories : prevState.product.categories
+        //     }
+        // }), () => console.log(this.state.product));
+    }
+
 
     render() {
         return (
-            <Menu
-                mode="inline"
-                openKeys={this.state.openKeys}
-                onOpenChange={this.onOpenChange}
-                className="menuTitle"
-                onSelect={this.onSelect}
-            >
-                <SubMenu
-                key="certificates"
-                title="Produktsiegel">    
-                    {this.state.certificates.map((c) => this.getMenuItem(c))}            
-                </SubMenu>
-            </Menu>
+            <Form onValuesChange={(changedValues, values) => this.onFinish(values)}> 
+                <Menu
+                    mode="inline"
+                    openKeys={this.state.openKeys}
+                    onOpenChange={this.onOpenChange}
+                    className="menuTitle">
+                    <SubMenu
+                        key="certificates"
+                        title="Produktsiegel">   
+                            <Form.Item name="certificates">
+                            <Checkbox.Group style={{width: '100%'}}>
+                                <Row style={{textAlign: 'left'}} gutter={[0]}>
+                                    {this.state.certificates.map((c) => this.getCheckboxes(c))}
+                                </Row>
+                            </Checkbox.Group>
+                            </Form.Item>    
+                    </SubMenu>
+                </Menu>
+            </Form>
         )
     }
 }
