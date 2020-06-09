@@ -66,13 +66,20 @@ class FairbundleController {
                     product: fairbundle.product._id,
                     user: req.userId
                 };
-                fairbundle.positions.push(position);
+                if (!fairbundle.positions) {
+                    fairbundle.positions = [];
+                }
+                fairbundle.positions.push(orderPosition);
+                if (!fairbundle.bundlers) {
+                    fairbundle.bundlers = [];
+                }
                 fairbundle.bundlers.push(req.municipalityId);
                 fairbundle.save((f) => {
                     res.status(201).json(f)
                 });
             })
             .catch((err) => {
+                console.log(err);
                 res.status(400).send(err);
             })
     }
