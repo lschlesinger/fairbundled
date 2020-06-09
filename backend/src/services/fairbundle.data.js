@@ -12,7 +12,7 @@ const FAIRBUNDLES = [
             billingAddress: "Str. 3434"
         },
         expiration: new Date('2020-10-01T17:00:00'),
-        expirationAction: "Cancel",
+        expirationAction: 'cancel',
         targetPrice: 50,
         bundlers: [{
             name: "München",

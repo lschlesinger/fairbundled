@@ -4,7 +4,11 @@ import extendSchema from 'mongoose-extend-schema';
 
 const Fairbundle = extendSchema(OrderSchema, {
     expiration: Date,
-    expirationAction: String,
+    expirationAction: {
+        type: String,
+        enum: ['force','cancel'],
+        default: 'force'
+    },
     targetPrice: Number,
     bundlers: [{
         type: mongoose.Schema.Types.ObjectId,
