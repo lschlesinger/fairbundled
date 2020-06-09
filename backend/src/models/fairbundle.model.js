@@ -1,10 +1,14 @@
 import mongoose from 'mongoose';
-import Order from './order.model';
+import {OrderSchema} from './order.model';
+import extendSchema from 'mongoose-extend-schema';
 
-const Fairbundle = new mongoose.Schema({
-    ...Order.obj,
+const Fairbundle = extendSchema(OrderSchema, {
     expiration: Date,
-    expirationAction: String,
+    expirationAction: {
+        type: String,
+        enum: ['force','cancel'],
+        default: 'force'
+    },
     targetPrice: Number,
     bundlers: [{
         type: mongoose.Schema.Types.ObjectId,
