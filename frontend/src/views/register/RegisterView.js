@@ -45,7 +45,6 @@ class RegisterView extends React.Component {
     }
 
     onFinish(values) {
-        console.log(values);
         const {email, password, municipality, supplier} = values;
         AuthService.register(email, password, municipality, supplier)
             .then(() => {
@@ -59,7 +58,9 @@ class RegisterView extends React.Component {
 
     render() {
         return (
-            <Row justify="center" align="middle">
+            <Row className="padding--md"
+                 justify="center"
+                 align="middle">
                 <RegisterForm onFinish={this.onFinish.bind(this)}
                               municipalities={this.state.municipalities}
                               suppliers={this.state.suppliers}/>

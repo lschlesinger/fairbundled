@@ -6,15 +6,10 @@ const CATEGORIES = [
             {name: "T-Shirts"},
             {name: "Feuerwehruniformen"},
             {name: "Polizeiuniformen"},
-            {name: "Tischwäsche"},
-            {name: "Teppiche"},
-            {name: "Westen"},
             {name: "Medizinische Kleidung"},
             {name: "Textilbeutel"},
             {name: "Handschuhe"},
-            {name: "Hemden"},
             {name: "Schutz- und Sicherheitsbekleidung"},
-            {name: "Gardinen"},
             {name: "Trockentücher"}]
     },
     {
@@ -24,12 +19,9 @@ const CATEGORIES = [
             {name: "Anbaugeräte"},
             {name: "Lagercontainer & Raummodule"},
             {name: "Gartenprodukte"},
-            {name: "Befestigungstechnik"},
             {name: "Werkzeug"},
             {name: "Werktstattbedarf"},
-            {name: "Werkstatteinrichtung"},
             {name: "Transportgeräte & Anhänger"},
-            {name: "Bauchemie"},
             {name: "Baumaterial"},
             {name: "Arbeitsschutz"},
             {name: "Streumittel"},
@@ -41,18 +33,16 @@ const CATEGORIES = [
         subcategories: [
             {name: "Ordnen & Archivieren"},
             {name: "Papier"},
-            {name: "Flipcharts & Tafel"},
             {name: "Formulare"},
             {name: "Schreibgerät"},
             {name: "Schreibtischaccessoires"},
             {name: "Bürotechnik"},
             {name: "Packmittel"},
             {name: "Wahlmaterial"},
-            {name: "Kalender"},
         ]
     },
     {
-        name: "Straße und Verkehr",
+        name: "Straße & Verkehr",
         root: true,
         subcategories: [
             {name: "Verkehrsspiegel"},
@@ -71,7 +61,6 @@ const CATEGORIES = [
         subcategories: [
             {name: "Heizungen"},
             {name: "Spielplatzgeräte"},
-            {name: "Outdoor Fitnessgeräte"},
             {name: "Parkbänke"},
             {name: "Abfallbehälter"},
             {name: "Müllsysteme"},
@@ -108,7 +97,6 @@ const CATEGORIES = [
             {name: "Therapie"},
             {name: "Teamsport"},
             {name: "Vereinsbedarf"},
-            {name: "E-Scooter"},
         ]
     },
     {
@@ -119,10 +107,8 @@ const CATEGORIES = [
             {name: "Reinigungs-, Pflegemittel"},
             {name: "Reinigungstücher"},
             {name: "Reinigungsgeräte für Betriebe"},
-            {name: "Reinigungsgeräte für den Haushalt"},
             {name: "Kaffee & Teeküche"},
             {name: "Abfallkübel & Spender"},
-            {name: "Schutzfangmatten"},
             {name: "Körperpflege"},
             {name: "Arbeitshandschuhe"},
 

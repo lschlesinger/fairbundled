@@ -27,8 +27,8 @@ const checkAuthentication = (req, res, next) => {
 
         // if verification succeeds, save userId to request for use in other routes
         req.userId = decoded.id;
-        req.municipalityId = decoded.municipalityId;
-        req.supplierId = decoded.supplierId;
+        req.municipalityId = decoded.municipality ? decoded.municipality._id : null;
+        req.supplierId = decoded.supplier ? decoded.supplier._id : null;
         next();
     });
 };
@@ -61,6 +61,7 @@ const checkMunicipality = (req, res, next) => {
  * @param next
  */
 const checkSupplier = (req, res, next) => {
+    console.log(req);
     if (req.supplierId) {
         next();
     } else {

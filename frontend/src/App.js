@@ -29,8 +29,18 @@ export default class App extends React.Component {
             // connect routes (url) and components
             routes: [
                 {component: LandingView, path: '/', exact: true},
-                {component: ProductListView, path: '/product'},
+                {
+                    // allow rendering of certain views only for authenticated user
+                    render: (props) => {
+                        if (AuthService.isAuthenticated()) {
+                            return (<ProductCreateView {...props} />)
+                        } else {
+                            return (<Redirect to={'/login'}/>)
+                        }
+                    }, path: '/product/create'
+                },
                 {component: ProductDetailView, path: '/product/:id'},
+                {component: ProductListView, path: '/product'},
                 {
                     // allow rendering of certain views only for non-authenticated user
                     render: (props) => {
@@ -50,16 +60,6 @@ export default class App extends React.Component {
                             return (<Redirect to={'/'}/>)
                         }
                     }, path: '/register'
-                },
-                {
-                    // allow rendering of certain views only for authenticated user
-                    render: (props) => {
-                        if (AuthService.isAuthenticated()) {
-                            return (<ProductCreateView {...props} />)
-                        } else {
-                            return (<Redirect to={'/login'}/>)
-                        }
-                    }, path: '/product/create'
                 },
                 {
                     // allow rendering of certain views only for authenticated user
@@ -102,7 +102,7 @@ export default class App extends React.Component {
                             {this.state.routes.map((route, i) => (<Route key={i} {...route}/>))}
                         </Switch>
                     </Content>
-                    <Footer>
+                    <Footer className="app__footer">
                         <FairbunbledFooter/>
                     </Footer>
                 </Router>

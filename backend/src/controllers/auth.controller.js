@@ -7,6 +7,8 @@ import UserService from "../services/user.service";
 class AuthController {
     static login(req, res) {
         User.findOne({email: req.body.email})
+            .populate('municipality')
+            .populate('supplier')
             .then((user) => {
                 const isPasswordValid = user.comparePassword(req.body.password);
                 if (!isPasswordValid) return res.status(401).json({token: null});
@@ -16,8 +18,8 @@ class AuthController {
                 const token = jwt.sign({
                     id: user._id,
                     email: user.email,
-                    municipalityId: user.municipality || '',
-                    supplierId: user.supplier || ''
+                    municipality: user.municipality || null,
+                    supplier: user.supplier || null
                 }, config.auth.jwtSecret, {
                     expiresIn: 86400 // expires in 24 hours
                 });

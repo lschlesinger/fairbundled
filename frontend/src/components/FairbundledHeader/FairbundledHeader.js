@@ -19,8 +19,10 @@ export default class FairbundledHeader extends React.Component {
                 <Row justify="space-around" align="middle">
                     <Col span={5}>
                         <Row align="middle" justify="start">
+                            <a href="/">
                             <img className="header__logo"
                                  src={logo} alt="LOGO"/>
+                            </a>
                         </Row>
                     </Col>
                     <Col span={14}>
