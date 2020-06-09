@@ -56,9 +56,8 @@ export default class ProductListView extends React.Component {
             <Layout className="product-list-view__layout">
                 <Sider width="30%" className="product-list-view__sider" style={{
                     overflow: 'auto',
-                    height: "80vh",
                     position: 'relative',
-                    left: 0,}}>
+                    left: 0}}>
                     <ProductFilterBar/>
                 </Sider>
                 <Content className="product-list-view__content">
