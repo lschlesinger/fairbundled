@@ -13,7 +13,7 @@ export default class ProductListCard extends React.Component {
 
     getCardItem(product) {
         return (
-            <Col span={8}>
+            <Col span={8} key={product._id}>
                 <Card title={product.name}
                       key={product._id}
                       bordered={true}>

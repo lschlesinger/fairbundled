@@ -20,7 +20,7 @@ export default class ProductListView extends React.Component {
     }
 
 
-    componentWillMount() {
+    componentDidMount() {
         this.getProductsAndFairbundles();
     }
 
