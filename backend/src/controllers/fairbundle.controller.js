@@ -44,7 +44,7 @@ class FairbundleController {
                 OrderPosition.create(position).then((position) => {
                     fairbundle.positions.push(position);
                     fairbundle.save((f) => {
-                        res.status(201).json(f)
+                        res.status(201).json(fairbundle)
                     })
                 });
             })
@@ -66,17 +66,15 @@ class FairbundleController {
                     product: fairbundle.product._id,
                     user: req.userId
                 };
-                if (!fairbundle.positions) {
-                    fairbundle.positions = [];
-                }
-                fairbundle.positions.push(orderPosition);
-                if (!fairbundle.bundlers) {
-                    fairbundle.bundlers = [];
-                }
-                fairbundle.bundlers.push(req.municipalityId);
-                fairbundle.save((f) => {
-                    res.status(201).json(f)
+                OrderPosition.create(orderPosition).then((position) => {
+                    fairbundle.positions.push(position._id);
+                    fairbundle.bundlers.push(req.municipalityId);
+                    fairbundle.save((f) => {
+                        res.status(201).json(fairbundle);
+                    });
                 });
+
+
             })
             .catch((err) => {
                 console.log(err);
