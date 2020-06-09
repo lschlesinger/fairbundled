@@ -10,9 +10,6 @@ const { SubMenu } = Menu;
 const { Paragraph } = Typography
 
 class FilterBar extends React.Component {
-
-    rootSubmenuKeys = ['certificates'];
-
     constructor(props, context) {
         super(props, context);
 
@@ -59,7 +56,7 @@ class FilterBar extends React.Component {
     onOpenChange = openKeys => {
         const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
         this.setState({
-            openKeys: latestOpenKey ? [latestOpenKey] : [],
+            openKeys: openKeys,
         });
     };
 
@@ -71,6 +68,8 @@ class FilterBar extends React.Component {
     }
 
     getCheckboxes(cert) {
+        console.log(cert.name);
+
         return (
             <Row justify="start" className="margin-vertical--md">
                 <Checkbox value={cert._id}>
@@ -80,6 +79,33 @@ class FilterBar extends React.Component {
                     <span className="certName">{cert.name}</span>
                 </Checkbox>
             </Row>);
+    }
+
+    getGroupedCertificates(certs) {
+
+        let groupedCerts = certs.reduce(function (r, a) {
+            r[a.sector] = r[a.sector] || [];
+            r[a.sector].push(a);
+            return r;
+        }, Object.create(null));
+
+        console.log(groupedCerts);
+
+        let code = [];
+
+        for (let [key, value] of Object.entries(groupedCerts)) {
+            console.log(`${key}: ${value.length} - ${value[0]._id}`);
+            code.push(
+            <SubMenu
+                key={key}
+                title={key}>   
+                <Checkbox.Group style={{width: '100%'}}>
+                    {value.map((c) => this.getCheckboxes(c))}
+                </Checkbox.Group>
+            </SubMenu>);
+        }
+
+        return code;
     }
 
     onFinish(values) {
@@ -104,24 +130,24 @@ class FilterBar extends React.Component {
     render() {
         return (
             <Form onValuesChange={(changedValues, values) => this.onFinish(values)}> 
-                <Menu
-                    mode="inline"
-                    openKeys={this.state.openKeys}
-                    onOpenChange={this.onOpenChange}
-                    className="menuTitle">
-                    <SubMenu
-                        key="certificates"
-                        title="Produktsiegel">   
-                            <Form.Item name="certificates">
-                            <Checkbox.Group style={{width: '100%'}}>
-                                {this.state.certificates.map((c) => this.getCheckboxes(c))}
-                            </Checkbox.Group>
-                            </Form.Item>    
-                    </SubMenu>
-                </Menu>
+                <Form.Item name="certificates">
+                    <Menu
+                        mode="inline"
+                        openKeys={this.state.openKeys}
+                        onOpenChange={this.onOpenChange}
+                        className="menuTitle">
+                        <SubMenu
+                            key="certificates"
+                            title="Produktsiegel">   
+                            {this.getGroupedCertificates(this.state.certificates)}
+                        </SubMenu>
+                    </Menu>
+                </Form.Item>   
             </Form>
         )
     }
 }
 
 export default withRouter(FilterBar);
+
+//{this.state.certificates.map(c => this.getCheckboxes(c))}
