@@ -42,9 +42,8 @@ export default class ProductListView extends React.Component {
             // get products
             let products = await ProductService.getProducts(search);
             if (certificates != null && certificates.length > 0) {
-                products = products.filter(p => p.certificates.length > 1);
+                products = products.filter(p => p.certificates.some(r=> certificates.indexOf(r) >= 0));
             }
-            console.log(products.length);
             // update products with smallest Price Information
             products = ProductService.getSmallestPrice(products);
             // update products with flagged (hasFairbundle) products

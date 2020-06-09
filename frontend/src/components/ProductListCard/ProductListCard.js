@@ -45,8 +45,6 @@ export default class ProductListCard extends React.Component {
                 products: this.props.products
             }
         ));
-
-        console.log(this.props);
     }
 
     //function to determine the lowest price and to differentiate between one and multiple price levels (Difference: Ab)
