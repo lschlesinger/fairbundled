@@ -17,20 +17,10 @@ class FilterBar extends React.Component {
     }
 
     initState() {
-        const category = this.props.location.search.includes('category') ? this.props.location.search.split('category=')[1].split("&")[0] : "";
-        const searchString = this.props.location.search.includes('searchString') ? this.props.location.search.split('searchString=')[1].split("&")[0] : "";
-        const selectedCerts = this.props.location.search.includes('certificate') ? this.props.location.search.split('certificate=')[1].split("&")[0].split("|") : [];
         this.state = {
-            category: category,
-            searchString: searchString,
-            selectedCerts: selectedCerts,
             openKeys: ['certificates'],
             certificates: []
         }
-
-        console.log(`Category: ${category}`);
-        console.log(`Search: ${searchString}`);
-        console.log(`Certs: ${selectedCerts.length}`);
     }
 
     componentWillMount() {
@@ -68,8 +58,6 @@ class FilterBar extends React.Component {
     }
 
     getCheckboxes(cert) {
-        console.log(cert.name);
-
         return (
             <Row justify="start" className="margin-vertical--md">
                 <Checkbox value={cert._id}>
@@ -89,19 +77,18 @@ class FilterBar extends React.Component {
             return r;
         }, Object.create(null));
 
-        console.log(groupedCerts);
-
         let code = [];
 
         for (let [key, value] of Object.entries(groupedCerts)) {
-            console.log(`${key}: ${value.length} - ${value[0]._id}`);
             code.push(
             <SubMenu
                 key={key}
                 title={key}>   
+                <Form.Item name={key}>
                 <Checkbox.Group style={{width: '100%'}}>
                     {value.map((c) => this.getCheckboxes(c))}
                 </Checkbox.Group>
+                </Form.Item>
             </SubMenu>);
         }
 
@@ -109,8 +96,12 @@ class FilterBar extends React.Component {
     }
 
     onFinish(values) {
-        console.log(values);
-        const {certificates} = values;
+        let entries = Object.entries(values);
+        let arrays = entries.map(e => e[1]);
+        var selectedCerts = [].concat.apply([], arrays);
+
+        console.log(selectedCerts);
+
         // this.setState(prevState => ({
         //     product: {
         //         ...prevState.product,
@@ -130,7 +121,6 @@ class FilterBar extends React.Component {
     render() {
         return (
             <Form onValuesChange={(changedValues, values) => this.onFinish(values)}> 
-                <Form.Item name="certificates">
                     <Menu
                         mode="inline"
                         openKeys={this.state.openKeys}
@@ -141,8 +131,7 @@ class FilterBar extends React.Component {
                             title="Produktsiegel">   
                             {this.getGroupedCertificates(this.state.certificates)}
                         </SubMenu>
-                    </Menu>
-                </Form.Item>   
+                    </Menu> 
             </Form>
         )
     }
