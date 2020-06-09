@@ -122,7 +122,7 @@ export default class ProductListCard extends React.Component {
         this.setState({
             products: checked
                 ? this.state.products.filter(
-                      (product) => product.hasFairbundle == true
+                      (product) => product.hasFairbundle === true
                   )
                 : this.props.products,
         });
@@ -130,7 +130,7 @@ export default class ProductListCard extends React.Component {
     //handles the ordering of the elements based on price ascending and descending (top right)
     handleOrdering(ordering) {
         this.setState({ ordering: ordering });
-        if (ordering == "Niedrigster Preis") {
+        if (ordering === "Niedrigster Preis") {
             this.setState({
                 products: this.state.products.sort(
                     (a, b) => a.smallestPrice - b.smallestPrice
@@ -138,7 +138,7 @@ export default class ProductListCard extends React.Component {
             });
             console.log(this.state.products);
         }
-        if (ordering == "Höchster Preis") {
+        if (ordering === "Höchster Preis") {
             this.setState({
                 products: this.state.products.sort(
                     (a, b) => b.smallestPrice - a.smallestPrice
