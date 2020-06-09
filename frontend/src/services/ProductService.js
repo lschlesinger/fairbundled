@@ -9,28 +9,14 @@ export default class ProductService {
         return HttpService.get(`${this.BASE_URL}/${search}`);
     }
 
-    static async createProduct(
-        name,
-        description,
-        ean,
-        images,
-        deliveryDays,
-        priceLevel,
-        certificates,
-        category
-    ) {
-        const product = {
-            name,
-            description,
-            ean,
-            images,
-            deliveryDays,
-            priceLevel,
-            certificates,
-            category,
-        };
+    static async createProduct(product) {
         return HttpService.post(`${this.BASE_URL}/`, product);
     }
+
+    static async getProduct(productId) {
+        return HttpService.get(`${this.BASE_URL}/${productId}`)
+    }
+
     static getSmallestPrice(products) {
         const smallestPriceProducts = [];
         for (const p in products) {

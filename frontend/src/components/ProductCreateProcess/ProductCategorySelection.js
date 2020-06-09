@@ -39,7 +39,9 @@ export default class ProductCategorySelection extends React.Component {
         }
         return (
             // navigate to route with category query param (if sub-category is selected)
-            <TreeNode value={category._id} title={category.name} key={category._id}/>
+            <TreeNode value={category._id}
+                      title={category.name}
+                      key={category._id}/>
         );
     }
 
