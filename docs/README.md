@@ -190,15 +190,19 @@ This section explains the routing logic in backend (request endpoints) and front
 
 The table should be read as tree from left to right, e.g. one endpoint is `/api/auth/register`
 
-| Base URL | Route          | Endpoint    | HTTP Verb |
-| -------- | -------------- | ----------- | --------- |
-| `/api`   | `/product`     | `/`         | GET, POST |
-|          | `/auth`        | `/login`    | POST      |
-|          |                | `/register` | POST      |
-|          | `/certificate` | `/`         | GET       |
-|          | `/fairbundle`  | `/`         | GET       |
-|          | `/fairbundle`  | `/`         | POST      |
-|          | `/municipatliy`| `/`         | GET       |
+| Base URL | Route           | Endpoint              | HTTP Verb | Middleware                                |
+| -------- | --------------- | --------------------- | --------- | ----------------------------------------- |
+| `/api`   | `/product`      | `/?product=productId` | GET       |                                           |
+|          |                 | `/:id`                | GET       |                                           |
+|          |                 | `/`                   | POST      | checkAuthentication<br>checkSupplier      |
+|          | `/fairbundle`   | `/?product=productId` | GET       |                                           |
+|          |                 | `/:id`                | GET       |                                           |
+|          |                 | `/`                   | POST      | checkAuthentication<br/>checkMunicipality |
+|          |                 | `/:id`                | PUT       | checkAuthentication<br/>checkMunicipality |
+|          | `/auth`         | `/login`              | POST      |                                           |
+|          |                 | `/register`           | POST      |                                           |
+|          | `/municipatliy` | `/`                   | GET       |                                           |
+|          | `/supplier`     | `/`                   | GET       |                                           |
 
 Note:
 
@@ -206,7 +210,11 @@ Note:
 - Routes (1st Level) are defined in `routes.js`
 - Endpoints (2nd Level) are defined in respective `routeX.routes.js` file in  `/routes` folder; in these files, the mapping of the endpoint to HTTP verbs and controller functions is done
 
+### Middleware
 
+Middleware functionality checks the request before data is sent back from the backend. More precisely, it is checked whether the user's token exists (user receives JWT token after login) and is still valid (`checkAuthentication`).
+
+Furthermore, depending on the request, it is also checked whether a `MunicipalityId` or `SupplierId` is present in the token (`checkMunicipality`, `checkSupplier`). These Ids are encoded in the user's JWT token after log in as registered municipality or supplier respectively. 
 
 <!-- FRONTEND URLS -->
 
@@ -218,9 +226,6 @@ Note:
 | `/register`       |        |                                | `RegisterView`                                               |
 | `/login`          |        |                                | `LoginView`                                                  |
 | `/product`        |        | `?category=A`<br/>`?query=abc` | `ProductListView`                                            |
-| `/product`        | `/:id` |                                | `ProductDetailView` <br>`CreateFairbundleModalView`<br/> `JoinFairbundleModalView` <br/>`FairbundleCreatedModalView` <br/>`FairbundleJoinedModalView` |
+| `/product`        | `/:id` |                                | `ProductDetailView` <br>`CreateFairbundleModalView` <br/> `JoinFairbundleModalView` <br/>`FairbundleCreatedModalView` <br/>`FairbundleJoinedModalView` |
 | `/product/create` |        |                                | `ProductCreateView`<br> `ProductPreviewModalView`            |
 | `/account`        |        |                                | `AccountView`                                                |
-
-
-
