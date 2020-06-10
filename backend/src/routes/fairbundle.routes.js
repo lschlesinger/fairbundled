@@ -6,7 +6,7 @@ const router = express.Router();
 
 // fairbundle routes
 router.get('/', FairbundleController.getFairbundles);
-router.get('/?product=:id', FairbundleController.getFairbundles);
+router.get('/:id', FairbundleController.getFairbundle);
 router.post('/', middlewares.checkAuthentication, middlewares.checkMunicipality, FairbundleController.createFairbundle);
 router.put('/:id', middlewares.checkAuthentication, middlewares.checkMunicipality, FairbundleController.joinFairbundle);
 export default router;

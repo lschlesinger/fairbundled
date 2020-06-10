@@ -1,6 +1,7 @@
 import Product from "../models/product.model";
 
 class ProductController {
+
     static getProducts(req, res) {
         const query = {};
         if (!!req.query.category) {
@@ -21,6 +22,18 @@ class ProductController {
                     }
                 });
                 res.status(200).json(products);
+            })
+            .catch((err) => {
+                res.status(400).send(err);
+            })
+    }
+
+    static getProduct(req, res) {
+        Product.findById(req.params.id)
+            .populate("supplier")
+            .populate("certificates")
+            .then((product) => {
+                res.status(200).json(product);
             })
             .catch((err) => {
                 res.status(400).send(err);
@@ -58,18 +71,6 @@ class ProductController {
         Product.create(product)
             .then((product) => {
                 res.status(201).json(product);
-            })
-            .catch((err) => {
-                res.status(400).send(err);
-            })
-    }
-
-    static getProduct(req, res) {
-        Product.findById(req.params.id)
-            .populate("supplier")
-            .populate("certificates")
-            .then((product) => {
-                res.status(200).json(product);
             })
             .catch((err) => {
                 res.status(400).send(err);
