@@ -47,17 +47,17 @@ export default class ProductCreateProcess extends React.Component {
         // and rendered depending on the current selected step
         switch (key) {
             case 'category':
-                return (<ProductCategorySelection categories={this.props.categories} product={this.props.product}/>);
+                return (<ProductCategorySelection categories={this.props.categories}/>);
             case 'description':
-                return (<ProductDescriptionInput product={this.props.product}/>);
+                return (<ProductDescriptionInput/>);
             case 'price':
-                return (<ProductPriceLevelInput product={this.props.product}/>);
+                return (<ProductPriceLevelInput/>);
             case 'certificate':
                 return (<ProductCertificateSelection categories={this.props.categories}
                                                      certificates={this.props.certificates}
                                                      product={this.props.product}/>);
             case 'image':
-                return (<ProductImageUpload product={this.props.product}/>);
+                return (<ProductImageUpload/>);
         }
     }
 
@@ -89,7 +89,7 @@ export default class ProductCreateProcess extends React.Component {
                      align="middle">
                     {/*initialize a form around process content to enable value (i.e. product fields) updates across process steps*/}
                     <Form className="product-create-process__step-form"
-                          onValuesChange={(changedValues, values) => this.props.onFinish(values)}>
+                          onValuesChange={(changedValues, values) => this.props.onChange(values)}>
                         {this.getCurrentContent(steps[current].content)}
                     </Form>
                 </Row>

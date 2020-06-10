@@ -61,7 +61,6 @@ const checkMunicipality = (req, res, next) => {
  * @param next
  */
 const checkSupplier = (req, res, next) => {
-    console.log(req);
     if (req.supplierId) {
         next();
     } else {

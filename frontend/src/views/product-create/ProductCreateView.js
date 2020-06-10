@@ -2,10 +2,11 @@ import React from 'react';
 import ProductCreateProcess from "../../components/ProductCreateProcess/ProductCreateProcess";
 import CategoryService from "../../services/CategoryService";
 import AuthService from "../../services/AuthService";
-import ProductPreviewModal from "../../components/ProductCreateProcess/ProductPreviewModal";
+import ProductPreviewModalView from "./ProductPreviewModalView";
 import ProductService from "../../services/ProductService";
 import CertificateService from "../../services/CertificateService";
 import {message} from "antd";
+import "../../App.less";
 
 export class ProductCreateView extends React.Component {
 
@@ -82,7 +83,7 @@ export class ProductCreateView extends React.Component {
      * those values that haven't been changed will receive the value of their previous state
      * @param values
      */
-    onFinish(values) {
+    onChange(values) {
         console.log(values);
         const {categories, name, description, ean, deliveryDays, priceLevel, certificates, images} = values;
         this.setState(prevState => ({
@@ -138,12 +139,12 @@ export class ProductCreateView extends React.Component {
                 <ProductCreateProcess categories={this.state.categories}
                                       certificates={this.state.certificates}
                                       product={this.state.product}
-                                      onFinish={this.onFinish.bind(this)}
-                                      onPreview={this.showModal.bind(this)}
+                                      onChange={this.onChange.bind(this)}
+                                      onPreview={this.showModal}
                                       onPublish={this.publishProduct.bind(this)}
                 />
-                <ProductPreviewModal
-                    onClose={this.hideModal.bind(this)} modalVisible={this.state.modalVisible}
+                <ProductPreviewModalView
+                    onClose={this.hideModal} modalVisible={this.state.modalVisible}
                     product={this.state.product}/>
             </div>
         );

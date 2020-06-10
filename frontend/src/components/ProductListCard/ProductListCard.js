@@ -17,10 +17,7 @@ import placeholder from "../../assets/placeholder.png";
 const { Paragraph, Text, Title } = Typography;
 const options = [
     { value: "Niedrigster Preis", label: "Niedrigster Preis" },
-    {
-        value: "Höchster Preis",
-        label: "Höchster Preis",
-    },
+    { value: "Höchster Preis", label: "Höchster Preis" }
 ];
 
 export default class ProductListCard extends React.Component {
@@ -116,6 +113,7 @@ export default class ProductListCard extends React.Component {
                                             shape="round"
                                             size="middle"
                                             type="primary"
+                                            block
                                         >
                                             Details
                                         </Button>
@@ -142,7 +140,7 @@ export default class ProductListCard extends React.Component {
     //handles the ordering of the elements based on price ascending and descending (top right)
     handleOrdering(ordering) {
         this.setState({ ordering: ordering });
-        if (ordering === "Niedrigster Preis") {
+        if (ordering[0] === "Niedrigster Preis") {
             this.setState({
                 products: this.state.products.sort(
                     (a, b) => a.smallestPrice - b.smallestPrice
@@ -150,7 +148,7 @@ export default class ProductListCard extends React.Component {
             });
             console.log(this.state.products);
         }
-        if (ordering === "Höchster Preis") {
+        if (ordering[0] === "Höchster Preis") {
             this.setState({
                 products: this.state.products.sort(
                     (a, b) => b.smallestPrice - a.smallestPrice
