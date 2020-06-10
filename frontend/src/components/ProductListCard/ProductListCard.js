@@ -186,7 +186,7 @@ export default class ProductListCard extends React.Component {
                                 options={options}
                                 onChange={this.handleOrdering}
                                 ordering={this.state.ordering}
-                                placeholder={this.state.ordering}
+                                placeholder="Bitte auswählen"
                             ></Cascader>
                         </Row>
                     </Col>
