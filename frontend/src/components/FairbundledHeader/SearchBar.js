@@ -10,36 +10,48 @@ const {Search} = Input;
 
 class SearchBar extends React.Component {
 
-    constructor(props, context) {
-        super(props, context);
-        // get query params from route (req. export withRouter)
-        const category = this.props.location.search.includes('category') ? this.props.location.search.split('category=')[1].split("&")[0] : "";
-        const searchString = this.props.location.search.includes('searchString') ? this.props.location.search.split('searchString=')[1].split("&")[0] : "";
+    constructor(props) {
+        super(props);
         this.state = {
-            category: category,
-            searchString: searchString
+            selectedCategory: this.props.currentRootCategory,
+            searchString: this.props.currentSearchString,
+        };
+        this.searchRef = React.createRef();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.currentRootCategory !== prevProps.currentRootCategory ||
+            this.props.currentSubCategory !== prevProps.currentSubCategory
+        ) {
+            // reset search input when category changed via CategoryHeaderMenu (crazy...)
+            if (this.props.currentRootCategory !== this.state.selectedCategory ||
+                this.props.currentSubCategory !== prevProps.currentSubCategory
+            ) {
+                if (this.searchRef?.current?.input?.handleReset) {
+                    this.searchRef.current.input.setValue(''); // hacky...
+                }
+            }
+            this.setState({
+                selectedCategory: this.props.currentRootCategory,
+                searchString: this.props.currentSearchString
+            });
         }
     }
 
-
     routeToPath() {
         // navigate to route with query params obtained from state
-        this.props.history.push(`/product?searchString=${this.state.searchString}&category=${this.state.category}`);
+        this.props.history.push(`/product?searchString=${this.state.searchString}&category=${this.state.selectedCategory}`);
     }
-
 
     getRootCategories(categories) {
         return (
             <Select className="search-bar__select"
-                labelInValue
-                defaultValue={{key: ''}}
-                onSelect={(category) => {
-                    // update state asynchronously with selection
-                    this.setState({category: category.key}, () => {
-                        // navigate to new route on state update completed
-                        this.routeToPath();
-                    });
-                }}>
+                    labelInValue
+                    value={{key: this.state.selectedCategory}}
+                    onSelect={(category) => {
+                        // update state asynchronously with selection
+                        this.setState({selectedCategory: category.key});
+                    }}>
                 <Option key='' value=''> Alle Kategorien </Option>
                 {
                     categories.map((c) => <Option key={c._id} value={c._id}> {c.name} </Option>)
@@ -52,6 +64,7 @@ class SearchBar extends React.Component {
         return (
             <Row justify="space-around" align="middle">
                 <Search
+                    ref={this.searchRef}
                     placeholder="Wonach suchen Sie?"
                     onSearch={(searchString) => {
                         // update state asynchronously on clicking/initializing search

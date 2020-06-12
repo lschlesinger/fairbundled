@@ -1,13 +1,12 @@
 import React from "react";
 
-import {Menu, message, Avatar, Checkbox, Col, Form, Row, Typography} from 'antd';
+import {Avatar, Checkbox, Form, Menu, message, Row, Typography} from 'antd';
 import "./ProductFilterBarStyles.less"
 import CertificateService from "../../services/CertificateService";
 import {withRouter} from "react-router-dom";
-import {Link} from "react-router-dom";
 
-const { SubMenu } = Menu;
-const { Paragraph } = Typography
+const {SubMenu} = Menu;
+const {Paragraph} = Typography
 
 class FilterBar extends React.Component {
     constructor(props, context) {
@@ -55,11 +54,11 @@ class FilterBar extends React.Component {
         this.setState({
             selectedCerts: certs.concat(item.key)
         })
-    }
+    };
 
     getCheckboxes(cert) {
         return (
-            <Row justify="start" className="margin-vertical--md">
+            <Row key={cert._id} justify="start" className="margin-vertical--md">
                 <Checkbox value={cert._id}>
                     <Avatar shape="square"
                             size="small"
@@ -81,15 +80,15 @@ class FilterBar extends React.Component {
 
         for (let [key, value] of Object.entries(groupedCerts)) {
             code.push(
-            <SubMenu
-                key={key}
-                title={key}>   
-                <Form.Item name={key}>
-                <Checkbox.Group style={{width: '100%'}}>
-                    {value.map((c) => this.getCheckboxes(c))}
-                </Checkbox.Group>
-                </Form.Item>
-            </SubMenu>);
+                <SubMenu
+                    key={key}
+                    title={key}>
+                    <Form.Item name={key}>
+                        <Checkbox.Group style={{width: '100%'}}>
+                            {value.map((c) => this.getCheckboxes(c))}
+                        </Checkbox.Group>
+                    </Form.Item>
+                </SubMenu>);
         }
 
         return code;
@@ -98,7 +97,7 @@ class FilterBar extends React.Component {
     onFinish(values) {
         let entries = Object.entries(values);
         let arrays = entries.map(e => e[1]);
-        var selectedCerts = [].concat.apply([], arrays);
+        let selectedCerts = [].concat.apply([], arrays);
 
         this.props.onSelectedCertsChanged(selectedCerts);
     }
@@ -106,18 +105,18 @@ class FilterBar extends React.Component {
 
     render() {
         return (
-            <Form onValuesChange={(changedValues, values) => this.onFinish(values)}> 
-                    <Menu
-                        mode="inline"
-                        openKeys={this.state.openKeys}
-                        onOpenChange={this.onOpenChange}
-                        className="menuTitle">
-                        <SubMenu
-                            key="certificates"
-                            title="Produktsiegel">   
-                            {this.getGroupedCertificates(this.state.certificates)}
-                        </SubMenu>
-                    </Menu> 
+            <Form onValuesChange={(changedValues, values) => this.onFinish(values)}>
+                <Menu
+                    mode="inline"
+                    openKeys={this.state.openKeys}
+                    onOpenChange={this.onOpenChange}
+                    className="menuTitle">
+                    <SubMenu
+                        key="certificates"
+                        title="Produktsiegel">
+                        {this.getGroupedCertificates(this.state.certificates)}
+                    </SubMenu>
+                </Menu>
             </Form>
         )
     }
