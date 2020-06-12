@@ -14,7 +14,7 @@ export class AccountView extends React.Component {
             user: "",
             municipality: "",
             supplier: "",
-            name: null,
+            entityName: null,
         }
     }
 
@@ -29,7 +29,7 @@ export class AccountView extends React.Component {
             user: user,
             municipality: user.municipality,
             supplier: user.supplier,
-            name: user.supplier ? user.supplier.name : user.municipality.name
+            entityName: AuthService.getEntityName()
         })
     }
 
@@ -72,7 +72,7 @@ export class AccountView extends React.Component {
                      justify="space-around"
                      align="middle">
                     <Col>
-                        {`Mein Fairbundled: ${this.state.name}`}
+                        {`Mein Fairbundled: ${this.state.entityName}`}
                     </Col>
                     <Col>
                         {this.renderUserTypeSpecificButton()}

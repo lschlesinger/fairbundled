@@ -11,7 +11,7 @@ class AuthController {
             .populate('supplier')
             .then((user) => {
                 const isPasswordValid = user.comparePassword(req.body.password);
-                if (!isPasswordValid) return res.status(401).json({token: null});
+                if (!isPasswordValid) return res.status(400).json({token: null});
 
                 // if user is found and password is valid
                 // create a token

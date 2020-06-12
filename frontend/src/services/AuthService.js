@@ -53,7 +53,7 @@ export default class AuthService {
 
         const base64Payload = token.split('.')[1];
         const base64 = base64Payload.replace('-', '+').replace('_', '/');
-        const user = JSON.parse(window.atob(base64));
+        const user = JSON.parse(this.decodeBase64ToUtf8(base64));
         return {
             id: user.id,
             email: user.email,
@@ -62,4 +62,23 @@ export default class AuthService {
         };
     }
 
+    static decodeBase64ToUtf8(base64) {
+        return decodeURIComponent(window.atob(base64)
+            .split('')
+            .map((c) => {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join(''));
+    }
+
+    static getEntityName() {
+        let user = this.getCurrentUser();
+        if (user.municipality) {
+            return user.municipality.name;
+        } else if (user.supplier) {
+            return user.supplier.name;
+        } else {
+            return "";
+        }
+    }
 }

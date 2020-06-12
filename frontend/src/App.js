@@ -100,7 +100,14 @@ export default class App extends React.Component {
             <Layout>
                 <Router>
                     <Header className="app__header">
-                        <FairbundledHeader categories={this.state.categories} />
+                        <FairbundledHeader
+                            categories={this.state.categories}
+                            isAuthenticated={AuthService.isAuthenticated()}
+                            isMunicipality={AuthService.isAuthenticatedMunicipality()}
+                            entityName={AuthService.getEntityName()}
+                            isSupplier={AuthService.isAuthenticatedSupplier()}
+                            onLogout={AuthService.logout}
+                        />
                     </Header>
                     <Content className="app__content">
                         {/*dynamically load `Content` through router*/}

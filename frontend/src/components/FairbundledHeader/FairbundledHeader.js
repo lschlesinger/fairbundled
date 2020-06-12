@@ -5,6 +5,7 @@ import {Col, Divider, Row} from 'antd';
 import logo from '../../assets/logo.png';
 import HeaderIconMenu from "./HeaderIconMenu";
 import './FairbundledHeader.less';
+import AuthService from "../../services/AuthService";
 
 
 export default class FairbundledHeader extends React.Component {
@@ -29,7 +30,13 @@ export default class FairbundledHeader extends React.Component {
                         <SearchBar categories={this.props.categories}/>
                     </Col>
                     <Col span={5}>
-                        <HeaderIconMenu/>
+                        <HeaderIconMenu
+                            isAuthenticated={this.props.isAuthenticated}
+                            isMunicipality={this.props.isMunicipality}
+                            isSupplier={this.props.isSupplier}
+                            onLogout={this.props.onLogout}
+                            entityName={this.props.entityName}
+                        />
                     </Col>
                 </Row>
                 <Divider className="header__custom-divider"/>
