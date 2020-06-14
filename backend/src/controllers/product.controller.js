@@ -8,7 +8,7 @@ class ProductController {
             query['categories'] = req.query.category;
         }
         if (!!req.query.searchString) {
-            query['$text'] = {$search: req.query.searchString};
+            query['name'] = new RegExp(req.query.searchString, 'i');
         }
         Product.find(query)
             .lean() // get json representation of mongoose docs

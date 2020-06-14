@@ -7,28 +7,24 @@ const {SubMenu} = Menu;
 
 class CategoryHeaderMenu extends React.Component {
 
-    constructor(props, context) {
-        super(props, context);
-        // get query param for category from route (req. export withRouter)
-        const category = this.props.location.search.includes('category') ? this.props.location.search.split('category=')[1].split("&")[0] : "";
+    constructor(props) {
+        super(props);
         this.state = {
-            category: category
+            currentRootCategory: this.props.currentRootCategory,
+            currentSubCategory: this.props.currentSubCategory,
+            selectedKeys: [this.props.currentRootCategory, this.props.currentSubCategory]
         };
     }
 
-    componentDidUpdate(prevProps) {
-        // if category param changed update category variable
-        if (this.props.location !== prevProps.location) {
-            const category = this.props.location.search.includes('category') ? this.props.location.search.split('category=')[1].split("&")[0] : "";
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.currentRootCategory !== prevProps.currentRootCategory ||
+            this.props.currentSubCategory !== prevProps.currentSubCategory) {
             this.setState({
-                category: category
-            })
+                currentRootCategory: this.props.currentRootCategory,
+                currentSubCategory: this.props.currentSubCategory,
+                selectedKeys: [this.props.currentRootCategory, this.props.currentSubCategory]
+            });
         }
-    }
-
-    getSelectedKeys() {
-        // get currently selected category
-        return [this.state.category];
     }
 
     getSubMenuItem(category) {
@@ -48,6 +44,7 @@ class CategoryHeaderMenu extends React.Component {
             // root level categories
             <SubMenu title={category.name}
                      key={category._id}
+                     className={this.state.currentRootCategory === category._id ? `ant-menu-submenu-selected ant-menu-submenu-active` : ""}
                      onTitleClick={navigateToCategory}>
                 {category.subcategories.map((subcat) => this.getSubMenuItem(subcat))}
             </SubMenu>
@@ -71,10 +68,16 @@ class CategoryHeaderMenu extends React.Component {
     render() {
         return (
             <Menu className="category-header-menu__menu"
-                  mode="horizontal"
-                  selectedKeys={this.getSelectedKeys()}>
+                  selectedKeys={this.state.selectedKeys}
+                  mode="horizontal">
                 {this.props.categories.map((c) => this.getMenuItems(c))}
-                <Menu.Item key="Angebote"> Alle Angebote </Menu.Item>
+                <Menu.Item
+                    className={this.state.currentRootCategory === "" ? `ant-menu-item-selected ant-menu-item-active` : ""}
+                    key="">
+                    <Link to={`/product`}>
+                        Alle Produkte
+                    </Link>
+                </Menu.Item>
             </Menu>
         )
     }
