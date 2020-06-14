@@ -5,8 +5,9 @@ import AuthService from "../../services/AuthService";
 import ProductPreviewModalView from "./ProductPreviewModalView";
 import ProductService from "../../services/ProductService";
 import CertificateService from "../../services/CertificateService";
-import {message} from "antd";
+import {message, notification} from "antd";
 import "../../App.less";
+import ValidationError from "../../services/ValidationError";
 
 export class ProductCreateView extends React.Component {
 
@@ -26,7 +27,7 @@ export class ProductCreateView extends React.Component {
                 "supplier": null,
                 // set in ProductCategorySelection Component
                 "categories": [],
-                // set in ProductDescriptionInput Component
+                // set in ProductInformationInput Component
                 "name": null,
                 "ean": null,
                 "deliveryDays": null,
@@ -124,14 +125,30 @@ export class ProductCreateView extends React.Component {
         });
     };
 
-    async publishProduct() {
-        try {
-            await ProductService.createProduct(this.state.product);
-            message.success("Produkt erfolgreich veröffentlicht")
-        } catch (e) {
-            message.warn("Produkt konnte nicht veröffentlicht werden.")
-        }
+    getErrorNotification = (e) => {
+        const args = {
+            type: 'error',
+            message: 'Problem bei der Validierung',
+            description: e[1].message,
+            duration: 10
+        };
+        notification.open(args);
+    };
+
+    publishProduct() {
+        ProductService.createProduct(this.state.product)
+            .then((product) => {
+                message.success("Produkt erfolgreich veröffentlicht");
+            })
+            .catch((err) => {
+                console.log(err.errors);
+                if (err instanceof ValidationError) {
+                    console.log(err.errors);
+                    Object.entries(err.errors).map(e => {this.getErrorNotification(e)})
+                }
+            });
     }
+
 
     render() {
         return (

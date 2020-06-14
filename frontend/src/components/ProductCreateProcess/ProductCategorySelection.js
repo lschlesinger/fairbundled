@@ -1,5 +1,6 @@
 import React from 'react';
-import {Form, TreeSelect} from 'antd';
+import {Form, Row, TreeSelect} from 'antd';
+import {InfoCircleOutlined} from "@ant-design/icons";
 
 
 const {TreeNode} = TreeSelect;
@@ -74,8 +75,11 @@ export default class ProductCategorySelection extends React.Component {
     render() {
         return (
             <div>
-                <h3 className="margin-vertical--md">Wählen Sie die zutreffenden Kategorien</h3>
-                <Form.Item name="categories">
+                <h3 className="margin-vertical--md">Wählen Sie bis zu fünf zutreffende Kategorien</h3>
+                <p><InfoCircleOutlined/> Bei Auswahl einer Unterkategorie wird die übergeordnete Kategorie automatisch ausgewählt.</p>
+                <Form.Item name="categories"
+                           label="Kategorie"
+                           rules={[{required: true}]}>
                     <TreeSelect
                         dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
                         placeholder="Wählen Sie eine oder mehrere Kategorien"

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Avatar, Checkbox, Col, Form, Row} from 'antd';
+import {InfoCircleOutlined} from "@ant-design/icons";
 
 export default class ProductCertificateSelection extends React.Component {
 
@@ -27,6 +28,7 @@ export default class ProductCertificateSelection extends React.Component {
         return (
             <div>
                 <h3 className="margin-vertical--md">Wählen Sie die Nachhaltigkeitssiegel für Ihr Produkt</h3>
+                <p><InfoCircleOutlined/> Die hier angezeigten Siegel sind speziell auf die im ersten Schritt festgelegte Produktkategorie zugeschnitten.</p>
                 <Form.Item name="certificates"
                 >
                     <Checkbox.Group style={{width: '100%'}}>
