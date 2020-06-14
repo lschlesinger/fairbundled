@@ -9,8 +9,22 @@ class FairbundleController {
             query['product'] = req.query.product;
         }
         Fairbundle.find(query)
+            .populate("product")
+            .populate("positions")
             .then((fairbundles) => {
                 res.status(200).json(fairbundles);
+            })
+            .catch((err) => {
+                res.status(400).send(err);
+            })
+    }
+
+    static getFairbundle(req, res) {
+        Fairbundle.findById(req.params.id)
+            .populate("product")
+            .populate("positions")
+            .then((fairbundle) => {
+                res.status(200).json(fairbundle);
             })
             .catch((err) => {
                 res.status(400).send(err);

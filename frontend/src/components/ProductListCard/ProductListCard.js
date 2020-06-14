@@ -32,6 +32,18 @@ export default class ProductListCard extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.products === prevProps.products) {
+            return;
+        }
+
+        this.setState(prevState => ({
+                ...prevState,
+                products: this.props.products
+            }
+        ));
+    }
+
     //function to determine the lowest price and to differentiate between one and multiple price levels (Difference: Ab)
     getLowestPrice(product) {
         return (
@@ -186,7 +198,7 @@ export default class ProductListCard extends React.Component {
                                 options={options}
                                 onChange={this.handleOrdering}
                                 ordering={this.state.ordering}
-                                placeholder={this.state.ordering}
+                                placeholder="Bitte auswählen"
                             ></Cascader>
                         </Row>
                     </Col>
