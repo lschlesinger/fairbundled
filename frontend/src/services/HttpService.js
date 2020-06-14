@@ -10,6 +10,7 @@
  * ```
  */
 import TokenService from "./TokenService";
+import AuthService from "./AuthService";
 
 export default class HttpService {
     constructor() {
@@ -59,7 +60,7 @@ export default class HttpService {
      */
     static async parseResponse(response) {
         if (response.status === 401) {
-            window.location = '/login';
+            AuthService.logout();
             throw new Error("Unauthorized request.");
         } else {
             return response.json();
@@ -74,7 +75,10 @@ export default class HttpService {
         const headers = new Headers();
         // add authorization header
         const token = TokenService.getToken();
-        if (token) {
+        if (token && token.exp && new Date(token.exp * 1000) < new Date()) {
+            AuthService.logout();
+            throw new Error("Token expired.");
+        } else if (token) {
             headers.append('Authorization', `Bearer ${token}`);
         }
         // add content-type header

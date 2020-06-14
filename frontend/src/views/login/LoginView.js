@@ -14,8 +14,7 @@ class LoginView extends React.Component {
         const {email, password} = values;
         AuthService.login(email, password)
             .then(() => {
-                this.props.history.push('/');
-                message.success('Erfolgreich eingeloggt!');
+                window.location = "/";
             })
             .catch((err) => {
                 message.error('Login fehlgeschlagen!');
