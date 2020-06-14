@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Col, Form, Input, Row, Select, Space} from 'antd';
+import {Button, Col, Form, Input, InputNumber, Row, Select, Space} from 'antd';
 import {InfoCircleOutlined, MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
 
 const {Option} = Select;
@@ -9,7 +9,7 @@ export default class ProductPriceLevelInput extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            unit: null
+            unit: undefined
         };
     }
 
@@ -25,7 +25,8 @@ export default class ProductPriceLevelInput extends React.Component {
                 <Row justify="space-around" align="middle">
                     <h3 className="margin-vertical--md">Wählen Sie beliebig viele Preisstufen und ermöglichen Sie
                         Fairbundles für Ihr Produkt</h3>
-                    <p><InfoCircleOutlined/> Geben Sie je Stufe den Preis je angebener Produkteinheit und einer mindestens
+                    <p><InfoCircleOutlined/> Geben Sie je Stufe den Preis je angebener Produkteinheit und einer
+                        mindestens
                         abzunehmenden Menge an.</p>
                 </Row>
                 <Form.List
@@ -44,17 +45,20 @@ export default class ProductPriceLevelInput extends React.Component {
                                                 <Form.Item
                                                     {...field}
                                                     name={[field.name, 'unitPrice']}
-                                                    fieldKey={[field.fieldKey, 'unitPrice']}
                                                     rules={[{required: true, message: 'Fehlender Preis je Einheit'}]}
                                                 >
-                                                    <Input placeholder="Grundpreis"
-                                                           suffix={"€"}/>
+                                                    <InputNumber placeholder="Grundpreis"
+                                                                 min={0}
+                                                                 step={0.01}
+                                                                 formatter={value => value ? `${value}€` : ""}
+                                                                 parser={value => value.replace('€', '')}
+                                                                 decimalSeparator=","/>
                                                 </Form.Item>
                                                 <p>je</p>
                                                 <Form.Item
                                                     {...field}
                                                     name={[field.name, 'unit']}
-                                                    fieldKey={[field.fieldKey, 'unit']}
+                                                    initialValue={this.state.unit ? this.state.unit : undefined}
                                                     rules={[{required: true, message: 'Fehlende Einheit'}]}
                                                 >
                                                     <Select
@@ -74,8 +78,6 @@ export default class ProductPriceLevelInput extends React.Component {
                                                 <Form.Item
                                                     {...field}
                                                     name={[field.name, 'minQty']}
-                                                    dependencies={['unit']}
-                                                    fieldKey={[field.fieldKey, 'minQty']}
                                                     rules={[{required: true, message: 'Fehlende Mindesteinheiten'}]}
                                                 >
                                                     <Input placeholder="Mindesteinheiten"

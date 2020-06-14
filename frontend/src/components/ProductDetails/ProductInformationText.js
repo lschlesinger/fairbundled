@@ -25,7 +25,7 @@ export default class ProductInformationText extends React.Component {
                 </Row>
                 <Row>
                     <p className="margin-vertical--xs">
-                        <i> von {this.props.product?.supplier?.name} </i>
+                        <i> von {this.props.supplierName} </i>
                     </p>
                 </Row>
                 <Divider className="margin-top--sm"/>

@@ -8,13 +8,16 @@ import CertificateService from "../../services/CertificateService";
 import {message, notification} from "antd";
 import "../../App.less";
 import ValidationError from "../../services/ValidationError";
+import {withRouter} from "react-router-dom";
 
-export class ProductCreateView extends React.Component {
+class ProductCreateView extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            // get name of supplier
+            entityName: AuthService.getEntityName(),
             // control visibility of product preview modal
             modalVisible: false,
             // initialize categories, further specified during product creation in respective components
@@ -139,16 +142,16 @@ export class ProductCreateView extends React.Component {
         ProductService.createProduct(this.state.product)
             .then((product) => {
                 message.success("Produkt erfolgreich veröffentlicht");
+                this.props.history.push(`/product/${product._id}`);
             })
             .catch((err) => {
-                console.log(err.errors);
                 if (err instanceof ValidationError) {
-                    console.log(err.errors);
-                    Object.entries(err.errors).map(e => {this.getErrorNotification(e)})
+                    Object.entries(err.errors).map(e => {
+                        this.getErrorNotification(e)
+                    })
                 }
             });
     }
-
 
     render() {
         return (
@@ -161,9 +164,12 @@ export class ProductCreateView extends React.Component {
                                       onPublish={this.publishProduct.bind(this)}
                 />
                 <ProductPreviewModalView
+                    entityName={this.state.entityName}
                     onClose={this.hideModal} modalVisible={this.state.modalVisible}
                     product={this.state.product}/>
             </div>
         );
     }
 }
+
+export default withRouter(ProductCreateView);

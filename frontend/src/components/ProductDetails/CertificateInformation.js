@@ -44,7 +44,7 @@ export default class CertificateInformation extends React.Component {
                     </Paragraph>
                     <Paragraph>
                         <a href={cert.url} target="_blank"> Hier </a>
-                        gelangen Sie zur offiziellen Seite von {cert.name}.
+                        gelangen Sie zur offiziellen Seite von {cert.name}
                     </Paragraph>
                 </Col>
             </Row>

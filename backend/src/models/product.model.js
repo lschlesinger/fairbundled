@@ -6,10 +6,7 @@ const Product = new mongoose.Schema(
             type: String,
             required: [true, 'Es wurde kein Produktname angegeben.']
         },
-        description: {
-            type: String,
-            required: [true, 'Es wurde keine Beschreibung angegeben.']
-        },
+        description: String,
         ean: String,
         images: [String],
         deliveryDays: {
