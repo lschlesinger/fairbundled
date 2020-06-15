@@ -108,6 +108,7 @@ Frontend implementation covers a well designed and functioning frontend interact
 - Project structure / repo organization (done)
 - Task and issue management (done)
 - Documentation (ongoing)
+- Deployment on Heroku (done)
 
 
 <!-- TECHNICAL DOCUMENTATION -->
