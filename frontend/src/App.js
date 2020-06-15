@@ -10,11 +10,11 @@ import LoginView from "./views/login/LoginView";
 import RegisterView from "./views/register/RegisterView";
 import ProductListView from "./views/product-list/ProductListView";
 import {ProductDetailView} from "./views/product-detail/ProductDetailView";
-import {ProductCreateView} from "./views/product-create/ProductCreateView";
+import ProductCreateView from "./views/product-create/ProductCreateView";
 import {AccountView} from "./views/account/AccountView";
 import FairbundledHeader from "./components/FairbundledHeader/FairbundledHeader";
 import CategoryService from "./services/CategoryService";
-import FairbunbledFooter from "./components/FairbundledFooter/FairbunbledFooter";
+import FairbundledFooter from "./components/FairbundledFooter/FairbundledFooter";
 import {LoadingOutlined} from '@ant-design/icons';
 
 // decide on overall layout structure (ANT)
@@ -112,7 +112,7 @@ export default class App extends React.Component {
                 </Switch>
             </Content>
             <Footer className="app__footer">
-                <FairbunbledFooter/>
+                <FairbundledFooter/>
             </Footer>
         </Router>
     }

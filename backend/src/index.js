@@ -46,12 +46,14 @@ mongoose
             console.log(`Server is listening at http://${address}:${port}`);
 
             // create initial data with bootstrap service
-            BootstrapService.loadInitialData().then(() => {
-                console.log('Created initial data.')
-            }).catch((err) => {
-                console.log(err);
-                console.log('Failed to initialize data.')
-            })
+            if (config.env !== 'production') {
+                BootstrapService.loadInitialData().then(() => {
+                    console.log('Created initial data.')
+                }).catch((err) => {
+                    console.log(err);
+                    console.log('Failed to initialize data.')
+                })
+            }
         });
     })
     .catch((err) => {

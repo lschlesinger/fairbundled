@@ -1,13 +1,16 @@
 import React from 'react';
 import {Button, Col, Form, Row, Steps} from 'antd';
 import ProductCategorySelection from "./ProductCategorySelection";
-import ProductDescriptionInput from "./ProductDescriptionInput";
+import ProductInformationInput from "./ProductInformationInput";
 import ProductPriceLevelInput from "./ProductPriceLevelInput";
 import ProductImageUpload from "./ProductImageUpload";
 import './ProductCreateProcess.less'
 import ProductCertificateSelection from "./ProductCertificateSelection";
 
 const {Step} = Steps;
+const validateMessages = {
+    required: "${label} muss angegeben werden",
+};
 
 // define all process steps, shown in the process-step-bar (top)
 const steps = [
@@ -49,7 +52,8 @@ export default class ProductCreateProcess extends React.Component {
             case 'category':
                 return (<ProductCategorySelection categories={this.props.categories}/>);
             case 'description':
-                return (<ProductDescriptionInput/>);
+                return (<ProductInformationInput onChange={this.props.onChange}
+                                                 product={this.props.product}/>);
             case 'price':
                 return (<ProductPriceLevelInput/>);
             case 'certificate':
@@ -89,6 +93,7 @@ export default class ProductCreateProcess extends React.Component {
                      align="middle">
                     {/*initialize a form around process content to enable value (i.e. product fields) updates across process steps*/}
                     <Form className="product-create-process__step-form"
+                          validateMessages={validateMessages}
                           onValuesChange={(changedValues, values) => this.props.onChange(values)}>
                         {this.getCurrentContent(steps[current].content)}
                     </Form>

@@ -5,15 +5,19 @@ import AuthService from "../../services/AuthService";
 import ProductPreviewModalView from "./ProductPreviewModalView";
 import ProductService from "../../services/ProductService";
 import CertificateService from "../../services/CertificateService";
-import {message} from "antd";
+import {message, notification} from "antd";
 import "../../App.less";
+import ValidationError from "../../services/ValidationError";
+import {withRouter} from "react-router-dom";
 
-export class ProductCreateView extends React.Component {
+class ProductCreateView extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            // get name of supplier
+            entityName: AuthService.getEntityName(),
             // control visibility of product preview modal
             modalVisible: false,
             // initialize categories, further specified during product creation in respective components
@@ -26,7 +30,7 @@ export class ProductCreateView extends React.Component {
                 "supplier": null,
                 // set in ProductCategorySelection Component
                 "categories": [],
-                // set in ProductDescriptionInput Component
+                // set in ProductInformationInput Component
                 "name": null,
                 "ean": null,
                 "deliveryDays": null,
@@ -124,13 +128,29 @@ export class ProductCreateView extends React.Component {
         });
     };
 
-    async publishProduct() {
-        try {
-            await ProductService.createProduct(this.state.product);
-            message.success("Produkt erfolgreich veröffentlicht")
-        } catch (e) {
-            message.warn("Produkt konnte nicht veröffentlicht werden.")
-        }
+    getErrorNotification = (e) => {
+        const args = {
+            type: 'error',
+            message: 'Problem bei der Validierung',
+            description: e[1].message,
+            duration: 10
+        };
+        notification.open(args);
+    };
+
+    publishProduct() {
+        ProductService.createProduct(this.state.product)
+            .then((product) => {
+                message.success("Produkt erfolgreich veröffentlicht");
+                this.props.history.push(`/product/${product._id}`);
+            })
+            .catch((err) => {
+                if (err instanceof ValidationError) {
+                    Object.entries(err.errors).map(e => {
+                        this.getErrorNotification(e)
+                    })
+                }
+            });
     }
 
     render() {
@@ -144,9 +164,12 @@ export class ProductCreateView extends React.Component {
                                       onPublish={this.publishProduct.bind(this)}
                 />
                 <ProductPreviewModalView
+                    entityName={this.state.entityName}
                     onClose={this.hideModal} modalVisible={this.state.modalVisible}
                     product={this.state.product}/>
             </div>
         );
     }
 }
+
+export default withRouter(ProductCreateView);

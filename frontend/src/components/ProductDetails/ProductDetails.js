@@ -31,7 +31,10 @@ export default class ProductDetails extends React.Component {
                             <ProductImage product={this.props.product}/>
                         </Col>
                         <Col span={17} className="padding--md">
-                            <ProductInformationText product={this.props.product}/>
+                            <ProductInformationText
+                                // if detailView is rendered for preview, supplierName is given via props.entityName, otherwise it is contained in product object from backenend
+                                supplierName={this.props.entityName ? this.props.entityName : this.props.product?.supplier?.name}
+                                product={this.props.product}/>
                         </Col>
                     </Row>
                     <Row className="padding--md">

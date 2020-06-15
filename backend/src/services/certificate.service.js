@@ -28,13 +28,12 @@ class CertificateService {
                             description: certificate.description.de,
                             url: certificate.url,
                             logo: certificate.logo,
-                            sector: (sector==='Rohstoffanbau (kleinbäuerl. Betriebe)') ? 'Rohstoffanbau (kleinbäuerl. Betriebe)' : sector
+                            sector: (sector === 'Rohstoffanbau (kleinbäuerl. Betriebe)') ? 'Rohstoffanbau (kleinbäuerl. Betriebe)' : sector
                         };
                         // update certificate and create if not exist (`upsert: true`)
                         await Certificate.findOneAndUpdate(cert, cert, {upsert: true});
                     }
                     resolve();
-                    console.log(sectors)
                     console.log("Initial Certificates created.");
                 })
                 .catch((err) => {

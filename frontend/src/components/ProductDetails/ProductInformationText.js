@@ -10,6 +10,10 @@ export default class ProductInformationText extends React.Component {
         super(props);
     }
 
+    displayDescriptionHtml() {
+        if (!this.props.product || !this.props.product.description) return {__html: ""};
+        return {__html: this.props.product.description};
+    }
 
     render() {
         return (
@@ -21,12 +25,12 @@ export default class ProductInformationText extends React.Component {
                 </Row>
                 <Row>
                     <p className="margin-vertical--xs">
-                        <i> von {this.props.product?.supplier?.name} </i>
+                        <i> von {this.props.supplierName} </i>
                     </p>
                 </Row>
                 <Divider className="margin-top--sm"/>
                 <Paragraph>
-                    {this.props.product?.description}
+                    {<div dangerouslySetInnerHTML={this.displayDescriptionHtml()}/>}
                 </Paragraph>
             </Col>
         )
