@@ -21,7 +21,8 @@ export default class ProductPreviewModalView extends React.Component {
                 footer={null}
                 width="960px"
             >
-                <ProductDetails product={this.props.product}
+                <ProductDetails entityName={this.props.entityName}
+                                product={this.props.product}
                                 fairbundles={this.props.fairbundles}
                                 onCreateFairbundle={() => {}}
                                 onJoinFairbundle={() => {}}

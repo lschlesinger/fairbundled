@@ -61,7 +61,7 @@ class ProductController {
             description: req.body.description || '',
             ean: req.body.ean || '',
             images: req.body.images || [],
-            deliveryDays: req.body.deliveryDays || 1,
+            deliveryDays: req.body.deliveryDays || '',
             priceLevel: priceLevel,
             certificates: certificates,
             supplier: req.supplierId,
