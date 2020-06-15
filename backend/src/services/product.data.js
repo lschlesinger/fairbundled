@@ -8,10 +8,12 @@ const PRODUCTS = [
         priceLevel: [
             {
                 unitPrice: 500,
+                unit: "Stück",
                 minQty: 30,
             },
             {
                 unitPrice: 200,
+                unit: "Stück",
                 minQty: 1000,
             },
         ],
@@ -51,6 +53,7 @@ const PRODUCTS = [
         priceLevel: [
             {
                 unitPrice: 800,
+                unit: "Stück",
                 minQty: 5,
             },
             {
@@ -71,14 +74,17 @@ const PRODUCTS = [
         priceLevel: [
             {
                 unitPrice: 0.8,
+                unit: "Stück",
                 minQty: 100,
             },
             {
                 unitPrice: 0.6,
+                unit: "Stück",
                 minQty: 1000,
             },
             {
                 unitPrice: 0.4,
+                unit: "Stück",
                 minQty: 2000,
             },
         ],

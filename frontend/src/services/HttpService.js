@@ -11,6 +11,7 @@
  */
 import TokenService from "./TokenService";
 import AuthService from "./AuthService";
+import ValidationError from "./ValidationError";
 
 export default class HttpService {
     constructor() {
@@ -32,6 +33,7 @@ export default class HttpService {
             headers: headers,
             body: JSON.stringify(body)
         });
+        console.log(response);
         return this.parseResponse(response);
     }
 
@@ -62,6 +64,13 @@ export default class HttpService {
         if (response.status === 401) {
             AuthService.logout();
             throw new Error("Unauthorized request.");
+        } else if (response.status >= 400) {
+            const o = await response.json();
+            if (o.name === 'ValidationError') {
+                throw new ValidationError(o._message, o.errors);
+            } else {
+                throw new Error("Error occurred during HTTP request.");
+            }
         } else {
             return response.json();
         }
