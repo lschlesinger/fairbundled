@@ -201,6 +201,7 @@ The table should be read as tree from left to right, e.g. one endpoint is `/api/
 |          |                 | `/:id` (*fairbundleId*)   | PUT       | checkAuthentication<br/>checkMunicipality |
 |          | `/order`        | `/:id` (*municipalityId*) | GET       | checkAuthentication<br/>checkMunicipality |
 |          |                 | `/:id` (*orderId*)        | GET       | checkAuthentication<br/>checkMunicipality |
+|          |                 | `/`                       | POST      | checkAuthentication<br/>checkMunicipality |
 |          | `/positions`    | `/:id` (*supplierId*)     | GET       | checkAuthentication<br/>checkSupplier     |
 |          | `/auth`         | `/login`                  | POST      |                                           |
 |          |                 | `/register`               | POST      |                                           |
