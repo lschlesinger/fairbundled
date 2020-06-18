@@ -69,7 +69,7 @@ class FairbundleController {
 
     /**
      * Find Fairbundle by Id and add Order Position
-     * @param req: qty, productId, expiration, expirationAction, targetPrice
+     * @param req: qty
      * @param res
      */
     static joinFairbundle(req, res) {
