@@ -190,19 +190,22 @@ This section explains the routing logic in backend (request endpoints) and front
 
 The table should be read as tree from left to right, e.g. one endpoint is `/api/auth/register`
 
-| Base URL | Route           | Endpoint              | HTTP Verb | Middleware                                |
-| -------- | --------------- | --------------------- | --------- | ----------------------------------------- |
-| `/api`   | `/product`      | `/?product=productId` | GET       |                                           |
-|          |                 | `/:id`                | GET       |                                           |
-|          |                 | `/`                   | POST      | checkAuthentication<br>checkSupplier      |
-|          | `/fairbundle`   | `/?product=productId` | GET       |                                           |
-|          |                 | `/:id`                | GET       |                                           |
-|          |                 | `/`                   | POST      | checkAuthentication<br/>checkMunicipality |
-|          |                 | `/:id`                | PUT       | checkAuthentication<br/>checkMunicipality |
-|          | `/auth`         | `/login`              | POST      |                                           |
-|          |                 | `/register`           | POST      |                                           |
-|          | `/municipatliy` | `/`                   | GET       |                                           |
-|          | `/supplier`     | `/`                   | GET       |                                           |
+| Base URL | Route           | Endpoint                  | HTTP Verb | Middleware                                |
+| -------- | --------------- | ------------------------- | --------- | ----------------------------------------- |
+| `/api`   | `/product`      | `/?product=productId`     | GET       |                                           |
+|          |                 | `/:id`                    | GET       |                                           |
+|          |                 | `/`                       | POST      | checkAuthentication<br>checkSupplier      |
+|          | `/fairbundle`   | `/?product=productId`     | GET       |                                           |
+|          |                 | `/:id` (*productId*)      | GET       |                                           |
+|          |                 | `/`                       | POST      | checkAuthentication<br/>checkMunicipality |
+|          |                 | `/:id` (*fairbundleId*)   | PUT       | checkAuthentication<br/>checkMunicipality |
+|          | `/order`        | `/:id` (*municipalityId*) | GET       | checkAuthentication<br/>checkMunicipality |
+|          |                 | `/:id` (*orderId*)        | GET       | checkAuthentication<br/>checkMunicipality |
+|          | `/positions`    | `/:id` (*supplierId*)     | GET       | checkAuthentication<br/>checkSupplier     |
+|          | `/auth`         | `/login`                  | POST      |                                           |
+|          |                 | `/register`               | POST      |                                           |
+|          | `/municipatliy` | `/`                       | GET       |                                           |
+|          | `/supplier`     | `/`                       | GET       |                                           |
 
 Note:
 
