@@ -1,11 +1,10 @@
-import {Order} from "../models/order.model";
+import { Order } from "../models/order.model";
 import OrderPosition from "../models/order-position.model";
 
 class OrderController {
-
     static getOrders(req, res) {
         const query = {};
-        query['municipality'] = req.municipalityId;
+        query["municipality"] = req.municipalityId;
         Order.find(query)
             .populate("positions")
             .populate("product")
@@ -14,8 +13,25 @@ class OrderController {
             })
             .catch((err) => {
                 res.status(400).send(err);
-            })
+            });
     }
+
+    static submitOrder(req, res) {
+        var date = new Date();
+        Order.findOneAndUpdate(
+            { _id: req.params.id },
+            { submission: date },
+            { new: true }
+        )
+            .then((order) => {
+                res.status(201).json(order);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(400).send(err);
+            });
+    }
+
     /**
      * First create order then create position of product with selected quantity and add position to Order
      * @param req: qty, productId
@@ -33,21 +49,19 @@ class OrderController {
                     qty: req.body.qty,
                     product: req.body.productId,
                     user: req.userId,
-                    order: order._id
+                    order: order._id,
                 };
-                OrderPosition.create(position)
-                    .then((position) => {
-                        order.positions.push(position);
-                        order.save((f) => {
-                            res.status(201).json(order)
-                        })
+                OrderPosition.create(position).then((position) => {
+                    order.positions.push(position);
+                    order.save((f) => {
+                        res.status(201).json(order);
                     });
+                });
             })
             .catch((err) => {
-            res.status(400).send(err);
-        })
+                res.status(400).send(err);
+            });
     }
-
 }
 
 export default OrderController;
