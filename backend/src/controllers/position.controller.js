@@ -59,20 +59,22 @@ class PositionController {
                 }
                 // if order found, add position to existing unsubmitted order, Note: there can be several positions of one product in one order
                 else {
-                        const orderPosition = {
-                            qty: req.body.qty,
-                            product: req.body.productId,
-                            user: req.userId,
-                            order: order._id
-                        };
-                        OrderPosition.create(orderPosition)
-                            .then((position) => {
-                                // if one unsubmitted order is found
-                                order.positions.push(position._id);
-                                order.save(() => {
-                                    res.status(201).json(order);
-                                });
+                    const orderPosition = {
+                        qty: req.body.qty,
+                        product: req.body.productId,
+                        user: req.userId,
+                        order: order._id
+                    };
+                    OrderPosition.create(orderPosition)
+                        .then((position) => {
+                            // if one unsubmitted order is found
+                            order.positions.push(position._id);
+                            order.save(() => {
+                                res.status(201).json(order);
                             });
+                        }).catch((err) => {
+                        res.status(400).send(err);
+                    });
                 }
 
             })

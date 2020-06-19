@@ -1,4 +1,4 @@
-import { Order } from "../models/order.model";
+import {Order} from "../models/order.model";
 import OrderPosition from "../models/order-position.model";
 
 class OrderController {
@@ -54,8 +54,8 @@ class OrderController {
         query._id = req.params.id;
         Order.findOneAndUpdate(
             query,
-            { submission: date },
-            { new: true }
+            {submission: date},
+            {new: true}
         )
             .then((order) => {
                 res.status(201).json(order);
@@ -90,6 +90,8 @@ class OrderController {
                     order.save((o) => {
                         res.status(201).json(order)
                     });
+                }).catch((err) => {
+                    res.status(400).send(err);
                 });
             })
             .catch((err) => {
