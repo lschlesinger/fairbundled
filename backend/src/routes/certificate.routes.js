@@ -3,6 +3,9 @@ import CertificateController from '../controllers/certificate.controller';
 
 const router = express.Router();
 
-router.get('/', CertificateController.getCertificates);
+// get all certificates from external page
+router.get('/',
+    CertificateController.getCertificates
+);
 
 export default router;

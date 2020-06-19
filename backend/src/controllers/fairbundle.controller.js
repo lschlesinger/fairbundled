@@ -3,6 +3,11 @@ import OrderPosition from "../models/order-position.model";
 
 class FairbundleController {
 
+    /**
+     * Find all Fairbundle by Id and if added query with productId to find all fairbundles available for one product
+     * @param req: qty
+     * @param res: array of fairbundle objects
+     */
     static getFairbundles(req, res) {
         const query = {};
         if (!!req.query.product) {
@@ -19,6 +24,11 @@ class FairbundleController {
             })
     }
 
+    /**
+     * Find Fairbundle by Id and add Order Position
+     * @param req: qty
+     * @param res: fairbundle object
+     */
     static getFairbundle(req, res) {
         Fairbundle.findById(req.params.id)
             .populate("product")
@@ -32,9 +42,9 @@ class FairbundleController {
     }
 
     /**
-     * First create fairbundle as order then create position of product with selected quantity and add position to FairbundleOrder
+     * First create Fairbundle as Order then create OrderPosition of product with selected quantity and add OrderPosition to Positions in Fairbundle
      * @param req: qty, productId, expiration, expirationAction, targetPrice
-     * @param res
+     * @param res: created fairbundle object
      */
     static createFairbundle(req, res) {
         const fairbundle = {
@@ -68,9 +78,9 @@ class FairbundleController {
     }
 
     /**
-     * Find Fairbundle by Id and add Order Position
+     * Find Fairbundle by Id and add OrderPosition to join with selected quantity
      * @param req: qty
-     * @param res
+     * @param res: updated fairbundle object
      */
     static joinFairbundle(req, res) {
         Fairbundle.findById(req.params.id)
