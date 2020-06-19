@@ -87,8 +87,8 @@ class OrderController {
                 };
                 OrderPosition.create(position).then((position) => {
                     order.positions.push(position);
-                    order.save((f) => {
-                        res.status(201).json(order);
+                    order.save((o) => {
+                        res.status(201).json(order)
                     });
                 });
             })

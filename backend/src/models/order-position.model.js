@@ -12,7 +12,8 @@ const OrderPosition = new mongoose.Schema({
     },
     order: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Order'
+        ref: 'Order',
+        required: [true, 'Die Bestellposition ist keiner Bestellung zugeordnet']
     },
 
 }, {

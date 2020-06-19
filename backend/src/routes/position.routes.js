@@ -12,4 +12,13 @@ router.get(
     PositionController.getPositions
 );
 
+// add one position to the only, currently unsubmitted order of the municipality associated with the requesting user
+router.post(
+    "/",
+    middlewares.checkAuthentication,
+    middlewares.checkMunicipality,
+    PositionController.addPosition
+);
+
+
 export default router;

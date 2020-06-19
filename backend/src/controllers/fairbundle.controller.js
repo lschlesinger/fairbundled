@@ -88,18 +88,18 @@ class FairbundleController {
                 const orderPosition = {
                     qty: req.body.qty,
                     product: fairbundle.product._id,
-                    user: req.userId
+                    user: req.userId,
+                    order: fairbundle._id,
                 };
                 OrderPosition.create(orderPosition).then((position) => {
                     fairbundle.positions.push(position._id);
                     fairbundle.bundlers.push(req.municipalityId);
-                    fairbundle.save((f) => {
+                    fairbundle.save(() => {
                         res.status(201).json(fairbundle);
                     });
                 });
             })
             .catch((err) => {
-                console.log(err);
                 res.status(400).send(err);
             })
     }
