@@ -193,7 +193,7 @@ Routes are protected by the specific middleware functions.  See section [Middlew
 
 | Base URL | Route           | Endpoint                  | HTTP Verb | Middleware                                    |
 | -------- | --------------- | ------------------------- | --------- | --------------------------------------------- |
-| `/api`   | `/product`      | `/?product=productId`     | GET       |                                               |
+| `/api`   | `/product`      | `/?category=?searchString=`     | GET       |                                               |
 |          |                 | `/:id`                    | GET       |                                               |
 |          |                 | `/`                       | POST      | checkAuthentication<br>checkSupplier          |
 |          | `/fairbundle`   | `/?product=productId`     | GET       |                                               |
