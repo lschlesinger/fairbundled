@@ -1,21 +1,15 @@
 # Table of Contents
 
 * [Data Model](#data-model)
-  
   * [UML Class Diagram](#uml-class-diagram)
   * [Entities](#entities)
-  
 * [Project Folder Structure](#project-folder-structure)
   * [Backend](#backend)
   * [Frontend](#frontend)
-  
 * [Routes](#routes)
-  
   * [Backend](#backend-endpoints)
   * [Frontend](#frontend-urls)
-  
 * [Authorization](#authorization)
-
   * [Token](#token)
   * [Middleware](#middleware)
 
