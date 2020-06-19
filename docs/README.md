@@ -181,7 +181,6 @@ Note: The `bootstrap.service.js` triggers initial sample data creation.
 This section explains the routing logic in backend (request endpoints) and frontend (URLs).
 
 
-
 <!-- BACKEND ENDPOINTS -->
 
 ## Backend Endpoints
@@ -218,8 +217,6 @@ Note:
 - Routes (1st Level) are defined in `routes.js`
 
 - Endpoints (2nd Level) are defined in respective `routeX.routes.js` file in  `/routes` folder; in these files, the mapping of the endpoint to HTTP verbs and controller functions is done
-
-  
 
 <!-- FRONTEND URLS -->
 
@@ -277,15 +274,11 @@ A decoded JWT token for a municipality user could be for example:
 
 Note: Encoded JWT Token can be decoded with [jwt.io](jwt.io).
 
-Information contained in a token is used by the middleware explained in following section [Middleware](#middleware)
-
-
+Information contained in a token is used by the middleware explained in following section [Middleware](#middleware).
 
 <!-- MIDDLEWARE -->
 
 ## Middleware
-
-### Middleware
 
 Middleware functionality checks the request before data is sent back from the backend. In the case of `checkAuthentication`, it is checked whether the user's token exists (user receives JWT token after login) and is still valid. Additionally, it is checked, whether either the user exhibits the field municipality with a respective `municipality._id` or the field supplier with a respective `supplier._id` in its decoded JWT token after logging in as user of a registered municipality/supplier. As a result, the request exhibits either the field `MunicipalityId` or `SupplierId` after being handled by `checkAuthentication`.
 
