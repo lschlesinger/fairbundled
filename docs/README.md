@@ -197,7 +197,7 @@ Routes are protected by the specific middleware functions.  See section [Middlew
 |          |                 | `/:id`                    | GET       |                                               |
 |          |                 | `/`                       | POST      | checkAuthentication<br>checkSupplier          |
 |          | `/fairbundle`   | `/?product=productId`     | GET       |                                               |
-|          |                 | `/:id` (*productId*)      | GET       |                                               |
+|          |                 | `/:id` (*fairbundleId*)      | GET       |                                               |
 |          |                 | `/`                       | POST      | checkAuthentication<br/>checkMunicipality     |
 |          |                 | `/:id` (*fairbundleId*)   | PUT       | checkAuthentication<br/>checkMunicipality     |
 |          | `/order`        | `/:id` (*municipalityId*) | GET       | checkAuthentication<br/>checkMunicipality     |
