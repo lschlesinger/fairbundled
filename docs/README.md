@@ -204,7 +204,7 @@ Routes are protected by the specific middleware functions.  See section [Middlew
 |          |                 | `/:id` (*orderId*)        | GET       | checkAuthentication<br/>checkMunicipality     |
 |          |                 | `/`                       | POST      | checkAuthentication<br/>checkMunicipality     |
 |          |                 | `/`                       | PUT       | checkAuthentication<br/>checkSameMunicipality |
-|          | `/positions`    | `/:id` (*supplierId*)     | GET       | checkAuthentication<br/>checkSupplier         |
+|          | `/positions`    | `/`     | GET       | checkAuthentication<br/>checkSupplier         |
 |          | `/auth`         | `/login`                  | POST      |                                               |
 |          |                 | `/register`               | POST      |                                               |
 |          | `/municipatliy` | `/`                       | GET       |                                               |
