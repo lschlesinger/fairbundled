@@ -205,6 +205,7 @@ Routes are protected by the specific middleware functions.  See section [Middlew
 |          |                 | `/`                       | POST      | checkAuthentication<br/>checkMunicipality     |
 |          |                 | `/`                       | PUT       | checkAuthentication<br/>checkMunicipality |
 |          | `/positions`    | `/`     | GET       | checkAuthentication<br/>checkSupplier         |
+|          | `/positions`    | `/`     | POST       | checkAuthentication<br/>checkMunicipality         |
 |          | `/auth`         | `/login`                  | POST      |                                               |
 |          |                 | `/register`               | POST      |                                               |
 |          | `/municipatliy` | `/`                       | GET       |                                               |
