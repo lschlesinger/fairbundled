@@ -203,7 +203,7 @@ Routes are protected by the specific middleware functions.  See section [Middlew
 |          | `/order`        | `/` | GET       | checkAuthentication<br/>checkMunicipality     |
 |          |                 | `/:id` (*orderId*)        | GET       | checkAuthentication<br/>checkMunicipality     |
 |          |                 | `/`                       | POST      | checkAuthentication<br/>checkMunicipality     |
-|          |                 | `/`                       | PUT       | checkAuthentication<br/>checkSameMunicipality |
+|          |                 | `/`                       | PUT       | checkAuthentication<br/>checkMunicipality |
 |          | `/positions`    | `/`     | GET       | checkAuthentication<br/>checkSupplier         |
 |          | `/auth`         | `/login`                  | POST      |                                               |
 |          |                 | `/register`               | POST      |                                               |
