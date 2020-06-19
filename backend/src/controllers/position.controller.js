@@ -2,7 +2,7 @@ import OrderPosition from "../models/order-position.model";
 
 class PositionController {
     static getPositions(req, res) {
-        const queury = {};
+        const query = {};
         OrderPosition.find()
             .populate({
                 path: "product",
@@ -15,6 +15,7 @@ class PositionController {
                 match: {
                     position: req._id,
                 },
+                select: ["submission", "municipality"],
             })
             .then((positions) => {
                 res.status(200).json(positions);
