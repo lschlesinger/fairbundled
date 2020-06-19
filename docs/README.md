@@ -200,7 +200,7 @@ Routes are protected by the specific middleware functions.  See section [Middlew
 |          |                 | `/:id` (*fairbundleId*)      | GET       |                                               |
 |          |                 | `/`                       | POST      | checkAuthentication<br/>checkMunicipality     |
 |          |                 | `/:id` (*fairbundleId*)   | PUT       | checkAuthentication<br/>checkMunicipality     |
-|          | `/order`        | `/:id` (*municipalityId*) | GET       | checkAuthentication<br/>checkMunicipality     |
+|          | `/order`        | `/` | GET       | checkAuthentication<br/>checkMunicipality     |
 |          |                 | `/:id` (*orderId*)        | GET       | checkAuthentication<br/>checkMunicipality     |
 |          |                 | `/`                       | POST      | checkAuthentication<br/>checkMunicipality     |
 |          |                 | `/`                       | PUT       | checkAuthentication<br/>checkSameMunicipality |
