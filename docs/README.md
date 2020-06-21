@@ -9,10 +9,11 @@
 * [Routes](#routes)
   * [Backend](#backend-endpoints)
   * [Frontend](#frontend-urls)
-* [Authorization](#authorization)
+* [Authentication/Authorization](#authentication)
+  
   * [Token](#token)
-  * [Middleware](#middleware)
-
+* [Middleware](#middleware)
+  
   
 
 <!-- DATA MODEL -->
@@ -36,7 +37,6 @@ The UML Class Diagram displays a data model implemented with a NoSQL MongoDB.
 The field `id` is automatically created (as `_id` field), when respective entity is modeled as database collection. This is the case for all entities except for `PriceLevel`  (defined inline in `Product` model's field).
 
 The grayish displayed id-fields represent a foreign key, i.e. a reference to a certain entity.
-
 
 <!-- ENTITIES -->
 
@@ -237,15 +237,15 @@ Note:
 
 
 
-<!-- AUTHORIZATION -->
+<!-- AUTHENTICATION -->
 
-# Authorization
+# Authentication/Authorization
 
 <!-- TOKEN -->
 
 ## Token
 
-As authorization mechanism JWT Tokens are generated and stored in the browsers local storage after login. 
+As authentication mechanism JWT Tokens are generated and stored in the browsers local storage after login. 
 
 The token holds the unique database id (`id`) and the email (`email`) as user information. Since a user is always registered as either a member of a municipality or a supplier entity, the generate JWT token also contains the information `municipality` and `supplier` which are either null or hold the associated municipality or supplier object.
 
@@ -281,10 +281,12 @@ Information contained in a token is used by the middleware explained in followin
 
 ## Middleware
 
-Middleware functionality checks the request before data is sent back from the backend. In the case of `checkAuthentication`, it is checked whether the user's token exists (user receives JWT token after login) and is still valid. Additionally, it is checked, whether either the user exhibits the field municipality with a respective `municipality._id` or the field supplier with a respective `supplier._id` in its decoded JWT token after logging in as user of a registered municipality/supplier. As a result, the request exhibits either the field `MunicipalityId` or `SupplierId` after being handled by `checkAuthentication`.
+Middleware functionality authenticates the user in the request before data is sent back from the backend. In the case of `checkAuthentication`, it is checked whether the user's token exists (user receives JWT token after login) and is still valid. Additionally, it is checked, whether either the user exhibits the field municipality with a respective `municipality._id` or the field supplier with a respective `supplier._id` in its decoded JWT token after logging in as user of a registered municipality/supplier. As a result, the request exhibits either the field `MunicipalityId` or `SupplierId` after being handled by `checkAuthentication`.
 
 Furthermore, depending on the request, it is also checked  (by `checkMunicipality` or `checkSupplier` respectively) whether a `MunicipalityId` or `SupplierId` was added to the request by `checkAuthentication`. 
 
 According to the check-mechanism explained above, the middleware functions `checkMunicipality` and `checkSupplier` can only be called *after* having called `checkedAuthentication`.
 
-Note: all middleware functions have to be called *before* triggering the actual functionality defined in a certain controller that directly accesses the database.
+The user or supplier/municipality information retrieved by the middleware is then used in the controllers to query resources that the requester is *authorized* to see.
+
+Note: All middleware functions have to be called *before* triggering the actual functionality defined in a certain controller that directly accesses the database.
