@@ -1,35 +1,68 @@
 import React from "react";
-import { Col, Row } from "antd";
+import { Col, Row, message } from "antd";
 import MySupplierData from "../../../components/SupplierAccountContent/MySupplierData";
+import OrderOverview from "../../../components/SupplierAccountContent/OrderOverview";
+import FeeOverview from "../../../components/SupplierAccountContent/FeeOverview";
+import ProductService from "../../../services/ProductService";
+import PositionService from "../../../services/PositionService";
 
 export class SupplierAccountView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            supplier: this.props.supplier,
+            supplier: null,
             user: this.props.user,
         };
     }
 
-    componentWillMount() {}
+    componentDidMount() {
+        this.getSupplierInfo();
+    }
+
+    async getSupplierInfo() {
+        try {
+            let supplierInfo = this.props.supplier;
+            supplierInfo = await ProductService.getActiveSupplierProducts(
+                supplierInfo
+            );
+            supplierInfo = await PositionService.getSalesInfo(supplierInfo);
+            this.setState({ supplier: supplierInfo });
+        } catch (e) {
+            message.error("Error fetching supplier Informations.");
+        }
+    }
 
     render() {
         return (
             <Row
-                gutter={[16, 16]}
+                gutter={[24, 24]}
                 className="padding-horizontal--lg"
                 justify="space-around"
-                align="middle"
             >
-                <Col span={7}>
-                    <MySupplierData
-                        supplier={this.state.supplier}
-                        user={this.state.user}
-                    />
-                    {/* {this.state.supplier.billingAddress} */}
+                <Col span={8}>
+                    {this.state.supplier ? (
+                        <MySupplierData
+                            supplier={this.state.supplier}
+                            user={this.state.user}
+                        />
+                    ) : (
+                        ""
+                    )}
                 </Col>
-                <Col span={10}>Supplier Col 2</Col>
-                <Col span={7}>Supplier Col 3</Col>
+                <Col span={8}>
+                    {this.state.supplier ? (
+                        <OrderOverview supplier={this.state.supplier} />
+                    ) : (
+                        ""
+                    )}
+                </Col>
+                <Col span={8}>
+                    {this.state.supplier ? (
+                        <FeeOverview supplier={this.state.supplier} />
+                    ) : (
+                        ""
+                    )}
+                </Col>
             </Row>
         );
     }

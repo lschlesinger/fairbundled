@@ -84,10 +84,10 @@ export class AccountView extends React.Component {
                     >
                         <Col span={8}>
                             <Row align="middle" justify="center">
-                                <Text class="account-view__meinFairbundled">
+                                <Text className="account-view__meinFairbundled">
                                     Mein Fairbundled:{" "}
                                 </Text>
-                                <Text class="account-view__entityName">
+                                <Text className="account-view__entityName">
                                     {this.state.entityName}
                                 </Text>
                             </Row>

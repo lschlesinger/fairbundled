@@ -18,36 +18,36 @@ export default class MySupplierData extends React.Component {
             <Card title="Persönliche Daten" className="padding-horizontal--sm">
                 <Row className="padding-top--md" gutter={8}>
                     <Col span={12}>
-                        <Text class="my-supplier-data__text" strong>
+                        <Text className="my-supplier-data__text" strong>
                             E-Mail Adresse:
                         </Text>
                     </Col>
                     <Col span={12}>
-                        <Text class="my-supplier-data__text">
+                        <Text className="my-supplier-data__text">
                             {this.state.user.email}
                         </Text>
                     </Col>
                 </Row>
                 <Row className="padding-top--md">
                     <Col span={12}>
-                        <Text class="my-supplier-data__text" strong>
+                        <Text className="my-supplier-data__text" strong>
                             Rechnungsadresse:
                         </Text>
                     </Col>
                     <Col span={12}>
-                        <Text class="my-supplier-data__text">
+                        <Text className="my-supplier-data__text">
                             {this.state.supplier.billingAddress}
                         </Text>
                     </Col>
                 </Row>
                 <Row className="padding-top--md padding-bottom--sm">
                     <Col span={12}>
-                        <Text class="my-supplier-data__text" strong>
+                        <Text className="my-supplier-data__text" strong>
                             Bankverbindung:
                         </Text>
                     </Col>
                     <Col span={12}>
-                        <Text class="my-supplier-data__text">
+                        <Text className="my-supplier-data__text">
                             {this.state.supplier.bankAccount}
                         </Text>
                     </Col>
