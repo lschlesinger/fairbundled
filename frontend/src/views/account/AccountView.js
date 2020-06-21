@@ -62,15 +62,16 @@ export class AccountView extends React.Component {
                     </Button>
                 </Link>
             );
-        } else if (AuthService.isAuthenticatedSupplier()) {
-            return (
-                <Link to="/product/create">
-                    <Button type="primary" icon={<NotificationOutlined />}>
-                        Jetzt Verkaufen
-                    </Button>
-                </Link>
-            );
         }
+        // else if (AuthService.isAuthenticatedSupplier()) {
+        //     return (
+        //         <Link to="/product/create">
+        //             <Button type="primary" icon={<NotificationOutlined />}>
+        //                 Jetzt Verkaufen
+        //             </Button>
+        //         </Link>
+        //     );
+        // }
     }
 
     render() {
