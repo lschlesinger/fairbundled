@@ -8,4 +8,6 @@ export default class PositionService {
     static async getPositions() {
         return HttpService.get(`${this.BASE_URL}/`);
     }
+
+    static getSales() {}
 }

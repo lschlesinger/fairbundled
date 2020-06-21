@@ -1,6 +1,6 @@
 import React from "react";
 import AuthService from "../../services/AuthService";
-import { Button, Col, Row, Typography, Space } from "antd";
+import { Button, Col, Row, Typography, Layout } from "antd";
 import {
     LogoutOutlined,
     NotificationOutlined,
@@ -11,7 +11,8 @@ import { SupplierAccountView } from "./supplier-account/SupplierAccountView";
 import { Link } from "react-router-dom";
 import "./AccountView.less";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
+const { Content } = Layout;
 
 export class AccountView extends React.Component {
     constructor(props) {
@@ -43,7 +44,12 @@ export class AccountView extends React.Component {
         if (AuthService.isAuthenticatedMunicipality()) {
             return <MunicipalityAccountView user={this.state.user} />;
         } else if (AuthService.isAuthenticatedSupplier()) {
-            return <SupplierAccountView user={this.state.user} />;
+            return (
+                <SupplierAccountView
+                    user={this.state.user}
+                    supplier={this.state.supplier}
+                />
+            );
         }
     }
 
@@ -69,42 +75,43 @@ export class AccountView extends React.Component {
 
     render() {
         return (
-            <div>
-                <Row
-                    className="padding--md"
-                    justify="space-around"
-                    align="middle"
-                >
-                    <Col span={8}>
-                        <Row align="middle" justify="center">
-                            <Text class="account-view__meinFairbundled">
-                                Mein Fairbundled:{" "}
-                            </Text>
-                            <Text class="account-view__entityName">
-                                {this.state.entityName}
-                            </Text>
-                        </Row>
-                    </Col>
-                    <Col span={8}>
-                        <Row align="middle" justify="center">
-                            {this.renderUserTypeSpecificButton()}
-                        </Row>
-                    </Col>
-                    <Col span={8}>
-                        <Row align="middle" justify="center">
-                            <Button
-                                type="primary"
-                                icon={<LogoutOutlined />}
-                                onClick={AuthService.logout}
-                            >
-                                Logout
-                            </Button>
-                        </Row>
-                    </Col>
-                </Row>
-
-                {this.renderUserTypeSpecificView()}
-            </div>
+            <Layout>
+                <Content>
+                    <Row
+                        className="padding--md"
+                        justify="space-around"
+                        align="middle"
+                    >
+                        <Col span={8}>
+                            <Row align="middle" justify="center">
+                                <Text class="account-view__meinFairbundled">
+                                    Mein Fairbundled:{" "}
+                                </Text>
+                                <Text class="account-view__entityName">
+                                    {this.state.entityName}
+                                </Text>
+                            </Row>
+                        </Col>
+                        <Col span={8}>
+                            <Row align="middle" justify="center">
+                                {this.renderUserTypeSpecificButton()}
+                            </Row>
+                        </Col>
+                        <Col span={8}>
+                            <Row align="middle" justify="center">
+                                <Button
+                                    type="primary"
+                                    icon={<LogoutOutlined />}
+                                    onClick={AuthService.logout}
+                                >
+                                    Logout
+                                </Button>
+                            </Row>
+                        </Col>
+                    </Row>
+                    {this.renderUserTypeSpecificView()}
+                </Content>
+            </Layout>
         );
     }
 }
