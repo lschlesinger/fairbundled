@@ -1,13 +1,19 @@
-import React from 'react';
+import React from "react";
 import AuthService from "../../services/AuthService";
-import {Button, Col, Row} from "antd";
-import {LogoutOutlined, NotificationOutlined, SmileOutlined} from '@ant-design/icons';
-import {MunicipalityAccountView} from "./municipality-account/MunicipalityAccountView";
-import {SupplierAccountView} from "./supplier-account/SupplierAccountView";
-import {Link} from "react-router-dom";
+import { Button, Col, Row, Typography, Space } from "antd";
+import {
+    LogoutOutlined,
+    NotificationOutlined,
+    SmileOutlined,
+} from "@ant-design/icons";
+import { MunicipalityAccountView } from "./municipality-account/MunicipalityAccountView";
+import { SupplierAccountView } from "./supplier-account/SupplierAccountView";
+import { Link } from "react-router-dom";
+import "./AccountView.less";
+
+const { Title, Text } = Typography;
 
 export class AccountView extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -15,7 +21,7 @@ export class AccountView extends React.Component {
             municipality: "",
             supplier: "",
             entityName: null,
-        }
+        };
     }
 
     componentWillMount() {
@@ -29,16 +35,15 @@ export class AccountView extends React.Component {
             user: user,
             municipality: user.municipality,
             supplier: user.supplier,
-            entityName: AuthService.getEntityName()
-        })
+            entityName: AuthService.getEntityName(),
+        });
     }
-
 
     renderUserTypeSpecificView() {
         if (AuthService.isAuthenticatedMunicipality()) {
-            return (<MunicipalityAccountView user={this.state.user}/>);
+            return <MunicipalityAccountView user={this.state.user} />;
         } else if (AuthService.isAuthenticatedSupplier()) {
-            return (<SupplierAccountView user={this.state.user}/>)
+            return <SupplierAccountView user={this.state.user} />;
         }
     }
 
@@ -46,48 +51,59 @@ export class AccountView extends React.Component {
         if (AuthService.isAuthenticatedMunicipality()) {
             return (
                 <Link to="/">
-                    <Button type="primary"
-                            icon={<SmileOutlined/>}>
+                    <Button type="primary" icon={<SmileOutlined />}>
                         Jetzt Kaufen
                     </Button>
                 </Link>
-            )
+            );
         } else if (AuthService.isAuthenticatedSupplier()) {
             return (
                 <Link to="/product/create">
-                    <Button type="primary"
-                            icon={<NotificationOutlined/>}>
+                    <Button type="primary" icon={<NotificationOutlined />}>
                         Jetzt Verkaufen
                     </Button>
                 </Link>
-            )
+            );
         }
     }
-
 
     render() {
         return (
             <div>
-                <Row className="padding--md"
-                     justify="space-around"
-                     align="middle">
-                    <Col>
-                        {`Mein Fairbundled: ${this.state.entityName}`}
+                <Row
+                    className="padding--md"
+                    justify="space-around"
+                    align="middle"
+                >
+                    <Col span={8}>
+                        <Row align="middle" justify="center">
+                            <Text class="account-view__meinFairbundled">
+                                Mein Fairbundled:{" "}
+                            </Text>
+                            <Text class="account-view__entityName">
+                                {this.state.entityName}
+                            </Text>
+                        </Row>
                     </Col>
-                    <Col>
-                        {this.renderUserTypeSpecificButton()}
+                    <Col span={8}>
+                        <Row align="middle" justify="center">
+                            {this.renderUserTypeSpecificButton()}
+                        </Row>
                     </Col>
-                    <Col>
-                        <Button type="primary"
-                                icon={<LogoutOutlined/>}
-                                onClick={AuthService.logout}>
-                            Logout
-                        </Button>
+                    <Col span={8}>
+                        <Row align="middle" justify="center">
+                            <Button
+                                type="primary"
+                                icon={<LogoutOutlined />}
+                                onClick={AuthService.logout}
+                            >
+                                Logout
+                            </Button>
+                        </Row>
                     </Col>
                 </Row>
 
                 {this.renderUserTypeSpecificView()}
-
             </div>
         );
     }
