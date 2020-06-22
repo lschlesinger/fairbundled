@@ -2,7 +2,6 @@ import React from "react";
 
 import {Avatar, Checkbox, Form, Menu, message, Row, Typography} from 'antd';
 import "./ProductFilterBarStyles.less"
-import CertificateService from "../../services/CertificateService";
 import {withRouter} from "react-router-dom";
 
 const {SubMenu} = Menu;
@@ -18,28 +17,20 @@ class FilterBar extends React.Component {
     initState() {
         this.state = {
             openKeys: ['certificates'],
-            certificates: []
+            certificates: this.props.certificates
         }
-    }
-
-    componentWillMount() {
-        this.getCertificates();
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.location !== prevProps.location) {
-            this.getCertificates();
+        if (this.props.certificates === prevProps.certificates) {
+            return;
         }
-    }
 
-    async getCertificates() {
-        try {
-            this.setState({
-                certificates: await CertificateService.getCertificates()
-            });
-        } catch (e) {
-            message.error("Error fetching certificates." + " " + e.message);
-        }
+        this.setState(prevState => ({
+                ...prevState,
+                certificates: this.props.certificates
+            }
+        ));
     }
 
     onOpenChange = openKeys => {
@@ -69,6 +60,10 @@ class FilterBar extends React.Component {
     }
 
     getGroupedCertificates(certs) {
+        if (certs == null) {
+            return []
+        }
+
 
         let groupedCerts = certs.reduce(function (r, a) {
             r[a.sector] = r[a.sector] || [];

@@ -1,6 +1,7 @@
 import React from "react";
 import ProductService from "../../services/ProductService";
 import FairbundleService from "../../services/FairbundleService";
+import CertificateService from "../../services/CertificateService";
 import {Layout, message} from 'antd';
 import ProductListCard from "../../components/ProductListCard/ProductListCard";
 import ProductFilterBar from "../../components/ProductFilterBar/ProductFilterBar"
@@ -15,16 +16,19 @@ export default class ProductListView extends React.Component {
         this.state = {
             products: null,
             fairbundles: null,
+            certificates: null
         };
     }
 
     componentDidMount() {
         this.getProductsAndFairbundles();
+        this.getCertificates();
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.location !== prevProps.location) {
             this.getProductsAndFairbundles();
+            this.getCertificates();
         }
     }
 
@@ -52,12 +56,26 @@ export default class ProductListView extends React.Component {
                 fairbundles
             );
             //set state variables
-            this.setState({
+            this.setState(prevState => ({
+                ...prevState,
                 fairbundles: fairbundles,
-                products: products,
-            });
+                products: products
+            }));
         } catch (e) {
             message.error("Error fetching products and fairbundles.");
+        }
+    }
+
+    async getCertificates() {
+        try {
+            let certificates = await CertificateService.getCertificates()
+
+            this.setState(prevState => ({
+                ...prevState,
+                certificates: certificates
+            }));
+        } catch (e) {
+            message.error("Error fetching certificates." + " " + e.message);
         }
     }
 
@@ -68,7 +86,7 @@ export default class ProductListView extends React.Component {
                     overflow: 'auto',
                     position: 'relative',
                     left: 0}}>
-                    <ProductFilterBar onSelectedCertsChanged={this.onSelectedCertsChanged.bind(this)} />
+                    <ProductFilterBar certificates={this.state.certificates} onSelectedCertsChanged={this.onSelectedCertsChanged.bind(this)} />
                 </Sider>
                 <Content className="product-list-view__content">
                     {this.state.products && this.state.fairbundles ? (
