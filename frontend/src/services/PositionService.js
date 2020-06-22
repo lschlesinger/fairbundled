@@ -19,6 +19,11 @@ export default class PositionService {
         let revenue = 0;
         //contains all products sold with product info and total qty per product and total revenue per product
         let orderedProducts = [];
+        //different fees
+        let totalFixedFee = 0;
+        let monthlyFixedFee = 0;
+        let totalVariableFee = 0;
+        let monthlyVariableFee = 0;
         let positions = await this.getPositions();
         for (const p in positions) {
             const position = positions[p];
@@ -37,15 +42,43 @@ export default class PositionService {
                         break;
                     }
                 }
+                //temp Revenue
+                let tempRevenue =
+                    position.qty *
+                    position.product.priceLevel[priceL].unitPrice;
+                // add tempRevenue to total revenue
+                revenue += tempRevenue;
+                //calculate monthly fees
+                if (
+                    new Date(position.order.submission) >
+                    new Date().setDate(new Date().getDate() - 30)
+                ) {
+                    monthlyFixedFee += 0.5;
+                    if (tempRevenue < 100) {
+                        monthlyVariableFee += tempRevenue * 0.05;
+                    } else if (tempRevenue > 10000) {
+                        monthlyVariableFee += tempRevenue * 0.02;
+                    } else {
+                        monthlyVariableFee += tempRevenue * 0.03;
+                    }
+                }
+                //calculate total fees
+                totalFixedFee += 0.5;
+                if (tempRevenue < 100) {
+                    totalVariableFee += tempRevenue * 0.05;
+                } else if (tempRevenue > 10000) {
+                    totalVariableFee += tempRevenue * 0.02;
+                } else {
+                    totalVariableFee += tempRevenue * 0.03;
+                }
+                //add qty and revenue to overall qty and revenue
                 let tie = false;
                 for (const op in orderedProducts) {
                     if (
                         orderedProducts[op].product.id === position.product._id
                     ) {
                         orderedProducts[op].qty += position.qty;
-                        orderedProducts[op].revenue +=
-                            position.qty *
-                            position.product.priceLevel[priceL].unitPrice;
+                        orderedProducts[op].revenue += tempRevenue;
                         tie = true;
                         break;
                     }
@@ -61,15 +94,16 @@ export default class PositionService {
                     };
                     orderedProducts.push(tempProduct);
                 }
-                revenue =
-                    revenue +
-                    position.qty *
-                        position.product.priceLevel[priceL].unitPrice;
             }
         }
+        //save all calculations in supplier json and return supplier
         supplier.productsSold = productsSold;
         supplier.revenue = revenue;
         supplier.qtySold = qtySold;
+        supplier.monthlyFixedFee = monthlyFixedFee;
+        supplier.monthlyVariableFee = monthlyVariableFee;
+        supplier.totalFixedFee = totalFixedFee;
+        supplier.totalVariableFee = totalVariableFee;
         supplier.bestseller = this.determineBestseller(orderedProducts);
         return supplier;
     }

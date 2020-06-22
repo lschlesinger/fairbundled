@@ -1,8 +1,7 @@
-import {Order} from "../models/order.model";
+import { Order } from "../models/order.model";
 import OrderPosition from "../models/order-position.model";
 
 class OrderController {
-
     /**
      * Find orders of municipality associated with requesting user (=req.municipalityId)
      * @param req: -
@@ -52,11 +51,7 @@ class OrderController {
         const query = {};
         query.municipality = req.municipalityId;
         query._id = req.params.id;
-        Order.findOneAndUpdate(
-            query,
-            {submission: date},
-            {new: true}
-        )
+        Order.findOneAndUpdate(query, { submission: date }, { new: true })
             .then((order) => {
                 res.status(201).json(order);
             })
@@ -85,19 +80,20 @@ class OrderController {
                     user: req.userId,
                     order: order._id,
                 };
-                OrderPosition.create(position).then((position) => {
-                    order.positions.push(position);
-                    order.save((o) => {
-                        res.status(201).json(order)
+                OrderPosition.create(position)
+                    .then((position) => {
+                        order.positions.push(position);
+                        order.save((o) => {
+                            res.status(201).json(order);
+                        });
+                    })
+                    .catch((err) => {
+                        res.status(400).send(err);
                     });
-                }).catch((err) => {
-                    res.status(400).send(err);
-                });
             })
             .catch((err) => {
                 res.status(400).send(err);
             });
     }
 }
-
 export default OrderController;

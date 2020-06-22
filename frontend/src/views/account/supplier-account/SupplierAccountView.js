@@ -39,7 +39,7 @@ export class SupplierAccountView extends React.Component {
                 className="padding-horizontal--lg"
                 justify="space-around"
             >
-                <Col span={8}>
+                <Col span={9}>
                     {this.state.supplier ? (
                         <MySupplierData
                             supplier={this.state.supplier}
@@ -56,7 +56,7 @@ export class SupplierAccountView extends React.Component {
                         ""
                     )}
                 </Col>
-                <Col span={8}>
+                <Col span={7}>
                     {this.state.supplier ? (
                         <FeeOverview supplier={this.state.supplier} />
                     ) : (

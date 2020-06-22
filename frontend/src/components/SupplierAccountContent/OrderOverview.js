@@ -20,7 +20,7 @@ export default class MySupplierData extends React.Component {
             <Card title="Verkaufsübersicht" className="padding-horizontal--sm">
                 {/* Aktive, Verkaufte Produkte und Gesamtumsatz */}
                 <Row className="margin--sm order-overview__kpis" gutter={8}>
-                    <Col span={9}>
+                    <Col span={7}>
                         <Row className="padding-top--sm" justify="center">
                             <Text className="order-overview__number" strong>
                                 {this.props.supplier.activeProducts}
@@ -33,7 +33,7 @@ export default class MySupplierData extends React.Component {
                             <Text strong>Aktiv</Text>
                         </Row>
                     </Col>
-                    <Col span={5}>
+                    <Col span={7}>
                         <Row className="padding-top--sm" justify="center">
                             <Text className="order-overview__number" strong>
                                 {this.props.supplier.qtySold}
@@ -66,7 +66,11 @@ export default class MySupplierData extends React.Component {
                 {/* Jetzt Verkaufen Button */}
                 <Row justify="center" className="margin--lg">
                     <Link to="/product/create">
-                        <Button type="primary" icon={<NotificationOutlined />}>
+                        <Button
+                            size="large"
+                            type="primary"
+                            icon={<NotificationOutlined />}
+                        >
                             Jetzt Verkaufen
                         </Button>
                     </Link>
@@ -98,7 +102,7 @@ export default class MySupplierData extends React.Component {
                             <Row
                                 justify="center"
                                 align="middle"
-                                className="margin-bottom--md"
+                                className="margin-bottom--sm"
                             >
                                 <Text strong>
                                     {
@@ -182,7 +186,7 @@ export default class MySupplierData extends React.Component {
                             <Row
                                 justify="center"
                                 align="middle"
-                                className="margin-bottom--md"
+                                className="margin-bottom--sm"
                             >
                                 <Text strong>
                                     {
