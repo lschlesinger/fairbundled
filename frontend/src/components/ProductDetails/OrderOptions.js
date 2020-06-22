@@ -1,6 +1,10 @@
 import React from "react";
-import {Col, Form, InputNumber, Row} from "antd";
+import {Col, Form, InputNumber, Row, Card, Typography} from "antd";
+import {
+    CheckCircleOutlined
+  } from '@ant-design/icons';
 
+const { Text } = Typography;
 
 export default class OrderOptions extends React.Component {
 
@@ -31,7 +35,16 @@ export default class OrderOptions extends React.Component {
 
         return (
             <Col>
-                <Row>{this.props.product?.name}</Row>
+                <Card className="order-options--card" style={{paddingLeft:8}}>
+                    <Text style={{color:"#78A262", fontSize:24, fontWeight:"bold"}}>
+                        {this.props.product?.priceLevel[0].unitPrice}€ / {this.props.product?.priceLevel[0].unit}
+                    </Text>
+                    <br /><br />
+                    <Text style={{color:"#000000"}}>
+                        Lieferbar <CheckCircleOutlined /> - {this.props.product?.deliveryDays} Werktage
+                    </Text>
+                    <br /><br />
+                </Card>
                 <Row>
                     <Form.Item name="quantitiy"
                                label="Menge"
