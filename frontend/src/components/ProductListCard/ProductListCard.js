@@ -1,13 +1,23 @@
 import React from "react";
-import {Button, Card, Cascader, Col, Row, Space, Switch, Tag, Typography,} from "antd";
-import {Link} from "react-router-dom";
+import {
+    Button,
+    Card,
+    Cascader,
+    Col,
+    Row,
+    Space,
+    Switch,
+    Tag,
+    Typography,
+} from "antd";
+import { Link } from "react-router-dom";
 import "./ProductListCard.less";
 import placeholder from "../../assets/placeholder.png";
 
-const {Paragraph, Text, Title} = Typography;
+const { Paragraph, Text, Title } = Typography;
 const options = [
-    {value: "Niedrigster Preis", label: "Niedrigster Preis"},
-    {value: "Höchster Preis", label: "Höchster Preis"}
+    { value: "Niedrigster Preis", label: "Niedrigster Preis" },
+    { value: "Höchster Preis", label: "Höchster Preis" },
 ];
 
 export default class ProductListCard extends React.Component {
@@ -27,11 +37,10 @@ export default class ProductListCard extends React.Component {
             return;
         }
 
-        this.setState(prevState => ({
-                ...prevState,
-                products: this.props.products
-            }
-        ));
+        this.setState((prevState) => ({
+            ...prevState,
+            products: this.props.products,
+        }));
     }
 
     //function to determine the lowest price and to differentiate between one and multiple price levels (Difference: Ab)
@@ -39,7 +48,10 @@ export default class ProductListCard extends React.Component {
         return (
             <Title level={4} className="price">
                 {product.priceLevel.length < 2 ? "" : "Ab "}
-                {product.smallestPrice} €
+                {new Intl.NumberFormat("de-DE", {
+                    style: "currency",
+                    currency: "EUR",
+                }).format(product.smallestPrice)}
             </Title>
         );
     }
@@ -91,7 +103,9 @@ export default class ProductListCard extends React.Component {
                                 className="product-list-card__product_description"
                                 justify="start"
                             >
-                                <Paragraph ellipsis>{this.displayDescriptionText(product)}</Paragraph>
+                                <Paragraph ellipsis>
+                                    {this.displayDescriptionText(product)}
+                                </Paragraph>
                             </Row>
                             <Row gutter={8} align="middle">
                                 <Col span={12}>{price}</Col>
@@ -117,19 +131,19 @@ export default class ProductListCard extends React.Component {
 
     //handles the changes of the Fairbundle switch (top left)
     handleChange(checked) {
-        this.setState({checked});
+        this.setState({ checked });
         this.setState({
             products: checked
                 ? this.state.products.filter(
-                    (product) => product.hasFairbundle === true
-                )
+                      (product) => product.hasFairbundle === true
+                  )
                 : this.props.products,
         });
     }
 
     //handles the ordering of the elements based on price ascending and descending (top right)
     handleOrdering(ordering) {
-        this.setState({ordering: ordering});
+        this.setState({ ordering: ordering });
         if (ordering[0] === "Niedrigster Preis") {
             this.setState({
                 products: this.state.products.sort(
@@ -182,7 +196,7 @@ export default class ProductListCard extends React.Component {
                                 {this.state.products.length === 1
                                     ? this.state.products.length + " Ergebnis"
                                     : this.state.products.length +
-                                    " Ergebnisse"}
+                                      " Ergebnisse"}
                             </Text>
                         </Row>
                     </Col>
