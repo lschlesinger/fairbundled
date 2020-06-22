@@ -1,9 +1,8 @@
 import OrderPosition from "../models/order-position.model";
-import {Order} from "../models/order.model";
+import { Order } from "../models/order.model";
 import OrderController from "./order.controller";
 
 class PositionController {
-
     /**
      * Find all OrderPositions of products provided by supplier associated with requesting user (=req.supplierId)
      * @param req: -
@@ -40,8 +39,8 @@ class PositionController {
      */
     static addPosition(req, res) {
         const query = {};
-        query['municipality'] = req.municipalityId;
-        query['submission'] = null;
+        query["municipality"] = req.municipalityId;
+        query["submission"] = null;
         Order.findOne(query)
             .populate({
                 path: "positions",
@@ -49,13 +48,13 @@ class PositionController {
                     path: "product",
                     match: {
                         _id: req.body.productId,
-                    }
-                }
+                    },
+                },
             })
             .then((order) => {
                 // check if there is no currently unsubmitted order, if so create new order
                 if (!order) {
-                    OrderController.createOrder(req);
+                    OrderController.createOrder(req, res);
                 }
                 // if order found, add position to existing unsubmitted order, Note: there can be several positions of one product in one order
                 else {
@@ -63,7 +62,7 @@ class PositionController {
                         qty: req.body.qty,
                         product: req.body.productId,
                         user: req.userId,
-                        order: order._id
+                        order: order._id,
                     };
                     OrderPosition.create(orderPosition)
                         .then((position) => {
@@ -72,15 +71,15 @@ class PositionController {
                             order.save(() => {
                                 res.status(201).json(order);
                             });
-                        }).catch((err) => {
-                        res.status(400).send(err);
-                    });
+                        })
+                        .catch((err) => {
+                            res.status(400).send(err);
+                        });
                 }
-
             })
             .catch((err) => {
                 res.status(400).send(err);
-            })
+            });
     }
 }
 
