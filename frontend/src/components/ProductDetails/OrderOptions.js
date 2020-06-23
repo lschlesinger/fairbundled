@@ -74,6 +74,13 @@ export default class OrderOptions extends React.Component {
                 <Row>
                     <button onClick={this.onCreateOrder}>Create Order</button>
                 </Row>
+                <Card className="order-options--card" style={{padding:8, marginBottom:"20px"}}>
+                    <Button type="primary" style={{width:"100%", height:"40px"}} onClick={this.onCreateOrder}>
+                        <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}}>
+                            Neue Bestellung
+                        </Text>
+                    </Button>
+                </Card>
             </Col>
         )
     }
