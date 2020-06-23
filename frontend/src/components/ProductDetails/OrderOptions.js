@@ -1,7 +1,9 @@
 import React from "react";
-import {Col, Button, InputNumber, Row, Card, Typography} from "antd";
+import {Col, Button, InputNumber, Progress, Card, Typography, Space} from "antd";
 import {
-    CheckCircleOutlined
+    CheckCircleOutlined,
+    CalendarOutlined,
+    TeamOutlined
   } from '@ant-design/icons';
 
 const { Text } = Typography;
@@ -43,8 +45,67 @@ export default class OrderOptions extends React.Component {
         this.setState({qty: number})
     }
 
-    render() {
+    createFairbundleCard = (fairbundle, product) => {
+        let savings = (1 - (fairbundle.targetPrice / product.priceLevel[0].unitPrice)) * 100;
 
+        let requiredBundlers = product.priceLevel.find(l => l.unitPrice == fairbundle.targetPrice).minQty;
+        let completedBundle = fairbundle.bundlers.length / requiredBundlers * 100;
+
+        let currentDate = new Date();
+        let diffTime = Date.parse(fairbundle.expiration) - currentDate.getTime();
+        let remainingDays = Math.round(diffTime / 3600 / 24 / 1000);
+
+        let bundlersString = "";
+
+        if (fairbundle.bundlers.length > 1) {
+            bundlersString = "Kommunen";
+        } else {
+            bundlersString = "Kommune";
+        }
+
+        return(
+            <Card className="order-options--card" style={{padding:8, marginBottom:"10px"}}>
+                <Space direction="horizontal" style={{width:"100%", marginBottom:4}}>
+                    <Text style={{color:"#78A262", fontSize:24, fontWeight:"bold", marginRight:16}}>
+                        {fairbundle.targetPrice}€ / {product.priceLevel[0].unit}
+                    </Text>
+                    <Text delete style={{color:"#a1a1a1", fontSize:14, fontWeight:"bold"}}>
+                        {product.priceLevel[0].unitPrice}€
+                    </Text>
+                </Space>
+                <Text style={{color:"#000000", fontStyle:"italic"}}>
+                    {savings}% sparen
+                </Text>
+                <Progress percent={completedBundle} strokeWidth={3} strokeColor="#78A262" showInfo={false} style={{width:"100%", marginTop:16}}/>
+                <Space direction="horizontal" style={{width:"100%", marginBottom:24}}>
+                    <Text style={{color:"#78A262", fontWeight:"bold"}}>
+                        {fairbundle.bundlers.length}
+                    </Text>
+                    <Text style={{color:"#a1a1a1"}}>
+                        von {requiredBundlers} erreicht
+                    </Text>
+                </Space>
+                <Space direction="horizontal" style={{width:"100%", marginBottom:4}}>
+                    <CalendarOutlined style={{fontSize:25, paddingTop:4, color:"#a1a1a1"}}/>
+                    <Text style={{color:"#000000", fontWeight:"normal"}}>Noch</Text>
+                    <Text style={{color:"#000000", fontWeight:"bold"}}>{remainingDays}</Text>
+                    <Text style={{color:"#000000", fontWeight:"normal"}}>Tage</Text>
+                </Space>
+                <Space direction="horizontal" style={{width:"100%"}}>
+                    <TeamOutlined style={{fontSize:25, paddingTop:4, color:"#a1a1a1"}}/>
+                    <Text style={{color:"#000000", fontWeight:"bold"}}>{fairbundle.bundlers.length}</Text>
+                    <Text style={{color:"#000000", fontWeight:"normal"}}>teilnehmende {bundlersString}</Text>
+                </Space>
+                <Button type="primary" style={{width:"100%", height:"40px", marginTop:24}} onClick={this.onJoinFairbundle}>
+                    <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}}>
+                        Fairbundle beitreten
+                    </Text>
+                </Button>
+            </Card>
+        );
+    }
+
+    render() {
         return (
             <Col>
                 <Card className="order-options--card" style={{paddingLeft:8, marginBottom:"10px"}}>
@@ -58,23 +119,15 @@ export default class OrderOptions extends React.Component {
                     <br /><br />
                     <Text style={{color:"#000000", marginRight:"10px"}}>Menge:</Text><InputNumber min={0} max={99999} defaultValue={0} onChange={this.onInputNumberChanged}/>
                 </Card>
-                <Card className="order-options--card" style={{padding:8, marginBottom:"20px"}}>
+                <Card className="order-options--card" style={{padding:8, marginBottom:"10px"}}>
                     <Button type="primary" style={{width:"100%", height:"40px"}} onClick={this.onCreateFairbundle}>
                         <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}}>
                             Neues Fairbundle
                         </Text>
                     </Button>
                 </Card>
-
-
-                {this.props.fairbundles?.map((fb) => <Row key={fb._id}>
-                    {fb._id}
-                    <button onClick={() => this.onJoinFairbundle(fb._id)}>Join Fairbundle</button>
-                </Row>)}
-                <Row>
-                    <button onClick={this.onCreateOrder}>Create Order</button>
-                </Row>
-                <Card className="order-options--card" style={{padding:8, marginBottom:"20px"}}>
+                {this.props.fairbundles?.map((fb) => this.createFairbundleCard(fb, this.props.product))}
+                <Card className="order-options--card" style={{padding:8, marginBottom:"10px"}}>
                     <Button type="primary" style={{width:"100%", height:"40px"}} onClick={this.onCreateOrder}>
                         <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}}>
                             Neue Bestellung
