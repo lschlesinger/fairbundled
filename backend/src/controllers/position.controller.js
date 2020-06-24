@@ -23,7 +23,14 @@ class PositionController {
                 },
                 select: ["submission", "municipality"],
             })
+            .find({ product: { $ne: null } })
             .then((positions) => {
+                positions = positions.filter(
+                    (position) => position.product != null
+                );
+                positions = positions.filter(
+                    (position) => position.order !== undefined
+                );
                 res.status(200).json(positions);
             })
             .catch((err) => {

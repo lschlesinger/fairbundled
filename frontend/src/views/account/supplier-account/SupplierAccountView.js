@@ -5,6 +5,7 @@ import OrderOverview from "../../../components/SupplierAccountContent/OrderOverv
 import FeeOverview from "../../../components/SupplierAccountContent/FeeOverview";
 import ProductService from "../../../services/ProductService";
 import PositionService from "../../../services/PositionService";
+import SupplierService from "../../../services/SupplierService";
 
 export class SupplierAccountView extends React.Component {
     constructor(props) {

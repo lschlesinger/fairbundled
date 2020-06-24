@@ -75,172 +75,193 @@ export default class MySupplierData extends React.Component {
                         </Button>
                     </Link>
                 </Row>
-                <Divider />
-                {/* Bestseller nach Anzahl der Verkäufe */}
-                <Row>
-                    <Row className="margin-bottom--sm">
-                        <Title className="padding-right--sm" level={4}>
-                            Bestseller
-                        </Title>
-                        <Text>(gemessen in: Anzahl der Verkäufe)</Text>
-                    </Row>
+                {this.props.supplier.noPosition ? "" : <Divider></Divider>}
+
+                {/* Bestseller nach Anzahl der Verkäufe und Umsatz abhängig von der Existenz der Positions*/}
+                {this.props.supplier.noPosition ? (
+                    ""
+                ) : (
                     <Row>
-                        <Col span={6}>
-                            <img
-                                src={
-                                    this.props.supplier.bestseller.qtyBestseller
-                                        .product.images?.length > 0
-                                        ? this.props.supplier.bestseller
-                                              .qtyBestseller.product.images[0]
-                                        : placeholder
-                                }
-                                alt="bild"
-                                width="100%"
-                            ></img>
-                        </Col>
-                        <Col span={18}>
-                            <Row
-                                justify="center"
-                                align="middle"
-                                className="margin-bottom--sm"
-                            >
-                                <Text strong>
-                                    {
+                        <Row className="margin-bottom--sm">
+                            <Title className="padding-right--sm" level={4}>
+                                Bestseller
+                            </Title>
+                            <Text>(gemessen in: Anzahl der Verkäufe)</Text>
+                        </Row>
+                        <Row>
+                            <Col span={6}>
+                                <img
+                                    src={
                                         this.props.supplier.bestseller
-                                            .qtyBestseller.product.name
+                                            .qtyBestseller.product.images
+                                            ?.length > 0
+                                            ? this.props.supplier.bestseller
+                                                  .qtyBestseller.product
+                                                  .images[0]
+                                            : placeholder
                                     }
-                                </Text>
-                            </Row>
-                            <Row>
-                                <Col justify="center" span={12}>
-                                    <Row justify="center">
-                                        <Text
-                                            className="order-overview__bestsellerNum"
-                                            strong
+                                    alt="bild"
+                                    width="100%"
+                                ></img>
+                            </Col>
+                            <Col span={18}>
+                                <Row
+                                    justify="center"
+                                    align="middle"
+                                    className="margin-bottom--sm"
+                                >
+                                    <Text strong>
+                                        {
+                                            this.props.supplier.bestseller
+                                                .qtyBestseller.product.name
+                                        }
+                                    </Text>
+                                </Row>
+                                <Row>
+                                    <Col justify="center" span={12}>
+                                        <Row justify="center">
+                                            <Text
+                                                className="order-overview__bestsellerNum"
+                                                strong
+                                            >
+                                                {
+                                                    this.props.supplier
+                                                        .bestseller
+                                                        .qtyBestseller.qty
+                                                }
+                                            </Text>
+                                        </Row>
+                                        <Row
+                                            className="margin-bottom--sm"
+                                            justify="center"
                                         >
-                                            {
-                                                this.props.supplier.bestseller
-                                                    .qtyBestseller.qty
-                                            }
-                                        </Text>
-                                    </Row>
-                                    <Row
-                                        className="margin-bottom--sm"
-                                        justify="center"
-                                    >
-                                        <Text strong>Verkauft</Text>
-                                    </Row>
-                                </Col>
-                                <Col span={12}>
-                                    <Row justify="center">
-                                        <Text
-                                            className="order-overview__bestsellerNum"
-                                            strong
+                                            <Text strong>Verkauft</Text>
+                                        </Row>
+                                    </Col>
+                                    <Col span={12}>
+                                        <Row justify="center">
+                                            <Text
+                                                className="order-overview__bestsellerNum"
+                                                strong
+                                            >
+                                                {new Intl.NumberFormat(
+                                                    "de-DE",
+                                                    {
+                                                        style: "currency",
+                                                        currency: "EUR",
+                                                    }
+                                                ).format(
+                                                    this.props.supplier
+                                                        .bestseller
+                                                        .qtyBestseller.revenue
+                                                )}
+                                            </Text>
+                                        </Row>
+                                        <Row
+                                            className="margin-bottom--sm"
+                                            justify="center"
                                         >
-                                            {new Intl.NumberFormat("de-DE", {
-                                                style: "currency",
-                                                currency: "EUR",
-                                            }).format(
-                                                this.props.supplier.bestseller
-                                                    .qtyBestseller.revenue
-                                            )}
-                                        </Text>
-                                    </Row>
-                                    <Row
-                                        className="margin-bottom--sm"
-                                        justify="center"
-                                    >
-                                        <Text strong>Umsatz</Text>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        </Col>
+                                            <Text strong>Umsatz</Text>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
                     </Row>
-                </Row>
-                <Divider />
-                {/* Bestseller nach Umsatz*/}
-                <Row className="margin-bottom--md">
-                    <Row className="margin-bottom--sm">
-                        <Title className="padding-right--sm" level={4}>
-                            Bestseller
-                        </Title>
-                        <Text>(gemessen in: Umsatz)</Text>
-                    </Row>
-                    <Row>
-                        <Col span={6}>
-                            <img
-                                src={
-                                    this.props.supplier.bestseller
-                                        .revenueBestseller.product.images
-                                        ?.length > 0
-                                        ? this.props.supplier.bestseller
-                                              .revenueBestseller.product
-                                              .images[0]
-                                        : placeholder
-                                }
-                                alt="bild"
-                                width="100%"
-                            ></img>
-                        </Col>
-                        <Col span={18}>
-                            <Row
-                                justify="center"
-                                align="middle"
-                                className="margin-bottom--sm"
-                            >
-                                <Text strong>
-                                    {
+                )}
+                {this.props.supplier.noPosition ? "" : <Divider></Divider>}
+                {this.props.supplier.noPosition ? (
+                    ""
+                ) : (
+                    <Row className="margin-bottom--md">
+                        <Row className="margin-bottom--sm">
+                            <Title className="padding-right--sm" level={4}>
+                                Bestseller
+                            </Title>
+                            <Text>(gemessen in: Umsatz)</Text>
+                        </Row>
+                        <Row>
+                            <Col span={6}>
+                                <img
+                                    src={
                                         this.props.supplier.bestseller
-                                            .revenueBestseller.product.name
+                                            .revenueBestseller.product.images
+                                            ?.length > 0
+                                            ? this.props.supplier.bestseller
+                                                  .revenueBestseller.product
+                                                  .images[0]
+                                            : placeholder
                                     }
-                                </Text>
-                            </Row>
-                            <Row>
-                                <Col justify="center" span={12}>
-                                    <Row justify="center">
-                                        <Text
-                                            className="order-overview__bestsellerNum"
-                                            strong
+                                    alt="bild"
+                                    width="100%"
+                                ></img>
+                            </Col>
+                            <Col span={18}>
+                                <Row
+                                    justify="center"
+                                    align="middle"
+                                    className="margin-bottom--sm"
+                                >
+                                    <Text strong>
+                                        {
+                                            this.props.supplier.bestseller
+                                                .revenueBestseller.product.name
+                                        }
+                                    </Text>
+                                </Row>
+                                <Row>
+                                    <Col justify="center" span={12}>
+                                        <Row justify="center">
+                                            <Text
+                                                className="order-overview__bestsellerNum"
+                                                strong
+                                            >
+                                                {
+                                                    this.props.supplier
+                                                        .bestseller
+                                                        .revenueBestseller.qty
+                                                }
+                                            </Text>
+                                        </Row>
+                                        <Row
+                                            className="margin-bottom--sm"
+                                            justify="center"
                                         >
-                                            {
-                                                this.props.supplier.bestseller
-                                                    .revenueBestseller.qty
-                                            }
-                                        </Text>
-                                    </Row>
-                                    <Row
-                                        className="margin-bottom--sm"
-                                        justify="center"
-                                    >
-                                        <Text strong>Verkauft</Text>
-                                    </Row>
-                                </Col>
-                                <Col span={12}>
-                                    <Row justify="center">
-                                        <Text
-                                            className="order-overview__bestsellerNum"
-                                            strong
+                                            <Text strong>Verkauft</Text>
+                                        </Row>
+                                    </Col>
+                                    <Col span={12}>
+                                        <Row justify="center">
+                                            <Text
+                                                className="order-overview__bestsellerNum"
+                                                strong
+                                            >
+                                                {new Intl.NumberFormat(
+                                                    "de-DE",
+                                                    {
+                                                        style: "currency",
+                                                        currency: "EUR",
+                                                    }
+                                                ).format(
+                                                    this.props.supplier
+                                                        .bestseller
+                                                        .revenueBestseller
+                                                        .revenue
+                                                )}
+                                            </Text>
+                                        </Row>
+                                        <Row
+                                            className="margin-bottom--sm"
+                                            justify="center"
                                         >
-                                            {new Intl.NumberFormat("de-DE", {
-                                                style: "currency",
-                                                currency: "EUR",
-                                            }).format(
-                                                this.props.supplier.bestseller
-                                                    .revenueBestseller.revenue
-                                            )}
-                                        </Text>
-                                    </Row>
-                                    <Row
-                                        className="margin-bottom--sm"
-                                        justify="center"
-                                    >
-                                        <Text strong>Umsatz</Text>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        </Col>
+                                            <Text strong>Umsatz</Text>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
                     </Row>
-                </Row>
+                )}
             </Card>
         );
     }
