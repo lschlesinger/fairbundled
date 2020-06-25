@@ -36,8 +36,6 @@ export default class OrderOptions extends React.Component {
     };
 
     onInputNumberChanged = number => {
-        console.log('Old: ', this.state.qty, ' - New: ', number);
-
         if (this.state.qty === number) {
             return;
         }
@@ -48,8 +46,10 @@ export default class OrderOptions extends React.Component {
     createFairbundleCard = (fairbundle, product) => {
         let savings = (1 - (fairbundle.targetPrice / product.priceLevel[0].unitPrice)) * 100;
 
-        let requiredBundlers = product.priceLevel.find(l => l.unitPrice == fairbundle.targetPrice).minQty;
-        let completedBundle = fairbundle.bundlers.length / requiredBundlers * 100;
+        let requiredQuantity = product.priceLevel.find(l => l.unitPrice == fairbundle.targetPrice).minQty;
+        let currentQuantity = fairbundle.bundlers.length
+
+        let completedBundle = currentQuantity / requiredQuantity * 100;
 
         let currentDate = new Date();
         let diffTime = Date.parse(fairbundle.expiration) - currentDate.getTime();
@@ -79,10 +79,10 @@ export default class OrderOptions extends React.Component {
                 <Progress percent={completedBundle} strokeWidth={3} strokeColor="#78A262" showInfo={false} style={{width:"100%", marginTop:16}}/>
                 <Space direction="horizontal" style={{width:"100%", marginBottom:24}}>
                     <Text style={{color:"#78A262", fontWeight:"bold"}}>
-                        {fairbundle.bundlers.length}
+                        {currentQuantity}
                     </Text>
                     <Text style={{color:"#a1a1a1"}}>
-                        von {requiredBundlers} erreicht
+                        von {requiredQuantity} erreicht
                     </Text>
                 </Space>
                 <Space direction="horizontal" style={{width:"100%", marginBottom:4}}>
@@ -96,7 +96,7 @@ export default class OrderOptions extends React.Component {
                     <Text style={{color:"#000000", fontWeight:"bold"}}>{fairbundle.bundlers.length}</Text>
                     <Text style={{color:"#000000", fontWeight:"normal"}}>teilnehmende {bundlersString}</Text>
                 </Space>
-                <Button type="primary" style={{width:"100%", height:"40px", marginTop:24}} onClick={this.onJoinFairbundle}>
+                <Button type="primary" style={{width:"100%", height:"40px", marginTop:24}} onClick={(evt) => this.onJoinFairbundle(fairbundle._id)}>
                     <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}}>
                         Fairbundle beitreten
                     </Text>
