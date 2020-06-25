@@ -14,7 +14,18 @@ export default class OrderOptions extends React.Component {
         super(props);
         this.state = {
             qty: 0,
+            canBuy: false
         };
+    }
+
+    getMinQuantity = () => {
+        if (this.props.product == null) {
+            return 0;
+        }
+
+        let min = Math.min(...this.props.product.priceLevel.map(p => p.minQty));
+        
+        return min;
     }
 
     onCreateFairbundle = (evt) => {
@@ -46,7 +57,12 @@ export default class OrderOptions extends React.Component {
             return;
         }
 
-        this.setState({qty: number})
+        let minQty = this.getMinQuantity();
+
+        this.setState({
+            qty: number,
+            canBuy: number >= minQty
+        })
     }
 
     createFairbundleCard = (fairbundle, product) => {
@@ -136,7 +152,7 @@ export default class OrderOptions extends React.Component {
                 </Card>
                 {this.props.fairbundles?.map((fb) => this.createFairbundleCard(fb, this.props.product))}
                 <Card className="order-options--card" style={{padding:8, marginBottom:"10px"}}>
-                    <Button type="primary" style={{width:"100%", height:"40px"}} ref={(buttonDOM) => { this.orderDOM = buttonDOM; }} onClick={this.onCreateOrder}>
+                    <Button type="primary" style={{width:"100%", height:"40px"}} disabled={!this.state.canBuy} ref={(buttonDOM) => { this.orderDOM = buttonDOM; }} onClick={this.onCreateOrder}>
                         <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}}>
                             Neue Bestellung
                         </Text>
