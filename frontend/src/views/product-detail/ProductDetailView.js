@@ -3,6 +3,7 @@ import ProductDetails from "../../components/ProductDetails/ProductDetails";
 import ProductService from "../../services/ProductService";
 import FairbundleService from "../../services/FairbundleService";
 import {message} from "antd";
+import JoinFairbundleModalView from "./FairbundledJoinedModalView"
 
 
 export class ProductDetailView extends React.Component {
@@ -13,7 +14,8 @@ export class ProductDetailView extends React.Component {
             productId: this.props.match.params.id,
             product: null,
             fairbundles: null,
-            qty: 0
+            qty: 0,
+            modalVisible: false
         };
         console.log(this.props);
     }
@@ -45,6 +47,7 @@ export class ProductDetailView extends React.Component {
         this.setState({qty: qty});
         //TODO: open joinFairbundleModal with fairbundleId and state variables productId and quantity
         console.log("Join fairbundle", qty);
+        this.showModal();
     };
 
     onCreateOrder = (qty) => {
@@ -53,13 +56,30 @@ export class ProductDetailView extends React.Component {
         console.log("Create order", qty);
     };
 
+    showModal = () => {
+        this.setState({
+            modalVisible: true,
+        });
+    };
+
+    hideModal = () => {
+        this.setState({
+            modalVisible: false,
+        });
+    };
+
     render() {
         return (
-            <ProductDetails product={this.state.product}
-                            fairbundles={this.state.fairbundles}
-                            onCreateFairbundle={this.onCreateFairbundle}
-                            onJoinFairbundle={this.onJoinFairbundle}
-                            onCreateOrder={this.onCreateOrder}/>
+            <div>
+                <ProductDetails product={this.state.product}
+                                fairbundles={this.state.fairbundles}
+                                onCreateFairbundle={this.onCreateFairbundle}
+                                onJoinFairbundle={this.onJoinFairbundle}
+                                onCreateOrder={this.onCreateOrder}/>
+                <JoinFairbundleModalView
+                                onClose={this.hideModal} 
+                                modalVisible={this.state.modalVisible}/>
+            </div>
         );
     }
 }
