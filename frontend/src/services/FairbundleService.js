@@ -36,7 +36,7 @@ export default class FairbundleService {
         return HttpService.put(`${this.BASE_URL}/${fairbundleId}`, {qty});
     }
 
-    static async createFairbundle(qty, productId, expirationDate, expirationAction, targetPrice) {
-        return HttpService.post(`${this.BASE_URL}/`, {qty, productId, expirationDate, expirationAction, targetPrice});
+    static async createFairbundle(qty, productId, expiration, expirationAction, targetPrice) {
+        return HttpService.post(`${this.BASE_URL}/`, {qty, productId, expiration, expirationAction, targetPrice});
     }
 }

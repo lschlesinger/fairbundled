@@ -72,7 +72,7 @@ export class ProductDetailView extends React.Component {
     }
 
     createFairbundle(expirationDate, expirationAction, targetPrice) {
-        FairbundleService.createFairbundle(this.state.qty, this.state.product._id, expirationDate, expirationAction, targetPrice)
+        FairbundleService.createFairbundle(this.state.qty, this.state.product._id, expirationDate.format('x'), expirationAction, targetPrice)
             .then((fairbundle) => {
                 this.getProductAndFairbundles();
                 this.setState({successVisible: true});

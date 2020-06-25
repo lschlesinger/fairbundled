@@ -32,7 +32,7 @@ export default class JoinFairbundle extends React.Component {
         let date = Date.parse(this.props.fairbundle.expiration);
         let expirationAction = "trotzdem zum nächsthöheren Preis von bis zu " + this.props.fairbundle.product.priceLevel[0].unitPrice + "€ / " + this.props.fairbundle.product.priceLevel[0].unit + " ausgeführt.";
 
-        if (this.props.fairbundle.expirationAction == "force") {
+        if (this.props.fairbundle.expirationAction == "cancel") {
             expirationAction = "abgebrochen und das Produkt wird nicht bestellt. Es entstehen keine Kosten.";
         }
 
