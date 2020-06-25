@@ -3,6 +3,7 @@ import ProductDetails from "../../components/ProductDetails/ProductDetails";
 import ProductService from "../../services/ProductService";
 import FairbundleService from "../../services/FairbundleService";
 import {message} from "antd";
+import ValidationError from "../../services/ValidationError";
 import JoinFairbundleModalView from "./FairbundledJoinedModalView"
 import CreateFairbundleModalView from "./FairbundleCreatedModalView"
 
@@ -56,8 +57,20 @@ export class ProductDetailView extends React.Component {
         this.showModal(true);
     };
 
-    onJoinFairbundle = () => {
-        console.log("Join fairbunlde with qty: " + this.state.qty);
+    joinFairbundle() {
+        FairbundleService.joinFairbundle(this.state.joinedFairbundle._id, this.state.qty)
+            .then((fairbundle) => {
+                console.log(fairbundle);
+                message.success("Fairbundle erfolgreich beigetreten");
+                this.getProductAndFairbundles();
+            })
+            .catch((err) => {
+                if (err instanceof ValidationError) {
+                    Object.entries(err.errors).map(e => {
+                        this.getErrorNotification(e)
+                    })
+                }
+            });
     }
 
     onCreateOrder = (qty) => {
@@ -90,7 +103,7 @@ export class ProductDetailView extends React.Component {
                                 onCreateOrder={this.onCreateOrder}/>
                 <JoinFairbundleModalView
                                 fairbundle={this.state.joinedFairbundle}
-                                joinFairbundle={this.onJoinFairbundle}
+                                joinFairbundle={this.joinFairbundle.bind(this)}
                                 onClose={this.hideModal} 
                                 modalVisible={this.state.joinModalVisible}/>
                 <CreateFairbundleModalView
