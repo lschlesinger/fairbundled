@@ -4,7 +4,7 @@ import ProductService from "../../services/ProductService";
 import FairbundleService from "../../services/FairbundleService";
 import {message} from "antd";
 import JoinFairbundleModalView from "./FairbundledJoinedModalView"
-
+import CreateFairbundleModalView from "./FairbundleCreatedModalView"
 
 export class ProductDetailView extends React.Component {
 
@@ -15,7 +15,9 @@ export class ProductDetailView extends React.Component {
             product: null,
             fairbundles: null,
             qty: 0,
-            modalVisible: false
+            joinModalVisible: false,
+            createModalVisible: false,
+            joinedFairbundle: null
         };
         console.log(this.props);
     }
@@ -41,14 +43,22 @@ export class ProductDetailView extends React.Component {
         this.setState({qty: qty});
         //TODO: open createFairbundleModal with state variables productId and quantity
         console.log("Create fairbundle", qty);
+
+        this.showModal(false);
     };
 
-    onJoinFairbundle = ({fairbundleId, qty}) => {
-        this.setState({qty: qty});
-        //TODO: open joinFairbundleModal with fairbundleId and state variables productId and quantity
-        console.log("Join fairbundle", qty);
-        this.showModal();
+    onShowJoinFairbundle = ({fairbundleId, qty}) => {
+        this.setState({
+            qty: qty,
+            joinedFairbundle: this.state.fairbundles.find(f => f._id === fairbundleId)
+        });
+
+        this.showModal(true);
     };
+
+    onJoinFairbundle = () => {
+        console.log("Join fairbunlde with qty: " + this.state.qty);
+    }
 
     onCreateOrder = (qty) => {
         this.setState({qty: qty});
@@ -56,15 +66,17 @@ export class ProductDetailView extends React.Component {
         console.log("Create order", qty);
     };
 
-    showModal = () => {
+    showModal = (join) => {
         this.setState({
-            modalVisible: true,
+            joinModalVisible: join,
+            createModalVisible: !join
         });
     };
 
     hideModal = () => {
         this.setState({
-            modalVisible: false,
+            joinModalVisible: false,
+            createModalVisible: false
         });
     };
 
@@ -74,11 +86,16 @@ export class ProductDetailView extends React.Component {
                 <ProductDetails product={this.state.product}
                                 fairbundles={this.state.fairbundles}
                                 onCreateFairbundle={this.onCreateFairbundle}
-                                onJoinFairbundle={this.onJoinFairbundle}
+                                onJoinFairbundle={this.onShowJoinFairbundle}
                                 onCreateOrder={this.onCreateOrder}/>
                 <JoinFairbundleModalView
+                                fairbundle={this.state.joinedFairbundle}
+                                joinFairbundle={this.onJoinFairbundle}
                                 onClose={this.hideModal} 
-                                modalVisible={this.state.modalVisible}/>
+                                modalVisible={this.state.joinModalVisible}/>
+                <CreateFairbundleModalView
+                                onClose={this.hideModal} 
+                                modalVisible={this.state.createModalVisible}/>
             </div>
         );
     }
