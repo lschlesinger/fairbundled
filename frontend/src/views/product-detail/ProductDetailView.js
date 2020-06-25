@@ -42,11 +42,8 @@ export class ProductDetailView extends React.Component {
         }
     }
 
-    onCreateFairbundle = ({qty}) => {
+    onShowCreateFairbundle = ({qty}) => {
         this.setState({qty: qty});
-        //TODO: open createFairbundleModal with state variables productId and quantity
-        console.log("Create fairbundle", qty);
-
         this.showModal(false);
     };
 
@@ -72,6 +69,10 @@ export class ProductDetailView extends React.Component {
                     })
                 }
             });
+    }
+
+    createFairbundle() {
+        // TODO
     }
 
     onCreateOrder = (qty) => {
@@ -100,7 +101,7 @@ export class ProductDetailView extends React.Component {
             <div>
                 <ProductDetails product={this.state.product}
                                 fairbundles={this.state.fairbundles}
-                                onCreateFairbundle={this.onCreateFairbundle}
+                                onCreateFairbundle={this.onShowCreateFairbundle}
                                 onJoinFairbundle={this.onShowJoinFairbundle}
                                 onCreateOrder={this.onCreateOrder}/>
                 <JoinFairbundleModalView
@@ -109,6 +110,8 @@ export class ProductDetailView extends React.Component {
                                 onClose={this.hideModal} 
                                 modalVisible={this.state.joinModalVisible}/>
                 <CreateFairbundleModalView
+                                product={this.state.product}
+                                createFairbundle={this.createFairbundle.bind(this)}
                                 onClose={this.hideModal} 
                                 modalVisible={this.state.createModalVisible}/>
                 <FairbundleSuccessView

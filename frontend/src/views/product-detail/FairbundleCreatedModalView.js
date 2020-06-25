@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal} from 'antd';
-import ProductDetails from "../../components/ProductDetails/ProductDetails";
+import CreateFairbundle from '../../components/ProductDetails/CreateFairbundle';
 
 export default class FairbundleCreatedModalView extends React.Component {
 
@@ -11,22 +11,19 @@ export default class FairbundleCreatedModalView extends React.Component {
         }
 
     }
-
+    
     render() {
         return (
             <Modal
-                title="Fairbundle erstellen"
                 visible={this.props.modalVisible}
                 onCancel={this.props.onClose}
                 footer={null}
+                centered
                 width="60%"
             >
-                {/* <ProductDetails entityName={this.props.entityName}
-                                product={this.props.product}
-                                fairbundles={this.props.fairbundles}
-                                onCreateFairbundle={() => {}}
-                                onJoinFairbundle={() => {}}
-                                onCreateOrder={() => {}}/> */}
+                <CreateFairbundle 
+                        product={this.props.product}
+                        createFairbundle={this.props.createFairbundle} />
             </Modal>
         );
     }
