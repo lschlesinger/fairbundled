@@ -40,7 +40,13 @@ export default class JoinFairbundle extends React.Component {
     render() {
         let priceLevel = this.props.fairbundle.product.priceLevel.find(p => p.unitPrice === this.props.fairbundle.targetPrice);
         let date = Date.parse(this.props.fairbundle.expiration);
-        let expirationAction = "trotzdem zum nächsthöheren Preis von bis zu " + this.getMaxPriceLevel().unitPrice + "€ / " + this.getMaxPriceLevel().unit + " ausgeführt.";
+
+        let maxPrice = new Intl.NumberFormat("de-DE", {
+            style: "currency",
+            currency: "EUR",
+        }).format(this.getMaxPriceLevel().unitPrice);
+
+        let expirationAction = "trotzdem zum nächsthöheren Preis von bis zu " + maxPrice + " / " + this.getMaxPriceLevel().unit + " ausgeführt.";
 
         if (this.props.fairbundle.expirationAction == "cancel") {
             expirationAction = "abgebrochen und das Produkt wird nicht bestellt. Es entstehen keine Kosten.";
@@ -51,7 +57,10 @@ export default class JoinFairbundle extends React.Component {
                 <Title level={2} style={{fontWeight:"bold"}}>Fairbundle beitreten</Title>
                 <br/>
                 <Card style={{width:"100%", background:"#c8c8c8", borderRadius:"12px", padding:"5px"}}>
-                    <Title level={3} style={{width:"100%", textAlign:"center", color:"#686868", fontWeight:"bold"}}>{this.props.fairbundle.targetPrice}€ / {priceLevel.unit}</Title>
+                    <Title level={3} style={{width:"100%", textAlign:"center", color:"#686868", fontWeight:"bold"}}>{new Intl.NumberFormat("de-DE", {
+                        style: "currency",
+                        currency: "EUR",
+                    }).format(this.props.fairbundle.targetPrice)} / {priceLevel.unit}</Title>
                     <Space style={{width:"100%", justifyContent:"center"}}><Text style={{color:"#686868"}}>bei einem Volumen von</Text></Space>
                     <Space style={{width:"100%", justifyContent:"center"}}><Text style={{color:"#686868", fontWeight:"bold"}}>{priceLevel.minQty} {priceLevel.unit}</Text></Space>
                 </Card>

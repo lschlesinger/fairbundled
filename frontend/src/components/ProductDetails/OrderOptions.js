@@ -101,10 +101,16 @@ export default class OrderOptions extends React.Component {
             <Card className="order-options--card" style={{padding:8, marginBottom:"10px"}}>
                 <Space direction="horizontal" style={{width:"100%", marginBottom:4}}>
                     <Text style={{color:"#78A262", fontSize:24, fontWeight:"bold", marginRight:16}}>
-                        {fairbundle.targetPrice}€ / {this.getMaxPriceLevel()?.unit}
+                            {new Intl.NumberFormat("de-DE", {
+                                style: "currency",
+                                currency: "EUR",
+                            }).format(fairbundle.targetPrice)} / {this.getMaxPriceLevel()?.unit}
                     </Text>
                     <Text delete style={{color:"#a1a1a1", fontSize:14, fontWeight:"bold"}}>
-                        {this.getMaxPriceLevel()?.unitPrice}€
+                            {new Intl.NumberFormat("de-DE", {
+                                style: "currency",
+                                currency: "EUR",
+                            }).format(this.getMaxPriceLevel()?.unitPrice)}
                     </Text>
                 </Space>
                 <Text style={{color:"#000000", fontStyle:"italic"}}>
@@ -144,7 +150,10 @@ export default class OrderOptions extends React.Component {
             <Col>
                 <Card className="order-options--card" style={{paddingLeft:8, marginBottom:"10px"}}>
                     <Text style={{color:"#78A262", fontSize:24, fontWeight:"bold"}}>
-                        {this.getMaxPriceLevel()?.unitPrice}€ / {this.getMaxPriceLevel()?.unit}
+                            {new Intl.NumberFormat("de-DE", {
+                                style: "currency",
+                                currency: "EUR",
+                            }).format(this.getMaxPriceLevel()?.unitPrice)} / {this.getMaxPriceLevel()?.unit}
                     </Text>
                     <br /><br />
                     <Text style={{color:"#000000"}}>

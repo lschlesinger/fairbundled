@@ -52,7 +52,10 @@ export default class CreateFairbundle extends React.Component {
         return (
             <Col className="gutter-row" span={8}>
                 <Card style={{background:color, borderRadius:"12px", padding:"5px"}}>
-                    <Title level={3} style={{width:"100%", textAlign:"center", color:"#686868", fontWeight:"bold"}}>{priceLevel.unitPrice}€ / {priceLevel.unit}</Title>
+                    <Title level={3} style={{width:"100%", textAlign:"center", color:"#686868", fontWeight:"bold"}}>{new Intl.NumberFormat("de-DE", {
+                        style: "currency",
+                        currency: "EUR",
+                    }).format(priceLevel.unitPrice)} / {priceLevel.unit}</Title>
                     <Space style={{width:"100%", justifyContent:"center"}}><Text style={{color:"#686868"}}>bei einem Volumen von</Text></Space>
                     <Space style={{width:"100%", justifyContent:"center", marginBottom:10}}><Text style={{color:"#686868", fontWeight:"bold"}}>{priceLevel.minQty} {priceLevel.unit}</Text></Space>
                     <Space style={{width:"100%", justifyContent:"center"}}><Radio value={index}/></Space>
