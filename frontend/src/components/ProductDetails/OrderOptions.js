@@ -47,7 +47,9 @@ export default class OrderOptions extends React.Component {
         let savings = (1 - (fairbundle.targetPrice / product.priceLevel[0].unitPrice)) * 100;
 
         let requiredQuantity = product.priceLevel.find(l => l.unitPrice == fairbundle.targetPrice).minQty;
-        let currentQuantity = fairbundle.bundlers.length
+        let currentQuantity = fairbundle.positions.reduce(function (r, a) {
+            return r + a.qty;
+        }, 0);
 
         let completedBundle = currentQuantity / requiredQuantity * 100;
 
