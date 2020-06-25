@@ -58,7 +58,7 @@ export default class OrderOptions extends React.Component {
         this.orderDOM.blur();
 
         if (this.state.qty && this.state.qty > 0) {
-            this.props.onCreateOrder({qty: this.state.qty});
+            this.props.onCreateOrder(this.state.qty);
         }
     };
 

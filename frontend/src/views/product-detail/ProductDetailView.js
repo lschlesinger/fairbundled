@@ -1,8 +1,9 @@
 import React from 'react';
 import ProductDetails from "../../components/ProductDetails/ProductDetails";
 import ProductService from "../../services/ProductService";
+import PositionService from "../../services/PositionService";
 import FairbundleService from "../../services/FairbundleService";
-import {message} from "antd";
+import {message, notification} from "antd";
 import ValidationError from "../../services/ValidationError";
 import JoinFairbundleModalView from "./FairbundledJoinedModalView"
 import CreateFairbundleModalView from "./FairbundleCreatedModalView"
@@ -88,8 +89,31 @@ export class ProductDetailView extends React.Component {
 
     onCreateOrder = (qty) => {
         this.setState({qty: qty});
-        //TODO: open createOrderModal with state variables productId and quantity
-        console.log("Create order", qty);
+
+        console.log(qty);
+
+        PositionService.addPosition(qty, this.state.product._id)
+            .then((product) => {
+                message.success("Produkt im Warenkorb platziert");
+                this.setState({successVisible: true});
+            })
+            .catch((err) => {
+                if (err instanceof ValidationError) {
+                    Object.entries(err.errors).map(e => {
+                        this.getErrorNotification(e)
+                    })
+                }
+            });
+    };
+
+    getErrorNotification = (e) => {
+        const args = {
+            type: 'error',
+            message: 'Problem bei der Validierung',
+            description: e[1].message,
+            duration: 10
+        };
+        notification.open(args);
     };
 
     showModal = (join) => {

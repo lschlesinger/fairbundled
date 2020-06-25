@@ -104,14 +104,3 @@ export default class CreateFairbundle extends React.Component {
         )
     }
 }
-
-/*
-<br/>
-                <Card style={{width:"100%", background:"#c8c8c8", borderRadius:"12px", padding:"5px"}}>
-                    <Title level={3} style={{width:"100%", textAlign:"center", color:"#686868", fontWeight:"bold"}}>{this.props.fairbundle.targetPrice}€ / {priceLevel.unit}</Title>
-                    <Space style={{width:"100%", justifyContent:"center"}}><Text style={{color:"#686868"}}>bei einem Volumen von</Text></Space>
-                    <Space style={{width:"100%", justifyContent:"center"}}><Text style={{color:"#686868", fontWeight:"bold"}}>{priceLevel.minQty} {priceLevel.unit}</Text></Space>
-                </Card>
-                
-                
-                */
