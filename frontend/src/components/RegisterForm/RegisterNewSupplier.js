@@ -26,14 +26,14 @@ export default class RegisterNewSupplier extends React.Component {
                     <Input placeholder="Name des Anbieters"/>
                 </Form.Item>
                 <Form.Item
-                    name={["supplier", "billing"]}
+                    name={["supplier", "billingAddress"]}
                 >
                     <Input
                         placeholder="Rechnungsadresse"
                     />
                 </Form.Item>
                 <Form.Item
-                    name={["supplier", "bankaccount"]}
+                    name={["supplier", "bankAccount"]}
                 >
                     <Input
                         placeholder="IBAN"

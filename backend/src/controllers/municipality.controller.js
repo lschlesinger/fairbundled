@@ -4,6 +4,7 @@ class MunicipalityController {
 
     static getMunicipalities(req, res) {
         Municipality.find({})
+            .select('name')
             .then((municipalities) => {
                 res.status(200).json(municipalities);
             })
