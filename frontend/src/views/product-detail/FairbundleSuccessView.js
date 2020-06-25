@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal} from 'antd';
-import JoinedFairbundle from '../../components/ProductDetails/JoinedFairbundle';
+import SuccessView from '../../components/ProductDetails/SuccessView';
 
 export default class FairbundleSuccessView extends React.Component {
 
@@ -21,7 +21,9 @@ export default class FairbundleSuccessView extends React.Component {
                 centered
                 width="40%"
             >
-                <JoinedFairbundle />
+                <SuccessView
+                    message={this.props.message}
+                    showLink={this.props.showLink} />
             </Modal>
         );
     }

@@ -21,7 +21,9 @@ export class ProductDetailView extends React.Component {
             joinModalVisible: false,
             createModalVisible: false,
             successVisible: false,
-            joinedFairbundle: null
+            joinedFairbundle: null,
+            successMessage: "",
+            successLink: false
         };
         console.log(this.props);
     }
@@ -61,7 +63,12 @@ export class ProductDetailView extends React.Component {
         FairbundleService.joinFairbundle(this.state.joinedFairbundle._id, this.state.qty)
             .then((fairbundle) => {
                 this.getProductAndFairbundles();
-                this.setState({successVisible: true});
+                this.setState({
+                    successVisible: true,
+                    successMessage: "Fairbundle beigetreten",
+                    successLink: false,
+                    joinModalVisible: false
+                });
             })
             .catch((err) => {
                 if (err instanceof ValidationError) {
@@ -76,7 +83,12 @@ export class ProductDetailView extends React.Component {
         FairbundleService.createFairbundle(this.state.qty, this.state.product._id, expirationDate.format('x'), expirationAction, targetPrice)
             .then((fairbundle) => {
                 this.getProductAndFairbundles();
-                this.setState({successVisible: true});
+                this.setState({
+                    successVisible: true,
+                    successMessage: "Fairbundle erstellt",
+                    successLink: true,
+                    joinModalVisible: false
+                });
             })
             .catch((err) => {
                 if (err instanceof ValidationError) {
@@ -95,7 +107,12 @@ export class ProductDetailView extends React.Component {
         PositionService.addPosition(qty, this.state.product._id)
             .then((product) => {
                 message.success("Produkt im Warenkorb platziert");
-                this.setState({successVisible: true});
+                this.setState({
+                    successVisible: true,
+                    successMessage: "Produkt im Warenkorb platziert",
+                    successLink: false,
+                    joinModalVisible: false
+                });
             })
             .catch((err) => {
                 if (err instanceof ValidationError) {
@@ -150,6 +167,8 @@ export class ProductDetailView extends React.Component {
                                 onClose={this.hideModal} 
                                 modalVisible={this.state.createModalVisible}/>
                 <FairbundleSuccessView
+                                message={this.state.successMessage}
+                                showLink={this.state.successLink}
                                 onClose={this.hideModal} 
                                 modalVisible={this.state.successVisible}/>
             </div>
