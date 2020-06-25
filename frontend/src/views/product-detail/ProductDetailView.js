@@ -6,6 +6,7 @@ import {message} from "antd";
 import ValidationError from "../../services/ValidationError";
 import JoinFairbundleModalView from "./FairbundledJoinedModalView"
 import CreateFairbundleModalView from "./FairbundleCreatedModalView"
+import FairbundleSuccessView from './FairbundleSuccessView';
 
 export class ProductDetailView extends React.Component {
 
@@ -18,6 +19,7 @@ export class ProductDetailView extends React.Component {
             qty: 0,
             joinModalVisible: false,
             createModalVisible: false,
+            successVisible: false,
             joinedFairbundle: null
         };
         console.log(this.props);
@@ -60,9 +62,8 @@ export class ProductDetailView extends React.Component {
     joinFairbundle() {
         FairbundleService.joinFairbundle(this.state.joinedFairbundle._id, this.state.qty)
             .then((fairbundle) => {
-                console.log(fairbundle);
-                message.success("Fairbundle erfolgreich beigetreten");
                 this.getProductAndFairbundles();
+                this.setState({successVisible: true});
             })
             .catch((err) => {
                 if (err instanceof ValidationError) {
@@ -89,7 +90,8 @@ export class ProductDetailView extends React.Component {
     hideModal = () => {
         this.setState({
             joinModalVisible: false,
-            createModalVisible: false
+            createModalVisible: false,
+            successVisible: false
         });
     };
 
@@ -109,6 +111,9 @@ export class ProductDetailView extends React.Component {
                 <CreateFairbundleModalView
                                 onClose={this.hideModal} 
                                 modalVisible={this.state.createModalVisible}/>
+                <FairbundleSuccessView
+                                onClose={this.hideModal} 
+                                modalVisible={this.state.successVisible}/>
             </div>
         );
     }
