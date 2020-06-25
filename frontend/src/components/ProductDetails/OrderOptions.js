@@ -137,7 +137,7 @@ export default class OrderOptions extends React.Component {
                     <Text style={{color:"#000000", fontWeight:"normal"}}>teilnehmende {bundlersString}</Text>
                 </Space>
                 <Button type="primary" style={{width:"100%", height:"40px", marginTop:24}} ref={(buttonDOM) => { this.joinDOM = buttonDOM; }} onClick={(evt) => this.onJoinFairbundle(fairbundle._id)}>
-                    <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}}>
+                    <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}} ellipsis>
                         Fairbundle beitreten
                     </Text>
                 </Button>
@@ -164,7 +164,7 @@ export default class OrderOptions extends React.Component {
                 </Card>
                 <Card className="order-options--card" style={{padding:8, marginBottom:"10px"}}>
                     <Button type="primary" style={{width:"100%", height:"40px"}} ref={(buttonDOM) => { this.createDOM = buttonDOM; }} onClick={this.onCreateFairbundle}>
-                        <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}}>
+                        <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}} ellipsis>
                             Neues Fairbundle
                         </Text>
                     </Button>
@@ -172,7 +172,7 @@ export default class OrderOptions extends React.Component {
                 {this.props.fairbundles?.map((fb) => this.createFairbundleCard(fb, this.props.product))}
                 <Card className="order-options--card" style={{padding:8, marginBottom:"10px"}}>
                     <Button type="primary" style={{width:"100%", height:"40px"}} disabled={!this.state.canBuy} ref={(buttonDOM) => { this.orderDOM = buttonDOM; }} onClick={this.onCreateOrder}>
-                        <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}}>
+                        <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}} ellipsis>
                             Neue Bestellung
                         </Text>
                     </Button>
