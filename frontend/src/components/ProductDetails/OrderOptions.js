@@ -28,6 +28,16 @@ export default class OrderOptions extends React.Component {
         return min;
     }
 
+    getMaxPriceLevel = () => {
+        if (this.props.product == null) {
+            return null;
+        }
+
+        let max = Math.max(...this.props.product.priceLevel.map(p => p.unitPrice));
+        
+        return this.props.product.priceLevel.find(p => p.unitPrice == max);
+    }
+
     onCreateFairbundle = (evt) => {
         this.createDOM.blur();
 
@@ -66,7 +76,7 @@ export default class OrderOptions extends React.Component {
     }
 
     createFairbundleCard = (fairbundle, product) => {
-        let savings = (1 - (fairbundle.targetPrice / product.priceLevel[0].unitPrice)) * 100;
+        let savings = (1 - (fairbundle.targetPrice / this.getMaxPriceLevel()?.unitPrice)) * 100;
 
         let requiredQuantity = product.priceLevel.find(l => l.unitPrice == fairbundle.targetPrice).minQty;
         let currentQuantity = fairbundle.positions.reduce(function (r, a) {
@@ -91,10 +101,10 @@ export default class OrderOptions extends React.Component {
             <Card className="order-options--card" style={{padding:8, marginBottom:"10px"}}>
                 <Space direction="horizontal" style={{width:"100%", marginBottom:4}}>
                     <Text style={{color:"#78A262", fontSize:24, fontWeight:"bold", marginRight:16}}>
-                        {fairbundle.targetPrice}€ / {product.priceLevel[0].unit}
+                        {fairbundle.targetPrice}€ / {this.getMaxPriceLevel()?.unit}
                     </Text>
                     <Text delete style={{color:"#a1a1a1", fontSize:14, fontWeight:"bold"}}>
-                        {product.priceLevel[0].unitPrice}€
+                        {this.getMaxPriceLevel()?.unitPrice}€
                     </Text>
                 </Space>
                 <Text style={{color:"#000000", fontStyle:"italic"}}>
@@ -134,7 +144,7 @@ export default class OrderOptions extends React.Component {
             <Col>
                 <Card className="order-options--card" style={{paddingLeft:8, marginBottom:"10px"}}>
                     <Text style={{color:"#78A262", fontSize:24, fontWeight:"bold"}}>
-                        {this.props.product?.priceLevel[0].unitPrice}€ / {this.props.product?.priceLevel[0].unit}
+                        {this.getMaxPriceLevel()?.unitPrice}€ / {this.getMaxPriceLevel()?.unit}
                     </Text>
                     <br /><br />
                     <Text style={{color:"#000000"}}>

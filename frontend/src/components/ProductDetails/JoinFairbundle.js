@@ -27,10 +27,20 @@ export default class JoinFairbundle extends React.Component {
         this.props.joinFairbundle();
     };
 
+    getMaxPriceLevel = () => {
+        if (this.props.fairbundle?.product == null) {
+            return null;
+        }
+
+        let max = Math.max(...this.props.fairbundle.product.priceLevel.map(p => p.unitPrice));
+        
+        return this.props.fairbundle.product.priceLevel.find(p => p.unitPrice == max);
+    }
+
     render() {
         let priceLevel = this.props.fairbundle.product.priceLevel.find(p => p.unitPrice === this.props.fairbundle.targetPrice);
         let date = Date.parse(this.props.fairbundle.expiration);
-        let expirationAction = "trotzdem zum nächsthöheren Preis von bis zu " + this.props.fairbundle.product.priceLevel[0].unitPrice + "€ / " + this.props.fairbundle.product.priceLevel[0].unit + " ausgeführt.";
+        let expirationAction = "trotzdem zum nächsthöheren Preis von bis zu " + this.getMaxPriceLevel().unitPrice + "€ / " + this.getMaxPriceLevel().unit + " ausgeführt.";
 
         if (this.props.fairbundle.expirationAction == "cancel") {
             expirationAction = "abgebrochen und das Produkt wird nicht bestellt. Es entstehen keine Kosten.";
