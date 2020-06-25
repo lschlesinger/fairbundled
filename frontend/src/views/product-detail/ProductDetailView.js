@@ -71,8 +71,19 @@ export class ProductDetailView extends React.Component {
             });
     }
 
-    createFairbundle() {
-        // TODO
+    createFairbundle(expirationDate, expirationAction, targetPrice) {
+        FairbundleService.createFairbundle(this.state.qty, this.state.product._id, expirationDate, expirationAction, targetPrice)
+            .then((fairbundle) => {
+                this.getProductAndFairbundles();
+                this.setState({successVisible: true});
+            })
+            .catch((err) => {
+                if (err instanceof ValidationError) {
+                    Object.entries(err.errors).map(e => {
+                        this.getErrorNotification(e)
+                    })
+                }
+            });
     }
 
     onCreateOrder = (qty) => {

@@ -12,18 +12,28 @@ export default class CreateFairbundle extends React.Component {
         this.state = {
             checkedOption: 0,
             selectedPriceLevel: 0,
-            expirationDate: null
+            expirationDate: null,
+            canNotSubmit: true
         };
     }
 
     onCreate = () => {
         this.createDOM.blur();
 
-        this.props.createFairbundle();
+        let expirationAction = this.state.checkedOption == 0 ? "force" : "cancel";
+
+        this.props.createFairbundle(
+            this.state.expirationDate,
+            expirationAction, 
+            this.props.product.priceLevel[this.state.selectedPriceLevel].unitPrice
+        );
     };
 
     onDateChange = (date, dateString) => {
-        this.setState({expirationDate: date});
+        this.setState({
+            expirationDate: date,
+            canNotSubmit: date == null
+        });
     }
 
     onPriceLevelChange = (e) => {
@@ -40,7 +50,7 @@ export default class CreateFairbundle extends React.Component {
         }
 
         return (
-            <Col className="gutter-row" span={6}>
+            <Col className="gutter-row" span={8}>
                 <Card style={{background:color, borderRadius:"12px", padding:"5px"}}>
                     <Title level={3} style={{width:"100%", textAlign:"center", color:"#686868", fontWeight:"bold"}}>{priceLevel.unitPrice}€ / {priceLevel.unit}</Title>
                     <Space style={{width:"100%", justifyContent:"center"}}><Text style={{color:"#686868"}}>bei einem Volumen von</Text></Space>
@@ -67,7 +77,7 @@ export default class CreateFairbundle extends React.Component {
 
                 <br/>
                 <Text style={{marginRight:"10px", fontSize:18, color:"#454545"}}>Zieldatum:</Text>
-                <DatePicker onChange={this.onDateChange} placeholder="Datum wählen" format={'DD.MM.YYYY'} style={{fontSize:18, fontWeight:"bold", color:"#686868", marginBottom:30, width:"15%"}} />
+                <DatePicker onChange={this.onDateChange} placeholder="Datum wählen" format={'DD.MM.YYYY'} style={{fontSize:18, fontWeight:"bold", color:"#686868", marginBottom:30, width:"25%"}} />
 
                 <Space style={{width:"100%", marginBottom:10}}><Text style={{fontSize:18, color:"#454545"}}>Bei Nichterreichen des Zielpreises soll</Text></Space>
                 <Radio.Group onChange={e => {this.setState({checkedOption:e.target.value})}} value={this.state.checkedOption}>
@@ -81,7 +91,7 @@ export default class CreateFairbundle extends React.Component {
                 <br/>
                 <br/>
                 <Space style={{width:"100%", justifyContent:"flex-end"}}>
-                    <Button type="primary" style={{width:"240px", height:"40px"}} ref={(buttonDOM) => { this.createDOM = buttonDOM; }} onClick={this.onCreate}>
+                    <Button type="primary" style={{width:"240px", height:"40px"}} disabled={this.state.canNotSubmit} ref={(buttonDOM) => { this.createDOM = buttonDOM; }} onClick={this.onCreate}>
                         <Text style={{color:"#ffffff", fontSize:18, fontWeight:"bold"}}>
                             Veröffentlichen
                         </Text>

@@ -19,7 +19,7 @@ export default class FairbundleCreatedModalView extends React.Component {
                 onCancel={this.props.onClose}
                 footer={null}
                 centered
-                width="60%"
+                width="40%"
             >
                 <CreateFairbundle 
                         product={this.props.product}
