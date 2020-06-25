@@ -18,18 +18,24 @@ export default class OrderOptions extends React.Component {
     }
 
     onCreateFairbundle = (evt) => {
+        this.createDOM.blur();
+
         if (this.state.qty  && this.state.qty > 0) {
             this.props.onCreateFairbundle({productId: this.props.productId, qty: this.state.qty});
         }
     };
 
     onJoinFairbundle = (fairbundleId) => {
+        this.joinDOM.blur();
+
         if (this.state.qty  && this.state.qty > 0) {
             this.props.onJoinFairbundle({fairbundleId: fairbundleId, qty: this.state.qty});
         }
     };
 
     onCreateOrder = (evt) => {
+        this.orderDOM.blur();
+
         if (this.state.qty && this.state.qty > 0) {
             this.props.onCreateOrder({qty: this.state.qty});
         }
@@ -98,7 +104,7 @@ export default class OrderOptions extends React.Component {
                     <Text style={{color:"#000000", fontWeight:"bold"}}>{fairbundle.bundlers.length}</Text>
                     <Text style={{color:"#000000", fontWeight:"normal"}}>teilnehmende {bundlersString}</Text>
                 </Space>
-                <Button type="primary" style={{width:"100%", height:"40px", marginTop:24}} onClick={(evt) => this.onJoinFairbundle(fairbundle._id)}>
+                <Button type="primary" style={{width:"100%", height:"40px", marginTop:24}} ref={(buttonDOM) => { this.joinDOM = buttonDOM; }} onClick={(evt) => this.onJoinFairbundle(fairbundle._id)}>
                     <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}}>
                         Fairbundle beitreten
                     </Text>
@@ -122,7 +128,7 @@ export default class OrderOptions extends React.Component {
                     <Text style={{color:"#000000", marginRight:"10px"}}>Menge:</Text><InputNumber min={0} max={99999} defaultValue={0} onChange={this.onInputNumberChanged}/>
                 </Card>
                 <Card className="order-options--card" style={{padding:8, marginBottom:"10px"}}>
-                    <Button type="primary" style={{width:"100%", height:"40px"}} onClick={this.onCreateFairbundle}>
+                    <Button type="primary" style={{width:"100%", height:"40px"}} ref={(buttonDOM) => { this.createDOM = buttonDOM; }} onClick={this.onCreateFairbundle}>
                         <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}}>
                             Neues Fairbundle
                         </Text>
@@ -130,7 +136,7 @@ export default class OrderOptions extends React.Component {
                 </Card>
                 {this.props.fairbundles?.map((fb) => this.createFairbundleCard(fb, this.props.product))}
                 <Card className="order-options--card" style={{padding:8, marginBottom:"10px"}}>
-                    <Button type="primary" style={{width:"100%", height:"40px"}} onClick={this.onCreateOrder}>
+                    <Button type="primary" style={{width:"100%", height:"40px"}} ref={(buttonDOM) => { this.orderDOM = buttonDOM; }} onClick={this.onCreateOrder}>
                         <Text style={{color:"#ffffff", fontSize:20, fontWeight:"bold"}}>
                             Neue Bestellung
                         </Text>
