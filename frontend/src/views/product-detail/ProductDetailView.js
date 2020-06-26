@@ -63,6 +63,7 @@ export class ProductDetailView extends React.Component {
         FairbundleService.joinFairbundle(this.state.joinedFairbundle._id, this.state.qty)
             .then((fairbundle) => {
                 this.getProductAndFairbundles();
+                this.props.onUpdate();
                 this.setState({
                     successVisible: true,
                     successMessage: "Fairbundle beigetreten",
@@ -83,11 +84,12 @@ export class ProductDetailView extends React.Component {
         FairbundleService.createFairbundle(this.state.qty, this.state.product._id, expirationDate.format('x'), expirationAction, targetPrice)
             .then((fairbundle) => {
                 this.getProductAndFairbundles();
+                this.props.onUpdate();
                 this.setState({
                     successVisible: true,
                     successMessage: "Fairbundle erstellt",
                     successLink: true,
-                    joinModalVisible: false
+                    createModalVisible: false
                 });
             })
             .catch((err) => {
@@ -106,12 +108,13 @@ export class ProductDetailView extends React.Component {
 
         PositionService.addPosition(qty, this.state.product._id)
             .then((product) => {
-                message.success("Produkt im Warenkorb platziert");
+                this.props.onUpdate();
                 this.setState({
                     successVisible: true,
                     successMessage: "Produkt im Warenkorb platziert",
                     successLink: false,
-                    joinModalVisible: false
+                    joinModalVisible: false,
+                    createModalVisible: false
                 });
             })
             .catch((err) => {

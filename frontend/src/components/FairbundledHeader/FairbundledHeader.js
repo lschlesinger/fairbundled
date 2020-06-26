@@ -68,6 +68,8 @@ class FairbundledHeader extends React.Component {
                     </Col>
                     <Col span={5}>
                         <HeaderIconMenu
+                            openFairbundles={this.props.openFairbundles}
+                            positions={this.props.positions}
                             isAuthenticated={this.props.isAuthenticated}
                             isMunicipality={this.props.isMunicipality}
                             isSupplier={this.props.isSupplier}

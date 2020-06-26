@@ -1,7 +1,7 @@
 import HttpService from "./HttpService";
 
 export default class PositionService {
-    static BASE_URL = "/api/position";
+    static BASE_URL = "/api/order";
 
     constructor() {}
 

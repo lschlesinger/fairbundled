@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Row, Space, Tooltip} from 'antd';
+import {Button, Row, Space, Tooltip, Badge} from 'antd';
 import {LoginOutlined, LogoutOutlined, ShoppingCartOutlined, UserOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
 
@@ -23,12 +23,17 @@ export default class HeaderIconMenu extends React.Component {
         return (
             <Space>
                 <i>{this.props.entityName}</i>
-                {this.props.isMunicipality ? <Tooltip title="Mein Warenkorb">
-                    <Button size="large" type="link" icon={<ShoppingCartOutlined/>}/>
+                {this.props.isMunicipality ? 
+                <Tooltip title="Mein Warenkorb">
+                    <Badge count={this.props.positions} offset={[-8, 8]}>
+                        <Button size="large" type="link" icon={<ShoppingCartOutlined/>}/>
+                    </Badge>
                 </Tooltip> : ""}
                 <Tooltip title="Mein Konto">
                     <Link to="/account">
-                        <Button size="large" type="link" icon={<UserOutlined/>}/>
+                        <Badge count={this.props.openFairbundles} offset={[-8, 8]}>
+                            <Button size="large" type="link" icon={<UserOutlined/>}/>
+                        </Badge>
                     </Link>
                 </Tooltip>
                 <Tooltip title="Logout">
