@@ -4,6 +4,7 @@ class SupplierController {
 
     static getSuppliers(req, res) {
         Supplier.find({})
+            .select('name')
             .then((suppliers) => {
                 res.status(200).json(suppliers);
             })

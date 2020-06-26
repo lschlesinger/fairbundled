@@ -32,6 +32,10 @@ class ProductController {
         Product.findById(req.params.id)
             .populate("supplier")
             .populate("certificates")
+            .populate({
+                path: "categories",
+                populate: "subcategories"
+            })
             .then((product) => {
                 res.status(200).json(product);
             })

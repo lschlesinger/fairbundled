@@ -28,6 +28,10 @@ export default class ProductPriceLevelInput extends React.Component {
                     <p><InfoCircleOutlined/> Geben Sie je Stufe den Preis je angebener Produkteinheit und einer
                         mindestens
                         abzunehmenden Menge an.</p>
+                    <p><i> Beachten Sie, dass die kleinste hier angegebene Menge an Mindesteinheiten der kleinsten
+                        bestellbaren Menge für Ihr Produkt entspricht.
+                        Wenn Sie keine Preisstufe für eine Mindestmenge von 1 angeben, wird ihr Produkt in jedem Fall
+                        nur in Bestellmengen > 1 verfügbar sein. </i></p>
                 </Row>
                 <Form.List
                     label="Preisstufen"
@@ -47,7 +51,7 @@ export default class ProductPriceLevelInput extends React.Component {
                                                     name={[field.name, 'unitPrice']}
                                                     rules={[{required: true, message: 'Fehlender Preis je Einheit'}]}
                                                 >
-                                                    <InputNumber placeholder="Grundpreis"
+                                                    <InputNumber placeholder="Preis"
                                                                  min={0}
                                                                  step={0.01}
                                                                  formatter={value => value ? `${value}€` : ""}
@@ -67,7 +71,6 @@ export default class ProductPriceLevelInput extends React.Component {
                                                     >
                                                         <Option value="Stück">Stück</Option>
                                                         <Option value="m&sup2;">m<sup>2</sup></Option>
-                                                        <Option value="m&sup3;">m<sup>3</sup></Option>
                                                         <Option value="Liter">Liter</Option>
                                                         <Option value="Kilogramm">Kilogramm</Option>
                                                         <Option value="Gramm">Gramm</Option>

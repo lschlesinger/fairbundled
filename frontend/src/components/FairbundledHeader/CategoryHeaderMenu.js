@@ -72,7 +72,7 @@ class CategoryHeaderMenu extends React.Component {
                   mode="horizontal">
                 {this.props.categories.map((c) => this.getMenuItems(c))}
                 <Menu.Item
-                    className={this.state.currentRootCategory === "" ? `ant-menu-item-selected ant-menu-item-active` : ""}
+                    className={this.state.currentRootCategory === "" && !(this.props.location.pathname.includes('/product/') || this.props.location.pathname === '/') ? `ant-menu-item-selected ant-menu-item-active` : ""}
                     key="">
                     <Link to={`/product`}>
                         Alle Produkte
