@@ -68,7 +68,7 @@ export default class ProductListView extends React.Component {
 
     async getCertificates() {
         try {
-            let certificates = await CertificateService.getCertificates()
+            let certificates = await CertificateService.getCertificates();
 
             this.setState(prevState => ({
                 ...prevState,
