@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Typography, Row, Col } from "antd";
 import "./MySupplierData.less";
+import { EditOutlined } from "@ant-design/icons";
 
 const { Text } = Typography;
 
@@ -13,19 +14,56 @@ export default class MySupplierData extends React.Component {
         };
     }
 
+    getAdditionalUser(user) {
+        if (user._id !== this.state.user.id) {
+            return (
+                <Text className="my-supplier-data__text" key={user._id}>
+                    {user.email}
+                </Text>
+            );
+        }
+    }
+
     render() {
         return (
-            <Card title="Persönliche Daten" className="padding-horizontal--sm">
-                <Row className="padding-top--md" gutter={8}>
+            <Card title="Anbieter Daten" className="padding-horizontal--sm">
+                <Row justify="end">
+                    <EditOutlined />
+                </Row>
+                <Row gutter={8}>
                     <Col span={12}>
                         <Text className="my-supplier-data__text" strong>
-                            E-Mail Adresse:
+                            Anbietername:
+                        </Text>
+                    </Col>
+                    <Col span={12}>
+                        <Text className="my-supplier-data__text">
+                            {this.state.supplier.name}
+                        </Text>
+                    </Col>
+                </Row>
+                <Row gutter={8} className="padding-top--md">
+                    <Col span={12}>
+                        <Text className="my-supplier-data__text" strong>
+                            Meine E-Mail Adresse:
                         </Text>
                     </Col>
                     <Col span={12}>
                         <Text className="my-supplier-data__text">
                             {this.state.user.email}
                         </Text>
+                    </Col>
+                </Row>
+                <Row gutter={8} className="padding-top--md">
+                    <Col span={12}>
+                        <Text className="my-supplier-data__text" strong>
+                            Weitere E-Mail Adressen:
+                        </Text>
+                    </Col>
+                    <Col span={12}>
+                        {this.state.supplier.user.map((u) =>
+                            this.getAdditionalUser(u)
+                        )}
                     </Col>
                 </Row>
                 <Row className="padding-top--md">
