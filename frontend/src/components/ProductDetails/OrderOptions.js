@@ -69,8 +69,6 @@ export default class OrderOptions extends React.Component {
     };
 
     createFairbundleCard = (fairbundle, product) => {
-        console.log(fairbundle);
-        console.log(product);
 
         let savings = ((1 - (fairbundle.targetPrice / this.getMaxPriceLevel()?.unitPrice))).toLocaleString(undefined, {
             style: 'percent',
@@ -89,7 +87,7 @@ export default class OrderOptions extends React.Component {
         let remainingDays = Math.round(diffTime / 3600 / 24 / 1000);
 
         return (
-            <Card className="order-options__card margin-bottom--sm">
+            <Card className="order-options__card margin-bottom--sm" key={fairbundle._id}>
                 <Row align="middle">
                     <Col className="order-options__prices">
                         {new Intl.NumberFormat("de-DE", {
@@ -98,7 +96,6 @@ export default class OrderOptions extends React.Component {
                         }).format(fairbundle.targetPrice)} / {this.getMaxPriceLevel()?.unit}
                     </Col>
                 </Row>
-                {console.log(savings)}
                 {fairbundle.targetPrice === this.getMaxPriceLevel()?.unitPrice ? '' :
                     <Row>
                         <Col className="margin-right--sm order-options__delete-prices">
@@ -111,7 +108,6 @@ export default class OrderOptions extends React.Component {
                             <i>{savings} sparen</i>
                         </Col>
                     </Row>}
-
                 <Progress
                     className="margin-top--md"
                     percent={completedBundle}
@@ -156,7 +152,7 @@ export default class OrderOptions extends React.Component {
     render() {
         return (
             <Col>
-                <Card className="order-options__card">
+                <Card className="order-options__card" key="order-head">
                     <Row>
                         <h1 className="order-options__prices">
                             {new Intl.NumberFormat("de-DE", {
