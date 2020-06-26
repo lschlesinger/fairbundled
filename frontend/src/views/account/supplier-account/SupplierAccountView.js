@@ -5,7 +5,7 @@ import OrderOverview from "../../../components/SupplierAccountContent/OrderOverv
 import FeeOverview from "../../../components/SupplierAccountContent/FeeOverview";
 import ProductService from "../../../services/ProductService";
 import PositionService from "../../../services/PositionService";
-import SupplierService from "../../../services/SupplierService";
+import UserService from "../../../services/UserService";
 
 export class SupplierAccountView extends React.Component {
     constructor(props) {
@@ -27,6 +27,9 @@ export class SupplierAccountView extends React.Component {
                 supplierInfo
             );
             supplierInfo = await PositionService.getSalesInfo(supplierInfo);
+            supplierInfo.user = await UserService.getUsersBySupplierId(
+                supplierInfo._id
+            );
             this.setState({ supplier: supplierInfo });
         } catch (e) {
             message.error("Error fetching supplier Informations.");
