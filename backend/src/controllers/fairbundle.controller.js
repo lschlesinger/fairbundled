@@ -1,5 +1,5 @@
 import Fairbundle from "../models/fairbundle.model";
-import OrderPosition from "../models/order-position.model";
+import OrderPosition from "../models/position.model";
 
 class FairbundleController {
 
@@ -93,7 +93,11 @@ class FairbundleController {
                 };
                 OrderPosition.create(orderPosition).then((position) => {
                     fairbundle.positions.push(position._id);
-                    fairbundle.bundlers.push(req.municipalityId);
+
+                    if (fairbundle.bundlers.find(b => b == req.municipalityId) == null) {
+                        fairbundle.bundlers.push(req.municipalityId);
+                    }
+
                     fairbundle.save(() => {
                         res.status(201).json(fairbundle);
                     });

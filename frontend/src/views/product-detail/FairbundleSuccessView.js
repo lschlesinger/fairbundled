@@ -1,8 +1,8 @@
 import React from 'react';
 import {Modal} from 'antd';
-import CreateFairbundle from '../../components/ProductDetails/CreateFairbundle';
+import SuccessView from '../../components/ProductDetails/SuccessView';
 
-export default class FairbundleCreatedModalView extends React.Component {
+export default class FairbundleSuccessView extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -20,12 +20,10 @@ export default class FairbundleCreatedModalView extends React.Component {
                 footer={null}
                 centered
                 width="50%"
-                title={"Neues Fairbundle"}
             >
-                <CreateFairbundle
-                        quantity={this.props.quantity}
-                        product={this.props.product}
-                        createFairbundle={this.props.createFairbundle} />
+                <SuccessView
+                    message={this.props.message}
+                    showLink={this.props.showLink} />
             </Modal>
         );
     }

@@ -1,17 +1,18 @@
 # Table of Contents
 
 * [Data Model](#data-model)
-  
   * [UML Class Diagram](#uml-class-diagram)
   * [Entities](#entities)
-  
 * [Project Folder Structure](#project-folder-structure)
   * [Backend](#backend)
   * [Frontend](#frontend)
-  
 * [Routes](#routes)
   * [Backend](#backend-endpoints)
   * [Frontend](#frontend-urls)
+* [Authentication/Authorization](#authentication)
+  
+  * [Token](#token)
+* [Middleware](#middleware)
   
   
 
@@ -36,7 +37,6 @@ The UML Class Diagram displays a data model implemented with a NoSQL MongoDB.
 The field `id` is automatically created (as `_id` field), when respective entity is modeled as database collection. This is the case for all entities except for `PriceLevel`  (defined inline in `Product` model's field).
 
 The grayish displayed id-fields represent a foreign key, i.e. a reference to a certain entity.
-
 
 <!-- ENTITIES -->
 
@@ -95,7 +95,7 @@ Most important files and folders in `fairbundled/backend/src`
 │   ├── certificate.model.js
 │   ├── fairbundle.model.js
 │   ├── municipality.model.js
-│   ├── order-position.model.js
+│   ├── position.model.js
 │   ├── order.model.js
 │   ├── product.model.js
 │   ├── supplier.model.js
@@ -181,40 +181,43 @@ Note: The `bootstrap.service.js` triggers initial sample data creation.
 This section explains the routing logic in backend (request endpoints) and frontend (URLs).
 
 
-
 <!-- BACKEND ENDPOINTS -->
 
 ## Backend Endpoints
 
 (to be constantly updated)
 
-The table should be read as tree from left to right, e.g. one endpoint is `/api/auth/register`
+The table should be read as tree from left to right, e.g. one endpoint is `/api/auth/register`.
 
-| Base URL | Route           | Endpoint              | HTTP Verb | Middleware                                |
-| -------- | --------------- | --------------------- | --------- | ----------------------------------------- |
-| `/api`   | `/product`      | `/?product=productId` | GET       |                                           |
-|          |                 | `/:id`                | GET       |                                           |
-|          |                 | `/`                   | POST      | checkAuthentication<br>checkSupplier      |
-|          | `/fairbundle`   | `/?product=productId` | GET       |                                           |
-|          |                 | `/:id`                | GET       |                                           |
-|          |                 | `/`                   | POST      | checkAuthentication<br/>checkMunicipality |
-|          |                 | `/:id`                | PUT       | checkAuthentication<br/>checkMunicipality |
-|          | `/auth`         | `/login`              | POST      |                                           |
-|          |                 | `/register`           | POST      |                                           |
-|          | `/municipatliy` | `/`                   | GET       |                                           |
-|          | `/supplier`     | `/`                   | GET       |                                           |
+Routes are protected by the specific middleware functions.  See section [Middleware](#middleware) for further explanation.
+
+| Base URL | Route           | Endpoint                  | HTTP Verb | Middleware                                    |
+| -------- | --------------- | ------------------------- | --------- | --------------------------------------------- |
+| `/api`   | `/product`      | `/?category=?searchString=`     | GET       |                                               |
+|          |                 | `/:id`                    | GET       |                                               |
+|          |                 | `/`                       | POST      | checkAuthentication<br>checkSupplier          |
+|          | `/fairbundle`   | `/?product=productId`     | GET       |                                               |
+|          |                 | `/:id` (*fairbundleId*)      | GET       |                                               |
+|          |                 | `/`                       | POST      | checkAuthentication<br/>checkMunicipality     |
+|          |                 | `/:id` (*fairbundleId*)   | PUT       | checkAuthentication<br/>checkMunicipality     |
+|          | `/order`        | `/` | GET       | checkAuthentication<br/>checkMunicipality     |
+|          |                 | `/:id` (*orderId*)        | GET       | checkAuthentication<br/>checkMunicipality     |
+|          |                 | `/`                       | POST      | checkAuthentication<br/>checkMunicipality     |
+|          |                 | `/`                       | PUT       | checkAuthentication<br/>checkMunicipality |
+|          | `/positions`    | `/`     | GET       | checkAuthentication<br/>checkSupplier         |
+|          |                 | `/`     | POST       | checkAuthentication<br/>checkMunicipality         |
+|          | `/auth`         | `/login`                  | POST      |                                               |
+|          |                 | `/register`               | POST      |                                               |
+|          | `/municipatliy` | `/`                       | GET       |                                               |
+|          | `/supplier`     | `/`                       | GET       |                                               |
 
 Note:
 
 - Base URL is defined in `index.js`
+
 - Routes (1st Level) are defined in `routes.js`
+
 - Endpoints (2nd Level) are defined in respective `routeX.routes.js` file in  `/routes` folder; in these files, the mapping of the endpoint to HTTP verbs and controller functions is done
-
-### Middleware
-
-Middleware functionality checks the request before data is sent back from the backend. More precisely, it is checked whether the user's token exists (user receives JWT token after login) and is still valid (`checkAuthentication`).
-
-Furthermore, depending on the request, it is also checked whether a `MunicipalityId` or `SupplierId` is present in the token (`checkMunicipality`, `checkSupplier`). These Ids are encoded in the user's JWT token after log in as registered municipality or supplier respectively. 
 
 <!-- FRONTEND URLS -->
 
@@ -229,3 +232,61 @@ Furthermore, depending on the request, it is also checked whether a `Municipalit
 | `/product`        | `/:id` |                                | `ProductDetailView` <br>`CreateFairbundleModalView` <br/> `JoinFairbundleModalView` <br/>`FairbundleCreatedModalView` <br/>`FairbundleJoinedModalView` |
 | `/product/create` |        |                                | `ProductCreateView`<br> `ProductPreviewModalView`            |
 | `/account`        |        |                                | `AccountView`                                                |
+
+
+
+
+
+<!-- AUTHENTICATION -->
+
+# Authentication/Authorization
+
+<!-- TOKEN -->
+
+## Token
+
+As authentication mechanism JWT Tokens are generated and stored in the browsers local storage after login. 
+
+The token holds the unique database id (`id`) and the email (`email`) as user information. Since a user is always registered as either a member of a municipality or a supplier entity, the generate JWT token also contains the information `municipality` and `supplier` which are either null or hold the associated municipality or supplier object.
+
+The fields `iat` and `exp` store the timestamp of token generation and expiration.
+
+A decoded JWT token for a municipality user could be for example: 
+
+```json
+{
+  "id": "5edf4cde6bc0c3dcc8113488",
+  "email": "user_municipality@user.de",
+  "municipality": {
+    "_id": "5edf50356bc0c3dcc8113ab1",
+    "billingAddress": "Str. 3434",
+    "name": "München",
+    "shippingAddress": "Str. 34245",
+    "state": "Bayern",
+    "__v": 0,
+    "createdAt": "2020-06-09T09:02:45.622Z",
+    "updatedAt": "2020-06-15T21:21:58.082Z"
+  },
+  "supplier": null,
+  "iat": 1592489966,
+  "exp": 1592576366
+}
+```
+
+Note: Encoded JWT Token can be decoded with [jwt.io](jwt.io).
+
+Information contained in a token is used by the middleware explained in following section [Middleware](#middleware).
+
+<!-- MIDDLEWARE -->
+
+## Middleware
+
+Middleware functionality authenticates the user in the request before data is sent back from the backend. In the case of `checkAuthentication`, it is checked whether the user's token exists (user receives JWT token after login) and is still valid. Additionally, it is checked, whether either the user exhibits the field municipality with a respective `municipality._id` or the field supplier with a respective `supplier._id` in its decoded JWT token after logging in as user of a registered municipality/supplier. As a result, the request exhibits either the field `MunicipalityId` or `SupplierId` after being handled by `checkAuthentication`.
+
+Furthermore, depending on the request, it is also checked  (by `checkMunicipality` or `checkSupplier` respectively) whether a `MunicipalityId` or `SupplierId` was added to the request by `checkAuthentication`. 
+
+According to the check-mechanism explained above, the middleware functions `checkMunicipality` and `checkSupplier` can only be called *after* having called `checkedAuthentication`.
+
+The user or supplier/municipality information retrieved by the middleware is then used in the controllers to query resources that the requester is *authorized* to see.
+
+Note: All middleware functions have to be called *before* triggering the actual functionality defined in a certain controller that directly accesses the database.

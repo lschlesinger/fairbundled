@@ -9,6 +9,10 @@ export default class PositionService {
         return HttpService.get(`${this.BASE_URL}/`);
     }
 
+    static async addPosition(qty, productId) {
+        return HttpService.post(`${this.BASE_URL}/`, {qty, productId});
+    }
+
     // Calculates all necessary information in the supplier account view
     static async getSalesInfo(supplier) {
         const FIXED_FEE = 0.5;

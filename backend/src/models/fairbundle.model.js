@@ -18,7 +18,6 @@ const Fairbundle = extendSchema(OrderSchema, {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
     }
-
 }, {
     timestamps: true
 });
