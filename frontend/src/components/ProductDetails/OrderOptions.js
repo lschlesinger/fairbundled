@@ -76,6 +76,9 @@ export default class OrderOptions extends React.Component {
     }
 
     createFairbundleCard = (fairbundle, product) => {
+        console.log(fairbundle);
+        console.log(product);
+
         let savings = (1 - (fairbundle.targetPrice / this.getMaxPriceLevel()?.unitPrice)) * 100;
 
         let requiredQuantity = product.priceLevel.find(l => l.unitPrice == fairbundle.targetPrice).minQty;

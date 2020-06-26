@@ -3,7 +3,7 @@ import ProductDetails from "../../components/ProductDetails/ProductDetails";
 import ProductService from "../../services/ProductService";
 import PositionService from "../../services/PositionService";
 import FairbundleService from "../../services/FairbundleService";
-import {Breadcrumb, Col, message, Row, notification} from "antd";
+import {Col, message, Row, notification, Breadcrumb} from "antd";
 import ValidationError from "../../services/ValidationError";
 import JoinFairbundleModalView from "./FairbundledJoinedModalView"
 import CreateFairbundleModalView from "./FairbundleCreatedModalView"
@@ -104,9 +104,7 @@ export class ProductDetailView extends React.Component {
 
     onCreateOrder = (qty) => {
         this.setState({qty: qty});
-
-        console.log(qty);
-
+        
         PositionService.addPosition(qty, this.state.product._id)
             .then((product) => {
                 this.props.onUpdate();
@@ -154,44 +152,22 @@ export class ProductDetailView extends React.Component {
 
     renderBreadcrumb = (parent, child) => {
         return (
-            <div>
-                <Row>
-                    <Breadcrumb separator=">">
-                        <Breadcrumb.Item
-                            key={parent._id}>
-                            <Link to={`/product?category=${parent._id}`}>
-                                {parent.name}
-                            </Link>
-                        </Breadcrumb.Item>
-                        {child ? <Breadcrumb.Item
-                            key={child._id}>
-                            <Link to={`/product?category=${child._id}`}>
-                                {child.name}
-                            </Link>
-                        </Breadcrumb.Item> : ""}
-                    </Breadcrumb>
-                </Row>
-                <ProductDetails product={this.state.product}
-                                fairbundles={this.state.fairbundles}
-                                onCreateFairbundle={this.onShowCreateFairbundle}
-                                onJoinFairbundle={this.onShowJoinFairbundle}
-                                onCreateOrder={this.onCreateOrder}/>
-                <JoinFairbundleModalView
-                                fairbundle={this.state.joinedFairbundle}
-                                joinFairbundle={this.joinFairbundle.bind(this)}
-                                onClose={this.hideModal} 
-                                modalVisible={this.state.joinModalVisible}/>
-                <CreateFairbundleModalView
-                                product={this.state.product}
-                                createFairbundle={this.createFairbundle.bind(this)}
-                                onClose={this.hideModal} 
-                                modalVisible={this.state.createModalVisible}/>
-                <FairbundleSuccessView
-                                message={this.state.successMessage}
-                                showLink={this.state.successLink}
-                                onClose={this.hideModal} 
-                                modalVisible={this.state.successVisible}/>
-            </div>
+            <Row>
+                <Breadcrumb separator=">">
+                    <Breadcrumb.Item
+                        key={parent._id}>
+                        <Link to={`/product?category=${parent._id}`}>
+                            {parent.name}
+                        </Link>
+                    </Breadcrumb.Item>
+                    {child ? <Breadcrumb.Item
+                        key={child._id}>
+                        <Link to={`/product?category=${child._id}`}>
+                            {child.name}
+                        </Link>
+                    </Breadcrumb.Item> : ""}
+                </Breadcrumb>
+            </Row>
         );
     };
 
@@ -231,11 +207,28 @@ export class ProductDetailView extends React.Component {
                     {this.renderBreadcrumbs()}
                 </Row>
                 <Row>
-                    <ProductDetails product={this.state.product}
-                                    fairbundles={this.state.fairbundles}
-                                    onCreateFairbundle={this.onCreateFairbundle}
-                                    onJoinFairbundle={this.onJoinFairbundle}
-                                    onCreateOrder={this.onCreateOrder}/>
+                    <div style={{width:"100%"}}>
+                        <ProductDetails product={this.state.product}
+                                        fairbundles={this.state.fairbundles}
+                                        onCreateFairbundle={this.onShowCreateFairbundle}
+                                        onJoinFairbundle={this.onShowJoinFairbundle}
+                                        onCreateOrder={this.onCreateOrder}/>
+                        <JoinFairbundleModalView
+                                        fairbundle={this.state.joinedFairbundle}
+                                        joinFairbundle={this.joinFairbundle.bind(this)}
+                                        onClose={this.hideModal} 
+                                        modalVisible={this.state.joinModalVisible}/>
+                        <CreateFairbundleModalView
+                                        product={this.state.product}
+                                        createFairbundle={this.createFairbundle.bind(this)}
+                                        onClose={this.hideModal} 
+                                        modalVisible={this.state.createModalVisible}/>
+                        <FairbundleSuccessView
+                                        message={this.state.successMessage}
+                                        showLink={this.state.successLink}
+                                        onClose={this.hideModal} 
+                                        modalVisible={this.state.successVisible}/>
+                    </div>
                 </Row>
             </Col>
         )

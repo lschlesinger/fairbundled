@@ -21,7 +21,7 @@ export default class JoinedFairbundle extends React.Component {
                 <br/><br/><br/>
                 <Space style={{width:"100%", justifyContent:"center"}}><Text style={{fontSize:38, color:"#454545", fontWeight:"bold"}}>{this.props.message}</Text></Space>
                 <br/><br/>
-                <Space style={{width:"100%", justifyContent:"center"}}><Paragraph copyable={{text: location}} style={{fontSize:30, color:"#454545", fontWeight:"bold", color:"#78A262"}}>Link kopieren</Paragraph></Space>
+                {this.props.showLink ? <Space style={{width:"100%", justifyContent:"center"}}><Paragraph copyable={{text: location}} style={{fontSize:30, color:"#454545", fontWeight:"bold", color:"#78A262"}}>Link kopieren</Paragraph></Space> : ""}
             </div>
         )
     }
