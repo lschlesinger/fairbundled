@@ -150,7 +150,6 @@ export default class ProductListCard extends React.Component {
                     (a, b) => a.smallestPrice - b.smallestPrice
                 ),
             });
-            console.log(this.state.products);
         }
         if (ordering[0] === "Höchster Preis") {
             this.setState({

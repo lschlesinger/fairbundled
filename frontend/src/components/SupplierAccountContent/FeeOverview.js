@@ -17,12 +17,12 @@ export default class MySupplierData extends React.Component {
             <Card title="Gebührenübersicht" className="padding-horizontal--sm">
                 {/* Gebühren des letzten Monats */}
                 <Row className="padding-top--md">
-                    <Text mark>Letzter Monat</Text>
+                    <Text mark>Letzte 30 Tage</Text>
                 </Row>
                 <Row className="padding-top--sm" gutter={8}>
                     <Col span={12}>
                         <Text className="my-supplier-data__text" strong>
-                            Fixer Anteil:
+                            Verkaufsgebühr:
                         </Text>
                     </Col>
                     <Col span={12}>
@@ -37,7 +37,7 @@ export default class MySupplierData extends React.Component {
                 <Row className="padding-top--sm" gutter={8}>
                     <Col span={12}>
                         <Text className="my-supplier-data__text" strong>
-                            Variabler Anteil:
+                            Umsatzprovision:
                         </Text>
                     </Col>
                     <Col span={12}>
@@ -78,7 +78,7 @@ export default class MySupplierData extends React.Component {
                 <Row className="padding-top--sm" gutter={8}>
                     <Col span={12}>
                         <Text className="my-supplier-data__text" strong>
-                            Fixer Anteil:
+                            Verkaufsgebühr:
                         </Text>
                     </Col>
                     <Col span={12}>
@@ -93,7 +93,7 @@ export default class MySupplierData extends React.Component {
                 <Row className="padding-top--sm" gutter={8}>
                     <Col span={12}>
                         <Text className="my-supplier-data__text" strong>
-                            Variabler Anteil:
+                            Umsatzprovision:
                         </Text>
                     </Col>
                     <Col span={12}>

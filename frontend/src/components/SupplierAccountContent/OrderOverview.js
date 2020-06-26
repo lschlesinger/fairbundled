@@ -84,9 +84,8 @@ export default class MySupplierData extends React.Component {
                     <Row>
                         <Row className="margin-bottom--sm">
                             <Title className="padding-right--sm" level={4}>
-                                Bestseller
+                                Meistverkauftes Produkt
                             </Title>
-                            <Text>(gemessen in: Anzahl der Verkäufe)</Text>
                         </Row>
                         <Row>
                             <Col span={6}>
@@ -176,9 +175,8 @@ export default class MySupplierData extends React.Component {
                     <Row className="margin-bottom--md">
                         <Row className="margin-bottom--sm">
                             <Title className="padding-right--sm" level={4}>
-                                Bestseller
+                                Umsatzstärkstes Produkt
                             </Title>
-                            <Text>(gemessen in: Umsatz)</Text>
                         </Row>
                         <Row>
                             <Col span={6}>
