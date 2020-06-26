@@ -1,6 +1,7 @@
 import React from "react";
 import {BrowserRouter as Router, Redirect, Route, Switch,} from "react-router-dom";
-import {Layout, Row, Spin} from "antd";
+import {ConfigProvider, Layout, Row, Spin} from "antd";
+import deDE from 'antd/es/locale/de_DE';
 // override style
 import "./App.less";
 // import all components and views
@@ -125,7 +126,7 @@ export default class App extends React.Component {
         let currentDate = new Date();
 
         fairbundles = fairbundles.filter(f => f.municipality == currentMunicipality);
-        fairbundles = fairbundles.filter(f => (Date.parse(f.expiration) - currentDate.getTime()) > 0 );
+        fairbundles = fairbundles.filter(f => (Date.parse(f.expiration) - currentDate.getTime()) > 0);
 
         return fairbundles.length;
     }
@@ -136,12 +137,12 @@ export default class App extends React.Component {
         }
 
         let orders = await OrderService.getOrders();
-        var unique = orders.flatMap(o => o.positions).map(p => p.product).filter( this.onlyUnique );
+        var unique = orders.flatMap(o => o.positions).map(p => p.product).filter(this.onlyUnique);
 
         return unique.length;
     }
 
-    onlyUnique = (value, index, self) => { 
+    onlyUnique = (value, index, self) => {
         return self.indexOf(value) === index;
     }
 
@@ -190,10 +191,12 @@ export default class App extends React.Component {
     render() {
         return (
             <Layout>
-                {
-                    this.state.categories && this.state.categories.length > 0 ? this.renderContent() :
-                        this.renderSpinner()
-                }
+                <ConfigProvider locale={deDE}>
+                    {
+                        this.state.categories && this.state.categories.length > 0 ? this.renderContent() :
+                            this.renderSpinner()
+                    }
+                </ConfigProvider>
             </Layout>
         );
     }

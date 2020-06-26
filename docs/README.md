@@ -95,7 +95,7 @@ Most important files and folders in `fairbundled/backend/src`
 │   ├── certificate.model.js
 │   ├── fairbundle.model.js
 │   ├── municipality.model.js
-│   ├── order-position.model.js
+│   ├── position.model.js
 │   ├── order.model.js
 │   ├── product.model.js
 │   ├── supplier.model.js

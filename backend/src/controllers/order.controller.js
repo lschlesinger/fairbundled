@@ -1,5 +1,5 @@
 import { Order } from "../models/order.model";
-import OrderPosition from "../models/order-position.model";
+import OrderPosition from "../models/position.model";
 
 class OrderController {
     /**

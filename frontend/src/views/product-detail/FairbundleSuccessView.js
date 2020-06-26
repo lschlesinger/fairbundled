@@ -19,7 +19,7 @@ export default class FairbundleSuccessView extends React.Component {
                 onCancel={this.props.onClose}
                 footer={null}
                 centered
-                width="40%"
+                width="50%"
             >
                 <SuccessView
                     message={this.props.message}

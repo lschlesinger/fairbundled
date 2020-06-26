@@ -2,7 +2,7 @@ import Fairbundle from "../models/fairbundle.model";
 import FAIRBUNDLES from "./fairbundle.data";
 import Municipality from "../models/municipality.model";
 import Product from "../models/product.model";
-import OrderPosition from "../models/order-position.model";
+import OrderPosition from "../models/position.model";
 
 class FairbundleService {
 

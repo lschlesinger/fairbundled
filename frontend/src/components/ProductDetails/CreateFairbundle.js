@@ -1,8 +1,10 @@
 import React from "react";
-import {Typography, Space, Button, Radio, DatePicker, Row, Col, Card} from "antd";
+import moment from 'moment';
+import {Button, Card, Col, DatePicker, Radio, Row, Typography} from "antd";
+import locale from 'antd/es/date-picker/locale/de_DE';
+import './CreateFairbundle.less';
 
-const { Title, Text } = Typography;
-const style = { background: '#0092ff', padding: '8px 0' };
+const {Text} = Typography;
 
 export default class CreateFairbundle extends React.Component {
 
@@ -20,11 +22,11 @@ export default class CreateFairbundle extends React.Component {
     onCreate = () => {
         this.createDOM.blur();
 
-        let expirationAction = this.state.checkedOption == 0 ? "force" : "cancel";
+        let expirationAction = this.state.checkedOption === 0 ? "force" : "cancel";
 
         this.props.createFairbundle(
             this.state.expirationDate,
-            expirationAction, 
+            expirationAction,
             this.props.product.priceLevel[this.state.selectedPriceLevel].unitPrice
         );
     };
@@ -34,31 +36,40 @@ export default class CreateFairbundle extends React.Component {
             expirationDate: date,
             canNotSubmit: date == null
         });
-    }
+    };
 
     onPriceLevelChange = (e) => {
         this.setState({selectedPriceLevel: e.target.value});
-    }
+    };
+
+    disabledDate = (current) => {
+        // Can not select days before today and today
+        return current && current < moment().endOf('day');
+    };
 
     getPriceLevel(priceLevel, index) {
-        let color;
-
-        if (index % 2) {
-            color = "#c8c8c8";
-        } else {
-            color = "#ffffff";
-        }
 
         return (
             <Col className="gutter-row" span={8}>
-                <Card style={{background:color, borderRadius:"12px", padding:"5px"}}>
-                    <Title level={3} style={{width:"100%", textAlign:"center", color:"#686868", fontWeight:"bold"}}>{new Intl.NumberFormat("de-DE", {
-                        style: "currency",
-                        currency: "EUR",
-                    }).format(priceLevel.unitPrice)} / {priceLevel.unit}</Title>
-                    <Space style={{width:"100%", justifyContent:"center"}}><Text style={{color:"#686868"}}>bei einem Volumen von</Text></Space>
-                    <Space style={{width:"100%", justifyContent:"center", marginBottom:10}}><Text style={{color:"#686868", fontWeight:"bold"}}>{priceLevel.minQty} {priceLevel.unit}</Text></Space>
-                    <Space style={{width:"100%", justifyContent:"center"}}><Radio value={index}/></Space>
+                <Card className={`create-fairbundle__card${index % 2 ? "-odd" : ''} padding--sm`}>
+                        <Row justify="center">
+                            <h3>Zielpreis</h3>
+                        </Row>
+                        <Row justify="center">
+                            <h3>{new Intl.NumberFormat("de-DE", {
+                                style: "currency",
+                                currency: "EUR",
+                            }).format(priceLevel.unitPrice)} / {priceLevel.unit}</h3>
+                        </Row>
+                    <Row justify="center" className="margin-vertical--md">
+                        <Row justify="center">
+                            bei einer Gesamtmenge von
+                        </Row>
+                        <Row justify="center">
+                            <b>{priceLevel.minQty} {priceLevel.unit}</b>
+                        </Row>
+                    </Row>
+                    <Row justify="center" className="margin-vertical--md"><Radio value={index}/></Row>
                 </Card>
             </Col>
         );
@@ -69,37 +80,66 @@ export default class CreateFairbundle extends React.Component {
 
         return (
             <div>
-                <Title level={2} style={{fontWeight:"bold"}}>Neues Fairbundle</Title>
-                <br />
-                
-                <Radio.Group size="large" onChange={this.onPriceLevelChange} value={this.state.selectedPriceLevel} style={{width:"100%", marginBottom:30}}>
-                    <Row gutter={[16, 16]}>
-                        {product.priceLevel.map((p, i) => this.getPriceLevel(p, i))}
+                <Row>
+                    <Radio.Group className="margin-vertical--md" size="large" onChange={this.onPriceLevelChange}
+                                 value={this.state.selectedPriceLevel}>
+                        <Row gutter={[16, 16]}>
+                            {product.priceLevel.map((p, i) => this.getPriceLevel(p, i))}
+                        </Row>
+                    </Radio.Group>
+                </Row>
+                <Row align="middle" className="margin-vertical--md">
+                    <Col className="padding-right--sm">
+                        <Text>Ihre Bestellmenge:</Text>
+                    </Col>
+                    <Col>
+                        <b> {this.props.quantity} </b>
+                    </Col>
+                </Row>
+                <Row align="middle">
+                    <Col className="padding-right--sm">
+                        <Text>Laufzeit bis:</Text>
+                    </Col>
+                    <Col>
+                        <DatePicker
+                            locale={locale}
+                            onChange={this.onDateChange}
+                            placeholder="Datum wählen"
+                            format={'DD.MM.YYYY'}
+                            showToday={false}
+                            disabledDate={this.disabledDate}
+                        />
+                    </Col>
+                </Row>
+                <Row className="margin-bottom--md">
+                    <Row className="margin-vertical--md">
+                        Bei Nichterreichen des Zielpreises soll:
                     </Row>
-                </Radio.Group>
-
-                <br/>
-                <Text style={{marginRight:"10px", fontSize:18, color:"#454545"}}>Zieldatum:</Text>
-                <DatePicker onChange={this.onDateChange} placeholder="Datum wählen" format={'DD.MM.YYYY'} style={{fontSize:18, fontWeight:"bold", color:"#686868", marginBottom:30, width:"25%"}} />
-
-                <Space style={{width:"100%", marginBottom:10}}><Text style={{fontSize:18, color:"#454545"}}>Bei Nichterreichen des Zielpreises soll</Text></Space>
-                <Radio.Group onChange={e => {this.setState({checkedOption:e.target.value})}} value={this.state.checkedOption}>
-                    <Radio value={0} style={{width:"100%"}}>
-                        <Text style={{fontSize:18, color:"#454545"}}>das Fairbundle trotzdem zum nächsthöheren Preis ausgeführt werden</Text>
-                    </Radio>
-                    <Radio value={1}>
-                        <Text style={{fontSize:18, color:"#454545"}}>das Fairbundle abgebrochen werden</Text>
-                    </Radio>
-                </Radio.Group>
-                <br/>
-                <br/>
-                <Space style={{width:"100%", justifyContent:"flex-end"}}>
-                    <Button type="primary" style={{width:"240px", height:"40px"}} disabled={this.state.canNotSubmit} ref={(buttonDOM) => { this.createDOM = buttonDOM; }} onClick={this.onCreate}>
-                        <Text style={{color:"#ffffff", fontSize:18, fontWeight:"bold"}}>
-                            Veröffentlichen
-                        </Text>
+                    <Row>
+                        <Radio.Group onChange={e => {
+                            this.setState({checkedOption: e.target.value})
+                        }} value={this.state.checkedOption}>
+                            <Radio value={0}>
+                                <Text className="create-fairbundle__expiration-option-text">
+                                    das Fairbundle trotzdem zum nächsthöheren Preis bestellt werden.
+                                </Text>
+                            </Radio>
+                            <Radio value={1}>
+                                <Text className="create-fairbundle__expiration-option-text">
+                                    die zum Fairbundle gehörenden Bestellungen nicht durchgeführt werden.
+                                </Text>
+                            </Radio>
+                        </Radio.Group>
+                    </Row>
+                </Row>
+                <Row justify="end">
+                    <Button type="primary" disabled={this.state.canNotSubmit}
+                            ref={(buttonDOM) => {
+                                this.createDOM = buttonDOM;
+                            }} onClick={this.onCreate}>
+                        Veröffentlichen
                     </Button>
-                </Space>
+                </Row>
             </div>
         )
     }

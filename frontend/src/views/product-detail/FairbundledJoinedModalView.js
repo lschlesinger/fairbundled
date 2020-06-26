@@ -14,7 +14,7 @@ export default class FairbundleJoinedModalView extends React.Component {
 
     render() {
         if (this.props.fairbundle == null) {
-            return (<p></p>);
+            return (<p/>);
         }
 
         return (
@@ -23,9 +23,12 @@ export default class FairbundleJoinedModalView extends React.Component {
                 onCancel={this.props.onClose}
                 footer={null}
                 centered
-                width="40%"
+                title={"Fairbundle beitreten"}
+                width="50%"
+
             >
-                <JoinFairbundle 
+                <JoinFairbundle
+                        quantity={this.props.quantity}
                         fairbundle={this.props.fairbundle}
                         joinFairbundle={this.props.joinFairbundle} />
             </Modal>

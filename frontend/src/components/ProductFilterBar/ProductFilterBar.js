@@ -1,11 +1,10 @@
 import React from "react";
-
-import {Avatar, Checkbox, Form, Menu, message, Row, Typography} from 'antd';
+import {Avatar, Checkbox, Form, Menu, Row, Typography} from 'antd';
 import "./ProductFilterBarStyles.less"
 import {withRouter} from "react-router-dom";
 
 const {SubMenu} = Menu;
-const {Paragraph} = Typography
+const {Paragraph} = Typography;
 
 class FilterBar extends React.Component {
     constructor(props, context) {
@@ -49,12 +48,12 @@ class FilterBar extends React.Component {
 
     getCheckboxes(cert) {
         return (
-            <Row key={cert._id} justify="start" className="margin-vertical--md">
+            <Row key={cert._id} justify="start" className="margin-vertical--sm padding-left--xl">
                 <Checkbox value={cert._id}>
                     <Avatar shape="square"
                             size="small"
                             src={cert.logo}/>
-                    <span className="certName">{cert.name}</span>
+                    <span className="filter-bar__cert-name padding-left--sm">{cert.name?.split(" - ")[0]}</span>
                 </Checkbox>
             </Row>);
     }
@@ -78,7 +77,7 @@ class FilterBar extends React.Component {
                 <SubMenu
                     key={key}
                     title={key}>
-                    <Form.Item name={key}>
+                    <Form.Item name={key} className="margin-bottom--xs">
                         <Checkbox.Group style={{width: '100%'}}>
                             {value.map((c) => this.getCheckboxes(c))}
                         </Checkbox.Group>
@@ -100,13 +99,14 @@ class FilterBar extends React.Component {
 
     render() {
         return (
-            <Form onValuesChange={(changedValues, values) => this.onFinish(values)}>
+            <Form className="full-height" onValuesChange={(changedValues, values) => this.onFinish(values)}>
                 <Menu
                     mode="inline"
                     openKeys={this.state.openKeys}
                     onOpenChange={this.onOpenChange}
-                    className="menuTitle">
+                    className="filter-bar__menu-title full-height">
                     <SubMenu
+                        className="padding--sm"
                         key="certificates"
                         title="Produktsiegel">
                         {this.getGroupedCertificates(this.state.certificates)}
@@ -118,5 +118,3 @@ class FilterBar extends React.Component {
 }
 
 export default withRouter(FilterBar);
-
-//{this.state.certificates.map(c => this.getCheckboxes(c))}

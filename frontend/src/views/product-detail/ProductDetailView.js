@@ -104,7 +104,7 @@ export class ProductDetailView extends React.Component {
 
     onCreateOrder = (qty) => {
         this.setState({qty: qty});
-        
+
         PositionService.addPosition(qty, this.state.product._id)
             .then((product) => {
                 this.props.onUpdate();
@@ -214,19 +214,21 @@ export class ProductDetailView extends React.Component {
                                         onJoinFairbundle={this.onShowJoinFairbundle}
                                         onCreateOrder={this.onCreateOrder}/>
                         <JoinFairbundleModalView
+                                        quantity={this.state.qty}
                                         fairbundle={this.state.joinedFairbundle}
                                         joinFairbundle={this.joinFairbundle.bind(this)}
-                                        onClose={this.hideModal} 
+                                        onClose={this.hideModal}
                                         modalVisible={this.state.joinModalVisible}/>
                         <CreateFairbundleModalView
+                                        quantity={this.state.qty}
                                         product={this.state.product}
                                         createFairbundle={this.createFairbundle.bind(this)}
-                                        onClose={this.hideModal} 
+                                        onClose={this.hideModal}
                                         modalVisible={this.state.createModalVisible}/>
                         <FairbundleSuccessView
                                         message={this.state.successMessage}
                                         showLink={this.state.successLink}
-                                        onClose={this.hideModal} 
+                                        onClose={this.hideModal}
                                         modalVisible={this.state.successVisible}/>
                     </div>
                 </Row>

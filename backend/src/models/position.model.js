@@ -12,7 +12,8 @@ const OrderPosition = new mongoose.Schema({
         },
         qty: {
             type: Number,
-            validate: [quantityMinLimit, 'Die Menge der Bestellposition ist zu niedrig.']
+            min: 0,
+            required: [true, 'Die Bestellmenge ist nicht gültig']
         },
         order: {
             type: mongoose.Schema.Types.ObjectId,
@@ -24,13 +25,5 @@ const OrderPosition = new mongoose.Schema({
         timestamps: true
     }
 );
-
-
-function quantityMinLimit(val) {
-    //TODO get smallest priceLevel quantity and set this as lower bound for orderPosition qty
-    //const minQty = this.product.aggregate([{"$unwind": "priceLevel"}, {"$sort": {"minQty": -1}}])[0];
-    return 0 < val;
-}
-
 
 export default mongoose.model('OrderPosition', OrderPosition);

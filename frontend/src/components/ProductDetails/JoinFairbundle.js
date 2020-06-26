@@ -1,7 +1,8 @@
 import React from "react";
-import {Card, Typography, Space, Button} from "antd";
+import {Button, Card, Col, Row, Typography} from "antd";
+import './JoinFairbundle.less';
 
-const { Title, Text } = Typography;
+const {Text} = Typography;
 
 export default class JoinFairbundle extends React.Component {
 
@@ -10,16 +11,16 @@ export default class JoinFairbundle extends React.Component {
     }
 
     formatDate = date => {
-        var d = new Date(date),
+        let d = new Date(date),
             month = '' + (d.getMonth() + 1),
             day = '' + d.getDate(),
             year = d.getFullYear();
-    
+
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
-    
+
         return [day, month, year].join('.');
-    }
+    };
 
     onJoin = () => {
         this.joinDOM.blur();
@@ -33,9 +34,9 @@ export default class JoinFairbundle extends React.Component {
         }
 
         let max = Math.max(...this.props.fairbundle.product.priceLevel.map(p => p.unitPrice));
-        
-        return this.props.fairbundle.product.priceLevel.find(p => p.unitPrice == max);
-    }
+
+        return this.props.fairbundle.product.priceLevel.find(p => p.unitPrice === max);
+    };
 
     render() {
         let priceLevel = this.props.fairbundle.product.priceLevel.find(p => p.unitPrice === this.props.fairbundle.targetPrice);
@@ -46,41 +47,45 @@ export default class JoinFairbundle extends React.Component {
             currency: "EUR",
         }).format(this.getMaxPriceLevel().unitPrice);
 
-        let expirationAction = "trotzdem zum nächsthöheren Preis von bis zu " + maxPrice + " / " + this.getMaxPriceLevel().unit + " ausgeführt.";
+        let expirationAction = "Ihre zum Fairbundle gehörende Bestellung trotzdem zum nächsthöheren Preis von bis zu " + maxPrice + " / " + this.getMaxPriceLevel().unit + " bestellt.";
 
-        if (this.props.fairbundle.expirationAction == "cancel") {
-            expirationAction = "abgebrochen und das Produkt wird nicht bestellt. Es entstehen keine Kosten.";
+        if (this.props.fairbundle.expirationAction === "cancel") {
+            expirationAction = "Ihre zum Fairbundle gehörende Bestellung nicht durchgeführt. Es entstehen keine Kosten.";
         }
 
         return (
-            <div>
-                <Title level={2} style={{fontWeight:"bold"}}>Fairbundle beitreten</Title>
-                <br/>
-                <Card style={{width:"100%", background:"#c8c8c8", borderRadius:"12px", padding:"5px"}}>
-                    <Title level={3} style={{width:"100%", textAlign:"center", color:"#686868", fontWeight:"bold"}}>{new Intl.NumberFormat("de-DE", {
-                        style: "currency",
-                        currency: "EUR",
-                    }).format(this.props.fairbundle.targetPrice)} / {priceLevel.unit}</Title>
-                    <Space style={{width:"100%", justifyContent:"center"}}><Text style={{color:"#686868"}}>bei einem Volumen von</Text></Space>
-                    <Space style={{width:"100%", justifyContent:"center"}}><Text style={{color:"#686868", fontWeight:"bold"}}>{priceLevel.minQty} {priceLevel.unit}</Text></Space>
+            <Col>
+                <Card className="create-fairbundle__card-odd padding--sm">
+                    <Row justify="center">
+                        <h3>Zielpreis des ausgewählten Fairbundles</h3>
+                    </Row>
+                    <Row justify="center">
+                        <h3>{new Intl.NumberFormat("de-DE", {
+                            style: "currency",
+                            currency: "EUR",
+                        }).format(this.props.fairbundle.targetPrice)} / {priceLevel.unit}</h3>
+                    </Row>
+                    <Row justify="center" className="margin-top--sm">
+                        bei einem Volumen von insgesamt {priceLevel.minQty} {priceLevel.unit}
+                    </Row>
+                    <Row justify="center" className="margin-top--md">
+                        Sie treten nach der Bestätigung mit einer Bestellmenge von &nbsp; <b>{ this.props.quantity }</b> &nbsp; <b>{ priceLevel.unit }</b> &nbsp;  bei.
+                    </Row>
                 </Card>
-                <br/>
-                <Text style={{marginRight:"10px", fontSize:18, color:"#454545"}}>Zieldatum:</Text>
-                <Text style={{fontSize:18, fontWeight:"bold", color:"#686868"}}>{this.formatDate(date)}</Text>
-                <br/>
-                <br/>
-                <Text style={{fontSize:18, color:"#454545"}}>Bei Nichterreichen des Zielpreises wird das Fairbundle </Text>
-                <Text style={{fontSize:18, color:"#454545", fontWeight:"bold"}}>{expirationAction}</Text>
-                <br/>
-                <br/>
-                <Space style={{width:"100%", justifyContent:"flex-end"}}>
-                    <Button type="primary" style={{width:"240px", height:"40px"}} ref={(buttonDOM) => { this.joinDOM = buttonDOM; }} onClick={this.onJoin}>
-                        <Text style={{color:"#ffffff", fontSize:18, fontWeight:"bold"}}>
-                            Beitreten
-                        </Text>
+                <Row className="margin-vertical--md">
+                    <Text>Laufzeit bis: <b>{this.formatDate(date)}</b> </Text>
+                </Row>
+                <Row>
+                    Bei Nichterreichen des Zielpreises wird {expirationAction}
+                </Row>
+                <Row justify="end">
+                    <Button type="primary" ref={(buttonDOM) => {
+                        this.joinDOM = buttonDOM;
+                    }} onClick={this.onJoin}>
+                        Beitreten
                     </Button>
-                </Space>
-            </div>
+                </Row>
+            </Col>
         )
     }
 }
