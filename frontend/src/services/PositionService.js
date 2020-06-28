@@ -15,6 +15,11 @@ export default class PositionService {
 
     // Calculates all necessary information in the supplier account view
     static async getSalesInfo(supplier) {
+        const FIXED_FEE = 0.5;
+        const VAR_FEE1 = 0.05;
+        const VAR_FEE2 = 0.03;
+        const VAR_FEE3 = 0.02;
+
         // counts products sold per order
         let productsSold = 0;
         // adds up the quantities per order
@@ -64,23 +69,23 @@ export default class PositionService {
                         new Date(position.order.submission) >
                         new Date().setDate(new Date().getDate() - 30)
                     ) {
-                        monthlyFixedFee += 0.5;
+                        monthlyFixedFee += FIXED_FEE;
                         if (tempRevenue < 100) {
-                            monthlyVariableFee += tempRevenue * 0.05;
+                            monthlyVariableFee += tempRevenue * VAR_FEE1;
                         } else if (tempRevenue > 10000) {
-                            monthlyVariableFee += tempRevenue * 0.02;
+                            monthlyVariableFee += tempRevenue * VAR_FEE3;
                         } else {
-                            monthlyVariableFee += tempRevenue * 0.03;
+                            monthlyVariableFee += tempRevenue * VAR_FEE2;
                         }
                     }
                     //calculate total fees
-                    totalFixedFee += 0.5;
+                    totalFixedFee += FIXED_FEE;
                     if (tempRevenue < 100) {
-                        totalVariableFee += tempRevenue * 0.05;
+                        totalVariableFee += tempRevenue * VAR_FEE1;
                     } else if (tempRevenue > 10000) {
-                        totalVariableFee += tempRevenue * 0.02;
+                        totalVariableFee += tempRevenue * VAR_FEE3;
                     } else {
-                        totalVariableFee += tempRevenue * 0.03;
+                        totalVariableFee += tempRevenue * VAR_FEE2;
                     }
                     //add qty and revenue to overall qty and revenue
                     let tie = false;

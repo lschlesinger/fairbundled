@@ -8,6 +8,7 @@ import supplier from "./routes/supplier.routes";
 import fairbundle from "./routes/fairbundle.routes";
 import order from "./routes/order.routes";
 import position from "./routes/position.routes";
+import user from "./routes/user.routes";
 
 const router = express.Router();
 
@@ -21,5 +22,6 @@ router.use("/municipality", municipality);
 router.use("/fairbundle", fairbundle);
 router.use("/order", order);
 router.use("/position", position);
+router.use("/user", user);
 
 export default router;

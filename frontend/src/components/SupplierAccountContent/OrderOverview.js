@@ -75,7 +75,7 @@ export default class MySupplierData extends React.Component {
                         </Button>
                     </Link>
                 </Row>
-                {this.props.supplier.noPosition ? "" : <Divider></Divider>}
+                {this.props.supplier.noPosition ? "" : <Divider/>}
 
                 {/* Bestseller nach Anzahl der Verkäufe und Umsatz abhängig von der Existenz der Positions*/}
                 {this.props.supplier.noPosition ? (
@@ -84,9 +84,8 @@ export default class MySupplierData extends React.Component {
                     <Row>
                         <Row className="margin-bottom--sm">
                             <Title className="padding-right--sm" level={4}>
-                                Bestseller
+                                Meistverkauftes Produkt
                             </Title>
-                            <Text>(gemessen in: Anzahl der Verkäufe)</Text>
                         </Row>
                         <Row>
                             <Col span={6}>
@@ -102,7 +101,7 @@ export default class MySupplierData extends React.Component {
                                     }
                                     alt="bild"
                                     width="100%"
-                                ></img>
+                                />
                             </Col>
                             <Col span={18}>
                                 <Row
@@ -169,16 +168,15 @@ export default class MySupplierData extends React.Component {
                         </Row>
                     </Row>
                 )}
-                {this.props.supplier.noPosition ? "" : <Divider></Divider>}
+                {this.props.supplier.noPosition ? "" : <Divider/>}
                 {this.props.supplier.noPosition ? (
                     ""
                 ) : (
                     <Row className="margin-bottom--md">
                         <Row className="margin-bottom--sm">
                             <Title className="padding-right--sm" level={4}>
-                                Bestseller
+                                Umsatzstärkstes Produkt
                             </Title>
-                            <Text>(gemessen in: Umsatz)</Text>
                         </Row>
                         <Row>
                             <Col span={6}>
@@ -194,7 +192,7 @@ export default class MySupplierData extends React.Component {
                                     }
                                     alt="bild"
                                     width="100%"
-                                ></img>
+                                />
                             </Col>
                             <Col span={18}>
                                 <Row

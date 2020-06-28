@@ -94,12 +94,12 @@ export class AccountView extends React.Component {
                             </Row>
                         </Col>
                         <Col span={8}>
-                            <Row align="middle" justify="center">
+                            {/* <Row align="middle" justify="center">
                                 {this.renderUserTypeSpecificButton()}
-                            </Row>
+                            </Row> */}
                         </Col>
                         <Col span={8}>
-                            <Row align="middle" justify="center">
+                            {/* <Row align="middle" justify="center">
                                 <Button
                                     type="primary"
                                     icon={<LogoutOutlined />}
@@ -107,7 +107,7 @@ export class AccountView extends React.Component {
                                 >
                                     Logout
                                 </Button>
-                            </Row>
+                            </Row> */}
                         </Col>
                     </Row>
                     {this.renderUserTypeSpecificView()}
