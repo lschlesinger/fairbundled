@@ -1,17 +1,16 @@
-import React from 'react';
+import React from "react";
 import ProductCreateProcess from "../../components/ProductCreateProcess/ProductCreateProcess";
 import CategoryService from "../../services/CategoryService";
 import AuthService from "../../services/AuthService";
 import ProductPreviewModalView from "./ProductPreviewModalView";
 import ProductService from "../../services/ProductService";
 import CertificateService from "../../services/CertificateService";
-import {message, notification} from "antd";
+import { message, notification } from "antd";
 import "../../App.less";
 import ValidationError from "../../services/ValidationError";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class ProductCreateView extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -27,21 +26,21 @@ class ProductCreateView extends React.Component {
             // initialize product with fields specified during product creation
             product: {
                 // set in view (retrieved from user that is logged in)
-                "supplier": null,
+                supplier: null,
                 // set in ProductCategorySelection Component
-                "categories": [],
+                categories: [],
                 // set in ProductInformationInput Component
-                "name": null,
-                "ean": null,
-                "deliveryDays": null,
-                "description": null,
+                name: null,
+                ean: null,
+                deliveryDays: null,
+                description: null,
                 // set in ProductPriceLevel Component
-                "priceLevel": [],
+                priceLevel: [],
                 // set in ProductCertificateSelection Component (takes categories into account)
-                "certificates": [],
+                certificates: [],
                 // set in ProductImageUpload Component
-                "images": null,
-            }
+                images: null,
+            },
         };
     }
 
@@ -62,11 +61,14 @@ class ProductCreateView extends React.Component {
             // get certificates
             let certificates = await CertificateService.getCertificates();
             // map certificates to categories to enable category specific certificate display
-            certificates = CertificateService.getCertificateCategoryMapping(categories, certificates);
+            certificates = CertificateService.getCertificateCategoryMapping(
+                categories,
+                certificates
+            );
             this.setState({
                 categories: categories,
-                certificates: certificates
-            })
+                certificates: certificates,
+            });
         } catch (e) {
             message.error("Error fetching certificates and categories.");
         }
@@ -74,12 +76,12 @@ class ProductCreateView extends React.Component {
 
     getSupplierId() {
         // supplier field in state variable `product`
-        this.setState(prevState => ({
+        this.setState((prevState) => ({
             product: {
                 ...prevState.product,
-                supplier: AuthService.getCurrentUser().supplier._id
-            }
-        }))
+                supplier: AuthService.getCurrentUser().supplier._id,
+            },
+        }));
     }
 
     /**
@@ -88,21 +90,41 @@ class ProductCreateView extends React.Component {
      * @param values
      */
     onChange(values) {
-        console.log(values);
-        const {categories, name, description, ean, deliveryDays, priceLevel, certificates, images} = values;
-        this.setState(prevState => ({
+        const {
+            categories,
+            name,
+            description,
+            ean,
+            deliveryDays,
+            priceLevel,
+            certificates,
+            images,
+        } = values;
+        this.setState((prevState) => ({
             product: {
                 ...prevState.product,
-                "name": name ? name : prevState.product.name,
-                "description": description ? description : prevState.product.description,
-                "ean": ean ? ean : prevState.product.ean,
-                "images": images ? this.getThumbUrls(images) : prevState.product.imagesUrl,
-                "deliveryDays": deliveryDays ? deliveryDays : prevState.product.deliveryDays,
-                "priceLevel": priceLevel ? priceLevel : prevState.product.priceLevel,
-                "certificates": certificates ? certificates : prevState.product.certificates,
-                "categories": categories ? categories : prevState.product.categories
-            }
-        }), () => console.log(this.state.product));
+                name: name ? name : prevState.product.name,
+                description: description
+                    ? description
+                    : prevState.product.description,
+                ean: ean ? ean : prevState.product.ean,
+                images: images
+                    ? this.getThumbUrls(images)
+                    : prevState.product.imagesUrl,
+                deliveryDays: deliveryDays
+                    ? deliveryDays
+                    : prevState.product.deliveryDays,
+                priceLevel: priceLevel
+                    ? priceLevel
+                    : prevState.product.priceLevel,
+                certificates: certificates
+                    ? certificates
+                    : prevState.product.certificates,
+                categories: categories
+                    ? categories
+                    : prevState.product.categories,
+            },
+        }));
     }
 
     getThumbUrls(images) {
@@ -130,10 +152,10 @@ class ProductCreateView extends React.Component {
 
     getErrorNotification = (e) => {
         const args = {
-            type: 'error',
-            message: 'Problem bei der Validierung',
+            type: "error",
+            message: "Problem bei der Validierung",
             description: e[1].message,
-            duration: 10
+            duration: 10,
         };
         notification.open(args);
     };
@@ -146,9 +168,9 @@ class ProductCreateView extends React.Component {
             })
             .catch((err) => {
                 if (err instanceof ValidationError) {
-                    Object.entries(err.errors).map(e => {
-                        this.getErrorNotification(e)
-                    })
+                    Object.entries(err.errors).map((e) => {
+                        this.getErrorNotification(e);
+                    });
                 }
             });
     }
@@ -156,17 +178,20 @@ class ProductCreateView extends React.Component {
     render() {
         return (
             <div>
-                <ProductCreateProcess categories={this.state.categories}
-                                      certificates={this.state.certificates}
-                                      product={this.state.product}
-                                      onChange={this.onChange.bind(this)}
-                                      onPreview={this.showModal}
-                                      onPublish={this.publishProduct.bind(this)}
+                <ProductCreateProcess
+                    categories={this.state.categories}
+                    certificates={this.state.certificates}
+                    product={this.state.product}
+                    onChange={this.onChange.bind(this)}
+                    onPreview={this.showModal}
+                    onPublish={this.publishProduct.bind(this)}
                 />
                 <ProductPreviewModalView
                     entityName={this.state.entityName}
-                    onClose={this.hideModal} modalVisible={this.state.modalVisible}
-                    product={this.state.product}/>
+                    onClose={this.hideModal}
+                    modalVisible={this.state.modalVisible}
+                    product={this.state.product}
+                />
             </div>
         );
     }
