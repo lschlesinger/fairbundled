@@ -75,7 +75,7 @@ export default class MySupplierData extends React.Component {
                         </Button>
                     </Link>
                 </Row>
-                {this.props.supplier.noPosition ? "" : <Divider></Divider>}
+                {this.props.supplier.noPosition ? "" : <Divider/>}
 
                 {/* Bestseller nach Anzahl der Verkäufe und Umsatz abhängig von der Existenz der Positions*/}
                 {this.props.supplier.noPosition ? (
@@ -101,7 +101,7 @@ export default class MySupplierData extends React.Component {
                                     }
                                     alt="bild"
                                     width="100%"
-                                ></img>
+                                />
                             </Col>
                             <Col span={18}>
                                 <Row
@@ -168,7 +168,7 @@ export default class MySupplierData extends React.Component {
                         </Row>
                     </Row>
                 )}
-                {this.props.supplier.noPosition ? "" : <Divider></Divider>}
+                {this.props.supplier.noPosition ? "" : <Divider/>}
                 {this.props.supplier.noPosition ? (
                     ""
                 ) : (
@@ -192,7 +192,7 @@ export default class MySupplierData extends React.Component {
                                     }
                                     alt="bild"
                                     width="100%"
-                                ></img>
+                                />
                             </Col>
                             <Col span={18}>
                                 <Row
