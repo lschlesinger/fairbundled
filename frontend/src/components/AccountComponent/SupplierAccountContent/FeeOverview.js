@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Typography, Row, Col } from "antd";
-import "./MySupplierData.less";
+import '../AccountContent.less'
 
 const { Text } = Typography;
 
@@ -21,12 +21,12 @@ export default class MySupplierData extends React.Component {
                 </Row>
                 <Row className="padding-top--sm" gutter={8}>
                     <Col span={12}>
-                        <Text className="my-supplier-data__text" strong>
+                        <Text className="my-entity-data__text" strong>
                             Verkaufsgebühr:
                         </Text>
                     </Col>
                     <Col span={12}>
-                        <Text className="my-supplier-data__text">
+                        <Text className="my-entity-data__text">
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
                                 currency: "EUR",
@@ -36,12 +36,12 @@ export default class MySupplierData extends React.Component {
                 </Row>
                 <Row className="padding-top--sm" gutter={8}>
                     <Col span={12}>
-                        <Text className="my-supplier-data__text" strong>
+                        <Text className="my-entity-data__text" strong>
                             Umsatzprovision:
                         </Text>
                     </Col>
                     <Col span={12}>
-                        <Text className="my-supplier-data__text">
+                        <Text className="my-entity-data__text">
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
                                 currency: "EUR",
@@ -52,7 +52,7 @@ export default class MySupplierData extends React.Component {
                 <Row className="padding-top--sm" gutter={8}>
                     <Col span={12}>
                         <Text
-                            className="my-supplier-data__text"
+                            className="my-entity-data__text"
                             underline
                             strong
                         >
@@ -60,7 +60,7 @@ export default class MySupplierData extends React.Component {
                         </Text>
                     </Col>
                     <Col span={12}>
-                        <Text underline className="my-supplier-data__text">
+                        <Text underline className="my-entity-data__text">
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
                                 currency: "EUR",
@@ -77,12 +77,12 @@ export default class MySupplierData extends React.Component {
                 </Row>
                 <Row className="padding-top--sm" gutter={8}>
                     <Col span={12}>
-                        <Text className="my-supplier-data__text" strong>
+                        <Text className="my-entity-data__text" strong>
                             Verkaufsgebühr:
                         </Text>
                     </Col>
                     <Col span={12}>
-                        <Text className="my-supplier-data__text">
+                        <Text className="my-entity-data__text">
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
                                 currency: "EUR",
@@ -92,12 +92,12 @@ export default class MySupplierData extends React.Component {
                 </Row>
                 <Row className="padding-top--sm" gutter={8}>
                     <Col span={12}>
-                        <Text className="my-supplier-data__text" strong>
+                        <Text className="my-entity-data__text" strong>
                             Umsatzprovision:
                         </Text>
                     </Col>
                     <Col span={12}>
-                        <Text className="my-supplier-data__text">
+                        <Text className="my-entity-data__text">
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
                                 currency: "EUR",
@@ -108,7 +108,7 @@ export default class MySupplierData extends React.Component {
                 <Row className="padding-top--sm" gutter={8}>
                     <Col span={12}>
                         <Text
-                            className="my-supplier-data__text"
+                            className="my-entity-data__text"
                             underline
                             strong
                         >
@@ -116,7 +116,7 @@ export default class MySupplierData extends React.Component {
                         </Text>
                     </Col>
                     <Col span={12}>
-                        <Text underline className="my-supplier-data__text">
+                        <Text underline className="my-entity-data__text">
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
                                 currency: "EUR",
