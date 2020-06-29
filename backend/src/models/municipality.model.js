@@ -7,7 +7,10 @@ const Municipality = new mongoose.Schema({
         required: true
     },
     state: String,
-    billingAddress: String,
+    billingAddress: {
+        type: String,
+        required: true
+    },
     shippingAddress: String
 }, {
     timestamps: true

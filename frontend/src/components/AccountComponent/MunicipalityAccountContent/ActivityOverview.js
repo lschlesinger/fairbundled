@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class SustainabilityOverview extends React.Component {
+export default class ActivityOverview extends React.Component {
 
     constructor(props) {
         super(props);
@@ -11,7 +11,7 @@ export default class SustainabilityOverview extends React.Component {
 
     render() {
         return (
-            <p>Insert SustainabilityOverview</p>
+            <p>Insert ActivityOverview</p>
         );
     }
 }

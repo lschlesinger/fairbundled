@@ -40,13 +40,13 @@ export class AccountView extends React.Component {
             return (
                 <MunicipalityAccountView
                     user={this.state.user}
-                    municipality={this.state.municipality}/>
+                    municipality={this.state?.municipality}/>
             );
         } else if (AuthService.isAuthenticatedSupplier()) {
             return (
                 <SupplierAccountView
                     user={this.state.user}
-                    supplier={this.state.supplier}
+                    supplier={this.state?.supplier}
                 />
             );
         }

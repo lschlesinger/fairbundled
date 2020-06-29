@@ -1,29 +1,61 @@
-import React from 'react';
-import {Row, Col} from "antd";
-
+import React from "react";
+import {Col, message, Row} from "antd";
+import ProductService from "../../../services/ProductService";
+import PositionService from "../../../services/PositionService";
+import UserService from "../../../services/UserService";
+import MyEntityData from "../../../components/AccountComponent/MyEntityData";
+import ActivityOverview from "../../../components/AccountComponent/MunicipalityAccountContent/ActivityOverview";
+import SustainabilityOverview from "../../../components/AccountComponent/MunicipalityAccountContent/SustainabilityOverview";
 
 export class MunicipalityAccountView extends React.Component {
-
     constructor(props) {
         super(props);
+        this.state = {
+            municipality: null,
+            user: this.props.user,
+        };
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        this.getMunicipalityInfo();
+    }
+
+    async getMunicipalityInfo() {
+        try {
+            let municipalityInfo = this.props.municipality;
+            municipalityInfo.user = await UserService.getEntityUsers();
+            this.setState({municipality: municipalityInfo});
+        } catch (e) {
+            message.error("Error fetching municipality Information.");
+        }
     }
 
     render() {
         return (
-            <Row className="padding--md"
-                 justify="space-around"
-                 align="middle">
-                <Col>
-                    Municipality Col 1
+            <Row
+                gutter={[24, 24]}
+                className="padding-horizontal--lg"
+                justify="space-around"
+            >
+                <Col span={9}>
+                    {this.state.municipality ? (
+                        <MyEntityData
+                            entity={this.state.municipality}
+                            user={this.state.user}
+                        />
+                    ) : ("")}
                 </Col>
-                <Col>
-                    Municipality Col 2
+                <Col span={9}>
+                    {this.state.municipality ? (
+                        <ActivityOverview municipality={this.state.municipality}/>
+                    ) : ("")}
                 </Col>
-                <Col>
-                    Municipality Col 3
+                <Col span={6}>
+                    {this.state.municipality ? (
+                        <SustainabilityOverview municipality={this.state.municipality}/>
+                    ) : (
+                        ""
+                    )}
                 </Col>
             </Row>
         );
