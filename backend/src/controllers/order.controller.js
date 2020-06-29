@@ -47,7 +47,7 @@ class OrderController {
      * @param res: updated order object
      */
     static submitOrder(req, res) {
-        var date = new Date();
+        let date = new Date();
         const query = {};
         query.municipality = req.municipalityId;
         query._id = req.params.id;

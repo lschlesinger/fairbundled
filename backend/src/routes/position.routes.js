@@ -8,7 +8,6 @@ const router = express.Router();
 router.get(
     "/",
     middlewares.checkAuthentication,
-    middlewares.checkSupplier,
     PositionController.getPositions
 );
 

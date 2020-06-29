@@ -94,7 +94,7 @@ class FairbundleController {
                 OrderPosition.create(orderPosition).then((position) => {
                     fairbundle.positions.push(position._id);
 
-                    if (fairbundle.bundlers.find(b => b == req.municipalityId) == null) {
+                    if (fairbundle.bundlers.find(b => b === req.municipalityId) == null) {
                         fairbundle.bundlers.push(req.municipalityId);
                     }
 

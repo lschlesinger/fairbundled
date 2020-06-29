@@ -2,36 +2,40 @@ import OrderPosition from "../models/position.model";
 import {Order} from "../models/order.model";
 import OrderController from "./order.controller";
 import Product from "../models/product.model";
+import Fairbundle from "../models/fairbundle.model";
 
 class PositionController {
     /**
      * Find all OrderPositions of products provided by supplier associated with requesting user (=req.supplierId)
+     * or ordered by municipality associated with requesting user
      * @param req: -
-     * @param res: array of OrderPositions with populated submission field (from respective order)
+     * @param res: array of OrderPositions with populated product and order field
      */
     static getPositions(req, res) {
+        const customizedSupplierMatch = {};
+        if (req.supplierId) {
+            customizedSupplierMatch.supplier = req.supplierId;
+        }
+
         OrderPosition.find()
             .populate({
                 path: "product",
-                match: {
-                    supplier: req.supplierId,
-                },
+                customizedSupplierMatch,
+                select: ["supplier", "priceLevel", "name", "certificates", "categories"]
             })
             .populate({
                 path: "order",
-                match: {
-                    position: req._id,
-                },
                 select: ["submission", "municipality"],
             })
-            .find({product: {$ne: null}})
             .then((positions) => {
                 positions = positions.filter(
                     (position) => position.product != null
                 );
-                positions = positions.filter(
-                    (position) => position.order !== undefined
-                );
+                if (req.municipalityId) {
+                    positions = positions.filter(
+                        (position) => position.order.municipality === req.municipalityId && position.order.submission
+                    );
+                }
                 res.status(200).json(positions);
             })
             .catch((err) => {
@@ -60,6 +64,8 @@ class PositionController {
                 const query = {};
                 query["municipality"] = req.municipalityId;
                 query["submission"] = null;
+                // only search for direct orders
+                query["__t"] = {$ne: "Fairbundle"};
                 Order.findOne(query)
                     .populate({
                         path: "positions",
@@ -71,8 +77,8 @@ class PositionController {
                         },
                     })
                     .then((order) => {
-                        // check if there is no currently unsubmitted order, if so create new order
-                        if (!order) {
+                        // check if there is no currently unsubmitted direct order, if so create new order
+                        if ((!order)) {
                             OrderController.createOrder(req, res);
                         }
                         // if order found, add position to existing unsubmitted order, Note: there can be several positions of one product in one order
