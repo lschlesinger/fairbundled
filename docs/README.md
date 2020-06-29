@@ -10,7 +10,6 @@
   * [Backend](#backend-endpoints)
   * [Frontend](#frontend-urls)
 * [Authentication/Authorization](#authentication)
-  
   * [Token](#token)
 * [Middleware](#middleware)
   
@@ -210,6 +209,7 @@ Routes are protected by the specific middleware functions.  See section [Middlew
 |          |                 | `/register`               | POST      |                                               |
 |          | `/municipatliy` | `/`                       | GET       |                                               |
 |          | `/supplier`     | `/`                       | GET       |                                               |
+|          | `/user`     | `/`                       | GET       | checkAuthentication                                               |
 
 Note:
 
