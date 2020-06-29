@@ -14,14 +14,14 @@ export default class OrderOptions extends React.Component {
     }
 
     getMinQuantity = () => {
-        if (this.props.product == null) {
+        if (this.props.product === null) {
             return 0;
         }
         return Math.min(...this.props.product.priceLevel.map(p => p.minQty));
     };
 
     getMaxPriceLevel = () => {
-        if (this.props.product == null) {
+        if (this.props.product === null) {
             return null;
         }
 

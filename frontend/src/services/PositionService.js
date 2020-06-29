@@ -35,13 +35,13 @@ export default class PositionService {
         let totalVariableFee = 0;
         let monthlyVariableFee = 0;
         let positions = await this.getPositions();
+        console.log(positions);
         if (Array.isArray(positions) && positions.length) {
             for (const p in positions) {
                 const position = positions[p];
                 if (
                     position.order.submission &&
-                    new Date(position.order.submission) < new Date() &&
-                    supplier._id === position.product.supplier
+                    new Date(position.order.submission) < new Date()
                 ) {
                     productsSold++;
                     qtySold += position.qty;

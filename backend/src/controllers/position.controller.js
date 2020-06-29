@@ -14,13 +14,12 @@ class PositionController {
     static getPositions(req, res) {
         const customizedSupplierMatch = {};
         if (req.supplierId) {
-            customizedSupplierMatch.supplier = req.supplierId;
+            customizedSupplierMatch["supplier"] = req.supplierId;
         }
-
         OrderPosition.find()
             .populate({
                 path: "product",
-                customizedSupplierMatch,
+                match: customizedSupplierMatch,
                 select: ["supplier", "priceLevel", "name", "certificates", "categories"]
             })
             .populate({
@@ -29,7 +28,7 @@ class PositionController {
             })
             .then((positions) => {
                 positions = positions.filter(
-                    (position) => position.product != null
+                    (position) => position.product !== null
                 );
                 if (req.municipalityId) {
                     positions = positions.filter(
