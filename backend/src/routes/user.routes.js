@@ -4,11 +4,11 @@ import middlewares from "../middlewares";
 
 const router = express.Router();
 
-// get one user by ObjectId
+// get all users of the entity associated with the requesting user (either municipality users or supplier users)
 router.get(
-    "/:id",
+    "/",
     middlewares.checkAuthentication,
     middlewares.checkSupplier,
-    UserController.getUsersOfSupplier
+    UserController.getUsersOfEntity
 );
 export default router;
