@@ -3,7 +3,8 @@ import HttpService from "./HttpService";
 export default class PositionService {
     static BASE_URL = "/api/position";
 
-    constructor() {}
+    constructor() {
+    }
 
     static async getPositions() {
         return HttpService.get(`${this.BASE_URL}/`);
@@ -38,7 +39,7 @@ export default class PositionService {
             for (const p in positions) {
                 const position = positions[p];
                 if (
-                    position.order &&
+                    position.order.submission &&
                     new Date(position.order.submission) < new Date() &&
                     supplier._id === position.product.supplier
                 ) {
@@ -129,6 +130,7 @@ export default class PositionService {
         supplier.totalVariableFee = totalVariableFee;
         return supplier;
     }
+
     // determines the bestseller in terms of qty & revenue
     static determineBestseller(orderedProducts) {
         let bestQty = 0;
@@ -149,5 +151,47 @@ export default class PositionService {
             qtyBestseller: orderedProducts[bestQtyProduct],
             revenueBestseller: orderedProducts[bestRevenueProduct],
         };
+    }
+
+    // Calculates all necessary information in the municipality account view
+    static async getOrderInfo(municipality) {
+        //counts unique products bought by municipality
+        let productsBought = 0;
+        // counts only products ordered within fairbundle
+        let fairbundleProductsBought = 0;
+        // counts only products ordered within direct order
+        let directProductsBought = 0;
+        //counts submitted orders
+        let ordersSubmitted = 0;
+        // counts only fairbundle orders
+        let fairbundlesSubmitted = 0;
+        // counts only direct orders
+        let directOrdersSubmitted = 0;
+        //total sum of all spendings
+        let spendings = 0;
+        // sum of spending for fairbundles
+        let fairbundleSpendings = 0;
+        // sum of spendings for directOrders
+        let directOrderSpendings = 0;
+
+        let positions = await this.getPositions();
+
+        if (positions && positions.length > 1) {
+
+            municipality.noPosition = false;
+        } else {
+            municipality.noPosition = true;
+        }
+        //save all calculations in municipality json and return municipaliy
+        municipality.productsBought = productsBought;
+        municipality.fairbundleProductsBought = fairbundleProductsBought;
+        municipality.directProductsBought = directProductsBought;
+        municipality.ordersSubmitted = ordersSubmitted;
+        municipality.fairbundlesSubmitted = fairbundlesSubmitted;
+        municipality.directOrdersSubmitted = directOrdersSubmitted;
+        municipality.spendings = spendings;
+        municipality.fairbundleSpendings = fairbundleSpendings;
+        municipality.directOrderSpendings = directOrderSpendings;
+        return municipality;
     }
 }

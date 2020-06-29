@@ -1,11 +1,10 @@
 import React from "react";
 import {Col, message, Row} from "antd";
-import ProductService from "../../../services/ProductService";
-import PositionService from "../../../services/PositionService";
 import UserService from "../../../services/UserService";
 import MyEntityData from "../../../components/AccountComponent/MyEntityData";
 import ActivityOverview from "../../../components/AccountComponent/MunicipalityAccountContent/ActivityOverview";
-import SustainabilityOverview from "../../../components/AccountComponent/MunicipalityAccountContent/SustainabilityOverview";
+import FairbundledAdvantage from "../../../components/AccountComponent/MunicipalityAccountContent/FairbundledAdvantage";
+import PositionService from "../../../services/PositionService";
 
 export class MunicipalityAccountView extends React.Component {
     constructor(props) {
@@ -23,6 +22,7 @@ export class MunicipalityAccountView extends React.Component {
     async getMunicipalityInfo() {
         try {
             let municipalityInfo = this.props.municipality;
+            municipalityInfo = await PositionService.getOrderInfo(municipalityInfo);
             municipalityInfo.user = await UserService.getEntityUsers();
             this.setState({municipality: municipalityInfo});
         } catch (e) {
@@ -52,7 +52,7 @@ export class MunicipalityAccountView extends React.Component {
                 </Col>
                 <Col span={6}>
                     {this.state.municipality ? (
-                        <SustainabilityOverview municipality={this.state.municipality}/>
+                        <FairbundledAdvantage municipality={this.state.municipality}/>
                     ) : (
                         ""
                     )}
