@@ -10,14 +10,11 @@ const {Text, Title} = Typography;
 export default class MySupplierData extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            supplier: null,
-        };
     }
 
     render() {
         return (
-            <Card title="Verkaufsübersicht" className="padding-horizontal--sm">
+            <Card title="Verkaufsübersicht">
                 {/* Aktive, Verkaufte Produkte und Gesamtumsatz */}
                 <Row className="margin--sm order-overview__kpis" gutter={8}>
                     <Col span={7}>
@@ -107,7 +104,7 @@ export default class MySupplierData extends React.Component {
                                 <Row
                                     justify="center"
                                     align="middle"
-                                    className="margin-bottom--sm"
+                                    className="margin-bottom--md"
                                 >
                                     <Text strong>
                                         {
@@ -183,7 +180,7 @@ export default class MySupplierData extends React.Component {
                                 <img
                                     src={
                                         this.props.supplier.bestseller
-                                            .revenueBestseller.product.images
+                                            .revenueBestseller?.product.images
                                             ?.length > 0
                                             ? this.props.supplier.bestseller
                                                 .revenueBestseller?.product
@@ -198,7 +195,7 @@ export default class MySupplierData extends React.Component {
                                 <Row
                                     justify="center"
                                     align="middle"
-                                    className="margin-bottom--sm"
+                                    className="margin-bottom--md"
                                 >
                                     <Text strong>
                                         {
