@@ -46,6 +46,7 @@ class RegisterView extends React.Component {
 
     onFinish(values) {
         const {email, password, municipality, supplier} = values;
+        console.log(values);
         AuthService.register(email, password, municipality, supplier)
             .then(() => {
                 this.props.history.push('/login');

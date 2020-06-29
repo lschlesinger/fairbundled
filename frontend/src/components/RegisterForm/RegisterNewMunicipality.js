@@ -15,38 +15,38 @@ export default class RegisterNewMunicipality extends React.Component {
         return (
             <div>
                 <Divider orientation="left">Gemeinde Daten</Divider>
-                    <Form.Item
-                        name={["municipality", "name"]}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Bitte geben Sie den Namen der Gemeide ein!',
-                            }
-                        ]}
-                    >
-                        <Input placeholder="Name der Gemeinde"/>
-                    </Form.Item>
-                    <Form.Item
-                        name={["municipality", "state"]}
-                    >
-                        <Input
-                            placeholder="Bundesland"
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        name={["municipality", "billing"]}
-                    >
-                        <Input
-                            placeholder="Rechnungsadresse"
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        name={["municipality", "shipping"]}
-                    >
-                        <Input
-                            placeholder="Lieferadresse"
-                        />
-                    </Form.Item>
+                <Form.Item
+                    name={["municipality", "name"]}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Bitte geben Sie den Namen der Gemeide ein!',
+                        }
+                    ]}
+                >
+                    <Input placeholder="Name der Gemeinde"/>
+                </Form.Item>
+                <Form.Item
+                    name={["municipality", "state"]}
+                >
+                    <Input
+                        placeholder="Bundesland"
+                    />
+                </Form.Item>
+                <Form.Item
+                    name={["municipality", "billingAddress"]}
+                >
+                    <Input
+                        placeholder="Rechnungsadresse"
+                    />
+                </Form.Item>
+                <Form.Item
+                    name={["municipality", "shippingAddress"]}
+                >
+                    <Input
+                        placeholder="Lieferadresse"
+                    />
+                </Form.Item>
             </div>
         )
     }

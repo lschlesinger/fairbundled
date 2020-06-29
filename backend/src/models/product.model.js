@@ -16,7 +16,11 @@ const Product = new mongoose.Schema(
         priceLevel: {
             type: [{
                 unitPrice: Number,
-                unit: String,
+                unit: {
+                    type: String,
+                    enum: ['m²', 'Liter', 'Kilogramm', 'Gramm', 'Packeinheit', 'Stück'],
+                    default: 'Stück'
+                },
                 minQty: Number,
             }],
             validate: [priceLevelExistance, 'Es wurde keine Preisstufe festgelegt.']

@@ -7,7 +7,7 @@ import placeholder from "../../assets/placeholder.png";
 const {Paragraph, Text, Title} = Typography;
 const options = [
     {value: "Niedrigster Preis", label: "Niedrigster Preis"},
-    {value: "Höchster Preis", label: "Höchster Preis"}
+    {value: "Höchster Preis", label: "Höchster Preis"},
 ];
 
 export default class ProductListCard extends React.Component {
@@ -27,11 +27,10 @@ export default class ProductListCard extends React.Component {
             return;
         }
 
-        this.setState(prevState => ({
-                ...prevState,
-                products: this.props.products
-            }
-        ));
+        this.setState((prevState) => ({
+            ...prevState,
+            products: this.props.products,
+        }));
     }
 
     //function to determine the lowest price and to differentiate between one and multiple price levels (Difference: Ab)
@@ -39,7 +38,10 @@ export default class ProductListCard extends React.Component {
         return (
             <Title level={4} className="price">
                 {product.priceLevel.length < 2 ? "" : "Ab "}
-                {product.smallestPrice} €
+                {new Intl.NumberFormat("de-DE", {
+                    style: "currency",
+                    currency: "EUR",
+                }).format(product.smallestPrice)}
             </Title>
         );
     }
@@ -48,9 +50,8 @@ export default class ProductListCard extends React.Component {
     getCardItem(product) {
         const price = this.getLowestPrice(product);
         return (
-            <Col span={8} key={product._id}>
-                <Card>
-                    {/* title={product.name} key={product._id} bordered={true} */}
+            <Col span={12} key={product._id}>
+                <Card className="product-list-card__card">
                     <Row gutter={12}>
                         <Col span={10}>
                             <Row
@@ -91,7 +92,9 @@ export default class ProductListCard extends React.Component {
                                 className="product-list-card__product_description"
                                 justify="start"
                             >
-                                <Paragraph ellipsis>{this.displayDescriptionText(product)}</Paragraph>
+                                <Paragraph ellipsis>
+                                    {this.displayDescriptionText(product)}
+                                </Paragraph>
                             </Row>
                             <Row gutter={8} align="middle">
                                 <Col span={12}>{price}</Col>
@@ -136,7 +139,6 @@ export default class ProductListCard extends React.Component {
                     (a, b) => a.smallestPrice - b.smallestPrice
                 ),
             });
-            console.log(this.state.products);
         }
         if (ordering[0] === "Höchster Preis") {
             this.setState({
@@ -196,7 +198,7 @@ export default class ProductListCard extends React.Component {
                                 onChange={this.handleOrdering}
                                 ordering={this.state.ordering}
                                 placeholder="Bitte auswählen"
-                            ></Cascader>
+                            />
                         </Row>
                     </Col>
                 </Row>

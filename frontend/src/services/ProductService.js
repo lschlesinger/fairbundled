@@ -3,8 +3,7 @@ import HttpService from "./HttpService";
 export default class ProductService {
     static BASE_URL = "/api/product";
 
-    constructor() {
-    }
+    constructor() {}
 
     static async getProducts(search = "") {
         return HttpService.get(`${this.BASE_URL}/${search}`);
@@ -15,7 +14,7 @@ export default class ProductService {
     }
 
     static async getProduct(productId) {
-        return HttpService.get(`${this.BASE_URL}/${productId}`)
+        return HttpService.get(`${this.BASE_URL}/${productId}`);
     }
 
     static getSmallestPrice(products) {
@@ -32,5 +31,18 @@ export default class ProductService {
             smallestPriceProducts.push(product);
         }
         return smallestPriceProducts;
+    }
+
+    static async getActiveSupplierProducts(supplier) {
+        let activeProducts = 0;
+        let products = await this.getProducts("");
+        for (const p in products) {
+            const product = products[p];
+            if (product.supplier == supplier._id) {
+                activeProducts++;
+            }
+        }
+        supplier.activeProducts = activeProducts;
+        return supplier;
     }
 }

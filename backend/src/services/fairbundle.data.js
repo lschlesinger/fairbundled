@@ -13,7 +13,7 @@ const FAIRBUNDLES = [
         },
         expiration: new Date('2020-10-01T17:00:00'),
         expirationAction: 'cancel',
-        targetPrice: 50,
+        targetPrice: 200,
         bundlers: [{
             name: "München",
             state: "Bayern",

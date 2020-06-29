@@ -22,7 +22,7 @@ export default class FairbundleService {
             product.hasFairbundle = false;
             for (const f in fairbundles) {
                 const fairbundle = fairbundles[f];
-                if (new Date(fairbundle.expiration) > new Date() && fairbundle.product === product._id) {
+                if (new Date(fairbundle.expiration) > new Date() && fairbundle.product?._id === product._id) {
                     product.hasFairbundle = true;
                     break;
                 }
@@ -36,7 +36,7 @@ export default class FairbundleService {
         return HttpService.put(`${this.BASE_URL}/${fairbundleId}`, {qty});
     }
 
-    static async createFairbundle(qty, productId, expirationDate, expirationAction, targetPrice) {
-        return HttpService.post(`${this.BASE_URL}/`, {qty, productId, expirationDate, expirationAction, targetPrice});
+    static async createFairbundle(qty, productId, expiration, expirationAction, targetPrice) {
+        return HttpService.post(`${this.BASE_URL}/`, {qty, productId, expiration, expirationAction, targetPrice});
     }
 }

@@ -64,9 +64,12 @@ export default class RegisterForm extends React.Component {
                         }
                     ]}
                 >
-                    <Select placeholder="Wählen Sie eine Gemeinde">
+                    <Select
+                        showSearch
+                        optionFilterProp="children"
+                        placeholder="Wählen Sie eine Gemeinde">
                         {
-                            this.props.municipalities.map((m) => <Option key={m._id} value={m._id}> {m.name} </Option>)
+                            this.props.municipalities.map((m) => <Option key={m._id} value={m._id}>{m.name}</Option>)
                         }
                     </Select>
                 </Form.Item>
@@ -84,9 +87,12 @@ export default class RegisterForm extends React.Component {
                         }
                     ]}
                 >
-                    <Select placeholder="Wählen Sie einen Anbieter">
+                    <Select
+                        showSearch
+                        optionFilterProp="children"
+                        placeholder="Wählen Sie einen Anbieter">
                         {
-                            this.props.suppliers.map((s) => <Option key={s._id} value={s._id}> {s.name} </Option>)
+                            this.props.suppliers.map((s) => <Option key={s._id} value={s._id}>{s.name}</Option>)
                         }
                     </Select>
                 </Form.Item>
@@ -101,7 +107,7 @@ export default class RegisterForm extends React.Component {
                 name="normal_register"
                 className="register-form__form"
                 onFinish={this.props.onFinish}>
-                <Divider orientation="left">Login Daten</Divider>
+                <Divider orientation="left">User Daten</Divider>
                 <Form.Item
                     name="email"
                     rules={[
@@ -123,11 +129,37 @@ export default class RegisterForm extends React.Component {
                             required: true,
                             message: 'Bitte geben Sie Ihr Passwort ein!',
                         },
-                    ]}>
-                    <Input
+                    ]}
+                    hasFeedback>
+                    <Input.Password
                         prefix={<LockOutlined/>}
                         type="password"
-                        placeholder="Password"
+                        placeholder="Passwort festlegen"
+                    />
+                </Form.Item>
+                <Form.Item
+                    name="confirm"
+                    dependencies={['password']}
+                    hasFeedback
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Bitte geben Sie Ihr Passwort ein!',
+                        },
+                        ({getFieldValue}) => ({
+                            validator(rule, value) {
+                                if (!value || getFieldValue('password') === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject('Die Passwörter stimmen nicht überein!');
+                            },
+                        }),
+                    ]}
+                >
+                    <Input.Password
+                        prefix={<LockOutlined/>}
+                        type="password"
+                        placeholder="Passwort bestätigen"
                     />
                 </Form.Item>
                 <Divider orientation="left">Zuordnung</Divider>

@@ -27,9 +27,9 @@ export default class CertificateService {
             const certificate = certificates[c];
             let certCategoryIds = [];
             const certCategoryNames = sectorCertificates[certificate.sector];
-            for (const n in certCategoryNames){
+            for (const n in certCategoryNames) {
                 const name = certCategoryNames[n];
-                let id = this.getCategoryNameOfId(name, categories);
+                let id = this.getCategoryId(name, categories);
                 certCategoryIds.push(id);
             }
             certificate.categories = certCategoryIds;
@@ -38,10 +38,10 @@ export default class CertificateService {
         return mappedCertificates;
     }
 
-    static getCategoryNameOfId(name, categories) {
+    static getCategoryId(name, categories) {
         //get object_ids instead of names
         for (const c in categories) {
-            const category = categories[c]
+            const category = categories[c];
             if (category.name === name) {
                 return category._id;
             }

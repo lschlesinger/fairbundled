@@ -1,8 +1,13 @@
 import Fairbundle from "../models/fairbundle.model";
-import OrderPosition from "../models/order-position.model";
+import OrderPosition from "../models/position.model";
 
 class FairbundleController {
 
+    /**
+     * Find all Fairbundle by Id and if added query with productId to find all fairbundles available for one product
+     * @param req: qty
+     * @param res: array of fairbundle objects
+     */
     static getFairbundles(req, res) {
         const query = {};
         if (!!req.query.product) {
@@ -19,6 +24,11 @@ class FairbundleController {
             })
     }
 
+    /**
+     * Find Fairbundle by Id and add Order Position
+     * @param req: qty
+     * @param res: fairbundle object
+     */
     static getFairbundle(req, res) {
         Fairbundle.findById(req.params.id)
             .populate("product")
@@ -32,9 +42,9 @@ class FairbundleController {
     }
 
     /**
-     * First create fairbundle as order then create position of product with selected quantity and add position to FairbundleOrder
+     * First create Fairbundle as Order then create OrderPosition of product with selected quantity and add OrderPosition to Positions in Fairbundle
      * @param req: qty, productId, expiration, expirationAction, targetPrice
-     * @param res
+     * @param res: created fairbundle object
      */
     static createFairbundle(req, res) {
         const fairbundle = {
@@ -68,9 +78,9 @@ class FairbundleController {
     }
 
     /**
-     * Find Fairbundle by Id and add Order Position
-     * @param req: qty, productId, expiration, expirationAction, targetPrice
-     * @param res
+     * Find Fairbundle by Id and add OrderPosition to join with selected quantity
+     * @param req: qty
+     * @param res: updated fairbundle object
      */
     static joinFairbundle(req, res) {
         Fairbundle.findById(req.params.id)
@@ -78,18 +88,22 @@ class FairbundleController {
                 const orderPosition = {
                     qty: req.body.qty,
                     product: fairbundle.product._id,
-                    user: req.userId
+                    user: req.userId,
+                    order: fairbundle._id,
                 };
                 OrderPosition.create(orderPosition).then((position) => {
                     fairbundle.positions.push(position._id);
-                    fairbundle.bundlers.push(req.municipalityId);
-                    fairbundle.save((f) => {
+
+                    if (fairbundle.bundlers.find(b => b == req.municipalityId) == null) {
+                        fairbundle.bundlers.push(req.municipalityId);
+                    }
+
+                    fairbundle.save(() => {
                         res.status(201).json(fairbundle);
                     });
                 });
             })
             .catch((err) => {
-                console.log(err);
                 res.status(400).send(err);
             })
     }

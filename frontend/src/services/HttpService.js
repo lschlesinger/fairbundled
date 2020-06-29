@@ -14,14 +14,13 @@ import AuthService from "./AuthService";
 import ValidationError from "./ValidationError";
 
 export default class HttpService {
-    constructor() {
-    }
+    constructor() {}
 
     static async get(url) {
         const headers = this.getDefaultHeaders();
         const response = await fetch(url, {
-            method: 'GET',
-            headers: headers
+            method: "GET",
+            headers: headers,
         });
         return this.parseResponse(response);
     }
@@ -29,20 +28,19 @@ export default class HttpService {
     static async post(url, body) {
         const headers = this.getDefaultHeaders();
         const response = await fetch(url, {
-            method: 'POST',
+            method: "POST",
             headers: headers,
-            body: JSON.stringify(body)
+            body: JSON.stringify(body),
         });
-        console.log(response);
         return this.parseResponse(response);
     }
 
     static async put(url, body) {
         const headers = this.getDefaultHeaders();
         const response = await fetch(url, {
-            method: 'PUT',
+            method: "PUT",
             headers: headers,
-            body: JSON.stringify(body)
+            body: JSON.stringify(body),
         });
         return this.parseResponse(response);
     }
@@ -50,8 +48,8 @@ export default class HttpService {
     static async delete(url) {
         const headers = this.getDefaultHeaders();
         const response = await fetch(url, {
-            method: 'DELETE',
-            headers: headers
+            method: "DELETE",
+            headers: headers,
         });
         return this.parseResponse(response);
     }
@@ -66,7 +64,7 @@ export default class HttpService {
             throw new Error("Unauthorized request.");
         } else if (response.status >= 400) {
             const o = await response.json();
-            if (o.name === 'ValidationError') {
+            if (o.name === "ValidationError") {
                 throw new ValidationError(o._message, o.errors);
             } else {
                 throw new Error("Error occurred during HTTP request.");
@@ -88,10 +86,10 @@ export default class HttpService {
             AuthService.logout();
             throw new Error("Token expired.");
         } else if (token) {
-            headers.append('Authorization', `Bearer ${token}`);
+            headers.append("Authorization", `Bearer ${token}`);
         }
         // add content-type header
-        headers.append('Content-Type', 'application/json');
+        headers.append("Content-Type", "application/json");
 
         return headers;
     }
