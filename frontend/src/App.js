@@ -1,32 +1,28 @@
 import React from "react";
-import {
-    BrowserRouter as Router,
-    Redirect,
-    Route,
-    Switch,
-} from "react-router-dom";
-import { ConfigProvider, Layout, Row, Spin } from "antd";
+import {BrowserRouter as Router, Redirect, Route, Switch,} from "react-router-dom";
+import {ConfigProvider, Layout, Row, Spin} from "antd";
 import deDE from "antd/es/locale/de_DE";
 // override style
 import "./App.less";
 // import all components and views
 import AuthService from "./services/AuthService";
-import { LandingView } from "./views/landing/LandingView";
+import {LandingView} from "./views/landing/LandingView";
 import LoginView from "./views/login/LoginView";
 import RegisterView from "./views/register/RegisterView";
 import ProductListView from "./views/product-list/ProductListView";
-import { ProductDetailView } from "./views/product-detail/ProductDetailView";
+import {ProductDetailView} from "./views/product-detail/ProductDetailView";
 import ProductCreateView from "./views/product-create/ProductCreateView";
-import { AccountView } from "./views/account/AccountView";
+import {AccountView} from "./views/account/AccountView";
 import FairbundledHeader from "./components/FairbundledHeader/FairbundledHeader";
 import CategoryService from "./services/CategoryService";
 import FairbundledFooter from "./components/FairbundledFooter/FairbundledFooter";
-import { LoadingOutlined } from "@ant-design/icons";
+import {LoadingOutlined} from "@ant-design/icons";
 import FairbundleService from "./services/FairbundleService";
 import OrderService from "./services/OrderService";
+import UserEditView from "./views/account/UserEditView";
 
 // decide on overall layout structure (ANT)
-const { Header, Footer, Content } = Layout;
+const {Header, Footer, Content} = Layout;
 
 export default class App extends React.Component {
     constructor(props) {
@@ -36,14 +32,14 @@ export default class App extends React.Component {
             title: "Fairbundled",
             // connect routes (url) and components
             routes: [
-                { component: LandingView, path: "/", exact: true },
+                {component: LandingView, path: "/", exact: true},
                 {
                     // allow rendering of certain views only for authenticated user
                     render: (props) => {
                         if (AuthService.isAuthenticated()) {
                             return <ProductCreateView {...props} />;
                         } else {
-                            return <Redirect to={"/login"} />;
+                            return <Redirect to={"/login"}/>;
                         }
                     },
                     path: "/product/create",
@@ -59,14 +55,14 @@ export default class App extends React.Component {
                     },
                     path: "/product/:id",
                 },
-                { component: ProductListView, path: "/product" },
+                {component: ProductListView, path: "/product"},
                 {
                     // allow rendering of certain views only for non-authenticated user
                     render: (props) => {
                         if (!AuthService.isAuthenticated()) {
-                            return <LoginView />;
+                            return <LoginView/>;
                         } else {
-                            return <Redirect to={"/"} />;
+                            return <Redirect to={"/"}/>;
                         }
                     },
                     path: "/login",
@@ -75,9 +71,9 @@ export default class App extends React.Component {
                     // allow rendering of certain views only for non-authenticated user
                     render: (props) => {
                         if (!AuthService.isAuthenticated()) {
-                            return <RegisterView />;
+                            return <RegisterView/>;
                         } else {
-                            return <Redirect to={"/"} />;
+                            return <Redirect to={"/"}/>;
                         }
                     },
                     path: "/register",
@@ -88,11 +84,22 @@ export default class App extends React.Component {
                         if (AuthService.isAuthenticated()) {
                             return <AccountView {...props} />;
                         } else {
-                            return <Redirect to={"/login"} />;
+                            return <Redirect to={"/login"}/>;
                         }
                     },
                     path: "/account",
                 },
+                {
+                    render: (props) => {
+                        // allow rendering of certain views only for authenticated user
+                        if (AuthService.isAuthenticated()) {
+                            return <UserEditView {...props} />;
+                        } else {
+                            return <Redirect to={"/login"}/>;
+                        }
+                    },
+                    path: "/user/edit",
+                }
             ],
             categories: [],
             openFairbundles: 0,
@@ -189,14 +196,14 @@ export default class App extends React.Component {
                     </Switch>
                 </Content>
                 <Footer className="app__footer">
-                    <FairbundledFooter />
+                    <FairbundledFooter/>
                 </Footer>
             </Router>
         );
     }
 
     renderSpinner() {
-        const antIcon = <LoadingOutlined style={{ fontSize: 36 }} spin />;
+        const antIcon = <LoadingOutlined style={{fontSize: 36}} spin/>;
 
         return (
             <Row
@@ -204,7 +211,7 @@ export default class App extends React.Component {
                 align="middle"
                 className="app__spinner-container"
             >
-                <Spin size="large" indicator={antIcon} />
+                <Spin size="large" indicator={antIcon}/>
             </Row>
         );
     }

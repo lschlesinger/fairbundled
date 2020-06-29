@@ -1,9 +1,10 @@
 import React from "react";
-import { Card, Typography, Row, Col } from "antd";
+import {Button, Card, Col, Row, Typography} from "antd";
 import "./MySupplierData.less";
-import { EditOutlined } from "@ant-design/icons";
+import {EditOutlined} from "@ant-design/icons";
+import {Link} from "react-router-dom";
 
-const { Text } = Typography;
+const {Text} = Typography;
 
 export default class MySupplierData extends React.Component {
     constructor(props) {
@@ -26,10 +27,13 @@ export default class MySupplierData extends React.Component {
 
     render() {
         return (
-            <Card title="Anbieter Daten" className="padding-horizontal--sm">
-                <Row justify="end">
-                    <EditOutlined />
-                </Row>
+            <Card
+                title="Anbieter Daten"
+                className="padding-horizontal--sm"
+                extra={
+                    <Link to="/user/edit">
+                        <Button size="large" type="link" icon={<EditOutlined/>}/>
+                    </Link>}>
                 <Row gutter={8}>
                     <Col span={12}>
                         <Text className="my-supplier-data__text" strong>
