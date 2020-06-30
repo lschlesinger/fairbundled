@@ -47,11 +47,18 @@ class OrderController {
      * @param res: updated order object
      */
     static submitOrder(req, res) {
-        let date = new Date();
+        const date = new Date();
         const query = {};
         query.municipality = req.municipalityId;
         query._id = req.params.id;
         Order.findOneAndUpdate(query, { submission: date }, { new: true })
+            .populate({
+                path: 'positions',
+                populate: ({
+                    path:'product',
+                    select: ['priceLevel']
+                }),
+            })
             .then((order) => {
                 res.status(201).json(order);
             })
@@ -71,6 +78,7 @@ class OrderController {
             positions: [],
             submission: null,
             municipality: req.municipalityId,
+            cancellation: null,
         };
         Order.create(order)
             .then((order) => {

@@ -50,6 +50,8 @@ class FairbundleController {
         const fairbundle = {
             positions: [],
             submission: null,
+            cancellation: null,
+            finalUnitPrice: null,
             municipality: req.municipalityId,
             expiration: req.body.expiration,
             expirationAction: req.body.expirationAction,

@@ -11,6 +11,7 @@ const Fairbundle = Order.discriminator('Fairbundle', new mongoose.Schema({
             default: 'force'
         },
         targetPrice: Number,
+        finalUnitPrice: Number,
         bundlers: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Municipality'
