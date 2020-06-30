@@ -23,11 +23,13 @@ export default class HeaderIconMenu extends React.Component {
         return (
             <Space>
                 <i>{this.props.entityName}</i>
-                {this.props.isMunicipality ? 
+                {this.props.isMunicipality ?
                 <Tooltip title="Mein Warenkorb">
-                    <Badge count={this.props.positions} offset={[-8, 8]}>
-                        <Button size="large" type="link" icon={<ShoppingCartOutlined/>}/>
-                    </Badge>
+                    <Link to="/checkout">
+                        <Badge count={this.props.positions} offset={[-8, 8]}>
+                            <Button size="large" type="link" icon={<ShoppingCartOutlined/>}/>
+                        </Badge>
+                    </Link>
                 </Tooltip> : ""}
                 <Tooltip title="Mein Konto">
                     <Link to="/account">

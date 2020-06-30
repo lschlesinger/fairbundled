@@ -20,6 +20,7 @@ import {LoadingOutlined} from "@ant-design/icons";
 import FairbundleService from "./services/FairbundleService";
 import OrderService from "./services/OrderService";
 import UserEditView from "./views/account/UserEditView";
+import CheckoutView from "./views/account/municipality-account/CheckoutView";
 
 // decide on overall layout structure (ANT)
 const {Header, Footer, Content} = Layout;
@@ -88,6 +89,17 @@ export default class App extends React.Component {
                         }
                     },
                     path: "/account",
+                },
+                {
+                    // allow rendering of certain views only for authenticated user
+                    render: (props) => {
+                        if (AuthService.isAuthenticated() && AuthService.isAuthenticatedMunicipality()) {
+                            return <CheckoutView {...props} />;
+                        } else {
+                            return <Redirect to={"/checkout"}/>;
+                        }
+                    },
+                    path: "/checkout",
                 },
                 {
                     render: (props) => {

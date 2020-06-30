@@ -1,4 +1,4 @@
-import { Order } from "../models/order.model";
+import {Order} from "../models/order.model";
 import OrderPosition from "../models/position.model";
 
 class OrderController {
@@ -10,9 +10,15 @@ class OrderController {
     static getOrders(req, res) {
         const query = {};
         query["municipality"] = req.municipalityId;
+        query["__t"] = {$ne: "Fairbundle"};
         Order.find(query)
-            .populate("positions")
-            .populate("product")
+            .populate({
+                path: 'positions',
+                populate: ({
+                    path: 'product',
+                    select: ['priceLevel', 'name']
+                }),
+            })
             .then((orders) => {
                 res.status(200).json(orders);
             })
@@ -51,11 +57,11 @@ class OrderController {
         const query = {};
         query.municipality = req.municipalityId;
         query._id = req.params.id;
-        Order.findOneAndUpdate(query, { submission: date }, { new: true })
+        Order.findOneAndUpdate(query, {submission: date}, {new: true})
             .populate({
                 path: 'positions',
                 populate: ({
-                    path:'product',
+                    path: 'product',
                     select: ['priceLevel']
                 }),
             })
@@ -104,4 +110,5 @@ class OrderController {
             });
     }
 }
+
 export default OrderController;

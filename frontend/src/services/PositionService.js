@@ -1,4 +1,5 @@
 import HttpService from "./HttpService";
+import OrderService from "./OrderService";
 
 export default class PositionService {
     static BASE_URL = "/api/position";
@@ -171,21 +172,10 @@ export default class PositionService {
         return resultArray;
     }
 
-    static getPositionsValue(positions) {
-        let result = 0;
-        positions.forEach((position) => {
-            const reachedPriceLevel = position.product.priceLevel.filter((pl) => pl.minQty <= position.qty);
-            const bestPrice = reachedPriceLevel.length > 0 ? reachedPriceLevel.reduce((a, b) => Math.min(a, b.unitPrice), Number.MAX_SAFE_INTEGER) : null;
-            const price = position.order.finalUnitPrice ? position.order.finalUnitPrice : bestPrice;
-            result += price * position.qty;
-        });
-        return result;
-    }
-
     static getDirectOrderValues(resultArray, orders, positions) {
         orders.forEach((order) => {
             let orderPositions = positions.filter((pos) => pos.order._id === order._id);
-            let orderValue = this.getPositionsValue(orderPositions);
+            let orderValue = OrderService.getPositionsValue(orderPositions);
             let orderEntry = {
                 order: order,
                 value: orderValue
@@ -229,10 +219,9 @@ export default class PositionService {
             directProductsBought = this.getUniqueProducts(directProductsBought, directOrdersSubmittedPositions);
             directOrdersSubmitted = this.getUniqueOrders(directOrdersSubmittedPositions);
             fairbundlesSubmitted = this.getUniqueOrders(fairbundlesSubmittedPositions);
-            fairbundleSpendings = this.getPositionsValue(fairbundlesSubmittedPositions);
-            directOrderSpendings = this.getPositionsValue(directOrdersSubmittedPositions);
+            fairbundleSpendings = OrderService.getPositionsValue(fairbundlesSubmittedPositions);
+            directOrderSpendings = OrderService.getPositionsValue(directOrdersSubmittedPositions);
             directOrderValues = this.getDirectOrderValues(directOrderValues, directOrdersSubmitted, directOrdersSubmittedPositions);
-
 
             municipality.noPosition = false;
         } else {

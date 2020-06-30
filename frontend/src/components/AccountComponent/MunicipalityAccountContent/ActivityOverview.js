@@ -132,6 +132,7 @@ export default class ActivityOverview extends React.Component {
                 </Row>
                 <Row>
                     <Table columns={this.getFairbundleTableColumns()}
+                           pagination={{size:"small"}}
                            dataSource={this.getFairbundleTableData()}>
                     </Table>
                 </Row>
@@ -143,6 +144,7 @@ export default class ActivityOverview extends React.Component {
                 <Row>
                     <Table columns={this.getOrderTableColumns()}
                            dataSource={this.getOrderTableData()}
+                           pagination={{size:"small"}}
                            expandable={{
                                expandedRowRender: record => this.renderPositionRecords(record),
                                rowExpandable: record => record.type === ('Direktbestellung')
@@ -173,7 +175,9 @@ export default class ActivityOverview extends React.Component {
             {
                 title: 'Laufzeitende',
                 dataIndex: 'expiration',
-                key: 'expiration'
+                key: 'expiration',
+                defaultSortOrder: 'descend',
+                sorter: (a, b) => a.rawExpiration - b.rawExpiration
             },
             {
                 title: 'Status',
@@ -202,7 +206,9 @@ export default class ActivityOverview extends React.Component {
                 order: order._id,
                 positions: positions.length,
                 price: price,
-                submission: submission
+                rawPrice: orderValue,
+                submission: submission,
+                rawSubmission: new Date(orderSubmission)
             };
             data.push(entry);
         });
@@ -223,7 +229,9 @@ export default class ActivityOverview extends React.Component {
                 order: order._id,
                 positions: positions.length,
                 price: price,
-                submission: submission
+                rawPrice: orderValue,
+                submission: submission,
+                rawSubmission: new Date(orderSubmission)
             };
             data.push(entry);
         });
@@ -263,14 +271,14 @@ export default class ActivityOverview extends React.Component {
                 dataIndex: 'price',
                 key: 'price',
                 defaultSortOrder: 'descend',
-                sorter: (a, b) => a.price - b.price
+                sorter: (a, b) => a.rawPrice - b.rawPrice
             },
             {
                 title: 'Datum',
                 dataIndex: 'submission',
                 key: 'submission',
                 defaultSortOrder: 'descend',
-                sorter: (a, b) => a.submission - b.submission
+                sorter: (a, b) => a.rawSubmission - b.rawSubmission
             }
         ];
     }
@@ -293,6 +301,7 @@ export default class ActivityOverview extends React.Component {
                 qty: fbp.qty + " " + targetPriceLevel.unit,
                 price: price,
                 expiration: expiration,
+                rawExpiration: new Date(fbp.order.expiration),
                 status: status
             };
             data.push(entry);
