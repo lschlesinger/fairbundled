@@ -38,24 +38,33 @@ export class MunicipalityAccountView extends React.Component {
                 justify="space-around"
             >
                 <Col span={9}>
-                    {this.state.municipality ? (
-                        <MyEntityData
-                            entity={this.state.municipality}
-                            user={this.state.user}
-                        />
-                    ) : ("")}
+                    <Row
+                        gutter={[24, 24]}
+                        justify="space-around">
+                        <Col span={24}>
+                            {this.state.municipality ? (
+                                <MyEntityData
+                                    entity={this.state.municipality}
+                                    user={this.state.user}
+                                />
+                            ) : ("")}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={24}>
+                            {this.state.municipality ? (
+                                <FairbundledAdvantage municipality={this.state.municipality}/>
+                            ) : (
+                                ""
+                            )}
+                        </Col>
+                    </Row>
+
                 </Col>
-                <Col span={9}>
+                <Col span={15}>
                     {this.state.municipality ? (
                         <ActivityOverview municipality={this.state.municipality}/>
                     ) : ("")}
-                </Col>
-                <Col span={6}>
-                    {this.state.municipality ? (
-                        <FairbundledAdvantage municipality={this.state.municipality}/>
-                    ) : (
-                        ""
-                    )}
                 </Col>
             </Row>
         );

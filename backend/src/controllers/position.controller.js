@@ -12,33 +12,28 @@ class PositionController {
      * @param res: array of OrderPositions with populated product and order field
      */
     static getPositions(req, res) {
-        const customizedSupplierMatch = {};
-        const customizedMunicipalityMatch = {};
-        if (req.supplierId) {
-            customizedSupplierMatch["supplier"] = req.supplierId;
-        } else if (req.municipalityId) {
-            customizedMunicipalityMatch['municipality'] = req.municipalityId;
-        }
         OrderPosition.find()
             .populate({
+                path: "user",
+                select: ["municipality"]
+            })
+            .populate({
                 path: "product",
-                match: customizedSupplierMatch,
                 select: ["supplier", "priceLevel", "name", "certificates", "categories"]
             })
             .populate({
                 path: "order",
-                match: customizedMunicipalityMatch,
-                select: ["submission", "municipality", "__t", "cancellation", "finalUnitPrice"],
+                populate: {path: "positions"},
             })
             .lean()
             .then((positions) => {
-                positions = positions.filter(
-                    (position) => position.product !== null
-                );
-                if (req.municipalityId) {
+                if (req.supplierId) {
                     positions = positions.filter(
-                        (position) => position.order !== null
+                        (position) => position.product.supplier.toString() === req.supplierId
                     );
+                } else if (req.municipalityId) {
+                    // return only those positions that are associated with users' municipality (both fairbundle positions and regular order postiions)
+                    positions = positions.filter((position) => position.user.municipality.toString() === req.municipalityId);
                 }
                 res.status(200).json(positions);
             })

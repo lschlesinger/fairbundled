@@ -35,7 +35,7 @@ export default class PositionService {
         let totalVariableFee = 0;
         let monthlyVariableFee = 0;
         let positions = await this.getPositions();
-        if (positions?.length > 1) {
+        if (positions?.length > 0) {
             for (const p in positions) {
                 const position = positions[p];
                 if (
@@ -161,16 +161,18 @@ export default class PositionService {
         return resultArray;
     }
 
-    static getUniqueOrders(resultArray, positions) {
+    static getUniqueOrders(positions) {
+        let resultArray = [];
         positions.forEach((position) => {
-            if (resultArray.indexOf(position.order._id) < 0) {
-                resultArray.push(position.order._id);
+            if (resultArray.filter((entry) => (entry._id === position.order._id)).length === 0) {
+                resultArray.push(position.order);
             }
         });
         return resultArray;
     }
 
-    static getPositionsValue(result, positions) {
+    static getPositionsValue(positions) {
+        let result = 0;
         positions.forEach((position) => {
             const reachedPriceLevel = position.product.priceLevel.filter((pl) => pl.minQty <= position.qty);
             const bestPrice = reachedPriceLevel.length > 0 ? reachedPriceLevel.reduce((a, b) => Math.min(a, b.unitPrice), Number.MAX_SAFE_INTEGER) : null;
@@ -180,12 +182,26 @@ export default class PositionService {
         return result;
     }
 
+    static getDirectOrderValues(resultArray, orders, positions) {
+        orders.forEach((order) => {
+            let orderPositions = positions.filter((pos) => pos.order._id === order._id);
+            let orderValue = this.getPositionsValue(orderPositions);
+            let orderEntry = {
+                order: order,
+                value: orderValue
+            };
+
+            resultArray.push(orderEntry);
+        });
+        return resultArray;
+    }
+
     // Calculates all necessary information in the municipality account view
     static async getPositionsInfo(municipality) {
         // array of submitted fairbundle order positions
         let fairbundlesSubmittedPositions = 0;
         // array of pending fairbundles
-        let fairbundlesPending = 0;
+        let fairbundlesPending = [];
         // array of submitted direct order positions
         let directOrdersSubmittedPositions = 0;
         // unique products bought by municipality in fairbundle
@@ -200,19 +216,23 @@ export default class PositionService {
         let fairbundleSpendings = 0;
         // sum of spendings for directOrders
         let directOrderSpendings = 0;
+        // value of each direct order
+        let directOrderValues = [];
 
         let positions = await this.getPositions();
 
-        if (positions?.length > 1) {
+        if (positions?.length > 0) {
             fairbundlesSubmittedPositions = positions.filter((position) => position.order.submission && position.order.__t);
-            fairbundlesPending = positions.filter((position) => !position.order.submission && position.order.__t);
+            fairbundlesPending = positions.filter((position) => !position.order.submission && !position.order.cancellation && position.order.__t);
             directOrdersSubmittedPositions = positions.filter((position) => position.order.submission && !position.order.__t);
             fairbundleProductsBought = this.getUniqueProducts(fairbundleProductsBought, fairbundlesSubmittedPositions);
             directProductsBought = this.getUniqueProducts(directProductsBought, directOrdersSubmittedPositions);
-            directOrdersSubmitted = this.getUniqueOrders(directOrdersSubmitted, directOrdersSubmittedPositions);
-            fairbundlesSubmitted = this.getUniqueOrders(fairbundlesSubmitted, fairbundlesSubmittedPositions);
-            fairbundleSpendings = this.getPositionsValue(fairbundleSpendings, fairbundlesSubmittedPositions);
-            directOrderSpendings = this.getPositionsValue(directOrderSpendings, directOrdersSubmittedPositions);
+            directOrdersSubmitted = this.getUniqueOrders(directOrdersSubmittedPositions);
+            fairbundlesSubmitted = this.getUniqueOrders(fairbundlesSubmittedPositions);
+            fairbundleSpendings = this.getPositionsValue(fairbundlesSubmittedPositions);
+            directOrderSpendings = this.getPositionsValue(directOrdersSubmittedPositions);
+            directOrderValues = this.getDirectOrderValues(directOrderValues, directOrdersSubmitted, directOrdersSubmittedPositions);
+
 
             municipality.noPosition = false;
         } else {
@@ -228,6 +248,7 @@ export default class PositionService {
         municipality.fairbundlesSubmitted = fairbundlesSubmitted;
         municipality.fairbundleSpendings = fairbundleSpendings;
         municipality.directOrderSpendings = directOrderSpendings;
+        municipality.directOrderValues = directOrderValues;
         return municipality;
     }
 }
