@@ -142,13 +142,12 @@ export default class App extends React.Component {
         let fairbundles = await FairbundleService.getFairbundles();
 
         let currentMunicipality = AuthService.getCurrentUser().municipality._id;
-        let currentDate = new Date();
 
         fairbundles = fairbundles.filter(
-            (f) => f.municipality === currentMunicipality
+            (f) => f.municipality === currentMunicipality || f.bundlers.includes(currentMunicipality)
         );
         fairbundles = fairbundles.filter(
-            (f) => Date.parse(f.expiration) - currentDate.getTime() > 0
+            (f) => f.submission === null && f.cancellation === null
         );
 
         return fairbundles.length;
@@ -160,7 +159,11 @@ export default class App extends React.Component {
         }
 
         let orders = await OrderService.getOrders();
-        var unique = orders
+        orders = orders.filter(
+            (f) => f.submission === null && f.cancellation === null
+        );
+
+        let unique = orders
             .flatMap((o) => o.positions)
             .map((p) => p.product)
             .filter(this.onlyUnique);

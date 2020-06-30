@@ -13,8 +13,11 @@ class PositionController {
      */
     static getPositions(req, res) {
         const customizedSupplierMatch = {};
+        const customizedMunicipalityMatch = {};
         if (req.supplierId) {
             customizedSupplierMatch["supplier"] = req.supplierId;
+        } else if (req.municipalityId) {
+            customizedMunicipalityMatch['municipality'] = req.municipalityId;
         }
         OrderPosition.find()
             .populate({
@@ -24,15 +27,17 @@ class PositionController {
             })
             .populate({
                 path: "order",
-                select: ["submission", "municipality"],
+                match: customizedMunicipalityMatch,
+                select: ["submission", "municipality", "__t", "cancellation", "finalUnitPrice"],
             })
+            .lean()
             .then((positions) => {
                 positions = positions.filter(
                     (position) => position.product !== null
                 );
                 if (req.municipalityId) {
                     positions = positions.filter(
-                        (position) => position.order.municipality === req.municipalityId && position.order.submission
+                        (position) => position.order !== null
                     );
                 }
                 res.status(200).json(positions);

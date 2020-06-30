@@ -35,8 +35,7 @@ export default class PositionService {
         let totalVariableFee = 0;
         let monthlyVariableFee = 0;
         let positions = await this.getPositions();
-        console.log(positions);
-        if (Array.isArray(positions) && positions.length) {
+        if (positions?.length > 1) {
             for (const p in positions) {
                 const position = positions[p];
                 if (
@@ -153,22 +152,50 @@ export default class PositionService {
         };
     }
 
+    static getUniqueProducts(resultArray, positions) {
+        positions.forEach((position) => {
+            if (resultArray.indexOf(position.product._id) < 0) {
+                resultArray.push(position.product._id);
+            }
+        });
+        return resultArray;
+    }
+
+    static getUniqueOrders(resultArray, positions) {
+        positions.forEach((position) => {
+            if (resultArray.indexOf(position.order._id) < 0) {
+                resultArray.push(position.order._id);
+            }
+        });
+        return resultArray;
+    }
+
+    static getPositionsValue(result, positions) {
+        positions.forEach((position) => {
+            const reachedPriceLevel = position.product.priceLevel.filter((pl) => pl.minQty <= position.qty);
+            const bestPrice = reachedPriceLevel.length > 0 ? reachedPriceLevel.reduce((a, b) => Math.min(a, b.unitPrice), Number.MAX_SAFE_INTEGER) : null;
+            const price = position.order.finalUnitPrice ? position.order.finalUnitPrice : bestPrice;
+            result += price * position.qty;
+        });
+        return result;
+    }
+
     // Calculates all necessary information in the municipality account view
-    static async getOrderInfo(municipality) {
-        //counts unique products bought by municipality
-        let productsBought = 0;
-        // counts only products ordered within fairbundle
-        let fairbundleProductsBought = 0;
-        // counts only products ordered within direct order
-        let directProductsBought = 0;
-        //counts submitted orders
-        let ordersSubmitted = 0;
-        // counts only fairbundle orders
-        let fairbundlesSubmitted = 0;
-        // counts only direct orders
-        let directOrdersSubmitted = 0;
-        //total sum of all spendings
-        let spendings = 0;
+    static async getPositionsInfo(municipality) {
+        // array of submitted fairbundle order positions
+        let fairbundlesSubmittedPositions = 0;
+        // array of pending fairbundles
+        let fairbundlesPending = 0;
+        // array of submitted direct order positions
+        let directOrdersSubmittedPositions = 0;
+        // unique products bought by municipality in fairbundle
+        let fairbundleProductsBought = [];
+        // unique products bought by municipality in direct order
+        let directProductsBought = [];
+        // unique fairbundle orders
+        let fairbundlesSubmitted = [];
+        // unique direct orders
+        let directOrdersSubmitted = [];
         // sum of spending for fairbundles
         let fairbundleSpendings = 0;
         // sum of spendings for directOrders
@@ -176,20 +203,29 @@ export default class PositionService {
 
         let positions = await this.getPositions();
 
-        if (positions && positions.length > 1) {
+        if (positions?.length > 1) {
+            fairbundlesSubmittedPositions = positions.filter((position) => position.order.submission && position.order.__t);
+            fairbundlesPending = positions.filter((position) => !position.order.submission && position.order.__t);
+            directOrdersSubmittedPositions = positions.filter((position) => position.order.submission && !position.order.__t);
+            fairbundleProductsBought = this.getUniqueProducts(fairbundleProductsBought, fairbundlesSubmittedPositions);
+            directProductsBought = this.getUniqueProducts(directProductsBought, directOrdersSubmittedPositions);
+            directOrdersSubmitted = this.getUniqueOrders(directOrdersSubmitted, directOrdersSubmittedPositions);
+            fairbundlesSubmitted = this.getUniqueOrders(fairbundlesSubmitted, fairbundlesSubmittedPositions);
+            fairbundleSpendings = this.getPositionsValue(fairbundleSpendings, fairbundlesSubmittedPositions);
+            directOrderSpendings = this.getPositionsValue(directOrderSpendings, directOrdersSubmittedPositions);
 
             municipality.noPosition = false;
         } else {
             municipality.noPosition = true;
         }
         //save all calculations in municipality json and return municipaliy
-        municipality.productsBought = productsBought;
         municipality.fairbundleProductsBought = fairbundleProductsBought;
         municipality.directProductsBought = directProductsBought;
-        municipality.ordersSubmitted = ordersSubmitted;
-        municipality.fairbundlesSubmitted = fairbundlesSubmitted;
+        municipality.fairbundlesSubmittedPositions = fairbundlesSubmittedPositions;
+        municipality.fairbundlesPending = fairbundlesPending;
+        municipality.directOrdersSubmittedPositions = directOrdersSubmittedPositions;
         municipality.directOrdersSubmitted = directOrdersSubmitted;
-        municipality.spendings = spendings;
+        municipality.fairbundlesSubmitted = fairbundlesSubmitted;
         municipality.fairbundleSpendings = fairbundleSpendings;
         municipality.directOrderSpendings = directOrderSpendings;
         return municipality;

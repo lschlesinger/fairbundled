@@ -22,7 +22,7 @@ export class MunicipalityAccountView extends React.Component {
     async getMunicipalityInfo() {
         try {
             let municipalityInfo = this.props.municipality;
-            municipalityInfo = await PositionService.getOrderInfo(municipalityInfo);
+            municipalityInfo = await PositionService.getPositionsInfo(municipalityInfo);
             municipalityInfo.user = await UserService.getEntityUsers();
             this.setState({municipality: municipalityInfo});
         } catch (e) {
