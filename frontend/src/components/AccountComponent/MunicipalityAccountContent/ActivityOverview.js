@@ -1,9 +1,8 @@
 import React from 'react';
-import {Card, Row, Table, Tabs, Typography} from "antd";
+import {Card, Row, Table, Typography} from "antd";
 import OverviewBanner from "./OverviewBanner";
 
-const {Text, Title} = Typography;
-const {TabPane} = Tabs;
+const {Title} = Typography;
 
 export default class ActivityOverview extends React.Component {
 
@@ -12,14 +11,13 @@ export default class ActivityOverview extends React.Component {
         this.state = {
             activeTab: "all"
         };
-
     }
 
     getOrderTableData() {
         let fairbundlesSubmitted = this.props.municipality.fairbundlesSubmitted;
         let directOrdersSubmitted = this.props.municipality.directOrdersSubmitted;
         let data = [];
-        directOrdersSubmitted.map((order) => {
+        directOrdersSubmitted.forEach((order) => {
             let positions = this.props.municipality.directOrdersSubmittedPositions.filter((position) => position.order._id.toString() === order._id.toString());
             let orderValue = this.props.municipality.directOrderValues.find((o) => o.order._id === order._id).value;
             let orderSubmission = order.submission;
@@ -40,7 +38,7 @@ export default class ActivityOverview extends React.Component {
             };
             data.push(entry);
         });
-        fairbundlesSubmitted.map((order) => {
+        fairbundlesSubmitted.forEach((order) => {
             let positions = this.props.municipality.fairbundlesSubmittedPositions.filter((position) => position.order._id.toString() === order._id.toString());
             let name = positions[0].product.name;
             let orderValue = positions.reduce((a, b) => a + b.qty * order.finalUnitPrice, 0);
@@ -67,7 +65,7 @@ export default class ActivityOverview extends React.Component {
 
     getFairbundleTableData() {
         let data = [];
-        this.props.municipality.fairbundlesPending.map((fbp) => {
+        this.props.municipality.fairbundlesPending.forEach((fbp) => {
             const targetPriceLevel = fbp.product.priceLevel.find((pl) => pl.unitPrice === fbp.order.targetPrice);
             const targetQty = targetPriceLevel.minQty;
             const currentQty = fbp.order.positions.reduce((a, b) => a + b.qty, 0);
@@ -106,7 +104,7 @@ export default class ActivityOverview extends React.Component {
         let positions = this.props.municipality.directOrdersSubmittedPositions.filter((p) =>
             p.order._id === record.key
         );
-        positions.map((p) => {
+        positions.forEach((p) => {
             const reachedPriceLevel = p.product.priceLevel.filter((pl) => pl.minQty <= p.qty);
             const bestPrice = reachedPriceLevel.length > 0 ? reachedPriceLevel.reduce((a, b) => Math.min(a, b.unitPrice), Number.MAX_SAFE_INTEGER) : null;
             const price = new Intl.NumberFormat("de-DE", {
@@ -124,7 +122,6 @@ export default class ActivityOverview extends React.Component {
         return data;
     }
 
-
     render() {
         return (
             <Card title="Meine Aktivitäten">
@@ -137,7 +134,7 @@ export default class ActivityOverview extends React.Component {
                 </Row>
                 <Row>
                     <Table columns={this.props.fairbundleTableColumns}
-                           pagination={{size:"small"}}
+                           pagination={{size: "small"}}
                            dataSource={this.getFairbundleTableData()}>
                     </Table>
                 </Row>
@@ -156,7 +153,6 @@ export default class ActivityOverview extends React.Component {
                            }}>
                     </Table>
                 </Row>
-
             </Card>
         );
     }
