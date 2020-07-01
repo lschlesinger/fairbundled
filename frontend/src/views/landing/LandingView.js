@@ -1,61 +1,64 @@
 import React from 'react';
-import ProductService from "../../services/ProductService";
-import {Button, Card, Col, Layout, message, Row, Tag, Typography} from "antd";
+import {Button, Card, Col, Layout, message, Row, Tag, Typography, Divider, Anchor} from "antd";
+import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
+import { SmileTwoTone, HeartTwoTone, CheckCircleTwoTone } from '@ant-design/icons';
+
 import './LandingView.less';
-import placeholder from "../../assets/placeholder.png";
-import {Link} from "react-router-dom";
+
+
 import "../../components/ProductListCard/ProductListCard.less";
 
+import ProductService from "../../services/ProductService";
+import HttpService from "../../services/HttpService";
+import placeholder from "../../assets/placeholder.png";
+import {Link} from "react-router-dom";
 
 // decide on overall layout structure (ANT)
 const {Sider, Content} = Layout;
 const { Paragraph, Text, Title } = Typography;
-
+//const {Link} = Anchor;
 export class LandingView extends React.Component {
 
 
-constructor(props) {
-    super(props);
-    this.state = {
-        productId: "5ed537556ea8f1fcd3e8ff9e",
-        fairbundles: null,
-        RecommendedProduct: null,
-        products: this.props.products,
-    };
-}
+//constructor(props) {
 
-    componentDidMount() {
-        this.getRecommendedProduct();
+    constructor(props) {
+        super(props);
+        this.state = {
+            productId: "5ed537556ea8f1fcd3e8ff9e",
+            products: null,
+            product: null,
+
+        };
     }
 
-    async getRecommendedProduct() {
-        try {
-            const product = await ProductService.getProduct(this.state.productId);
-            this.setState({
-                RecommendedProduct: product})
-        } catch (e) {
-            message.error("Error fetching Product.")
+    static async getProduct(productId) {
+        return HttpService.get(`${this.BASE_URL}/${productId}`);
+    }
+
+    componentDidMount() {
+        this.getProductsAndFairbundles();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.location !== prevProps.location) {
+            this.getProductsAndFairbundles();
         }
     }
 
-    //function to determine the lowest price and to differentiate between one and multiple price levels (Difference: Ab)
-    getLowestPrice(product) {
-        return (
-            <Title level={4} className="price">
-                {product.priceLevel.length < 2 ? "" : "Ab "}
-                {product.smallestPrice} €
-            </Title>
-        );
+    displayDescriptionText(product) {
+        if (!product || !product.description) return "";
+        let tmp = document.createElement("div");
+        tmp.innerHTML = product.description;
+        return (tmp.textContent || tmp.innerText || "").substring(0, 50);
     }
 
-
-//function to create every single card based on every single product
     getCardItem(product) {
+        if (product == null) return ("");
         const price = this.getLowestPrice(product);
         return (
-            <Col span={8} key={product._id}>
-                <Card>
-                    {/* title={product.name} key={product._id} bordered={true} */}
+            <Col span={12} key={product._id}>
+                <Card className="product-list-card__card">
                     <Row gutter={12}>
                         <Col span={10}>
                             <Row
@@ -75,7 +78,7 @@ constructor(props) {
                         </Col>
                         <Col span={14}>
                             <Row
-                                className="product-list-card__fairbundle_tag"
+                                className="landing-view__fairbundle_tag"
                                 justify="start"
                             >
                                 <Paragraph>
@@ -87,17 +90,17 @@ constructor(props) {
                                 </Paragraph>
                             </Row>
                             <Row
-                                className="product-list-card__product_title"
+                                className="landing-view__product_title"
                                 justify="start"
                             >
                                 <Title level={4}>{product.name}</Title>
                             </Row>
                             <Row
-                                className="product-list-card__product_description"
+                                className="landing-view__product_description"
                                 justify="start"
                             >
-                                <Paragraph>
-                                    <Text>{product.description}</Text>
+                                <Paragraph ellipsis>
+                                    {this.displayDescriptionText(product)}
                                 </Paragraph>
                             </Row>
                             <Row gutter={8} align="middle">
@@ -122,21 +125,117 @@ constructor(props) {
         );
     }
 
-render() {
-    return (
-        <Layout className="landing-view__layout">
-            <Sider className="landing-view__sider">
+    //function to determine the lowest price and to differentiate between one and multiple price levels (Difference: Ab)
+    getLowestPrice(product) {
+        let smallestPrice = Math.min(...product.priceLevel.map(p => p.unitPrice));
+        return (
+            <Title level={4} className="price">
+                {product.priceLevel.length < 2 ? "" : "Ab "}
+                {new Intl.NumberFormat("de-DE", {
+                    style: "currency",
+                    currency: "EUR",
+                }).format(smallestPrice)}
+            </Title>
+        );
+    }
 
-            </Sider>
-            <Content
-                gutter={[16, 16]} className="product-list-card__cards">
-                  {this.getCardItem(this.RecommendedProduct)}
-            </Content>
-            <Sider className="landing-view__sider">
+    async getProductsAndFairbundles(certificates = null) {
+        try {
+            // get product
+            let product = await ProductService.getProduct(this.state.productId);
+            // update products with flagged (hasFairbundle) products
+            //set state variables
+            this.setState(prevState => ({
+                ...prevState,
+                product: product
+            }));
+        } catch (e) {
+            message.error("Error fetching products and fairbundles.");
+        }
+    }
 
-            </Sider>
-        </Layout>
-    );
+    render() {
+        return (
+            <Layout className="landing-view__layout">
+                <Row gutter={[8, 48]}>
+                   <Col span={24} align="middle">
+                       <Divider>Das Produkt der Woche</Divider>
+                       {this.getCardItem(this.state.product)}
+                   </Col>
+                </Row>
+                <Row gutter={[8, 48]}>
+                    <Col span={8} />
+                    <Content className="landing-view__content">
+
+                        <Button
+                            shape="round"
+                            size="middle"
+                            type="primary"
+                            block
+                        >
+                            Über Fairbundled
+                        </Button>
+                    </Content>
+                    <Col span={8} align="middle">
+                    </Col>
+                </Row>
+                <Row gutter={[8, 48]}>
+                    <Col span={8} align = "middle">
+                    </Col>
+
+                    <Col span={8} />
+                    <Col span={8} />
+                </Row>
+                <Row>
+
+                            <Divider>
+                                Das Fairbundle Prinzip
+                            </Divider>
+
+
+                </Row>
+                <Row>
+                    <Col span={8} align = "middle">
+                        <SmileTwoTone twoToneColor="#78A262" style={{ fontSize: '32px'}}/>
+                    </Col>
+                    <Col span={8} align = "middle">
+                        <SmileTwoTone twoToneColor="#78A262" style={{ fontSize: '32px'}}/>
+                    </Col>
+                    <Col span={8} align = "middle">
+                        <SmileTwoTone twoToneColor="#78A262" style={{ fontSize: '32px'}}/>
+                    </Col>
+
+                </Row>
+
+                <Row  className="landing-view__content_headline">
+                    <Col span={8} align = "middle">
+                        Faire Preise..
+                    </Col>
+                    <Col span={8} align = "middle">
+                        ..für Kommunen..
+                    </Col>
+                    <Col span={8} align = "middle">
+                       ..nachhaltig
+                    </Col>
+
+                </Row>
+                <Row>
+                    <Col span={8} align = "middle">
+                        Aufgrund unseres Fairbundle-Prinzips können Anbieter in größeren Mengen produzieren.
+                        Dadurch können wir die Produkte zu den Preisen anbieten, bei denen jeder profitiert.
+                        Treten Sie einem Fairbunndle bei oder erstellen Sie Ihr eigenes Fairbundle
+                        von den günstigsten Preisen zu profitieren
+                    </Col>
+                    <Col span={8} align = "middle">
+                        Der Prozess
+                    </Col>
+                    <Col span={8} align = "middle">
+                        Nachhaltigkeit ist uns ein großes Anliegen. Wir arbeiten daher nur mit
+                        zertifizierten Unternehmen, die unsere hohen Standards erfüllen.
+                    </Col>
+
+                </Row>
+            </Layout>
+        );
+    }
 }
-}
-
