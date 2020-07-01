@@ -173,7 +173,7 @@ export class LandingView extends React.Component {
                             type="primary"
                             block
                         >
-                            Über Fairbundled
+                       Über Fairbundled
                         </Button>
                     </Content>
                     <Col span={8} align="middle">
@@ -186,14 +186,10 @@ export class LandingView extends React.Component {
                     <Col span={8} />
                     <Col span={8} />
                 </Row>
-                <Row>
-
-                            <Divider>
-                                Das Fairbundle Prinzip
-                            </Divider>
-
-
+                <Row gutter={[8, 48]}>
+                            <Divider>Das Fairbundle Prinzip</Divider>
                 </Row>
+
                 <Row>
                     <Col span={8} align = "middle">
                         <SmileTwoTone twoToneColor="#78A262" style={{ fontSize: '32px'}}/>
@@ -219,7 +215,7 @@ export class LandingView extends React.Component {
                     </Col>
 
                 </Row>
-                <Row>
+                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col span={8} align = "middle">
                         Aufgrund unseres Fairbundle-Prinzips können Anbieter in größeren Mengen produzieren.
                         Dadurch können wir die Produkte zu den Preisen anbieten, bei denen jeder profitiert.
@@ -227,11 +223,21 @@ export class LandingView extends React.Component {
                         von den günstigsten Preisen zu profitieren
                     </Col>
                     <Col span={8} align = "middle">
-                        Der Prozess
+                        Der Prozess der kommunalen Beschaffung ist kompliziert und häufig umständlich - das
+                        wissen wir. Mit Hilfe von fairbundled.de gibt es nun endlich die Möglichkeit
+                        alles über einen zentralen Marktplatz einzukaufen.
                     </Col>
                     <Col span={8} align = "middle">
                         Nachhaltigkeit ist uns ein großes Anliegen. Wir arbeiten daher nur mit
-                        zertifizierten Unternehmen, die unsere hohen Standards erfüllen.
+                        zertifizierten Unternehmen, die unsere hohen Standards erfüllen. Filtern Sie gerne nach
+                        den Nachhaltigkeits-Zertifikaten in der Produktübersicht, um den Vorgaben Ihrer Kommune gerecht
+                        zu werden und nachhaltig einzukaufen.
+                    </Col>
+
+                </Row>
+                <Row>
+                    <Col align="middle">
+                        Bild
                     </Col>
 
                 </Row>
