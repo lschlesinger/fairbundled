@@ -1,7 +1,7 @@
 import React from 'react';
 import {withRouter} from "react-router-dom";
 import OrderService from "../../../services/OrderService";
-import {Button, Col, Row, Table, Typography} from "antd";
+import {Button, Col, message, Row, Table, Typography} from "antd";
 import "../AccountView.less";
 import AccountService from "../../../services/AccountService";
 
@@ -33,7 +33,10 @@ class CheckoutView extends React.Component {
     }
 
     onCheckout = async () => {
-        OrderService.submitOrder(this.state.order._id);
+        OrderService.submitOrder(this.state.order._id).then((order) => {
+            message.success("Bestellung erfolgreich");
+            this.props.history.push(`/account`);
+        }).catch((err) => message.info("Bestellung nicht abgeschickt."));
     };
 
     getOrderOverviewTableColumns() {
