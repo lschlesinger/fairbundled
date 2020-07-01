@@ -5,7 +5,7 @@ export default class UserService {
 
     constructor() {}
 
-    static async getUsersBySupplierId(supplierId) {
-        return HttpService.get(`${this.BASE_URL}/${supplierId}`);
+    static async getEntityUsers() {
+        return HttpService.get(`${this.BASE_URL}/`);
     }
 }

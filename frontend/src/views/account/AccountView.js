@@ -1,18 +1,12 @@
 import React from "react";
 import AuthService from "../../services/AuthService";
-import { Button, Col, Row, Typography, Layout } from "antd";
-import {
-    LogoutOutlined,
-    NotificationOutlined,
-    SmileOutlined,
-} from "@ant-design/icons";
-import { MunicipalityAccountView } from "./municipality-account/MunicipalityAccountView";
-import { SupplierAccountView } from "./supplier-account/SupplierAccountView";
-import { Link } from "react-router-dom";
+import {Layout, Row, Typography} from "antd";
+import {MunicipalityAccountView} from "./municipality-account/MunicipalityAccountView";
+import {SupplierAccountView} from "./supplier-account/SupplierAccountView";
 import "./AccountView.less";
 
-const { Text } = Typography;
-const { Content } = Layout;
+const {Text} = Typography;
+const {Content} = Layout;
 
 export class AccountView extends React.Component {
     constructor(props) {
@@ -40,9 +34,14 @@ export class AccountView extends React.Component {
         });
     }
 
+
     renderUserTypeSpecificView() {
         if (AuthService.isAuthenticatedMunicipality()) {
-            return <MunicipalityAccountView user={this.state.user} />;
+            return (
+                <MunicipalityAccountView
+                    user={this.state.user}
+                    municipality={this.state.municipality}/>
+            );
         } else if (AuthService.isAuthenticatedSupplier()) {
             return (
                 <SupplierAccountView
@@ -53,62 +52,21 @@ export class AccountView extends React.Component {
         }
     }
 
-    renderUserTypeSpecificButton() {
-        if (AuthService.isAuthenticatedMunicipality()) {
-            return (
-                <Link to="/">
-                    <Button type="primary" icon={<SmileOutlined />}>
-                        Jetzt Kaufen
-                    </Button>
-                </Link>
-            );
-        }
-        // else if (AuthService.isAuthenticatedSupplier()) {
-        //     return (
-        //         <Link to="/product/create">
-        //             <Button type="primary" icon={<NotificationOutlined />}>
-        //                 Jetzt Verkaufen
-        //             </Button>
-        //         </Link>
-        //     );
-        // }
-    }
-
     render() {
         return (
             <Layout>
                 <Content>
                     <Row
-                        className="padding--md"
-                        justify="space-around"
+                        className="padding--lg"
+                        justify="left"
                         align="middle"
                     >
-                        <Col span={8}>
-                            <Row align="middle" justify="center">
-                                <Text className="account-view__meinFairbundled">
-                                    Mein Fairbundled:{" "}
-                                </Text>
-                                <Text className="account-view__entityName">
-                                    {this.state.entityName}
-                                </Text>
-                            </Row>
-                        </Col>
-                        <Col span={8}>
-                            {/* <Row align="middle" justify="center">
-                                {this.renderUserTypeSpecificButton()}
-                            </Row> */}
-                        </Col>
-                        <Col span={8}>
-                            {/* <Row align="middle" justify="center">
-                                <Button
-                                    type="primary"
-                                    icon={<LogoutOutlined />}
-                                    onClick={AuthService.logout}
-                                >
-                                    Logout
-                                </Button>
-                            </Row> */}
-                        </Col>
+                        <Text className="account-view__meinFairbundled">
+                            Mein Fairbundled:{" "}
+                        </Text>
+                        <Text className="account-view__entityName">
+                            {this.state.entityName}
+                        </Text>
                     </Row>
                     {this.renderUserTypeSpecificView()}
                 </Content>

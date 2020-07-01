@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, Card, Col, Divider, Typography, Row, Space } from "antd";
+import {Button, Card, Col, Divider, Row, Typography} from "antd";
 import "./OrderOverview.less";
-import { NotificationOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import placeholder from "../../assets/placeholder.png";
+import {NotificationOutlined} from "@ant-design/icons";
+import {Link} from "react-router-dom";
+import placeholder from "../../../assets/placeholder.png";
 
-const { Text, Title } = Typography;
+const {Text, Title} = Typography;
 
 export default class MySupplierData extends React.Component {
     constructor(props) {
@@ -69,7 +69,7 @@ export default class MySupplierData extends React.Component {
                         <Button
                             size="large"
                             type="primary"
-                            icon={<NotificationOutlined />}
+                            icon={<NotificationOutlined/>}
                         >
                             Jetzt Verkaufen
                         </Button>
@@ -92,11 +92,11 @@ export default class MySupplierData extends React.Component {
                                 <img
                                     src={
                                         this.props.supplier.bestseller
-                                            .qtyBestseller.product.images
+                                            .qtyBestseller?.product.images
                                             ?.length > 0
                                             ? this.props.supplier.bestseller
-                                                  .qtyBestseller.product
-                                                  .images[0]
+                                                .qtyBestseller?.product
+                                                .images[0]
                                             : placeholder
                                     }
                                     alt="bild"
@@ -112,7 +112,7 @@ export default class MySupplierData extends React.Component {
                                     <Text strong>
                                         {
                                             this.props.supplier.bestseller
-                                                .qtyBestseller.product.name
+                                                .qtyBestseller?.product.name
                                         }
                                     </Text>
                                 </Row>
@@ -126,7 +126,7 @@ export default class MySupplierData extends React.Component {
                                                 {
                                                     this.props.supplier
                                                         .bestseller
-                                                        .qtyBestseller.qty
+                                                        .qtyBestseller?.qty
                                                 }
                                             </Text>
                                         </Row>
@@ -152,7 +152,7 @@ export default class MySupplierData extends React.Component {
                                                 ).format(
                                                     this.props.supplier
                                                         .bestseller
-                                                        .qtyBestseller.revenue
+                                                        .qtyBestseller?.revenue
                                                 )}
                                             </Text>
                                         </Row>
@@ -186,8 +186,8 @@ export default class MySupplierData extends React.Component {
                                             .revenueBestseller.product.images
                                             ?.length > 0
                                             ? this.props.supplier.bestseller
-                                                  .revenueBestseller.product
-                                                  .images[0]
+                                                .revenueBestseller?.product
+                                                .images[0]
                                             : placeholder
                                     }
                                     alt="bild"
@@ -203,7 +203,7 @@ export default class MySupplierData extends React.Component {
                                     <Text strong>
                                         {
                                             this.props.supplier.bestseller
-                                                .revenueBestseller.product.name
+                                                .revenueBestseller?.product.name
                                         }
                                     </Text>
                                 </Row>
@@ -217,7 +217,7 @@ export default class MySupplierData extends React.Component {
                                                 {
                                                     this.props.supplier
                                                         .bestseller
-                                                        .revenueBestseller.qty
+                                                        .revenueBestseller?.qty
                                                 }
                                             </Text>
                                         </Row>
@@ -243,8 +243,7 @@ export default class MySupplierData extends React.Component {
                                                 ).format(
                                                     this.props.supplier
                                                         .bestseller
-                                                        .revenueBestseller
-                                                        .revenue
+                                                        .revenueBestseller?.revenue
                                                 )}
                                             </Text>
                                         </Row>
