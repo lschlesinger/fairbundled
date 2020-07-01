@@ -5,6 +5,7 @@ import MyEntityData from "../../../components/AccountComponent/MyEntityData";
 import ActivityOverview from "../../../components/AccountComponent/MunicipalityAccountContent/ActivityOverview";
 import FairbundledAdvantage from "../../../components/AccountComponent/MunicipalityAccountContent/FairbundledAdvantage";
 import PositionService from "../../../services/PositionService";
+import AccountService from "../../../services/AccountService";
 
 export class MunicipalityAccountView extends React.Component {
     constructor(props) {
@@ -12,11 +13,25 @@ export class MunicipalityAccountView extends React.Component {
         this.state = {
             municipality: null,
             user: this.props.user,
+            orderTableColums: null,
+            fairbundleTableColumns: null
         };
+    }
+
+    getTableColumns() {
+        let orderTableColums = AccountService.getOrderTableColumns();
+        let fairbundleTableColumns = AccountService.getFairbundleTableColumns();
+        let positionSubTableColumns = AccountService.getPositionSubTableColumns();
+        this.setState({
+            orderTableColums: orderTableColums,
+            fairbundleTableColumns: fairbundleTableColumns,
+            positionSubTableColumns: positionSubTableColumns
+        })
     }
 
     componentDidMount() {
         this.getMunicipalityInfo();
+        this.getTableColumns();
     }
 
     async getMunicipalityInfo() {
@@ -63,7 +78,11 @@ export class MunicipalityAccountView extends React.Component {
                 </Col>
                 <Col span={15}>
                     {this.state.municipality ? (
-                        <ActivityOverview municipality={this.state.municipality}/>
+                        <ActivityOverview
+                            orderTableColums={this.state.orderTableColums}
+                            fairbundleTableColumns={this.state.fairbundleTableColumns}
+                            positionSubTableColumns={this.state.positionSubTableColumns}
+                            municipality={this.state.municipality}/>
                     ) : ("")}
                 </Col>
             </Row>

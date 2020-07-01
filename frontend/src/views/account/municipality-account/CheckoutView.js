@@ -3,6 +3,7 @@ import {withRouter} from "react-router-dom";
 import OrderService from "../../../services/OrderService";
 import {Button, Col, Row, Table, Typography} from "antd";
 import "../AccountView.less";
+import AccountService from "../../../services/AccountService";
 
 const {Text} = Typography;
 
@@ -35,7 +36,7 @@ class CheckoutView extends React.Component {
         OrderService.submitOrder(this.state.order._id);
     };
 
-    getOrderTableColumns() {
+    getOrderOverviewTableColumns() {
         return [
             {
                 title: 'Bestellnummer',
@@ -81,7 +82,7 @@ class CheckoutView extends React.Component {
 
     renderPositionRecords(record) {
         return (
-            <Table columns={this.getSubTableColumns()}
+            <Table columns={AccountService.getPositionSubTableColumns()}
                    dataSource={this.getSubTableData(record)}
                    pagination={false}
                    className="padding--md">
@@ -89,25 +90,6 @@ class CheckoutView extends React.Component {
         )
     }
 
-    getSubTableColumns() {
-        return [
-            {
-                title: 'Produkt',
-                dataIndex: 'product',
-                key: 'product'
-            },
-            {
-                title: 'Menge',
-                dataIndex: 'qty',
-                key: 'qty'
-            },
-            {
-                title: 'Preis',
-                dataIndex: 'price',
-                key: 'price'
-            }
-        ];
-    }
 
     getSubTableData(record) {
         if (this.state.order) {
@@ -144,7 +126,7 @@ class CheckoutView extends React.Component {
                 </Row>
                 <Row className="padding-horizontal--lg"
                      justify="space-around">
-                    <Table columns={this.getOrderTableColumns()}
+                    <Table columns={this.getOrderOverviewTableColumns()}
                            dataSource={this.getOrderTableData()}
                            expandable={{
                                expandedRowRender: record => this.renderPositionRecords(record),

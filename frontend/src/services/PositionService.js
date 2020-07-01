@@ -153,7 +153,8 @@ export default class PositionService {
         };
     }
 
-    static getUniqueProducts(resultArray, positions) {
+    static getUniqueProducts(positions) {
+        let resultArray = [];
         positions.forEach((position) => {
             if (resultArray.indexOf(position.product._id) < 0) {
                 resultArray.push(position.product._id);
@@ -172,7 +173,8 @@ export default class PositionService {
         return resultArray;
     }
 
-    static getDirectOrderValues(resultArray, orders, positions) {
+    static getDirectOrderValues(orders, positions) {
+        let resultArray = [];
         orders.forEach((order) => {
             let orderPositions = positions.filter((pos) => pos.order._id === order._id);
             let orderValue = OrderService.getPositionsValue(orderPositions);
@@ -215,18 +217,19 @@ export default class PositionService {
             fairbundlesSubmittedPositions = positions.filter((position) => position.order.submission && position.order.__t);
             fairbundlesPending = positions.filter((position) => !position.order.submission && !position.order.cancellation && position.order.__t);
             directOrdersSubmittedPositions = positions.filter((position) => position.order.submission && !position.order.__t);
-            fairbundleProductsBought = this.getUniqueProducts(fairbundleProductsBought, fairbundlesSubmittedPositions);
-            directProductsBought = this.getUniqueProducts(directProductsBought, directOrdersSubmittedPositions);
+            fairbundleProductsBought = this.getUniqueProducts(fairbundlesSubmittedPositions);
+            directProductsBought = this.getUniqueProducts(directOrdersSubmittedPositions);
             directOrdersSubmitted = this.getUniqueOrders(directOrdersSubmittedPositions);
             fairbundlesSubmitted = this.getUniqueOrders(fairbundlesSubmittedPositions);
             fairbundleSpendings = OrderService.getPositionsValue(fairbundlesSubmittedPositions);
             directOrderSpendings = OrderService.getPositionsValue(directOrdersSubmittedPositions);
-            directOrderValues = this.getDirectOrderValues(directOrderValues, directOrdersSubmitted, directOrdersSubmittedPositions);
+            directOrderValues = this.getDirectOrderValues(directOrdersSubmitted, directOrdersSubmittedPositions);
 
             municipality.noPosition = false;
         } else {
             municipality.noPosition = true;
         }
+
         //save all calculations in municipality json and return municipaliy
         municipality.fairbundleProductsBought = fairbundleProductsBought;
         municipality.directProductsBought = directProductsBought;
