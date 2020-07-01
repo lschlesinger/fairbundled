@@ -45,24 +45,28 @@ export default class PositionService {
                 ) {
                     productsSold++;
                     qtySold += position.qty;
-                    let priceL = 0;
-                    for (
-                        let i = 0;
-                        i < position.product.priceLevel.length;
-                        i++
-                    ) {
-                        if (
-                            position.qty >= position.product.priceLevel[i].qty
+                    let price = position.order.finalUnitPrice;
+                    if (position.order.finalUnitPrice == null) {
+                        let priceL = 0;
+                        for (
+                            let i = 0;
+                            i < position.product.priceLevel.length;
+                            i++
                         ) {
-                            priceL = i;
-                        } else {
-                            break;
+                            if (
+                                position.qty >=
+                                position.product.priceLevel[i].qty
+                            ) {
+                                priceL = i;
+                            } else {
+                                break;
+                            }
                         }
+                        price = position.product.priceLevel[priceL].unitPrice;
                     }
+
                     //temp Revenue
-                    let tempRevenue =
-                        position.qty *
-                        position.product.priceLevel[priceL].unitPrice;
+                    let tempRevenue = position.qty * price;
                     // add tempRevenue to total revenue
                     revenue += tempRevenue;
                     //calculate monthly fees
@@ -106,9 +110,7 @@ export default class PositionService {
                         let tempProduct = {
                             product: position.product,
                             qty: position.qty,
-                            revenue:
-                                position.qty *
-                                position.product.priceLevel[priceL].unitPrice,
+                            revenue: position.qty * price,
                         };
                         orderedProducts.push(tempProduct);
                     }
