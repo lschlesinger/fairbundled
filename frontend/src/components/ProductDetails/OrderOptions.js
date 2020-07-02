@@ -135,7 +135,7 @@ export default class OrderOptions extends React.Component {
                             <TeamOutlined style={{fontSize: 25}}/>
                         </Col>
                         <Col className="padding-horizontal--sm padding-vertical--xs">
-                            aktuell <b>{fairbundle.bundlers.length}</b> {`teilnehmende Kommune${fairbundle.bundlers.length > 1 ? 'n' : ''}`}
+                            aktuell <b>{new Set(fairbundle.bundlers).size}</b> {`teilnehmende Kommune${new Set(fairbundle.bundlers).size > 1 ? 'n' : ''}`}
                         </Col>
                     </Row>
                 </Row>
@@ -149,6 +149,7 @@ export default class OrderOptions extends React.Component {
     };
 
     render() {
+        // language=HTML
         return (
             <Col>
                 <Card className="order-options__card" key="order-head">
@@ -202,8 +203,8 @@ export default class OrderOptions extends React.Component {
                 </Row>)}
                 {this.props.fairbundles?.map((fb) => this.createFairbundleCard(fb, this.props.product))}
                 <Card className="order-options__card margin-vertical--sm">
-                    <Tooltip title={!this.state.canBuy ? "Mindestbestellmenge nicht erfüllt" : "Sofort bestellen"}>
-                        <Button type="primary"
+                    <Tooltip title={`${!this.state.canBuy ? 'Mindestbestellmenge von ' + this.getMinQuantity() + ' nicht erreicht' : 'Sofort bestellen'}`}>
+                            <Button type="primary"
                                 className="order-options__buttons"
                                 block
                                 disabled={!this.state.canBuy}
