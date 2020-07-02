@@ -1,3 +1,8 @@
+import React from "react";
+import {CloseCircleOutlined, SendOutlined} from '@ant-design/icons';
+import {Row} from "antd";
+import {Link} from "react-router-dom";
+
 export default class AccountService {
 
     constructor() {
@@ -27,11 +32,6 @@ export default class AccountService {
                 key: 'order'
             },
             {
-                title: 'Positionen',
-                dataIndex: 'positions',
-                key: 'positions'
-            },
-            {
                 title: 'Gesamtpreis',
                 dataIndex: 'price',
                 key: 'price',
@@ -53,7 +53,11 @@ export default class AccountService {
             {
                 title: 'Produkt',
                 dataIndex: 'product',
-                key: 'product'
+                key: 'product',
+                render: (product, record) => (
+                    <Link to={`/product/${record.key}`}> {product}
+                    </Link>
+                ),
             },
             {
                 title: 'Menge',
@@ -61,16 +65,26 @@ export default class AccountService {
                 key: 'qty'
             },
             {
-                title: 'Zielpreis',
-                dataIndex: 'price',
-                key: 'price'
-            },
-            {
                 title: 'Laufzeitende',
                 dataIndex: 'expiration',
                 key: 'expiration',
                 defaultSortOrder: 'descend',
                 sorter: (a, b) => a.rawExpiration - b.rawExpiration
+            },
+            {
+                title: 'Zielpreis | Aktueller Preis',
+                dataIndex: 'price',
+                key: 'price'
+            },
+            {
+                title: 'Alternative',
+                dataIndex: 'expirationAction',
+                key: 'expirationAction',
+                render: (expirationAction) => (
+                    <Row justify="left">
+                        {expirationAction === 'force' ? <SendOutlined/> : <CloseCircleOutlined/>}
+                    </Row>
+                ),
             },
             {
                 title: 'Status',

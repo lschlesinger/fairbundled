@@ -19,7 +19,10 @@ class PositionController {
             })
             .populate({
                 path: "product",
-                select: ["supplier", "priceLevel", "name", "certificates", "categories"]
+                select: ["supplier", "priceLevel", "name", "certificates", "categories"],
+                populate: {
+                    path: "certificates"
+                },
             })
             .populate({
                 path: "order",

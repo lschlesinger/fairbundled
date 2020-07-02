@@ -39,60 +39,6 @@ class CheckoutView extends React.Component {
         }).catch((err) => message.info("Bestellung nicht abgeschickt."));
     };
 
-    getOrderOverviewTableColumns() {
-        return [
-            {
-                title: 'Bestellnummer',
-                dataIndex: 'order',
-                key: 'order'
-            },
-            {
-                title: 'Positionen',
-                dataIndex: 'positions',
-                key: 'positions'
-            },
-            {
-                title: 'Gesamtpreis',
-                dataIndex: 'price',
-                key: 'price',
-                defaultSortOrder: 'descend',
-                sorter: (a, b) => a.rawPrice - b.rawPrice
-            },
-        ];
-    }
-
-    getOrderTableData() {
-        let data = [];
-        if (this.state.order) {
-            let order = this.state.order;
-            let positions = this.state.order.positions;
-            let orderValue = OrderService.getPositionsValue(positions);
-            const price = new Intl.NumberFormat("de-DE", {
-                style: "currency",
-                currency: "EUR",
-            }).format(orderValue);
-            let entry = {
-                key: order._id,
-                order: order._id,
-                positions: positions.length,
-                price: price,
-                rawPrice: orderValue,
-            };
-            data.push(entry);
-        }
-        return data;
-    }
-
-    renderPositionRecords(record) {
-        return (
-            <Table columns={AccountService.getPositionSubTableColumns()}
-                   dataSource={this.getSubTableData(record)}
-                   pagination={false}
-                   className="padding--md">
-            </Table>
-        )
-    }
-
 
     getSubTableData(record) {
         if (this.state.order) {
@@ -117,6 +63,17 @@ class CheckoutView extends React.Component {
         }
     }
 
+    getTotalPrice() {
+        if (this.state.order) {
+            let orderValue = OrderService.getPositionsValue(this.state.order.positions);
+            let totalPrice = new Intl.NumberFormat("de-DE", {
+                style: "currency",
+                currency: "EUR",
+            }).format(orderValue);
+            return (`Gesamtpreis: ${totalPrice}`);
+        }
+    }
+
     render() {
         return (
             <Col>
@@ -129,11 +86,10 @@ class CheckoutView extends React.Component {
                 </Row>
                 <Row className="padding-horizontal--lg"
                      justify="space-around">
-                    <Table columns={this.getOrderOverviewTableColumns()}
-                           dataSource={this.getOrderTableData()}
-                           expandable={{
-                               expandedRowRender: record => this.renderPositionRecords(record),
-                           }}>
+                    <Table columns={AccountService.getPositionSubTableColumns()}
+                           dataSource={this.getSubTableData()}
+                           pagination={false}
+                           footer={() => this.getTotalPrice()}>
                     </Table>
                 </Row>
                 <Row className="padding-horizontal--lg padding-vertical--md">

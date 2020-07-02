@@ -77,6 +77,7 @@ class FairbundleService {
                             // set finalUnitPrice to bestPriceLevel that is reached in quantity if action is force and submit
                             fairbundle.finalUnitPrice = bestPrice;
                             fairbundle.submission = new Date();
+                            fairbundle.finalReachedQty = reachedQty;
                             fairbundle.save((f) => {
                                 console.log('Submitted fairbundle.')
                             });
@@ -91,6 +92,7 @@ class FairbundleService {
                         // set finalUnitPrice to min(targetPrice and unitPrice reached with quantity) and submit fairbundle
                         fairbundle.finalUnitPrice = Math.min(bestPrice, fairbundle.targetPrice);
                         fairbundle.submission = new Date();
+                        fairbundle.finalReachedQty = reachedQty;
                         fairbundle.save(() => {
                             console.log('Submitted fairbundle.')
                         });

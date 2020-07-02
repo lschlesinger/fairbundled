@@ -1,5 +1,6 @@
 import HttpService from "./HttpService";
 import OrderService from "./OrderService";
+import CertificateService from "./CertificateService";
 
 export default class PositionService {
     static BASE_URL = "/api/position";
@@ -190,6 +191,27 @@ export default class PositionService {
         return resultArray;
     }
 
+    static getFairbundlesPending(positions) {
+        let fbPositions = positions.filter((position) => !position.order.submission && !position.order.cancellation && position.order.__t);
+        let resultArray = [];
+        let positionOrders = [];
+        fbPositions.forEach((position) => {
+            // there is already a position of the same order
+            if (positionOrders.includes(position.order._id)) {
+                console.log("already in");
+                let updatedPosition = resultArray.find(p => p.order._id === position.order._id);
+                updatedPosition.qty = updatedPosition.qty + position.qty;
+                console.log(updatedPosition);
+                let foundIndex = resultArray.findIndex(p => p.order._id === position.order._id);
+                resultArray[foundIndex] = updatedPosition;
+            } else {
+                positionOrders.push(position.order._id);
+                resultArray.push(position);
+            }
+        });
+        return resultArray;
+    }
+
     // Calculates all necessary information in the municipality account view
     static async getPositionsInfo(municipality) {
         // array of submitted fairbundle order positions
@@ -209,23 +231,31 @@ export default class PositionService {
         // sum of spending for fairbundles
         let fairbundleSpendings = 0;
         // sum of spendings for directOrders
+        let fairbundleSavings = [];
+        // sum of spendings for directOrders
         let directOrderSpendings = 0;
         // value of each direct order
         let directOrderValues = [];
+        // certificates of ordered products (not unique)
+        let certificates = [];
 
         let positions = await this.getPositions();
 
+
         if (positions?.length > 0) {
             fairbundlesSubmittedPositions = positions.filter((position) => position.order.submission && position.order.__t);
-            fairbundlesPending = positions.filter((position) => !position.order.submission && !position.order.cancellation && position.order.__t);
+            fairbundlesPending = this.getFairbundlesPending(positions);
             directOrdersSubmittedPositions = positions.filter((position) => position.order.submission && !position.order.__t);
             fairbundleProductsBought = this.getUniqueProducts(fairbundlesSubmittedPositions);
             directProductsBought = this.getUniqueProducts(directOrdersSubmittedPositions);
             directOrdersSubmitted = this.getUniqueOrders(directOrdersSubmittedPositions);
             fairbundlesSubmitted = this.getUniqueOrders(fairbundlesSubmittedPositions);
             fairbundleSpendings = OrderService.getPositionsValue(fairbundlesSubmittedPositions);
+            fairbundleSavings = OrderService.getPositionsSavings(fairbundlesSubmittedPositions);
             directOrderSpendings = OrderService.getPositionsValue(directOrdersSubmittedPositions);
             directOrderValues = this.getDirectOrderValues(directOrdersSubmitted, directOrdersSubmittedPositions);
+            certificates = CertificateService.getPositionsCertificates(positions);
+            console.log(certificates);
 
             municipality.noPosition = false;
         } else {
@@ -241,8 +271,10 @@ export default class PositionService {
         municipality.directOrdersSubmitted = directOrdersSubmitted;
         municipality.fairbundlesSubmitted = fairbundlesSubmitted;
         municipality.fairbundleSpendings = fairbundleSpendings;
+        municipality.fairbundleSavings = fairbundleSavings;
         municipality.directOrderSpendings = directOrderSpendings;
         municipality.directOrderValues = directOrderValues;
+        municipality.certificates = certificates;
         return municipality;
     }
 }

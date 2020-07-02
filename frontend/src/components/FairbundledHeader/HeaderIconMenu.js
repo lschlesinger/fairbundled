@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Row, Space, Tooltip, Badge} from 'antd';
 import {LoginOutlined, LogoutOutlined, ShoppingCartOutlined, UserOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
+import {yellow} from "color-name";
 
 export default class HeaderIconMenu extends React.Component {
 
@@ -26,14 +27,21 @@ export default class HeaderIconMenu extends React.Component {
                 {this.props.isMunicipality ?
                 <Tooltip title="Mein Warenkorb">
                     <Link to="/checkout">
-                        <Badge count={this.props.positions} offset={[-8, 8]}>
+                        <Badge
+                            count={this.props.positions}
+                            style= {{backgroundColor: 'gold'}}
+                            title="Bestellpositionen"
+                            offset={[-8, 8]}>
                             <Button size="large" type="link" icon={<ShoppingCartOutlined/>}/>
                         </Badge>
                     </Link>
                 </Tooltip> : ""}
                 <Tooltip title="Mein Konto">
                     <Link to="/account">
-                        <Badge count={this.props.openFairbundles} offset={[-8, 8]}>
+                        <Badge count={this.props.openFairbundles}
+                               style= {{backgroundColor: 'gold'}}
+                               title="Offene Fairbundle"
+                               offset={[-8, 8]}>
                             <Button size="large" type="link" icon={<UserOutlined/>}/>
                         </Badge>
                     </Link>

@@ -5,7 +5,7 @@ import '../OrderOverview.less'
 const {Text, Title} = Typography;
 const {TabPane} = Tabs;
 
-export default class OverviewBanner extends React.Component {
+export default class ActivityOverviewBanner extends React.Component {
 
     constructor(props) {
         super(props);
