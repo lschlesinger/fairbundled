@@ -60,12 +60,12 @@ export class LandingView extends React.Component {
         if (product == null) return ("");
         const price = this.getLowestPrice(product);
         return (
-            <Col span={12} key={product._id}>
-                <Card className="product-list-card__card">
-                    <Row gutter={12}>
-                        <Col span={20}>
+            <Col span={24} key={product._id}>
+                <Card className="landing-view__card">
+                    <Row gutter={4}>
+                        <Col span={10}>
                             <Row
-                                className="product-list-card__product-image"
+                                className="landing-view__product-image"
                                 align="middle"
                             >
                                 <img
@@ -94,7 +94,7 @@ export class LandingView extends React.Component {
                             </Row>
                             <Row
                                 className="landing-view__product_title"
-                                justify="start"
+                                //justify="start"
                                 align="right"
                             >
                                 <Title level={4}>{product.name}</Title>
@@ -102,6 +102,7 @@ export class LandingView extends React.Component {
                             <Row
                                 className="landing-view__product_description"
                                 justify="start"
+                                align="right"
                             >
                                 <Paragraph ellipsis>
                                     {this.displayDescriptionText(product)}
@@ -166,7 +167,7 @@ export class LandingView extends React.Component {
                        <Divider>Das Produkt der Woche</Divider>
                    </Col>
                 </Row>
-                       <Row gutter={[8, 48]}>
+                       <Row gutter={[24, 24]}>
                        <Col span={20} align="left">
                        {this.getCardItem(this.state.product)}
                        </Col>
