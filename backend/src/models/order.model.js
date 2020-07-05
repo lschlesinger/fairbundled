@@ -6,6 +6,7 @@ const OrderSchema = new mongoose.Schema({
         ref: 'OrderPosition'
     }],
     submission: Date,
+    cancellation: Date,
     municipality: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Municipality'

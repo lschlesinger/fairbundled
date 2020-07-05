@@ -19,7 +19,7 @@ export default class ProductPreviewModalView extends React.Component {
                 visible={this.props.modalVisible}
                 onCancel={this.props.onClose}
                 footer={null}
-                width="60%"
+                width="70%"
             >
                 <ProductDetails entityName={this.props.entityName}
                                 product={this.props.product}

@@ -108,18 +108,20 @@ export default class MyEntityData extends React.Component {
                         </Text>
                     </Col>
                 </Row>
-                <Row className="padding-top--md">
-                    <Col span={12}>
-                        <Text className="my-entity-data__text" strong>
-                            Weitere E-Mail Adressen:
-                        </Text>
-                    </Col>
-                    <Col span={12}>
-                        {this.state.entity.user.map((u) =>
-                            this.getAdditionalUser(u)
-                        )}
-                    </Col>
-                </Row>
+                {this.state.entity.user.length > 1 ?
+                    <Row className="padding-top--md">
+                        <Col span={12}>
+                            <Text className="my-entity-data__text" strong>
+                                Weitere E-Mail Adressen:
+                            </Text>
+                        </Col>
+                        <Col span={12}>
+                            {this.state.entity.user.map((u) =>
+                                this.getAdditionalUser(u)
+                            )}
+                        </Col>
+                    </Row> : ""
+                }
                 <Row className="padding-top--md">
                     <Col span={12}>
                         <Text className="my-entity-data__text" strong>

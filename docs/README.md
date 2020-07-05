@@ -232,6 +232,8 @@ Note:
 | `/product`        | `/:id` |                                | `ProductDetailView` <br>`CreateFairbundleModalView` <br/> `JoinFairbundleModalView` <br/>`FairbundleCreatedModalView` <br/>`FairbundleJoinedModalView` |
 | `/product/create` |        |                                | `ProductCreateView`<br> `ProductPreviewModalView`            |
 | `/account`        |        |                                | `AccountView`                                                |
+| `/checkout`        |        |                                | `CheckoutView`                                                |
+| `/edit`        |        |                                | `UserEditView`                                                |
 
 
 

@@ -20,7 +20,7 @@ class BootstrapService {
         await ProductService.createInitialProducts();
 
         // 5. create fairbundle
-        await FairbundleService.createInitialFairbundles();
+        // await FairbundleService.createInitialFairbundles();
     }
 
 }
