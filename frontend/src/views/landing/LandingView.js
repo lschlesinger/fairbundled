@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card, Col, Layout, message, Row, Tag, Typography, Divider, Anchor} from "antd";
+import {Button, Card, Col, Layout, message, Row, Tag, Typography, Divider, Anchor, Carousel} from "antd";
 import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
 import { SmileTwoTone, HeartTwoTone, CheckCircleTwoTone } from '@ant-design/icons';
 
@@ -157,12 +157,53 @@ export class LandingView extends React.Component {
     render() {
         return (
             <Layout className="landing-view__layout">
-                <Row gutter={[8, 48]}>
+                <Row gutter={[8]}>
                    <Col span={24} align="middle">
                        <Divider>Das Produkt der Woche</Divider>
-                       {this.getCardItem(this.state.product)}
                    </Col>
                 </Row>
+                       <Row gutter={[8, 48]}>
+                       <Col span={20} align="left">
+                       {this.getCardItem(this.state.product)}
+                       </Col>
+                           <Col span={4} align="right">
+                       <Carousel autoplay>
+                           <div>
+                               <h1>
+                                   {this.getCardItem(this.state.product)}
+                               </h1>
+                           </div>
+                           <div>
+                               <h1>
+                                   {this.getCardItem(this.state.product)}
+                               </h1>
+                           </div>
+                           <div>
+                               <h1>
+                                   {this.getCardItem(this.state.product)}
+                               </h1>
+                           </div>
+                           <div>
+                               <h1>
+                                   {this.getCardItem(this.state.product)}
+                               </h1>
+                           </div>
+                       </Carousel>
+                           </Col>
+                       </Row>
+
+                <Row gutter={[8,48]}>
+                    <Col span={24} align="middle">
+                        <Divider>Unsere Zertifikate</Divider>
+                    </Col>
+                </Row>
+
+                <Row gutter={[8,48]}>
+                    <Col span={24} align="middle">
+                        <Divider>Interessante Kategorien</Divider>
+                    </Col>
+                </Row>
+
                 <Row gutter={[8, 48]}>
                     <Col span={8} />
                     <Content className="landing-view__content">
