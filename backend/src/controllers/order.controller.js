@@ -1,5 +1,5 @@
 import {Order} from "../models/order.model";
-import OrderPosition from "../models/position.model";
+import OrderService from "../services/order.service";
 
 class OrderController {
     /**
@@ -80,33 +80,16 @@ class OrderController {
      * @param res: created order object
      */
     static createOrder(req, res) {
-        const order = {
-            positions: [],
-            submission: null,
-            municipality: req.municipalityId,
-            cancellation: null,
+        const product = {
+            productId: req.body.productId,
+            qty: req.body.qty,
         };
-        Order.create(order)
+        OrderService.createOrder(product, req.userId, req.municipalityId)
             .then((order) => {
-                const position = {
-                    qty: req.body.qty,
-                    product: req.body.productId,
-                    user: req.userId,
-                    order: order._id,
-                };
-                OrderPosition.create(position)
-                    .then((position) => {
-                        order.positions.push(position);
-                        order.save((o) => {
-                            res.status(201).json(order);
-                        });
-                    })
-                    .catch((err) => {
-                        res.status(400).send(err);
-                    });
+                res.status(201).json(order);
             })
             .catch((err) => {
-                res.status(400).send(err);
+                res.status(400).json({message: err.message});
             });
     }
 }

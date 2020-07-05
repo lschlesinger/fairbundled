@@ -1,8 +1,8 @@
 import OrderPosition from "../models/position.model";
 import {Order} from "../models/order.model";
-import OrderController from "./order.controller";
 import Product from "../models/product.model";
 import Fairbundle from "../models/fairbundle.model";
+import OrderService from "../services/order.service";
 
 class PositionController {
     /**
@@ -81,7 +81,17 @@ class PositionController {
                     .then((order) => {
                         // check if there is no currently unsubmitted direct order, if so create new order
                         if ((!order)) {
-                            OrderController.createOrder(req, res);
+                            const product = {
+                                productId: req.body.productId,
+                                qty: req.body.qty,
+                            };
+                            OrderService.createOrder(product, req.userId, req.municipalityId)
+                                .then((order) => {
+                                    res.status(201).json(order);
+                                })
+                                .catch((err) => {
+                                    res.status(400).json({message: err.message});
+                                });
                         }
                         // if order found, add position to existing unsubmitted order, Note: there can be several positions of one product in one order
                         else {
