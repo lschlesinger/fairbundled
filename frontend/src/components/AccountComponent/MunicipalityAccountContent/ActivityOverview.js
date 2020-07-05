@@ -56,7 +56,6 @@ export default class ActivityOverview extends React.Component {
     getFairbundleTableData() {
         let data = [];
         this.props.municipality.fairbundlesPending.forEach((fbp) => {
-            console.log(fbp);
             const targetPriceLevel = fbp.product.priceLevel.find((pl) => pl.unitPrice === fbp.order.targetPrice);
             const targetQty = targetPriceLevel.minQty;
             const currentQty = fbp.order.positions.reduce((a, b) => a + b.qty, 0);
@@ -108,14 +107,12 @@ export default class ActivityOverview extends React.Component {
             positions = fairbundlesSubmitted.filter((p) =>
                 p.order._id === record.key);
         } else if (record.type === "Direktbestellung") {
-            console.log(directOrdersSubmitted);
             positions = directOrdersSubmitted.filter((p) =>
                 p.order._id === record.key);
         }
         positions.forEach((p) => {
             let bestPrice = 0;
             if (record.type === "Fairbundle") {
-                console.log(p);
                 bestPrice = p.order.finalUnitPrice
             } else if (record.type === "Direktbestellung") {
                 let reachedPriceLevel = p.product.priceLevel.filter((pl) => pl.minQty <= p.qty);

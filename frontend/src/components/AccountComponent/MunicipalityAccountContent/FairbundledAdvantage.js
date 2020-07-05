@@ -22,10 +22,15 @@ export default class FairbundledAdvantage extends React.Component {
 
     getAverageSavings() {
         let averagedSavingPercentage = this.props.municipality?.fairbundleSavings.reduce((a, b) => a + b.savingPercentage, 0) / this.props.municipality?.fairbundleSavings.length;
-        return averagedSavingPercentage.toLocaleString(undefined, {
-            style: 'percent',
-            minimumFractionDigits: 2
-        });
+        if (averagedSavingPercentage > 0) {
+            averagedSavingPercentage = averagedSavingPercentage.toLocaleString(undefined, {
+                style: 'percent',
+                minimumFractionDigits: 2
+            });
+        } else {
+            averagedSavingPercentage = "-";
+        }
+        return averagedSavingPercentage;
     }
 
     getOverallSavings() {
@@ -34,11 +39,15 @@ export default class FairbundledAdvantage extends React.Component {
 
     getTopCertficate() {
         let certificates = this.props.municipality?.certificates;
-        let orderedCertificates = certificates.sort((a, b) =>
-            certificates.filter(v => v._id === a._id).length
-            - certificates.filter(v => v._id === b._id).length
-        );
-        return orderedCertificates.pop();
+        if (certificates.length > 0) {
+            let orderedCertificates = certificates.sort((a, b) =>
+                certificates.filter(v => v._id === a._id).length
+                - certificates.filter(v => v._id === b._id).length
+            );
+            return orderedCertificates.pop();
+        } else {
+            return null;
+        }
     }
 
     render() {
@@ -85,22 +94,23 @@ export default class FairbundledAdvantage extends React.Component {
                         Wichtigstes Nachhaltigkeits-Zertifikat
                     </Title>
                 </Row>
-                <Col span={24}>
-                    <Row className="padding-top--sm" justify="center">
-                        <a href={this.state.topCertificate?.url} target="_blank">
-                            <Avatar
-                                shape="square"
-                                size="large"
-                                src={this.state.topCertificate?.logo}/>
-                        </a>
-
-                    </Row>
-                    <Row className="padding-top--sm" justify="center">
-                        <Text className="order-overview__number" strong>
-                            {this.state.topCertificate?.name}
-                        </Text>
-                    </Row>
-                </Col>
+                {this.state.topCertificate ?
+                    <Col span={24}>
+                        <Row className="padding-top--sm" justify="center">
+                            <a href={this.state.topCertificate?.url} target="_blank">
+                                <Avatar
+                                    shape="square"
+                                    size="large"
+                                    src={this.state.topCertificate?.logo}/>
+                            </a>
+                        </Row>
+                        <Row className="padding-top--sm" justify="center">
+                            <Text className="order-overview__number" strong>
+                                {this.state.topCertificate?.name}
+                            </Text>
+                        </Row>)
+                    </Col> :
+                    "Es liegen noch keine Daten vor."}
             </Card>
         );
     }

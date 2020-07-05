@@ -198,10 +198,8 @@ export default class PositionService {
         fbPositions.forEach((position) => {
             // there is already a position of the same order
             if (positionOrders.includes(position.order._id)) {
-                console.log("already in");
                 let updatedPosition = resultArray.find(p => p.order._id === position.order._id);
                 updatedPosition.qty = updatedPosition.qty + position.qty;
-                console.log(updatedPosition);
                 let foundIndex = resultArray.findIndex(p => p.order._id === position.order._id);
                 resultArray[foundIndex] = updatedPosition;
             } else {
@@ -255,7 +253,6 @@ export default class PositionService {
             directOrderSpendings = OrderService.getPositionsValue(directOrdersSubmittedPositions);
             directOrderValues = this.getDirectOrderValues(directOrdersSubmitted, directOrdersSubmittedPositions);
             certificates = CertificateService.getPositionsCertificates(positions);
-            console.log(certificates);
 
             municipality.noPosition = false;
         } else {
