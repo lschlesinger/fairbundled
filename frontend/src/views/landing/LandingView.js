@@ -15,7 +15,7 @@ import {Link} from "react-router-dom";
 import Corona from "../../assets/Corona.png";
 import Feuerwehr from "../../assets/Feuerwehr.png";
 import Computer from "../../assets/Computer.png";
-
+import Prinzip from "../../assets/Prinzip.png";
 // decide on overall layout structure (ANT)
 const {Sider, Content} = Layout;
 const { Paragraph, Text, Title } = Typography;
@@ -282,7 +282,7 @@ export class LandingView extends React.Component {
                     </Col>
 
                 </Row>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                <Row gutter={[8,48]}>
                     <Col span={8} align = "middle">
                         Aufgrund unseres Fairbundle-Prinzips können Anbieter in größeren Mengen produzieren.
                         Dadurch können wir die Produkte zu den Preisen anbieten, bei denen jeder profitiert.
@@ -302,9 +302,10 @@ export class LandingView extends React.Component {
                     </Col>
 
                 </Row>
-                <Row>
-                    <Col align="middle">
-                        Bild
+                <Row gutter={[8, 48]}>
+                    <Col span={24} align="middle">
+                        <img className="landing__picture_big"
+                             src={Prinzip} alt="Prinzip"/>
                     </Col>
 
                 </Row>
