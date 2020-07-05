@@ -14,6 +14,7 @@ import placeholder from "../../assets/placeholder.png";
 import {Link} from "react-router-dom";
 import Corona from "../../assets/Corona.png";
 import Feuerwehr from "../../assets/Feuerwehr.png";
+import Computer from "../../assets/Computer.png";
 
 // decide on overall layout structure (ANT)
 const {Sider, Content} = Layout;
@@ -62,7 +63,7 @@ export class LandingView extends React.Component {
             <Col span={12} key={product._id}>
                 <Card className="product-list-card__card">
                     <Row gutter={12}>
-                        <Col span={10}>
+                        <Col span={20}>
                             <Row
                                 className="product-list-card__product-image"
                                 align="middle"
@@ -78,7 +79,7 @@ export class LandingView extends React.Component {
                                 />
                             </Row>
                         </Col>
-                        <Col span={14}>
+                        <Col span={4}>
                             <Row
                                 className="landing-view__fairbundle_tag"
                                 justify="start"
@@ -94,6 +95,7 @@ export class LandingView extends React.Component {
                             <Row
                                 className="landing-view__product_title"
                                 justify="start"
+                                align="right"
                             >
                                 <Title level={4}>{product.name}</Title>
                             </Row>
@@ -105,7 +107,7 @@ export class LandingView extends React.Component {
                                     {this.displayDescriptionText(product)}
                                 </Paragraph>
                             </Row>
-                            <Row gutter={8} align="middle">
+                            <Row gutter={8} align="right">
                                 <Col span={12}>{price}</Col>
                                 <Col span={12}>
                                     <Link to={`/product/${product._id}`}>
@@ -208,16 +210,22 @@ export class LandingView extends React.Component {
 
                 <Row gutter={[8,48]}>
                     <Col span={8} align="middle">
+                        <Link to={`/product?category=5ed537556ea8f1fcd3e8ff0c`}>
                         <img className="landing__pictures"
                              src={Corona} alt="Corona"/>
+                        </Link>
                     </Col>
                     <Col span={8} align="middle">
+                        <Link to={`/product?category=5ed537556ea8f1fcd3e8fe72`}>
                         <img className="landing__pictures"
                              src={Feuerwehr} alt="Feuerwehr"/>
+                    </Link>
                     </Col>
                     <Col span={8} align="middle">
+                        <Link to={`/product?category=5ed537556ea8f1fcd3e8fee4`}>
                         <img className="landing__pictures"
-                             src={Corona} alt="Corona"/>
+                             src={Computer} alt="Computer"/>
+                        </Link>
                     </Col>
                 </Row>
 
