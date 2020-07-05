@@ -75,7 +75,7 @@ export class LandingView extends React.Component {
                                             : placeholder
                                     }
                                     alt="bild"
-                                    width="100%"
+                                    //width="50%"
                                 />
                             </Row>
                         </Col>
