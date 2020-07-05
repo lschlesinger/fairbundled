@@ -33,10 +33,13 @@ class CheckoutView extends React.Component {
     }
 
     onCheckout = async () => {
-        OrderService.submitOrder(this.state.order._id).then((order) => {
-            message.success("Bestellung erfolgreich");
-            this.props.history.push(`/account`);
-        }).catch((err) => message.info("Bestellung nicht abgeschickt."));
+        this.props.onUpdate();
+        OrderService.submitOrder(this.state.order._id)
+            .then((order) => {
+                message.success("Bestellung erfolgreich");
+                this.props.history.push(`/account`);
+            })
+            .catch((err) => message.warning("Bestellung nicht abgeschickt."));
     };
 
 

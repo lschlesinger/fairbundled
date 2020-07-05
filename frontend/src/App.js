@@ -94,7 +94,9 @@ export default class App extends React.Component {
                     // allow rendering of certain views only for authenticated user
                     render: (props) => {
                         if (AuthService.isAuthenticated() && AuthService.isAuthenticatedMunicipality()) {
-                            return <CheckoutView {...props} />;
+                            return <CheckoutView
+                                onUpdate={this.update}
+                                {...props}/>;
                         } else {
                             return <Redirect to={"/checkout"}/>;
                         }
