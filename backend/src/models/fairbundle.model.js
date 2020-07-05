@@ -1,26 +1,28 @@
 import mongoose from 'mongoose';
-import {OrderSchema} from './order.model';
-import extendSchema from 'mongoose-extend-schema';
+import {Order} from './order.model';
 
-const Fairbundle = extendSchema(OrderSchema, {
-    expiration: Date,
-    expirationAction: {
-        type: String,
-        enum: ['force','cancel'],
-        default: 'force'
-    },
-    targetPrice: Number,
-    bundlers: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Municipality'
-    }],
-    product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product'
-    }
-}, {
-    timestamps: true
-});
+let options = {discriminatorKey: 'kind'};
+
+const Fairbundle = Order.discriminator('Fairbundle', new mongoose.Schema({
+        expiration: Date,
+        expirationAction: {
+            type: String,
+            enum: ['force', 'cancel'],
+            default: 'force'
+        },
+        targetPrice: Number,
+        finalUnitPrice: Number,
+        finalReachedQty: Number,
+        bundlers: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Municipality'
+        }],
+        product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product'
+        }
+    }, options)
+);
 
 
-export default mongoose.model('Fairbundle', Fairbundle);
+export default Fairbundle;

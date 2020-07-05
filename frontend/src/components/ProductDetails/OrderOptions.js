@@ -14,15 +14,14 @@ export default class OrderOptions extends React.Component {
     }
 
     getMinQuantity = () => {
-        if (this.props.product == null) {
+        if (this.props.product === null) {
             return 0;
         }
-
         return Math.min(...this.props.product.priceLevel.map(p => p.minQty));
     };
 
     getMaxPriceLevel = () => {
-        if (this.props.product == null) {
+        if (this.props.product === null) {
             return null;
         }
 
@@ -136,7 +135,7 @@ export default class OrderOptions extends React.Component {
                             <TeamOutlined style={{fontSize: 25}}/>
                         </Col>
                         <Col className="padding-horizontal--sm padding-vertical--xs">
-                            aktuell <b>{fairbundle.bundlers.length}</b> {`teilnehmende Kommune${fairbundle.bundlers.length > 1 ? 'n' : ''}`}
+                            aktuell <b>{new Set(fairbundle.bundlers).size}</b> {`teilnehmende Kommune${new Set(fairbundle.bundlers).size > 1 ? 'n' : ''}`}
                         </Col>
                     </Row>
                 </Row>
@@ -150,6 +149,7 @@ export default class OrderOptions extends React.Component {
     };
 
     render() {
+        // language=HTML
         return (
             <Col>
                 <Card className="order-options__card" key="order-head">
@@ -186,27 +186,32 @@ export default class OrderOptions extends React.Component {
                         </Col>
                     </Row>
                 </Card>
-                <Card className="order-options__card margin-vertical--sm">
-                    <Button type="primary"
-                            block
-                            className="order-options__buttons"
-                            ref={(buttonDOM) => {
-                        this.createDOM = buttonDOM;
-                    }} onClick={this.onCreateFairbundle}>
-                        Neues Fairbundle
-                    </Button>
-                </Card>
+                {/*only render "Neues Fairbundle" Button if bundling is possible (more than 1 price level)*/}
+                {this.props.product?.priceLevel.length > 1 ? (
+                    <Card className="order-options__card margin-vertical--sm">
+                        <Button type="primary"
+                                block
+                                className="order-options__buttons"
+                                ref={(buttonDOM) => {
+                                    this.createDOM = buttonDOM;
+                                }} onClick={this.onCreateFairbundle}>
+                            Neues Fairbundle
+                        </Button>
+                    </Card>
+                ) : (<Row className="order-options__card margin-vertical--sm">
+                    <i>Der Hersteller bietet dieses Produkt leider nicht im Fairbundle an.</i>
+                </Row>)}
                 {this.props.fairbundles?.map((fb) => this.createFairbundleCard(fb, this.props.product))}
                 <Card className="order-options__card margin-vertical--sm">
-                    <Tooltip title={!this.state.canBuy ? "Mindestbestellmenge nicht erfüllt" : "Sofort bestellen"}>
-                        <Button type="primary"
+                    <Tooltip title={`${!this.state.canBuy ? 'Mindestbestellmenge von ' + this.getMinQuantity() + ' nicht erreicht' : 'Sofort bestellen'}`}>
+                            <Button type="primary"
                                 className="order-options__buttons"
                                 block
                                 disabled={!this.state.canBuy}
                                 ref={(buttonDOM) => {
                                     this.orderDOM = buttonDOM;
                                 }} onClick={this.onCreateOrder}>
-                            Neue Bestellung
+                            Direktbestellung
                         </Button>
                     </Tooltip>
                 </Card>

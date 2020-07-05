@@ -35,6 +35,12 @@ export default class RegisterNewMunicipality extends React.Component {
                 </Form.Item>
                 <Form.Item
                     name={["municipality", "billingAddress"]}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Bitte geben Sie eine Rechnungsadresse ein!',
+                        }
+                    ]}
                 >
                     <Input
                         placeholder="Rechnungsadresse"

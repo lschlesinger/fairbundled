@@ -6,7 +6,10 @@ const Supplier = new mongoose.Schema({
         type: String,
         required: true
     },
-    billingAddress: String,
+    billingAddress: {
+        type: String,
+        required: true
+    },
     bankAccount: String,
 }, {
     timestamps: true

@@ -50,6 +50,9 @@ class FairbundleController {
         const fairbundle = {
             positions: [],
             submission: null,
+            cancellation: null,
+            finalUnitPrice: null,
+            finalReachedQty: null,
             municipality: req.municipalityId,
             expiration: req.body.expiration,
             expirationAction: req.body.expirationAction,
@@ -94,7 +97,7 @@ class FairbundleController {
                 OrderPosition.create(orderPosition).then((position) => {
                     fairbundle.positions.push(position._id);
 
-                    if (fairbundle.bundlers.find(b => b == req.municipalityId) == null) {
+                    if (fairbundle.bundlers.find(b => b === req.municipalityId) == null) {
                         fairbundle.bundlers.push(req.municipalityId);
                     }
 

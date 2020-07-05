@@ -14,7 +14,7 @@ export default class MySupplierData extends React.Component {
 
     render() {
         return (
-            <Card title="Gebührenübersicht" className="padding-horizontal--sm">
+            <Card title="Gebührenübersicht">
                 {/* Gebühren des letzten Monats */}
                 <Row className="padding-top--md">
                     <Text mark>Letzte 30 Tage</Text>

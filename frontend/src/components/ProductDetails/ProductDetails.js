@@ -22,7 +22,7 @@ export default class ProductDetails extends React.Component {
     render() {
         return (
             <Row>
-                <Col span={18}>
+                <Col span={17}>
                     <Row className="padding--md">
                         <Col span={7}>
                             <ProductImage product={this.props.product} />
@@ -43,7 +43,7 @@ export default class ProductDetails extends React.Component {
                         <CertificateInformation product={this.props.product} />
                     </Row>
                 </Col>
-                <Col span={6} className="padding--md">
+                <Col span={7} className="padding--md">
                     <OrderOptions {...this.props} />
                 </Col>
             </Row>

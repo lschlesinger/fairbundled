@@ -20,6 +20,7 @@ import {LoadingOutlined} from "@ant-design/icons";
 import FairbundleService from "./services/FairbundleService";
 import OrderService from "./services/OrderService";
 import UserEditView from "./views/account/UserEditView";
+import CheckoutView from "./views/account/municipality-account/CheckoutView";
 
 // decide on overall layout structure (ANT)
 const {Header, Footer, Content} = Layout;
@@ -90,6 +91,19 @@ export default class App extends React.Component {
                     path: "/account",
                 },
                 {
+                    // allow rendering of certain views only for authenticated user
+                    render: (props) => {
+                        if (AuthService.isAuthenticated() && AuthService.isAuthenticatedMunicipality()) {
+                            return <CheckoutView
+                                onUpdate={this.update}
+                                {...props}/>;
+                        } else {
+                            return <Redirect to={"/checkout"}/>;
+                        }
+                    },
+                    path: "/checkout",
+                },
+                {
                     render: (props) => {
                         // allow rendering of certain views only for authenticated user
                         if (AuthService.isAuthenticated()) {
@@ -142,13 +156,12 @@ export default class App extends React.Component {
         let fairbundles = await FairbundleService.getFairbundles();
 
         let currentMunicipality = AuthService.getCurrentUser().municipality._id;
-        let currentDate = new Date();
 
         fairbundles = fairbundles.filter(
-            (f) => f.municipality === currentMunicipality
+            (f) => f.municipality === currentMunicipality || f.bundlers.includes(currentMunicipality)
         );
         fairbundles = fairbundles.filter(
-            (f) => Date.parse(f.expiration) - currentDate.getTime() > 0
+            (f) => f.submission === null && f.cancellation === null
         );
 
         return fairbundles.length;
@@ -160,7 +173,11 @@ export default class App extends React.Component {
         }
 
         let orders = await OrderService.getOrders();
-        var unique = orders
+        orders = orders.filter(
+            (f) => f.submission === null && f.cancellation === null
+        );
+
+        let unique = orders
             .flatMap((o) => o.positions)
             .map((p) => p.product)
             .filter(this.onlyUnique);

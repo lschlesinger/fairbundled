@@ -1,9 +1,12 @@
 import HttpService from "./HttpService";
+import OrderService from "./OrderService";
+import CertificateService from "./CertificateService";
 
 export default class PositionService {
     static BASE_URL = "/api/position";
 
-    constructor() {}
+    constructor() {
+    }
 
     static async getPositions() {
         return HttpService.get(`${this.BASE_URL}/`);
@@ -34,34 +37,37 @@ export default class PositionService {
         let totalVariableFee = 0;
         let monthlyVariableFee = 0;
         let positions = await this.getPositions();
-        if (Array.isArray(positions) && positions.length) {
+        if (positions?.length > 0) {
             for (const p in positions) {
                 const position = positions[p];
                 if (
-                    position.order &&
-                    new Date(position.order.submission) < new Date() &&
-                    supplier._id === position.product.supplier
+                    position.order.submission &&
+                    new Date(position.order.submission) < new Date()
                 ) {
                     productsSold++;
                     qtySold += position.qty;
-                    let priceL = 0;
-                    for (
-                        let i = 0;
-                        i < position.product.priceLevel.length;
-                        i++
-                    ) {
-                        if (
-                            position.qty >= position.product.priceLevel[i].qty
+                    let price = position.order.finalUnitPrice;
+                    if (position.order.finalUnitPrice == null) {
+                        let priceL = 0;
+                        for (
+                            let i = 0;
+                            i < position.product.priceLevel.length;
+                            i++
                         ) {
-                            priceL = i;
-                        } else {
-                            break;
+                            if (
+                                position.qty >=
+                                position.product.priceLevel[i].qty
+                            ) {
+                                priceL = i;
+                            } else {
+                                break;
+                            }
                         }
+                        price = position.product.priceLevel[priceL].unitPrice;
                     }
+
                     //temp Revenue
-                    let tempRevenue =
-                        position.qty *
-                        position.product.priceLevel[priceL].unitPrice;
+                    let tempRevenue = position.qty * price;
                     // add tempRevenue to total revenue
                     revenue += tempRevenue;
                     //calculate monthly fees
@@ -105,9 +111,7 @@ export default class PositionService {
                         let tempProduct = {
                             product: position.product,
                             qty: position.qty,
-                            revenue:
-                                position.qty *
-                                position.product.priceLevel[priceL].unitPrice,
+                            revenue: position.qty * price,
                         };
                         orderedProducts.push(tempProduct);
                     }
@@ -129,6 +133,7 @@ export default class PositionService {
         supplier.totalVariableFee = totalVariableFee;
         return supplier;
     }
+
     // determines the bestseller in terms of qty & revenue
     static determineBestseller(orderedProducts) {
         let bestQty = 0;
@@ -149,5 +154,124 @@ export default class PositionService {
             qtyBestseller: orderedProducts[bestQtyProduct],
             revenueBestseller: orderedProducts[bestRevenueProduct],
         };
+    }
+
+    static getUniqueProducts(positions) {
+        let resultArray = [];
+        positions.forEach((position) => {
+            if (resultArray.indexOf(position.product._id) < 0) {
+                resultArray.push(position.product._id);
+            }
+        });
+        return resultArray;
+    }
+
+    static getUniqueOrders(positions) {
+        let resultArray = [];
+        positions.forEach((position) => {
+            if (resultArray.filter((entry) => (entry._id === position.order._id)).length === 0) {
+                resultArray.push(position.order);
+            }
+        });
+        return resultArray;
+    }
+
+    static getDirectOrderValues(orders, positions) {
+        let resultArray = [];
+        orders.forEach((order) => {
+            let orderPositions = positions.filter((pos) => pos.order._id === order._id);
+            let orderValue = OrderService.getPositionsValue(orderPositions);
+            let orderEntry = {
+                order: order,
+                value: orderValue
+            };
+
+            resultArray.push(orderEntry);
+        });
+        return resultArray;
+    }
+
+    static getFairbundlesPending(positions) {
+        let fbPositions = positions.filter((position) => !position.order.submission && !position.order.cancellation && position.order.__t);
+        let resultArray = [];
+        let positionOrders = [];
+        fbPositions.forEach((position) => {
+            // there is already a position of the same order
+            if (positionOrders.includes(position.order._id)) {
+                let updatedPosition = resultArray.find(p => p.order._id === position.order._id);
+                updatedPosition.qty = updatedPosition.qty + position.qty;
+                let foundIndex = resultArray.findIndex(p => p.order._id === position.order._id);
+                resultArray[foundIndex] = updatedPosition;
+            } else {
+                positionOrders.push(position.order._id);
+                resultArray.push(position);
+            }
+        });
+        return resultArray;
+    }
+
+    // Calculates all necessary information in the municipality account view
+    static async getPositionsInfo(municipality) {
+        // array of submitted fairbundle order positions
+        let fairbundlesSubmittedPositions = 0;
+        // array of pending fairbundles
+        let fairbundlesPending = [];
+        // array of submitted direct order positions
+        let directOrdersSubmittedPositions = 0;
+        // unique products bought by municipality in fairbundle
+        let fairbundleProductsBought = [];
+        // unique products bought by municipality in direct order
+        let directProductsBought = [];
+        // unique fairbundle orders
+        let fairbundlesSubmitted = [];
+        // unique direct orders
+        let directOrdersSubmitted = [];
+        // sum of spending for fairbundles
+        let fairbundleSpendings = 0;
+        // sum of spendings for directOrders
+        let fairbundleSavings = [];
+        // sum of spendings for directOrders
+        let directOrderSpendings = 0;
+        // value of each direct order
+        let directOrderValues = [];
+        // certificates of ordered products (not unique)
+        let certificates = [];
+
+        let positions = await this.getPositions();
+
+
+        if (positions?.length > 0) {
+            fairbundlesSubmittedPositions = positions.filter((position) => position.order.submission && position.order.__t);
+            fairbundlesPending = this.getFairbundlesPending(positions);
+            directOrdersSubmittedPositions = positions.filter((position) => position.order.submission && !position.order.__t);
+            fairbundleProductsBought = this.getUniqueProducts(fairbundlesSubmittedPositions);
+            directProductsBought = this.getUniqueProducts(directOrdersSubmittedPositions);
+            directOrdersSubmitted = this.getUniqueOrders(directOrdersSubmittedPositions);
+            fairbundlesSubmitted = this.getUniqueOrders(fairbundlesSubmittedPositions);
+            fairbundleSpendings = OrderService.getPositionsValue(fairbundlesSubmittedPositions);
+            fairbundleSavings = OrderService.getPositionsSavings(fairbundlesSubmittedPositions);
+            directOrderSpendings = OrderService.getPositionsValue(directOrdersSubmittedPositions);
+            directOrderValues = this.getDirectOrderValues(directOrdersSubmitted, directOrdersSubmittedPositions);
+            certificates = CertificateService.getPositionsCertificates(positions);
+
+            municipality.noPosition = false;
+        } else {
+            municipality.noPosition = true;
+        }
+
+        //save all calculations in municipality json and return municipaliy
+        municipality.fairbundleProductsBought = fairbundleProductsBought;
+        municipality.directProductsBought = directProductsBought;
+        municipality.fairbundlesSubmittedPositions = fairbundlesSubmittedPositions;
+        municipality.fairbundlesPending = fairbundlesPending;
+        municipality.directOrdersSubmittedPositions = directOrdersSubmittedPositions;
+        municipality.directOrdersSubmitted = directOrdersSubmitted;
+        municipality.fairbundlesSubmitted = fairbundlesSubmitted;
+        municipality.fairbundleSpendings = fairbundleSpendings;
+        municipality.fairbundleSavings = fairbundleSavings;
+        municipality.directOrderSpendings = directOrderSpendings;
+        municipality.directOrderValues = directOrderValues;
+        municipality.certificates = certificates;
+        return municipality;
     }
 }

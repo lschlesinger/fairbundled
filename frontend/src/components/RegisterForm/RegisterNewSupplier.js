@@ -27,6 +27,12 @@ export default class RegisterNewSupplier extends React.Component {
                 </Form.Item>
                 <Form.Item
                     name={["supplier", "billingAddress"]}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Bitte geben Sie eine Rechnungsadresse ein!',
+                        }
+                    ]}
                 >
                     <Input
                         placeholder="Rechnungsadresse"

@@ -54,8 +54,6 @@ class UserService {
             }))._id;
         }
 
-        console.log(user.municipality);
-
         // get supplierId or create new supplier
         if (user.supplier) {
             u.supplier = user.supplier._id ? user.supplier._id : (await Supplier.findOneAndUpdate({name: user.supplier.name}, user.supplier, {

@@ -30,7 +30,7 @@ export class SupplierAccountView extends React.Component {
             supplierInfo.user = await UserService.getEntityUsers();
             this.setState({supplier: supplierInfo});
         } catch (e) {
-            message.error("Error fetching supplier Informations.");
+            message.error("Error fetching supplier Information.");
         }
     }
 
@@ -42,9 +42,9 @@ export class SupplierAccountView extends React.Component {
                 justify="space-around"
             >
                 <Col span={9}>
-                    {this.state.municipality || this.state.supplier ? (
+                    {this.state.supplier ? (
                         <MyEntityData
-                            entity={this.state.municipality ? this.state.municipality : this.state.supplier}
+                            entity={this.state.supplier}
                             user={this.state.user}
                         />
                     ) : ("")}

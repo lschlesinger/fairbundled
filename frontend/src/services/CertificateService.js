@@ -47,4 +47,14 @@ export default class CertificateService {
             }
         }
     }
+
+    static getPositionsCertificates(positions) {
+        let resultArray = [];
+        positions.forEach((position) => {
+            position.product.certificates.forEach((cert) => {
+                resultArray.push(cert);
+            });
+        });
+        return resultArray;
+    }
 }

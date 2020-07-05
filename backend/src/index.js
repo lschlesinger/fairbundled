@@ -6,6 +6,7 @@ import routes from "./routes";
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import BootstrapService from "./services/bootstrap.service";
+import FairbundleService from "./services/fairbundle.service";
 
 // create express app
 const app = express();
@@ -44,6 +45,11 @@ mongoose
 
             // log if server is listening to requests
             console.log(`Server is listening at http://${address}:${port}`);
+
+            // start job to submit fairbundle if their expiration is reached
+            setInterval(()=>{
+                FairbundleService.submitFairbundles();
+            }, 1000);
 
             // create initial data with bootstrap service
             if (config.env !== 'production') {

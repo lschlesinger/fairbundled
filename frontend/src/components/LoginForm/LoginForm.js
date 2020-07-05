@@ -47,7 +47,7 @@ export default class LoginForm extends React.Component {
                     <Input
                         prefix={<LockOutlined/>}
                         type="password"
-                        placeholder="Password"
+                        placeholder="Passwort"
                     />
                 </Form.Item>
                 <Form.Item>
