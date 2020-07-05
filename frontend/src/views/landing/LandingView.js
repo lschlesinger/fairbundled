@@ -12,6 +12,8 @@ import ProductService from "../../services/ProductService";
 import HttpService from "../../services/HttpService";
 import placeholder from "../../assets/placeholder.png";
 import {Link} from "react-router-dom";
+import Corona from "../../assets/Corona.png";
+import Feuerwehr from "../../assets/Feuerwehr.png";
 
 // decide on overall layout structure (ANT)
 const {Sider, Content} = Layout;
@@ -201,6 +203,21 @@ export class LandingView extends React.Component {
                 <Row gutter={[8,48]}>
                     <Col span={24} align="middle">
                         <Divider>Interessante Kategorien</Divider>
+                    </Col>
+                </Row>
+
+                <Row gutter={[8,48]}>
+                    <Col span={8} align="middle">
+                        <img className="landing__pictures"
+                             src={Corona} alt="Corona"/>
+                    </Col>
+                    <Col span={8} align="middle">
+                        <img className="landing__pictures"
+                             src={Feuerwehr} alt="Feuerwehr"/>
+                    </Col>
+                    <Col span={8} align="middle">
+                        <img className="landing__pictures"
+                             src={Corona} alt="Corona"/>
                     </Col>
                 </Row>
 
