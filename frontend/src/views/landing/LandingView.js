@@ -16,6 +16,12 @@ import Corona from "../../assets/Corona.png";
 import Feuerwehr from "../../assets/Feuerwehr.png";
 import Computer from "../../assets/Computer.png";
 import Prinzip from "../../assets/Prinzip.png";
+import BlauerEngel from "../../assets/BlauerEngel.png";
+import EcoLabel from "../../assets/EcoLabel.png";
+import FairStone from "../../assets/FairStone.jpg";
+import TCO from "../../assets/TCO.jpg";
+import Fairtrade from "../../assets/Fairtrade.jpg";
+
 // decide on overall layout structure (ANT)
 const {Sider, Content} = Layout;
 const { Paragraph, Text, Title } = Typography;
@@ -40,12 +46,12 @@ export class LandingView extends React.Component {
     }
 
     componentDidMount() {
-        this.getProductsAndFairbundles();
+        this.getProducts();
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.location !== prevProps.location) {
-            this.getProductsAndFairbundles();
+            this.getProducts();
         }
     }
 
@@ -66,7 +72,7 @@ export class LandingView extends React.Component {
                         <Col span={10}>
                             <Row
                                 className="landing-view__product-image"
-                                align="middle"
+                                align="left"
                             >
                                 <img
                                     src={
@@ -144,11 +150,10 @@ export class LandingView extends React.Component {
         );
     }
 
-    async getProductsAndFairbundles(certificates = null) {
+    async getProducts(certificates = null) {
         try {
             // get product
             let product = await ProductService.getProduct(this.state.productId);
-            // update products with flagged (hasFairbundle) products
             //set state variables
             this.setState(prevState => ({
                 ...prevState,
@@ -201,6 +206,34 @@ export class LandingView extends React.Component {
                     <Col span={24} align="middle">
                         <Divider>Unsere Zertifikate</Divider>
                     </Col>
+                </Row>
+                <Row>
+                    <Col span={5} align="middle">
+                        <img className="landing__picture_cert"
+                             src={BlauerEngel} alt="BlauerEngel"/>
+                    </Col>
+                    <Col span={5} align="middle">
+                        <img className="landing__picture_cert"
+                             src={EcoLabel} alt="EcoLabel"/>
+                    </Col>
+                    <Col span={4} align="middle">
+                        <img className="landing__picture_cert"
+                             src={FairStone} alt="FairStone"/>
+                    </Col>
+                    <Col span={5} align="middle">
+                        <img className="landing__picture_cert"
+                             src={TCO} alt="TCO"/>
+                    </Col>
+                    <Col span={5} align="middle">
+                        <img className="landing__picture_cert"
+                             src={Fairtrade} alt="Fairtrade"/>
+                    </Col>
+                </Row>
+                <Row gutter={[8, 48]}>
+                <Col span={24} align="middle">
+                    Durch eine sorgfältige Auswahl der Zertifikate und unseren hohen Anspruch an Qualität, können Sie sich
+                    sicher sein, dass Produkte auf Fairbundled.de nachhaltig und hochwertig sind.
+                </Col>
                 </Row>
 
                 <Row gutter={[8,48]}>
