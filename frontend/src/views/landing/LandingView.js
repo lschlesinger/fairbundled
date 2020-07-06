@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card, Col, Layout, message, Row, Tag, Typography, Divider, Anchor, Carousel} from "antd";
+import {Button, Card, Col, Layout, message, Row, Tag, Typography, Divider, Anchor, Carousel, Avatar} from "antd";
 import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
 import { SmileTwoTone, HeartTwoTone, CheckCircleTwoTone } from '@ant-design/icons';
 
@@ -207,14 +207,16 @@ export class LandingView extends React.Component {
                         <Divider>Unsere Zertifikate</Divider>
                     </Col>
                 </Row>
-                <Row>
+                <Row gutter={[8,48]}>
                     <Col span={5} align="middle">
-                        <img className="landing__picture_cert"
-                             src={BlauerEngel} alt="BlauerEngel"/>
+                        <Avatar shape="square"
+                                size={100}
+                                src={BlauerEngel}/>
                     </Col>
                     <Col span={5} align="middle">
-                        <img className="landing__picture_cert"
-                             src={EcoLabel} alt="EcoLabel"/>
+                        <Avatar shape="square"
+                                size={100}
+                                src={EcoLabel}/>
                     </Col>
                     <Col span={4} align="middle">
                         <img className="landing__picture_cert"
@@ -222,7 +224,8 @@ export class LandingView extends React.Component {
                     </Col>
                     <Col span={5} align="middle">
                         <img className="landing__picture_cert"
-                             src={TCO} alt="TCO"/>
+                        src={TCO} alt="TCO"/>
+
                     </Col>
                     <Col span={5} align="middle">
                         <img className="landing__picture_cert"
