@@ -11,8 +11,8 @@ export default class OrderOptions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            qty: this.getMinQuantity(),
-            canBuy: true,
+            qty: 1,
+            canBuy: false,
         };
     }
 
