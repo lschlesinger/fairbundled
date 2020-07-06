@@ -3,12 +3,12 @@ import ProductDetails from "../../components/ProductDetails/ProductDetails";
 import ProductService from "../../services/ProductService";
 import PositionService from "../../services/PositionService";
 import FairbundleService from "../../services/FairbundleService";
-import {Breadcrumb, Col, message, notification, Row} from "antd";
+import { Breadcrumb, Col, message, notification, Row } from "antd";
 import ValidationError from "../../services/ValidationError";
 import JoinFairbundleModalView from "./FairbundledJoinedModalView";
 import CreateFairbundleModalView from "./FairbundleCreatedModalView";
 import FairbundleSuccessView from "./FairbundleSuccessView";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export class ProductDetailView extends React.Component {
     constructor(props) {
@@ -43,10 +43,12 @@ export class ProductDetailView extends React.Component {
 
             if (fairbundles.length > 0) {
                 fairbundles.forEach((fairbundle) => {
-                    fairbundles = fairbundles.filter((fb) => fb.submission === null && fb.cancellation === null);
+                    fairbundles = fairbundles.filter(
+                        (fb) =>
+                            fb.submission === null && fb.cancellation === null
+                    );
                 });
             }
-
 
             this.setState({
                 product: product,
@@ -57,12 +59,12 @@ export class ProductDetailView extends React.Component {
         }
     }
 
-    onShowCreateFairbundle = ({qty}) => {
-        this.setState({qty: qty});
+    onShowCreateFairbundle = ({ qty }) => {
+        this.setState({ qty: qty });
         this.showModal(false);
     };
 
-    onShowJoinFairbundle = ({fairbundleId, qty}) => {
+    onShowJoinFairbundle = ({ fairbundleId, qty }) => {
         this.setState({
             qty: qty,
             joinedFairbundle: this.state.fairbundles.find(
@@ -125,7 +127,7 @@ export class ProductDetailView extends React.Component {
     }
 
     onCreateOrder = (qty) => {
-        this.setState({qty: qty});
+        this.setState({ qty: qty });
 
         PositionService.addPosition(qty, this.state.product._id)
             .then((product) => {
@@ -212,12 +214,12 @@ export class ProductDetailView extends React.Component {
                     rc.subcategories.find((sc) => sc._id === childC._id)
                 );
                 parentsWithChildren.push(parent);
-                breadcrumbs.push({parent: parent, child: childC});
+                breadcrumbs.push({ parent: parent, child: childC });
             }
             for (let rc in rootCategories) {
                 const rootC = rootCategories[rc];
                 if (!parentsWithChildren.find((c) => c._id === rootC._id)) {
-                    breadcrumbs.push({parent: rootC});
+                    breadcrumbs.push({ parent: rootC });
                 }
             }
             return (
@@ -236,14 +238,18 @@ export class ProductDetailView extends React.Component {
             <Col>
                 <Row>{this.renderBreadcrumbs()}</Row>
                 <Row>
-                    <div style={{width: "100%"}}>
-                        <ProductDetails
-                            product={this.state.product}
-                            fairbundles={this.state.fairbundles}
-                            onCreateFairbundle={this.onShowCreateFairbundle}
-                            onJoinFairbundle={this.onShowJoinFairbundle}
-                            onCreateOrder={this.onCreateOrder}
-                        />
+                    <div style={{ width: "100%" }}>
+                        {this.state.product ? (
+                            <ProductDetails
+                                product={this.state.product}
+                                fairbundles={this.state.fairbundles}
+                                onCreateFairbundle={this.onShowCreateFairbundle}
+                                onJoinFairbundle={this.onShowJoinFairbundle}
+                                onCreateOrder={this.onCreateOrder}
+                            />
+                        ) : (
+                            ""
+                        )}
                         <JoinFairbundleModalView
                             quantity={this.state.qty}
                             fairbundle={this.state.joinedFairbundle}

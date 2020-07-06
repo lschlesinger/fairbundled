@@ -1,32 +1,38 @@
-import React from 'react';
-import {Avatar, Card, Col, Row, Typography} from "antd";
-import '../OrderOverview.less'
+import React from "react";
+import { Avatar, Card, Col, Row, Typography } from "antd";
+import "../OrderOverview.less";
 
-const {Text, Title} = Typography;
+const { Text, Title } = Typography;
 
 export default class FairbundledAdvantage extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
             topCertificate: null,
-        }
+        };
     }
 
     componentDidMount() {
         let topCertificate = this.getTopCertficate();
         this.setState({
-            topCertificate: topCertificate
+            topCertificate: topCertificate,
         });
     }
 
     getAverageSavings() {
-        let averagedSavingPercentage = this.props.municipality?.fairbundleSavings.reduce((a, b) => a + b.savingPercentage, 0) / this.props.municipality?.fairbundleSavings.length;
+        let averagedSavingPercentage =
+            this.props.municipality?.fairbundleSavings.reduce(
+                (a, b) => a + b.savingPercentage,
+                0
+            ) / this.props.municipality?.fairbundleSavings.length;
         if (averagedSavingPercentage > 0) {
-            averagedSavingPercentage = averagedSavingPercentage.toLocaleString(undefined, {
-                style: 'percent',
-                minimumFractionDigits: 2
-            });
+            averagedSavingPercentage = averagedSavingPercentage.toLocaleString(
+                undefined,
+                {
+                    style: "percent",
+                    minimumFractionDigits: 2,
+                }
+            );
         } else {
             averagedSavingPercentage = "-";
         }
@@ -34,15 +40,19 @@ export default class FairbundledAdvantage extends React.Component {
     }
 
     getOverallSavings() {
-        return this.props.municipality?.fairbundleSavings.reduce((a, b) => a + b.savingAbsolute, 0);
+        return this.props.municipality?.fairbundleSavings.reduce(
+            (a, b) => a + b.savingAbsolute,
+            0
+        );
     }
 
     getTopCertficate() {
         let certificates = this.props.municipality?.certificates;
         if (certificates.length > 0) {
-            let orderedCertificates = certificates.sort((a, b) =>
-                certificates.filter(v => v._id === a._id).length
-                - certificates.filter(v => v._id === b._id).length
+            let orderedCertificates = certificates.sort(
+                (a, b) =>
+                    certificates.filter((v) => v._id === a._id).length -
+                    certificates.filter((v) => v._id === b._id).length
             );
             return orderedCertificates.pop();
         } else {
@@ -94,23 +104,29 @@ export default class FairbundledAdvantage extends React.Component {
                         Wichtigstes Nachhaltigkeits-Zertifikat
                     </Title>
                 </Row>
-                {this.state.topCertificate ?
+                {this.state.topCertificate ? (
                     <Col span={24}>
                         <Row className="padding-top--sm" justify="center">
-                            <a href={this.state.topCertificate?.url} target="_blank">
+                            <a
+                                href={this.state.topCertificate?.url}
+                                target="_blank"
+                            >
                                 <Avatar
                                     shape="square"
                                     size="large"
-                                    src={this.state.topCertificate?.logo}/>
+                                    src={this.state.topCertificate?.logo}
+                                />
                             </a>
                         </Row>
                         <Row className="padding-top--sm" justify="center">
                             <Text className="order-overview__number" strong>
                                 {this.state.topCertificate?.name}
                             </Text>
-                        </Row>)
-                    </Col> :
-                    "Es liegen noch keine Daten vor."}
+                        </Row>
+                    </Col>
+                ) : (
+                    "Es liegen noch keine Daten vor."
+                )}
             </Card>
         );
     }
