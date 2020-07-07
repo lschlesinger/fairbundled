@@ -135,7 +135,6 @@ export default class PositionService {
 
     // determines the bestseller in terms of qty & revenue
     static determineBestseller(orderedProducts) {
-        let uniquePr;
         let bestQty = 0;
         let bestRevenue = 0;
         let bestQtyProduct = 0;

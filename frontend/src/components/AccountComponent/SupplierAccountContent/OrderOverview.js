@@ -97,20 +97,21 @@ export default class MySupplierData extends React.Component {
                     ""
                 ) : (
                     <Row>
-                        <Row width={"100%"} className="margin-bottom--sm">
+                        <Row className="margin-bottom--sm">
                             <Title className="padding-right--sm" level={4}>
                                 Meistverkauftes Produkt
                             </Title>
                         </Row>
                         <Row>
                             <Col span={6}>
+                                {console.log(this.props.supplier.bestseller)}
                                 <img
                                     src={
                                         this.props.supplier.bestseller
                                             .qtyBestseller?.product.images
                                             ?.length > 0
                                             ? this.props.supplier.bestseller
-                                                  .qtyBestseller?.product
+                                                  .qtyBestseller.product
                                                   .images[0]
                                             : placeholder
                                     }

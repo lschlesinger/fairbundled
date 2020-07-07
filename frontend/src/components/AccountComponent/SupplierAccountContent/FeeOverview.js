@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Typography, Row, Col } from "antd";
-import '../AccountContent.less'
+import "../AccountContent.less";
 
 const { Text } = Typography;
 
@@ -20,12 +20,12 @@ export default class MySupplierData extends React.Component {
                     <Text mark>Letzte 30 Tage</Text>
                 </Row>
                 <Row className="padding-top--sm" gutter={8}>
-                    <Col span={12}>
+                    <Col span={14}>
                         <Text className="my-entity-data__text" strong>
                             Verkaufsgebühr:
                         </Text>
                     </Col>
-                    <Col span={12}>
+                    <Col span={10}>
                         <Text className="my-entity-data__text">
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
@@ -35,12 +35,12 @@ export default class MySupplierData extends React.Component {
                     </Col>
                 </Row>
                 <Row className="padding-top--sm" gutter={8}>
-                    <Col span={12}>
+                    <Col span={14}>
                         <Text className="my-entity-data__text" strong>
                             Umsatzprovision:
                         </Text>
                     </Col>
-                    <Col span={12}>
+                    <Col span={10}>
                         <Text className="my-entity-data__text">
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
@@ -50,16 +50,12 @@ export default class MySupplierData extends React.Component {
                     </Col>
                 </Row>
                 <Row className="padding-top--sm" gutter={8}>
-                    <Col span={12}>
-                        <Text
-                            className="my-entity-data__text"
-                            underline
-                            strong
-                        >
+                    <Col span={14}>
+                        <Text className="my-entity-data__text" underline strong>
                             Summe:
                         </Text>
                     </Col>
-                    <Col span={12}>
+                    <Col span={10}>
                         <Text underline className="my-entity-data__text">
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
@@ -76,12 +72,12 @@ export default class MySupplierData extends React.Component {
                     <Text mark>Insgesamt</Text>
                 </Row>
                 <Row className="padding-top--sm" gutter={8}>
-                    <Col span={12}>
+                    <Col span={14}>
                         <Text className="my-entity-data__text" strong>
                             Verkaufsgebühr:
                         </Text>
                     </Col>
-                    <Col span={12}>
+                    <Col span={10}>
                         <Text className="my-entity-data__text">
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
@@ -91,12 +87,12 @@ export default class MySupplierData extends React.Component {
                     </Col>
                 </Row>
                 <Row className="padding-top--sm" gutter={8}>
-                    <Col span={12}>
+                    <Col span={14}>
                         <Text className="my-entity-data__text" strong>
                             Umsatzprovision:
                         </Text>
                     </Col>
-                    <Col span={12}>
+                    <Col span={10}>
                         <Text className="my-entity-data__text">
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
@@ -106,16 +102,12 @@ export default class MySupplierData extends React.Component {
                     </Col>
                 </Row>
                 <Row className="padding-top--sm" gutter={8}>
-                    <Col span={12}>
-                        <Text
-                            className="my-entity-data__text"
-                            underline
-                            strong
-                        >
+                    <Col span={14}>
+                        <Text className="my-entity-data__text" underline strong>
                             Summe:
                         </Text>
                     </Col>
-                    <Col span={12}>
+                    <Col span={10}>
                         <Text underline className="my-entity-data__text">
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
