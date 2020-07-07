@@ -341,7 +341,7 @@ export class LandingView extends React.Component {
                 <Row gutter={[8, 48]}>
                     <Col span={24} align="middle">
                         <img className="landing__picture_big"
-                             src={Prinzip} alt="Prinzip"/>
+                             src={Fairbundled} alt="Fairbundled"/>
                     </Col>
 
                 </Row>
