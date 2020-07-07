@@ -5,6 +5,13 @@ import {CloseCircleOutlined, SendOutlined} from "@ant-design/icons";
 
 const {Title, Text} = Typography;
 
+// 24-Stunden Angabe in DE Zeiten
+let options = {
+    year: 'numeric', month: 'numeric', day: 'numeric',
+    hour: 'numeric', minute: 'numeric', second: 'numeric',
+    hour12: false,
+};
+
 export default class ActivityOverview extends React.Component {
 
     constructor(props) {
@@ -70,7 +77,7 @@ export default class ActivityOverview extends React.Component {
                 currency: "EUR",
             }).format(currentPrice);
             const status = currentQty + " von " + targetQty + " " + targetPriceLevel.unit;
-            const expiration = new Intl.DateTimeFormat(('de-DE')).format(new Date(fbp.order.expiration));
+            const expiration = new Intl.DateTimeFormat(('de-DE'), options).format(new Date(fbp.order.expiration));
             const expirationAction = fbp.order.expirationAction;
             let entry = {
                 key: fbp.product._id,
@@ -152,12 +159,11 @@ export default class ActivityOverview extends React.Component {
                            footer={() =>
                                <Col>
                                    <Row justify="start" align="middle">
-
-                                       <SendOutlined/> <Text type="secondary"  className="padding-left--md">Die Bestellung wird in jedem Fall
-                                       getätigt, eventuell nicht zum Zielpreis</Text>
+                                       <SendOutlined/> <Text type="secondary"  className="padding-left--md">Die Bestellung wird
+                                       getätigt auch wenn der Zielpreis nicht erreicht ist</Text>
                                    </Row>
                                    <Row justify="start" align="middle">
-                                       <CloseCircleOutlined/> <Text type="secondary"  className="padding-left--md">Die Bestellung wird abgebrochen, wenn der Zielpreis nicht erreicht wird</Text>
+                                       <CloseCircleOutlined/> <Text type="secondary"  className="padding-left--md">Die Bestellung wird abgebrochen wenn der Zielpreis nicht erreicht wird</Text>
                                    </Row>
                                </Col>
 

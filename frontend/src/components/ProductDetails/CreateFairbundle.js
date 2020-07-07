@@ -1,10 +1,23 @@
 import React from "react";
 import moment from "moment";
-import { Button, Card, Col, DatePicker, Radio, Row, Typography } from "antd";
+import {Button, Card, Col, DatePicker, Radio, Row, Typography} from "antd";
 import locale from "antd/es/date-picker/locale/de_DE";
 import "./CreateFairbundle.less";
 
-const { Text } = Typography;
+const {Text} = Typography;
+
+// start week mondays
+moment.locale('de', {
+    week: {
+        dow: 0,
+    },
+});
+// show German weekdays and months
+moment.updateLocale('de', {
+    weekdaysMin : ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"],
+    monthsShort: ["Jan", "Feb", "März", "Apr", "Mai", "Jun", "Jul", "Aug", "Sept", "Okt", "Nov", "Dez"]
+});
+
 
 export default class CreateFairbundle extends React.Component {
     constructor(props) {
@@ -40,7 +53,7 @@ export default class CreateFairbundle extends React.Component {
     };
 
     onPriceLevelChange = (e) => {
-        this.setState({ selectedPriceLevel: e.target.value });
+        this.setState({selectedPriceLevel: e.target.value});
     };
 
     disabledDate = (current) => {
@@ -48,9 +61,9 @@ export default class CreateFairbundle extends React.Component {
         return current && current < moment().endOf("day");
     };
 
-    getPriceLevel(priceLevel, index) {
+    getPriceLevelCard(priceLevel, index) {
         return (
-            <Col className="gutter-row" span={8} key={index}>
+            <Col span={8} key={index}>
                 <Card
                     className={`create-fairbundle__card${
                         index % 2 ? "-odd" : ""
@@ -77,7 +90,7 @@ export default class CreateFairbundle extends React.Component {
                         </Row>
                     </Row>
                     <Row justify="center" className="margin-vertical--md">
-                        <Radio value={index} />
+                        <Radio value={index}/>
                     </Row>
                 </Card>
             </Col>
@@ -91,14 +104,14 @@ export default class CreateFairbundle extends React.Component {
             <div>
                 <Row>
                     <Radio.Group
-                        className="margin-vertical--md"
+                        className="margin-vertical--md create-fairbundle__cards-group"
                         size="large"
                         onChange={this.onPriceLevelChange}
                         value={this.state.selectedPriceLevel}
                     >
                         <Row gutter={[16, 16]}>
                             {product.priceLevel.map((p, i) =>
-                                this.getPriceLevel(p, i)
+                                this.getPriceLevelCard(p, i)
                             )}
                         </Row>
                     </Radio.Group>
@@ -108,7 +121,7 @@ export default class CreateFairbundle extends React.Component {
                         <Text>Ihre Bestellmenge:</Text>
                     </Col>
                     <Col>
-                        <b> {this.props.quantity} </b>
+                        <b> {this.props.quantity + ' ' + product.priceLevel[0].unit} </b>
                     </Col>
                 </Row>
                 <Row align="middle">
@@ -119,16 +132,19 @@ export default class CreateFairbundle extends React.Component {
                         <DatePicker
                             locale={locale}
                             onChange={this.onDateChange}
-                            placeholder="Datum wählen"
-                            format={"DD.MM.YYYY"}
                             showToday={false}
+                            showTime={true}
+                            showNow={false}
+                            placeholder="Zeitpunkt wählen"
+                            format={"DD.MM.YYYY HH:mm"}
                             disabledDate={this.disabledDate}
                         />
                     </Col>
                 </Row>
                 <Row className="margin-bottom--md">
                     <Row className="margin-vertical--md">
-                        Bei Nichterreichen des Zielpreises soll:
+                        {`Wenn die vom Verkäufer festgelegte Mindestmenge von ${product.priceLevel.reduce((a, b) => Math.min(a, b.minQty), Number.MAX_SAFE_INTEGER)}
+                         ${product.priceLevel[0].unit} erreicht wird, nicht jedoch die entsprechende Menge zur Erreichung des Zielpreises soll:`}
                     </Row>
                     <Row>
                         <Radio.Group
