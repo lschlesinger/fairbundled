@@ -63,6 +63,7 @@ class FilterBar extends React.Component {
             return []
         }
 
+        certs = certs.sort((a,b) => (a.sector > b.sector) ? 1 : ((b.sector > a.sector) ? -1 : 0));
 
         let groupedCerts = certs.reduce(function (r, a) {
             r[a.sector] = r[a.sector] || [];
