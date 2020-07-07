@@ -1,27 +1,16 @@
 import React from "react";
 import { Button, Card, Col, InputNumber, Progress, Row, Tooltip } from "antd";
-import {
-    CalendarOutlined,
-    CheckCircleOutlined,
-    TeamOutlined,
-} from "@ant-design/icons";
-import "./OrderOptions.less";
+import {CalendarOutlined, CheckCircleOutlined, TeamOutlined} from '@ant-design/icons';
+import './OrderOptions.less';
 
 export default class OrderOptions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             qty: 1,
-            canBuy: false,
+            canBuy: this.props.minQty <= 1
         };
     }
-
-    getMinQuantity = () => {
-        if (this.props.product === null) {
-            return 0;
-        }
-        return Math.min(...this.props.product.priceLevel.map((p) => p.minQty));
-    };
 
     getMaxPriceLevel = () => {
         if (this.props.product === null) {
@@ -70,11 +59,9 @@ export default class OrderOptions extends React.Component {
             return;
         }
 
-        let minQty = this.getMinQuantity();
-
         this.setState({
             qty: number,
-            canBuy: number >= minQty,
+            canBuy: number >= this.props.minQty
         });
     };
 
@@ -248,16 +235,14 @@ export default class OrderOptions extends React.Component {
                 )}
                 <Card className="order-options__card margin-vertical--sm">
                     <Tooltip
-                        title={`${
-                            !this.state.canBuy
-                                ? "Mindestbestellmenge von " +
-                                  this.getMinQuantity() +
-                                  " nicht erreicht"
-                                : "Sofort bestellen"
+                        title={`${!this.state.canBuy ? "Mindestbestellmenge von " +
+                            this.props.minQty + " " +
+                            this.props.product?.priceLevel[0].unit +
+                            " nicht erreicht"
+                            : "Sofort bestellen"
                         }`}
                     >
-                        <Button
-                            type="primary"
+                        <Button type="primary"
                             className="order-options__buttons"
                             block
                             disabled={!this.state.canBuy}

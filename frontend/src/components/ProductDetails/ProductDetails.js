@@ -17,7 +17,22 @@ import ProductInformationText from "./ProductInformationText";
 export default class ProductDetails extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            minQty: this.getMinQuantity()
+        }
     }
+
+    componentDidMount() {
+        let minQty = this.getMinQuantity();
+        this.setState({
+            minQty: minQty
+        });
+    }
+
+    getMinQuantity() {
+        let priceLevel = this.props.product.priceLevel;
+        return Math.min(...priceLevel.map(p => p.minQty));
+    };
 
     render() {
         return (
@@ -44,7 +59,10 @@ export default class ProductDetails extends React.Component {
                     </Row>
                 </Col>
                 <Col span={7} className="padding--md">
-                    {this.props.product ? <OrderOptions {...this.props} /> : ""}
+                    <OrderOptions
+                        {...this.props}
+                        minQty={this.state.minQty}
+                    />
                 </Col>
             </Row>
         );

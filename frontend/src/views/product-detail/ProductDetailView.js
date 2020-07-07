@@ -3,12 +3,13 @@ import ProductDetails from "../../components/ProductDetails/ProductDetails";
 import ProductService from "../../services/ProductService";
 import PositionService from "../../services/PositionService";
 import FairbundleService from "../../services/FairbundleService";
-import { Breadcrumb, Col, message, notification, Row } from "antd";
+import {Breadcrumb, Col, message, notification, Row, Spin} from "antd";
 import ValidationError from "../../services/ValidationError";
 import JoinFairbundleModalView from "./FairbundledJoinedModalView";
 import CreateFairbundleModalView from "./FairbundleCreatedModalView";
 import FairbundleSuccessView from "./FairbundleSuccessView";
 import { Link } from "react-router-dom";
+import {LoadingOutlined} from "@ant-design/icons";
 
 export class ProductDetailView extends React.Component {
     constructor(props) {
@@ -75,7 +76,7 @@ export class ProductDetailView extends React.Component {
         this.showModal(true);
     };
 
-    joinFairbundle() {
+    joinFairbundle = () => {
         FairbundleService.joinFairbundle(
             this.state.joinedFairbundle._id,
             this.state.qty
@@ -97,9 +98,9 @@ export class ProductDetailView extends React.Component {
                     });
                 }
             });
-    }
+    };
 
-    createFairbundle(expirationDate, expirationAction, targetPrice) {
+    createFairbundle = (expirationDate, expirationAction, targetPrice) => {
         FairbundleService.createFairbundle(
             this.state.qty,
             this.state.product._id,
@@ -124,7 +125,7 @@ export class ProductDetailView extends React.Component {
                     });
                 }
             });
-    }
+    };
 
     onCreateOrder = (qty) => {
         this.setState({ qty: qty });
@@ -233,34 +234,52 @@ export class ProductDetailView extends React.Component {
         return null;
     };
 
+    renderProductDetails() {
+        if (this.state.product) {
+            return (<ProductDetails
+                product={this.state.product}
+                fairbundles={this.state.fairbundles}
+                onCreateFairbundle={this.onShowCreateFairbundle}
+                onJoinFairbundle={this.onShowJoinFairbundle}
+                onCreateOrder={this.onCreateOrder}
+            />)
+        } else {
+            return (this.renderSpinner)
+        }
+
+    }
+
+    renderSpinner() {
+        const antIcon = <LoadingOutlined style={{fontSize: 36}} spin/>;
+        return (
+            <Row
+                justify="center"
+                align="middle"
+                className="app__spinner-container"
+            >
+                <Spin size="large" indicator={antIcon}/>
+            </Row>
+        );
+    }
+
     render() {
         return (
             <Col>
                 <Row>{this.renderBreadcrumbs()}</Row>
                 <Row>
                     <div style={{ width: "100%" }}>
-                        {this.state.product ? (
-                            <ProductDetails
-                                product={this.state.product}
-                                fairbundles={this.state.fairbundles}
-                                onCreateFairbundle={this.onShowCreateFairbundle}
-                                onJoinFairbundle={this.onShowJoinFairbundle}
-                                onCreateOrder={this.onCreateOrder}
-                            />
-                        ) : (
-                            ""
-                        )}
+                        {this.renderProductDetails()}
                         <JoinFairbundleModalView
                             quantity={this.state.qty}
                             fairbundle={this.state.joinedFairbundle}
-                            joinFairbundle={this.joinFairbundle.bind(this)}
+                            joinFairbundle={this.joinFairbundle}
                             onClose={this.hideModal}
                             modalVisible={this.state.joinModalVisible}
                         />
                         <CreateFairbundleModalView
                             quantity={this.state.qty}
                             product={this.state.product}
-                            createFairbundle={this.createFairbundle.bind(this)}
+                            createFairbundle={this.createFairbundle}
                             onClose={this.hideModal}
                             modalVisible={this.state.createModalVisible}
                         />
