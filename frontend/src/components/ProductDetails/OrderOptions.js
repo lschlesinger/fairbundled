@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Card, Col, InputNumber, Progress, Row, Tooltip } from "antd";
 import {CalendarOutlined, CheckCircleOutlined, TeamOutlined} from '@ant-design/icons';
+import AuthService from "../../services/AuthService";
 import './OrderOptions.less';
 
 export default class OrderOptions extends React.Component {
@@ -158,16 +159,25 @@ export default class OrderOptions extends React.Component {
                         </Col>
                     </Row>
                 </Row>
-                <Button
-                    type="primary"
-                    className="order-options__buttons margin-top--md"
-                    ref={(buttonDOM) => {
-                        this.joinDOM = buttonDOM;
-                    }}
-                    onClick={(evt) => this.onJoinFairbundle(fairbundle._id)}
+                <Tooltip
+                    title={`
+                    ${!AuthService.isAuthenticatedMunicipality() 
+                        ? "Nur angemeldete Nutzer von Kommunen können Fairbundle beitreten" 
+                        : "Bestehendem Fairbundle beitreten"
+                    }`}
                 >
-                    Fairbundle beitreten
-                </Button>
+                    <Button
+                        type="primary"
+                        className="order-options__buttons margin-top--md"
+                        disabled={!AuthService.isAuthenticatedMunicipality()}
+                        ref={(buttonDOM) => {
+                            this.joinDOM = buttonDOM;
+                        }}
+                        onClick={(evt) => this.onJoinFairbundle(fairbundle._id)}
+                    >
+                        Fairbundle beitreten
+                    </Button>
+                </Tooltip>
             </Card>
         );
     };
@@ -210,17 +220,26 @@ export default class OrderOptions extends React.Component {
                 {/*only render "Neues Fairbundle" Button if bundling is possible (more than 1 price level)*/}
                 {this.props.product?.priceLevel.length > 1 ? (
                     <Card className="order-options__card margin-vertical--sm">
-                        <Button
-                            type="primary"
-                            block
-                            className="order-options__buttons"
-                            ref={(buttonDOM) => {
-                                this.createDOM = buttonDOM;
-                            }}
-                            onClick={this.onCreateFairbundle}
+                        <Tooltip
+                            title={`
+                            ${!AuthService.isAuthenticatedMunicipality() 
+                                ? "Nur angemeldete Nutzer von Kommunen können Fairbundle erstellen" 
+                                : "Neues Fairbundle erstellen"
+                            }`}
                         >
-                            Neues Fairbundle
-                        </Button>
+                            <Button
+                                type="primary"
+                                block
+                                disabled={!AuthService.isAuthenticatedMunicipality()}
+                                className="order-options__buttons"
+                                ref={(buttonDOM) => {
+                                    this.createDOM = buttonDOM;
+                                }}
+                                onClick={this.onCreateFairbundle}
+                            >
+                                Neues Fairbundle
+                            </Button>
+                        </Tooltip>
                     </Card>
                 ) : (
                     <Row className="order-options__card margin-vertical--sm">
@@ -235,11 +254,15 @@ export default class OrderOptions extends React.Component {
                 )}
                 <Card className="order-options__card margin-vertical--sm">
                     <Tooltip
-                        title={`${!this.state.canBuy ? "Mindestbestellmenge von " +
-                            this.props.minQty + " " +
-                            this.props.product?.priceLevel[0].unit +
-                            " nicht erreicht"
-                            : "Sofort bestellen"
+                        title={`
+                        ${!AuthService.isAuthenticatedMunicipality() 
+                            ? "Nur angemeldete Nutzer von Kommunen können Artikel bestellen" 
+                            : !this.state.canBuy 
+                                ? "Mindestbestellmenge von " +
+                                    this.props.minQty + " " +
+                                    this.props.product?.priceLevel[0].unit +
+                                    " nicht erreicht"
+                                : "Sofort bestellen"
                         }`}
                     >
                         <Button type="primary"
