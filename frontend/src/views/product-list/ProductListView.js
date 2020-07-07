@@ -16,7 +16,8 @@ export default class ProductListView extends React.Component {
         this.state = {
             products: null,
             fairbundles: null,
-            certificates: null
+            certificates: null,
+            selectedCerts: null
         };
     }
 
@@ -33,10 +34,15 @@ export default class ProductListView extends React.Component {
     }
 
     onSelectedCertsChanged(selectedCerts) {
-        this.getProductsAndFairbundles(selectedCerts);
+        this.setState(prevState => ({
+            ...prevState,
+            selectedCerts: selectedCerts
+        }));
+
+        this.getProductsAndFairbundles();
     }
 
-    async getProductsAndFairbundles(certificates = null) {
+    async getProductsAndFairbundles() {
         try {
             const {
                 location: { search },
@@ -45,6 +51,7 @@ export default class ProductListView extends React.Component {
             let fairbundles = await FairbundleService.getFairbundles();
             // get products
             let products = await ProductService.getProducts(search);
+            let certificates = this.state.selectedCerts;
             if (certificates != null && certificates.length > 0) {
                 products = products.filter(p => p.certificates.some(r=> certificates.indexOf(r) >= 0));
             }
