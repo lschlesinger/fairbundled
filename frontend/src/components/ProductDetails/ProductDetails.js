@@ -44,7 +44,7 @@ export default class ProductDetails extends React.Component {
                     </Row>
                 </Col>
                 <Col span={7} className="padding--md">
-                    <OrderOptions {...this.props} />
+                    {this.props.product ? <OrderOptions {...this.props} /> : ""}
                 </Col>
             </Row>
         );

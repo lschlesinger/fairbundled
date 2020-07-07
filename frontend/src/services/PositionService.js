@@ -5,15 +5,14 @@ import CertificateService from "./CertificateService";
 export default class PositionService {
     static BASE_URL = "/api/position";
 
-    constructor() {
-    }
+    constructor() {}
 
     static async getPositions() {
         return HttpService.get(`${this.BASE_URL}/`);
     }
 
     static async addPosition(qty, productId) {
-        return HttpService.post(`${this.BASE_URL}/`, {qty, productId});
+        return HttpService.post(`${this.BASE_URL}/`, { qty, productId });
     }
 
     // Calculates all necessary information in the supplier account view
@@ -97,7 +96,7 @@ export default class PositionService {
                     let tie = false;
                     for (const op in orderedProducts) {
                         if (
-                            orderedProducts[op].product.id ===
+                            orderedProducts[op].product._id ===
                             position.product._id
                         ) {
                             orderedProducts[op].qty += position.qty;
@@ -136,6 +135,7 @@ export default class PositionService {
 
     // determines the bestseller in terms of qty & revenue
     static determineBestseller(orderedProducts) {
+        let uniquePr;
         let bestQty = 0;
         let bestRevenue = 0;
         let bestQtyProduct = 0;
@@ -169,7 +169,10 @@ export default class PositionService {
     static getUniqueOrders(positions) {
         let resultArray = [];
         positions.forEach((position) => {
-            if (resultArray.filter((entry) => (entry._id === position.order._id)).length === 0) {
+            if (
+                resultArray.filter((entry) => entry._id === position.order._id)
+                    .length === 0
+            ) {
                 resultArray.push(position.order);
             }
         });
@@ -179,11 +182,13 @@ export default class PositionService {
     static getDirectOrderValues(orders, positions) {
         let resultArray = [];
         orders.forEach((order) => {
-            let orderPositions = positions.filter((pos) => pos.order._id === order._id);
+            let orderPositions = positions.filter(
+                (pos) => pos.order._id === order._id
+            );
             let orderValue = OrderService.getPositionsValue(orderPositions);
             let orderEntry = {
                 order: order,
-                value: orderValue
+                value: orderValue,
             };
 
             resultArray.push(orderEntry);
@@ -192,15 +197,24 @@ export default class PositionService {
     }
 
     static getFairbundlesPending(positions) {
-        let fbPositions = positions.filter((position) => !position.order.submission && !position.order.cancellation && position.order.__t);
+        let fbPositions = positions.filter(
+            (position) =>
+                !position.order.submission &&
+                !position.order.cancellation &&
+                position.order.__t
+        );
         let resultArray = [];
         let positionOrders = [];
         fbPositions.forEach((position) => {
             // there is already a position of the same order
             if (positionOrders.includes(position.order._id)) {
-                let updatedPosition = resultArray.find(p => p.order._id === position.order._id);
+                let updatedPosition = resultArray.find(
+                    (p) => p.order._id === position.order._id
+                );
                 updatedPosition.qty = updatedPosition.qty + position.qty;
-                let foundIndex = resultArray.findIndex(p => p.order._id === position.order._id);
+                let foundIndex = resultArray.findIndex(
+                    (p) => p.order._id === position.order._id
+                );
                 resultArray[foundIndex] = updatedPosition;
             } else {
                 positionOrders.push(position.order._id);
@@ -239,20 +253,42 @@ export default class PositionService {
 
         let positions = await this.getPositions();
 
-
         if (positions?.length > 0) {
-            fairbundlesSubmittedPositions = positions.filter((position) => position.order.submission && position.order.__t);
+            fairbundlesSubmittedPositions = positions.filter(
+                (position) => position.order.submission && position.order.__t
+            );
             fairbundlesPending = this.getFairbundlesPending(positions);
-            directOrdersSubmittedPositions = positions.filter((position) => position.order.submission && !position.order.__t);
-            fairbundleProductsBought = this.getUniqueProducts(fairbundlesSubmittedPositions);
-            directProductsBought = this.getUniqueProducts(directOrdersSubmittedPositions);
-            directOrdersSubmitted = this.getUniqueOrders(directOrdersSubmittedPositions);
-            fairbundlesSubmitted = this.getUniqueOrders(fairbundlesSubmittedPositions);
-            fairbundleSpendings = OrderService.getPositionsValue(fairbundlesSubmittedPositions);
-            fairbundleSavings = OrderService.getPositionsSavings(fairbundlesSubmittedPositions);
-            directOrderSpendings = OrderService.getPositionsValue(directOrdersSubmittedPositions);
-            directOrderValues = this.getDirectOrderValues(directOrdersSubmitted, directOrdersSubmittedPositions);
-            certificates = CertificateService.getPositionsCertificates(positions);
+            directOrdersSubmittedPositions = positions.filter(
+                (position) => position.order.submission && !position.order.__t
+            );
+            fairbundleProductsBought = this.getUniqueProducts(
+                fairbundlesSubmittedPositions
+            );
+            directProductsBought = this.getUniqueProducts(
+                directOrdersSubmittedPositions
+            );
+            directOrdersSubmitted = this.getUniqueOrders(
+                directOrdersSubmittedPositions
+            );
+            fairbundlesSubmitted = this.getUniqueOrders(
+                fairbundlesSubmittedPositions
+            );
+            fairbundleSpendings = OrderService.getPositionsValue(
+                fairbundlesSubmittedPositions
+            );
+            fairbundleSavings = OrderService.getPositionsSavings(
+                fairbundlesSubmittedPositions
+            );
+            directOrderSpendings = OrderService.getPositionsValue(
+                directOrdersSubmittedPositions
+            );
+            directOrderValues = this.getDirectOrderValues(
+                directOrdersSubmitted,
+                directOrdersSubmittedPositions
+            );
+            certificates = CertificateService.getPositionsCertificates(
+                positions
+            );
 
             municipality.noPosition = false;
         } else {
