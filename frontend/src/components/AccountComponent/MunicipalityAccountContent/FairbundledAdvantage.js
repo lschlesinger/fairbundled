@@ -124,7 +124,7 @@ export default class FairbundledAdvantage extends React.Component {
                             </Text>
                         </Row>
                     </Col>
-                ) : (
+                    ) : (
                     "Es liegen noch keine Daten vor."
                 )}
             </Card>
