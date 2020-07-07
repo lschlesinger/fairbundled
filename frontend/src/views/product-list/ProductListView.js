@@ -53,7 +53,7 @@ export default class ProductListView extends React.Component {
             let products = await ProductService.getProducts(search);
             let certificates = this.state.selectedCerts;
             if (certificates != null && certificates.length > 0) {
-                products = products.filter(p => p.certificates.some(r=> certificates.indexOf(r) >= 0));
+                products = products.filter(p => certificates.every(c => p.certificates.indexOf(c) >= 0));
             }
             // update products with smallest Price Information
             products = ProductService.getSmallestPrice(products);
