@@ -11,7 +11,7 @@ export default class ProductImageUpload extends React.Component {
             previewVisible: false,
             previewImage: '',
             previewTitle: '',
-            fileList: []
+            fileList:  this.props.product.fileList
         };
     }
 
@@ -31,6 +31,7 @@ export default class ProductImageUpload extends React.Component {
 
     handleChange = (res) => {
         this.setState({fileList: res.fileList});
+        console.log(this.state.fileList);
     };
 
     getBase64 = (file) => {
@@ -59,14 +60,14 @@ export default class ProductImageUpload extends React.Component {
                     >
                         <Upload
                             // TODO: think about coming up with customRequest here...
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            action="/api/product/image"
                             listType="picture-card"
-                            fileList={fileList}
+                            fileList={this.state.fileList}
                             onPreview={this.handlePreview}
                             onChange={this.handleChange}
                             multiple
                         >
-                            {fileList.length >= ALLOWED_IMAGE_NUMBER ? null : uploadButton}
+                            {fileList?.length >= ALLOWED_IMAGE_NUMBER ? null : uploadButton}
                         </Upload>
                     </Form.Item>
                 </Row>

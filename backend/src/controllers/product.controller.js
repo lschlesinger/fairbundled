@@ -2,6 +2,15 @@ import Product from "../models/product.model";
 
 class ProductController {
 
+    /**
+     * noop image upload handler
+     * @param req
+     * @param res
+     */
+    static uploadImage(req, res) {
+        res.status(200).json({});
+    }
+
     static getProducts(req, res) {
         const query = {};
         if (!!req.query.category) {

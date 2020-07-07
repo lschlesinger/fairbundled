@@ -13,7 +13,7 @@ export default class ProductCertificateSelection extends React.Component {
         // the mapped categories for the certificate
         if (cert.categories.some(i => this.props.product.categories.indexOf(i) >= 0)) {
             return (
-                <Col span="12" key={cert._id}>
+                <Col offset="8" span="12" key={cert._id}>
                     <Checkbox value={cert}>
                         <Avatar shape="square"
                                 size="medium"

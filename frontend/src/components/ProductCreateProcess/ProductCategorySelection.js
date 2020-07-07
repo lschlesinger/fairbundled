@@ -83,7 +83,6 @@ export default class ProductCategorySelection extends React.Component {
                     <TreeSelect
                         dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
                         placeholder="Wählen Sie eine oder mehrere Kategorien"
-                        value={this.state.categories}
                         onChange={this.onChange.bind(this)}
                         multiple
                     >
