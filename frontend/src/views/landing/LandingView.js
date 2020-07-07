@@ -8,6 +8,7 @@ import './LandingView.less';
 
 import "../../components/ProductListCard/ProductListCard.less";
 
+import ProductRecomemndations from "../../components/ProductRecommendations/ProductRecommendations";
 import ProductService from "../../services/ProductService";
 import HttpService from "../../services/HttpService";
 import placeholder from "../../assets/placeholder.png";
@@ -15,7 +16,7 @@ import {Link} from "react-router-dom";
 import Corona from "../../assets/Corona.png";
 import Feuerwehr from "../../assets/Feuerwehr.png";
 import Computer from "../../assets/Computer.png";
-import Prinzip from "../../assets/Prinzip.png";
+import Fairbundled from "../../assets/Fairbundled.png";
 import BlauerEngel from "../../assets/BlauerEngel.png";
 import EcoLabel from "../../assets/EcoLabel.png";
 import FairStone from "../../assets/FairStone.jpg";
@@ -166,186 +167,194 @@ export class LandingView extends React.Component {
 
     render() {
         return (
-            <Layout className="landing-view__layout">
-                <Row gutter={[8]}>
-                   <Col span={24} align="middle">
-                       <Divider>Das Produkt der Woche</Divider>
-                   </Col>
-                </Row>
-                       <Row gutter={[24, 24]}>
-                       <Col span={20} align="left">
-                       {this.getCardItem(this.state.product)}
-                       </Col>
-                           <Col span={4} align="right">
-                       <Carousel autoplay>
-                           <div>
-                               <h1>
-                                   {this.getCardItem(this.state.product)}
-                               </h1>
-                           </div>
-                           <div>
-                               <h1>
-                                   {this.getCardItem(this.state.product)}
-                               </h1>
-                           </div>
-                           <div>
-                               <h1>
-                                   {this.getCardItem(this.state.product)}
-                               </h1>
-                           </div>
-                           <div>
-                               <h1>
-                                   {this.getCardItem(this.state.product)}
-                               </h1>
-                           </div>
-                       </Carousel>
-                           </Col>
-                       </Row>
+            <ProductRecommendations
 
-                <Row gutter={[8,48]}>
-                    <Col span={24} align="middle">
-                        <Divider>Unsere Zertifikate</Divider>
-                    </Col>
-                </Row>
-                <Row gutter={[8,48]}>
-                    <Col span={5} align="middle">
-                        <Avatar shape="square"
-                                size={100}
-                                src={BlauerEngel}/>
-                    </Col>
-                    <Col span={5} align="middle">
-                        <Avatar shape="square"
-                                size={100}
-                                src={EcoLabel}/>
-                    </Col>
-                    <Col span={4} align="middle">
-                        <img className="landing__picture_cert"
-                             src={FairStone} alt="FairStone"/>
-                    </Col>
-                    <Col span={5} align="middle">
-                        <img className="landing__picture_cert"
-                        src={TCO} alt="TCO"/>
-
-                    </Col>
-                    <Col span={5} align="middle">
-                        <img className="landing__picture_cert"
-                             src={Fairtrade} alt="Fairtrade"/>
-                    </Col>
-                </Row>
-                <Row gutter={[8, 48]}>
-                <Col span={24} align="middle">
-                    Durch eine sorgfältige Auswahl der Zertifikate und unseren hohen Anspruch an Qualität, können Sie sich
-                    sicher sein, dass Produkte auf Fairbundled.de nachhaltig und hochwertig sind.
-                </Col>
-                </Row>
-
-                <Row gutter={[8,48]}>
-                    <Col span={24} align="middle">
-                        <Divider>Interessante Kategorien</Divider>
-                    </Col>
-                </Row>
-
-                <Row gutter={[8,48]}>
-                    <Col span={8} align="middle">
-                        <Link to={`/product?category=5ed537556ea8f1fcd3e8ff0c`}>
-                        <img className="landing__pictures"
-                             src={Corona} alt="Corona"/>
-                        </Link>
-                    </Col>
-                    <Col span={8} align="middle">
-                        <Link to={`/product?category=5ed537556ea8f1fcd3e8fe72`}>
-                        <img className="landing__pictures"
-                             src={Feuerwehr} alt="Feuerwehr"/>
-                    </Link>
-                    </Col>
-                    <Col span={8} align="middle">
-                        <Link to={`/product?category=5ed537556ea8f1fcd3e8fee4`}>
-                        <img className="landing__pictures"
-                             src={Computer} alt="Computer"/>
-                        </Link>
-                    </Col>
-                </Row>
-
-                <Row gutter={[8, 48]}>
-                    <Col span={8} />
-                    <Content className="landing-view__content">
-
-                        <Button
-                            shape="round"
-                            size="middle"
-                            type="primary"
-                            block
-                        >
-                       Über Fairbundled
-                        </Button>
-                    </Content>
-                    <Col span={8} align="middle">
-                    </Col>
-                </Row>
-                <Row gutter={[8, 48]}>
-                    <Col span={8} align = "middle">
-                    </Col>
-
-                    <Col span={8} />
-                    <Col span={8} />
-                </Row>
-                <Row gutter={[8, 48]}>
-                            <Divider>Das Fairbundle Prinzip</Divider>
-                </Row>
-
-                <Row>
-                    <Col span={8} align = "middle">
-                        <SmileTwoTone twoToneColor="#78A262" style={{ fontSize: '32px'}}/>
-                    </Col>
-                    <Col span={8} align = "middle">
-                        <SmileTwoTone twoToneColor="#78A262" style={{ fontSize: '32px'}}/>
-                    </Col>
-                    <Col span={8} align = "middle">
-                        <SmileTwoTone twoToneColor="#78A262" style={{ fontSize: '32px'}}/>
-                    </Col>
-
-                </Row>
-
-                <Row  className="landing-view__content_headline">
-                    <Col span={8} align = "middle">
-                        Faire Preise..
-                    </Col>
-                    <Col span={8} align = "middle">
-                        ..für Kommunen..
-                    </Col>
-                    <Col span={8} align = "middle">
-                       ..nachhaltig
-                    </Col>
-
-                </Row>
-                <Row gutter={[8,48]}>
-                    <Col span={8} align = "middle">
-                        Aufgrund unseres Fairbundle-Prinzips können Anbieter in größeren Mengen produzieren.
-                        Dadurch können wir die Produkte zu den Preisen anbieten, bei denen jeder profitiert.
-                        Treten Sie einem Fairbunndle bei oder erstellen Sie Ihr eigenes Fairbundle
-                        von den günstigsten Preisen zu profitieren
-                    </Col>
-                    <Col span={8} align = "middle">
-                        Der Prozess der kommunalen Beschaffung ist kompliziert und häufig umständlich - das
-                        wissen wir. Mit Hilfe von fairbundled.de gibt es nun endlich die Möglichkeit
-                        alles über einen zentralen Marktplatz einzukaufen.
-                    </Col>
-                    <Col span={8} align = "middle">
-                        Nachhaltigkeit ist uns ein großes Anliegen. Wir arbeiten daher nur mit
-                        zertifizierten Unternehmen, die unsere hohen Standards erfüllen. Filtern Sie gerne nach
-                        den Nachhaltigkeits-Zertifikaten in der Produktübersicht, um den Vorgaben Ihrer Kommune gerecht
-                        zu werden und nachhaltig einzukaufen.
-                    </Col>
-
-                </Row>
-                <Row gutter={[8, 48]}>
-                    <Col span={24} align="middle">
-                        <img className="landing__picture_big"
-                             src={Fairbundled} alt="Fairbundled"/>
-                    </Col>
-
-                </Row>
-            </Layout>
-        );
+            />
+        )
     }
 }
+/*
+       <Layout className="landing-view__layout">
+           <Row gutter={[8]}>
+              <Col span={24} align="middle">
+                  <Divider>Das Produkt der Woche</Divider>
+              </Col>
+           </Row>
+                  <Row gutter={[24, 24]}>
+                  <Col span={20} align="left">
+                  {this.getCardItem(this.state.product)}
+                  </Col>
+                      <Col span={4} align="right">
+                  <Carousel autoplay>
+                      <div>
+                          <h1>
+                              {this.getCardItem(this.state.product)}
+                          </h1>
+                      </div>
+                      <div>
+                          <h1>
+                              {this.getCardItem(this.state.product)}
+                          </h1>
+                      </div>
+                      <div>
+                          <h1>
+                              {this.getCardItem(this.state.product)}
+                          </h1>
+                      </div>
+                      <div>
+                          <h1>
+                              {this.getCardItem(this.state.product)}
+                          </h1>
+                      </div>
+                  </Carousel>
+                      </Col>
+                  </Row>
+
+           <Row gutter={[8,48]}>
+               <Col span={24} align="middle">
+                   <Divider>Unsere Zertifikate</Divider>
+               </Col>
+           </Row>
+           <Row gutter={[8,48]}>
+               <Col span={5} align="middle">
+                   <Avatar shape="square"
+                           size={100}
+                           src={BlauerEngel}/>
+               </Col>
+               <Col span={5} align="middle">
+                   <Avatar shape="square"
+                           size={100}
+                           src={EcoLabel}/>
+               </Col>
+               <Col span={4} align="middle">
+                   <img className="landing__picture_cert"
+                        src={FairStone} alt="FairStone"/>
+               </Col>
+               <Col span={5} align="middle">
+                   <img className="landing__picture_cert"
+                   src={TCO} alt="TCO"/>
+
+               </Col>
+               <Col span={5} align="middle">
+                   <img className="landing__picture_cert"
+                        src={Fairtrade} alt="Fairtrade"/>
+               </Col>
+           </Row>
+           <Row gutter={[8, 48]}>
+           <Col span={24} align="middle">
+               Durch eine sorgfältige Auswahl der Zertifikate und unseren hohen Anspruch an Qualität, können Sie sich
+               sicher sein, dass Produkte auf Fairbundled.de nachhaltig und hochwertig sind.
+           </Col>
+           </Row>
+
+           <Row gutter={[8,48]}>
+               <Col span={24} align="middle">
+                   <Divider>Interessante Kategorien</Divider>
+               </Col>
+           </Row>
+
+           <Row gutter={[8,48]}>
+               <Col span={8} align="middle">
+                   <Link to={`/product?category=5ed537556ea8f1fcd3e8ff0c`}>
+                   <img className="landing__pictures"
+                        src={Corona} alt="Corona"/>
+                   </Link>
+               </Col>
+               <Col span={8} align="middle">
+                   <Link to={`/product?category=5ed537556ea8f1fcd3e8fe72`}>
+                   <img className="landing__pictures"
+                        src={Feuerwehr} alt="Feuerwehr"/>
+               </Link>
+               </Col>
+               <Col span={8} align="middle">
+                   <Link to={`/product?category=5ed537556ea8f1fcd3e8fee4`}>
+                   <img className="landing__pictures"
+                        src={Computer} alt="Computer"/>
+                   </Link>
+               </Col>
+           </Row>
+
+           <Row gutter={[8, 48]}>
+               <Col span={8} />
+               <Content className="landing-view__content">
+
+                   <Button
+                       shape="round"
+                       size="middle"
+                       type="primary"
+                       block
+                   >
+                  Über Fairbundled
+                   </Button>
+               </Content>
+               <Col span={8} align="middle">
+               </Col>
+           </Row>
+           <Row gutter={[8, 48]}>
+               <Col span={8} align = "middle">
+               </Col>
+
+               <Col span={8} />
+               <Col span={8} />
+           </Row>
+           <Row gutter={[8, 48]}>
+                       <Divider>Das Fairbundle Prinzip</Divider>
+           </Row>
+
+           <Row>
+               <Col span={8} align = "middle">
+                   <SmileTwoTone twoToneColor="#78A262" style={{ fontSize: '32px'}}/>
+               </Col>
+               <Col span={8} align = "middle">
+                   <SmileTwoTone twoToneColor="#78A262" style={{ fontSize: '32px'}}/>
+               </Col>
+               <Col span={8} align = "middle">
+                   <SmileTwoTone twoToneColor="#78A262" style={{ fontSize: '32px'}}/>
+               </Col>
+
+           </Row>
+
+           <Row  className="landing-view__content_headline">
+               <Col span={8} align = "middle">
+                   Faire Preise..
+               </Col>
+               <Col span={8} align = "middle">
+                   ..für Kommunen..
+               </Col>
+               <Col span={8} align = "middle">
+                  ..nachhaltig
+               </Col>
+
+           </Row>
+           <Row gutter={[8,48]}>
+               <Col span={8} align = "middle">
+                   Aufgrund unseres Fairbundle-Prinzips können Anbieter in größeren Mengen produzieren.
+                   Dadurch können wir die Produkte zu den Preisen anbieten, bei denen jeder profitiert.
+                   Treten Sie einem Fairbunndle bei oder erstellen Sie Ihr eigenes Fairbundle
+                   von den günstigsten Preisen zu profitieren
+               </Col>
+               <Col span={8} align = "middle">
+                   Der Prozess der kommunalen Beschaffung ist kompliziert und häufig umständlich - das
+                   wissen wir. Mit Hilfe von fairbundled.de gibt es nun endlich die Möglichkeit
+                   alles über einen zentralen Marktplatz einzukaufen.
+               </Col>
+               <Col span={8} align = "middle">
+                   Nachhaltigkeit ist uns ein großes Anliegen. Wir arbeiten daher nur mit
+                   zertifizierten Unternehmen, die unsere hohen Standards erfüllen. Filtern Sie gerne nach
+                   den Nachhaltigkeits-Zertifikaten in der Produktübersicht, um den Vorgaben Ihrer Kommune gerecht
+                   zu werden und nachhaltig einzukaufen.
+               </Col>
+
+           </Row>
+           <Row gutter={[8, 48]}>
+               <Col span={24} align="middle">
+                   <img className="landing__picture_big"
+                        src={Fairbundled} alt="Fairbundled"/>
+               </Col>
+
+           </Row>
+       </Layout>
+   );
+}
+}
+*/
