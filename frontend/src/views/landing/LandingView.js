@@ -8,7 +8,8 @@ import './LandingView.less';
 
 import "../../components/ProductListCard/ProductListCard.less";
 
-import ProductRecomemndations from "../../components/ProductRecommendations/ProductRecommendations";
+import ProductRecommendations from "../../components/ProductRecommendations/ProductRecommendations";
+import FairbundlePrinciple from "../../components/FairbundlePrinciple/FairbundlePrinciple";
 import ProductService from "../../services/ProductService";
 import HttpService from "../../services/HttpService";
 import placeholder from "../../assets/placeholder.png";
@@ -40,10 +41,6 @@ export class LandingView extends React.Component {
             product: null,
 
         };
-    }
-
-    static async getProduct(productId) {
-        return HttpService.get(`${this.BASE_URL}/${productId}`);
     }
 
     componentDidMount() {
@@ -137,6 +134,49 @@ export class LandingView extends React.Component {
         );
     }
 
+
+    getCardItemCarousel(product) {
+        if (product == null) return ("");
+        const price = this.getLowestPrice(product);
+        return (
+            <Col span={24} key={product._id}>
+                <Card>
+                    <Row
+                                className="landing-view__product-image_Carousel"
+                                align="left"
+                            >
+                                <Link to={`/product/${product._id}`}>
+                                <img
+                                    src={
+                                        product.images?.length > 0
+                                            ? product.images[0]
+                                            : placeholder
+                                    }
+                                    alt="bild"
+                                    width="100%"
+                                />
+                                </Link>
+                            </Row>
+
+                    <Row
+                                className="landing-view__product_title"
+                                //justify="start"
+                                align="right"
+                            >
+                                <Title level={4}>{product.name}</Title>
+                            </Row>
+
+
+
+                            <Row gutter={8} align="right">
+                                <Col span={24}>{price}</Col>
+                            </Row>
+
+
+                </Card>
+            </Col>
+        );
+    }
     //function to determine the lowest price and to differentiate between one and multiple price levels (Difference: Ab)
     getLowestPrice(product) {
         let smallestPrice = Math.min(...product.priceLevel.map(p => p.unitPrice));
@@ -167,13 +207,6 @@ export class LandingView extends React.Component {
 
     render() {
         return (
-            <ProductRecommendations
-
-            />
-        )
-    }
-}
-/*
        <Layout className="landing-view__layout">
            <Row gutter={[8]}>
               <Col span={24} align="middle">
@@ -188,22 +221,22 @@ export class LandingView extends React.Component {
                   <Carousel autoplay>
                       <div>
                           <h1>
-                              {this.getCardItem(this.state.product)}
+                              {this.getCardItemCarousel(this.state.product)}
                           </h1>
                       </div>
                       <div>
                           <h1>
-                              {this.getCardItem(this.state.product)}
+                              {this.getCardItemCarousel(this.state.product)}
                           </h1>
                       </div>
                       <div>
                           <h1>
-                              {this.getCardItem(this.state.product)}
+                              {this.getCardItemCarousel(this.state.product)}
                           </h1>
                       </div>
                       <div>
                           <h1>
-                              {this.getCardItem(this.state.product)}
+                              {this.getCardItemCarousel(this.state.product)}
                           </h1>
                       </div>
                   </Carousel>
@@ -356,5 +389,18 @@ export class LandingView extends React.Component {
        </Layout>
    );
 }
+}
+
+/*
+    render() {
+        return (
+            <ProductRecommendations
+                productId={"5ed537556ea8f1fcd3e8ff9e"}
+                products={null}
+                product={this.getCardItem(this.state.product)}
+            />
+            <FairbundlePrinciple/>
+        )
+    }
 }
 */

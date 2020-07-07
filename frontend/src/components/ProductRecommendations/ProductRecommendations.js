@@ -26,7 +26,7 @@ import Fairtrade from "../../assets/Fairtrade.jpg";
 const {Sider, Content} = Layout;
 const { Paragraph, Text, Title } = Typography;
 //const {Link} = Anchor;
-export class ProductRecommendations extends React.Component {
+export default class ProductRecommendations extends React.Component {
 
 
 //constructor(props) {
@@ -41,9 +41,6 @@ export class ProductRecommendations extends React.Component {
         };
     }
 
-    static async getProduct(productId) {
-        return HttpService.get(`${this.BASE_URL}/${productId}`);
-    }
 
     componentDidMount() {
         this.getProducts();
