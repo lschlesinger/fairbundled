@@ -4,23 +4,28 @@ import {Button, Col, Row} from "antd";
 import {Link} from "react-router-dom";
 
 
+const catExplanation = ['Seien Sie bestens ausgestattet - für jeden Job', 'Noch nie etwas von Green IT gehört?', 'Sorgen Sie vor in Zeiten von Corona', ''
+
+];
+
 export default class LandingCategories extends React.Component {
 
     constructor(props) {
         super(props);
     }
 
+
     getCategoryCard(cat, index) {
         return (
-            <Col span={7} className="card">
-                <Row className="content" >
-                        <h2 className="title">{cat.name}</h2>
+            <Col span={7} className="card" key={cat._id}>
+                <Row className="content">
+                    <h2 className="title">{cat.name}</h2>
                     <Row justify="start">
-                        <p className="copy">Hier ein Text Über die Kategorie</p>
+                        <p className="copy">{catExplanation[index]}</p>
                     </Row>
-                        <Link to={`/product?category=${cat._id}`}>
-                            <Button className="btn">Jetzt suchen</Button>
-                        </Link>
+                    <Link to={`/product?category=${cat._id}`}>
+                        <Button className="btn" type="primary" >Jetzt suchen</Button>
+                    </Link>
 
                 </Row>
             </Col>

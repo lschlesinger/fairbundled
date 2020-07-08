@@ -10,10 +10,10 @@ export default class LandingCertificates extends React.Component {
 
     getSlide(c) {
         return (
-            <Col>
+            <Col key={c._id}>
                 <Row justify="center" className="padding-top--md">
                     <a href={c.url} target="_blank">
-                        <img src={c.logo} height="200px" alt="Logo"/>
+                        <img src={c.logo} height="180px" alt="Logo"/>
                     </a>
                 </Row>
                 <Row justify="center">

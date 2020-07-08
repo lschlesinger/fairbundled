@@ -29,11 +29,12 @@ export default class FairbundlePrinciple extends React.Component {
         super(props);
     }
 
-    getText(p) {
+    getText(p, index) {
         return (
             <Col
                 span={8}
-                align="middle">
+                align="middle"
+                key={index}>
                 <Row justify="center" className="padding--sm">
                     <SmileTwoTone
                         twoToneColor="#78A262"
@@ -55,7 +56,7 @@ export default class FairbundlePrinciple extends React.Component {
 
         return (
             <Row gutter={16} className="padding-top--md">
-                {principles.map((p) => this.getText(p))}
+                {principles.map((p, index) => this.getText(p, index))}
                 <Row justify="center" className="padding-top--xl fairbundle-principle__image-div">
                     <img src={Principle} width={1000} alt="Prinzip"/>
                 </Row>

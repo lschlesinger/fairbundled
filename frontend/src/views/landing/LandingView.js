@@ -3,13 +3,14 @@ import {Divider, Layout, message, Row, Spin} from "antd";
 import {LoadingOutlined} from '@ant-design/icons';
 import './LandingView.less';
 import ProductService from "../../services/ProductService";
-import HttpService from "../../services/HttpService";
-import Banner from "../../assets/banner.png"
+import Banner from "../../assets/banner.png";
 import CertificateService from "../../services/CertificateService";
 import LandingCategories from "../../components/LandingPage/LandingCategories";
 import CategoryService from "../../services/CategoryService";
 import FairbundlePrinciple from "../../components/LandingPage/FairbundlePrinciple";
 import LandingCertificates from "../../components/LandingPage/LandingCertificates";
+import SponsoredProducts from "../../components/LandingPage/SponsoredProducts";
+import FairbundleService from "../../services/FairbundleService";
 
 
 export class LandingView extends React.Component {
@@ -25,21 +26,25 @@ export class LandingView extends React.Component {
     }
 
     componentDidMount() {
-        this.getProducts();
+        this.getProductsAndFairbundles();
         this.getCertificates();
         this.getCategories();
     }
 
 
-    async getProducts() {
+    async getProductsAndFairbundles() {
         try {
             // get all product
             let products = await ProductService.getProducts();
-            // filter?
+            // TODO: filter somehow to select?
+
+            let fairbundles = await FairbundleService.getFairbundles();
+            // TODO: filter somehow to select?
 
             //set state variables
             this.setState({
-                sponsoredProducts: products
+                sponsoredProducts: products,
+                introducedFairbundle: fairbundles,
             });
         } catch (e) {
             message.error("Error fetching products and fairbundles.");
@@ -71,7 +76,6 @@ export class LandingView extends React.Component {
         }
     }
 
-
     renderLandingCategories() {
         if (this.state.topCategories) {
             return (<LandingCategories topCategories={this.state.topCategories}/>)
@@ -88,10 +92,16 @@ export class LandingView extends React.Component {
         }
     }
 
+    renderSponsoredProducts() {
+        if (this.state.sponsoredProducts && this.state.introducedFairbundle) {
+            return (<SponsoredProducts sponsoredProducts={this.state.sponsoredProducts} introducedFairbundle={this.state.introducedFairbundle} f/>)
+        } else {
+            return (this.renderSpinner());
+        }
+    }
 
     renderSpinner() {
         const antIcon = <LoadingOutlined style={{fontSize: 36}} spin/>;
-
         return (
             <Row
                 justify="center"
@@ -103,17 +113,15 @@ export class LandingView extends React.Component {
         );
     }
 
-
     render() {
         return (
             <Layout className="padding--md">
                 <Row justify="center" className="padding--md">
-                    <img className="landing__pictures"
+                    <img className="landing__banner"
                          src={Banner} alt="Fairtrade"/>
                 </Row>
                 <Row justify="center" className="padding--md">
-                    Hier kommen das vorgeschlagene Fairbundle und die gesponsorten Produkte hin
-                    {/*{this.renderSponsoredProducts()}*/}
+                    {this.renderSponsoredProducts()}
                 </Row>
                 <Divider><h1> Unsere Zertifikate </h1></Divider>
                 {this.renderLandingCertificates()}
