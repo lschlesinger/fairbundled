@@ -77,7 +77,7 @@ export default class AccountService {
                 key: 'price'
             },
             {
-                title: 'Alternative',
+                title: 'bei Zielverfehlung',
                 dataIndex: 'expirationAction',
                 key: 'expirationAction',
                 render: (expirationAction) => (

@@ -61,9 +61,10 @@ export default class ProductCreateProcess extends React.Component {
                                                      certificates={this.props.certificates}
                                                      product={this.props.product}/>);
             case 'image':
-                return (<ProductImageUpload/>);
+                return (<ProductImageUpload product={this.props.product}/>)
         }
     }
+
 
     next() {
         const current = this.state.current + 1;

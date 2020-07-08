@@ -21,5 +21,10 @@ router.post('/',
     ProductController.createProduct
 );
 
+// "Mock" Endpoint for making ant image upload work smoothly
+router.post('/image',
+    ProductController.uploadImage
+);
+
 export default router;
 

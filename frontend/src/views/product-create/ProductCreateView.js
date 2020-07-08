@@ -5,10 +5,10 @@ import AuthService from "../../services/AuthService";
 import ProductPreviewModalView from "./ProductPreviewModalView";
 import ProductService from "../../services/ProductService";
 import CertificateService from "../../services/CertificateService";
-import { message, notification } from "antd";
+import {message, notification} from "antd";
 import "../../App.less";
 import ValidationError from "../../services/ValidationError";
-import { withRouter } from "react-router-dom";
+import {withRouter} from "react-router-dom";
 
 class ProductCreateView extends React.Component {
     constructor(props) {
@@ -39,7 +39,8 @@ class ProductCreateView extends React.Component {
                 // set in ProductCertificateSelection Component (takes categories into account)
                 certificates: [],
                 // set in ProductImageUpload Component
-                images: null,
+                images: [],
+                fileList: [],
             },
         };
     }
@@ -110,7 +111,10 @@ class ProductCreateView extends React.Component {
                 ean: ean ? ean : prevState.product.ean,
                 images: images
                     ? this.getThumbUrls(images)
-                    : prevState.product.imagesUrl,
+                    : prevState.product.images,
+                fileList: images
+                    ? images.fileList
+                    : prevState.fileList,
                 deliveryDays: deliveryDays
                     ? deliveryDays
                     : prevState.product.deliveryDays,

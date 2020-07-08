@@ -1,11 +1,11 @@
 import React from "react";
-import {Button, Card, Col, Divider, Row, Typography} from "antd";
+import { Button, Card, Col, Divider, Row, Typography } from "antd";
 import "../OrderOverview.less";
-import {NotificationOutlined} from "@ant-design/icons";
-import {Link} from "react-router-dom";
+import { NotificationOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 import placeholder from "../../../assets/placeholder.png";
 
-const {Text, Title} = Typography;
+const { Text, Title } = Typography;
 
 export default class MySupplierData extends React.Component {
     constructor(props) {
@@ -17,9 +17,13 @@ export default class MySupplierData extends React.Component {
             <Card title="Verkaufsübersicht">
                 {/* Aktive, Verkaufte Produkte und Gesamtumsatz */}
                 <Row className="margin--sm order-overview__kpis" gutter={8}>
-                    <Col span={7}>
+                    <Col span={8}>
                         <Row className="padding-top--sm" justify="center">
-                            <Text className="order-overview__number" strong>
+                            <Text
+                                className="order-overview__number"
+                                ellipsis
+                                strong
+                            >
                                 {this.props.supplier.activeProducts}
                             </Text>
                         </Row>
@@ -27,25 +31,37 @@ export default class MySupplierData extends React.Component {
                             justify="center"
                             className="padding-top--xs padding-bottom--sm"
                         >
-                            <Text strong>Aktiv</Text>
+                            <Text ellipsis strong>
+                                Aktive Produkte
+                            </Text>
                         </Row>
                     </Col>
-                    <Col span={7}>
+                    <Col span={8}>
                         <Row className="padding-top--sm" justify="center">
-                            <Text className="order-overview__number" strong>
-                                {this.props.supplier.qtySold}
+                            <Text
+                                ellipsis
+                                className="order-overview__number"
+                                strong
+                            >
+                                {this.props.supplier.productsSold}
                             </Text>
                         </Row>
                         <Row
                             justify="center"
                             className="padding-top--xs padding-bottom--sm"
                         >
-                            <Text strong>Verkauft</Text>
+                            <Text ellipsis strong>
+                                Bestellungen
+                            </Text>
                         </Row>
                     </Col>
-                    <Col span={10}>
+                    <Col span={8}>
                         <Row className="padding-top--sm" justify="center">
-                            <Text className="order-overview__number" strong>
+                            <Text
+                                className="order-overview__number"
+                                ellipsis
+                                strong
+                            >
                                 {new Intl.NumberFormat("de-DE", {
                                     style: "currency",
                                     currency: "EUR",
@@ -56,7 +72,9 @@ export default class MySupplierData extends React.Component {
                             justify="center"
                             className="padding-top--xs padding-bottom--sm"
                         >
-                            <Text strong>Gesamtumsatz</Text>
+                            <Text ellipsis strong>
+                                Gesamtumsatz
+                            </Text>
                         </Row>
                     </Col>
                 </Row>
@@ -66,13 +84,13 @@ export default class MySupplierData extends React.Component {
                         <Button
                             size="large"
                             type="primary"
-                            icon={<NotificationOutlined/>}
+                            icon={<NotificationOutlined />}
                         >
                             Jetzt Verkaufen
                         </Button>
                     </Link>
                 </Row>
-                {this.props.supplier.noPosition ? "" : <Divider/>}
+                {this.props.supplier.noPosition ? "" : <Divider />}
 
                 {/* Bestseller nach Anzahl der Verkäufe und Umsatz abhängig von der Existenz der Positions*/}
                 {this.props.supplier.noPosition ? (
@@ -86,14 +104,15 @@ export default class MySupplierData extends React.Component {
                         </Row>
                         <Row>
                             <Col span={6}>
+                                {console.log(this.props.supplier.bestseller)}
                                 <img
                                     src={
                                         this.props.supplier.bestseller
                                             .qtyBestseller?.product.images
                                             ?.length > 0
                                             ? this.props.supplier.bestseller
-                                                .qtyBestseller?.product
-                                                .images[0]
+                                                  .qtyBestseller.product
+                                                  .images[0]
                                             : placeholder
                                     }
                                     alt="bild"
@@ -165,7 +184,7 @@ export default class MySupplierData extends React.Component {
                         </Row>
                     </Row>
                 )}
-                {this.props.supplier.noPosition ? "" : <Divider/>}
+                {this.props.supplier.noPosition ? "" : <Divider />}
                 {this.props.supplier.noPosition ? (
                     ""
                 ) : (
@@ -183,8 +202,8 @@ export default class MySupplierData extends React.Component {
                                             .revenueBestseller?.product.images
                                             ?.length > 0
                                             ? this.props.supplier.bestseller
-                                                .revenueBestseller?.product
-                                                .images[0]
+                                                  .revenueBestseller?.product
+                                                  .images[0]
                                             : placeholder
                                     }
                                     alt="bild"
@@ -240,7 +259,8 @@ export default class MySupplierData extends React.Component {
                                                 ).format(
                                                     this.props.supplier
                                                         .bestseller
-                                                        .revenueBestseller?.revenue
+                                                        .revenueBestseller
+                                                        ?.revenue
                                                 )}
                                             </Text>
                                         </Row>
