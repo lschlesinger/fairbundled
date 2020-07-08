@@ -1,8 +1,7 @@
 import React from 'react';
-import {Button, Row, Space, Tooltip, Badge} from 'antd';
-import {LoginOutlined, LogoutOutlined, ShoppingCartOutlined, UserOutlined} from '@ant-design/icons';
+import {Badge, Button, Col, Row, Tooltip} from 'antd';
+import {LogoutOutlined, ShoppingCartOutlined, UserOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
-import {yellow} from "color-name";
 
 export default class HeaderIconMenu extends React.Component {
 
@@ -12,48 +11,60 @@ export default class HeaderIconMenu extends React.Component {
 
     renderAnonymous() {
         return (
-            <Tooltip title="Login">
-                <Link to="/login">
-                    <Button size="large" type="link" icon={<LoginOutlined/>}/>
-                </Link>
-            </Tooltip>
+            <Link to="/login">
+                <Button size="large" type="link">
+                    Anmelden
+                </Button>
+            </Link>
         );
     }
 
     renderAuthenticated() {
         return (
-            <Space>
-                <i>{this.props.entityName}</i>
-                {this.props.isMunicipality ?
-                <Tooltip title="Mein Warenkorb">
-                    <Link to="/checkout">
-                        <Badge
-                            count={this.props.positions}
-                            style= {{backgroundColor: 'gold'}}
-                            title="Bestellpositionen"
-                            offset={[-8, 8]}>
-                            <Button size="large" type="link" icon={<ShoppingCartOutlined/>}/>
-                        </Badge>
-                    </Link>
-                </Tooltip> : ""}
-                <Tooltip title="Mein Konto">
+            <Row align="middle" className="padding-right--lg padding-top--sm">
+                <Col className="margin--xs">
+                    <h4>{'Hallo ' + this.props.entityName + '!'}</h4>
+                </Col>
+                <Col className="margin--xs">
                     <Link to="/account">
                         <Badge count={this.props.openFairbundles}
-                               style= {{backgroundColor: 'gold'}}
+                               style={{backgroundColor: 'gold'}}
                                title="Offene Fairbundle"
-                               offset={[-8, 8]}>
-                            <Button size="large" type="link" icon={<UserOutlined/>}/>
+                               offset={[-7, 7]}>
+                            <Tooltip title="Kontoübersicht">
+                                <Button size="large" type="link" icon={<UserOutlined style={{fontSize: '24px'}}/>}/>
+                            </Tooltip>
                         </Badge>
                     </Link>
-                </Tooltip>
-                <Tooltip title="Logout">
-                    <Button size="large"
-                            onClick={this.props.onLogout}
-                            type="link"
-                            icon={<LogoutOutlined/>}
-                    />
-                </Tooltip>
-            </Space>
+                </Col>
+                <Col className="margin--xs">
+                    {this.props.isMunicipality ?
+                        <Link to="/checkout">
+                            <Badge
+                                count={this.props.positions}
+                                style={{backgroundColor: 'gold'}}
+                                title="Bestellpositionen"
+                                offset={[-7, 7]}>
+                                <Tooltip title="Warenkorb">
+                                    <Button size="large" type="link"
+                                            icon={<ShoppingCartOutlined style={{fontSize: '24px'}}/>}/>
+                                </Tooltip>
+                            </Badge>
+                        </Link>
+                        : ""}
+                </Col>
+                <Col className="margin--xs">
+                    <Tooltip title="Abmelden">
+                        <Button size="large"
+                                onClick={this.props.onLogout}
+                                type="link"
+
+                                icon={<LogoutOutlined style={{fontSize: '24px'}}/>}
+                        />
+                    </Tooltip>
+                </Col>
+            </Row>
+
         );
     }
 
