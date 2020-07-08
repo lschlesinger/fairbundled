@@ -62,7 +62,7 @@ export default class ActivityOverview extends React.Component {
 
     getFairbundleTableData() {
         let data = [];
-        this.props.municipality.fairbundlesPending.forEach((fbp) => {
+        this.props.municipality.fairbundlesPending.forEach((fbp, idx) => {
             const targetPriceLevel = fbp.product.priceLevel.find((pl) => pl.unitPrice === fbp.order.targetPrice);
             const targetQty = targetPriceLevel.minQty;
             const currentQty = fbp.order.positions.reduce((a, b) => a + b.qty, 0);
@@ -80,7 +80,7 @@ export default class ActivityOverview extends React.Component {
             const expiration = new Intl.DateTimeFormat(('de-DE'), options).format(new Date(fbp.order.expiration));
             const expirationAction = fbp.order.expirationAction;
             let entry = {
-                key: fbp.product._id,
+                key: fbp.product._id + idx,
                 product: fbp.product.name,
                 qty: fbp.qty + " " + targetPriceLevel.unit,
                 price: targetprice + " | " + currentPrice,
