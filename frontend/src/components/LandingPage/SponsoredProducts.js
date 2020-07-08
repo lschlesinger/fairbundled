@@ -1,8 +1,6 @@
 import React from "react";
 import {Row} from "antd";
-import Principle from "../../assets/principle.png";
 import "./FairbundlePrinciple.less";
-
 
 
 export default class FairbundlePrinciple extends React.Component {
@@ -10,7 +8,6 @@ export default class FairbundlePrinciple extends React.Component {
     constructor(props) {
         super(props);
     }
-
 
 
     render() {
