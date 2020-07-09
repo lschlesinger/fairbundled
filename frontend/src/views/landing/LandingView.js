@@ -66,7 +66,11 @@ export class LandingView extends React.Component {
     async getCategories() {
         try {
             let categories = await CategoryService.getCategories();
-            let topCategories = categories.filter((c) => (c.name === "IT & Zubehör") | (c.name === "Hygiene & Haushalt") | ((c.name === "Bauhof")));
+            const flatCategories = categories
+                .flatMap((c) => [c, ...(c.subcategories.map((s) => {
+                    return {...s, parent: c._id}
+                }))]);
+            let topCategories = flatCategories.filter((c) => (c.name === "Computer & Endgeräte") | (c.name === "Coronakrise") | ((c.name === "Feuerwehruniformen")));
             //set state variables
             this.setState({
                 topCategories: topCategories

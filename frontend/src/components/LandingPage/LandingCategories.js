@@ -4,7 +4,7 @@ import {Button, Col, Row} from "antd";
 import {Link} from "react-router-dom";
 
 
-const catExplanation = ['Bestens ausgestattet - für jeden Job', 'Noch nie etwas von Green IT gehört?', 'Sorgen Sie vor in Zeiten von Corona', ''
+const catExplanation = ['Bestens ausgestattet - für jeden Job', 'Noch nie etwas von Green IT gehört?', 'Sorgen Sie vor in diesen Zeiten', ''
 
 ];
 
