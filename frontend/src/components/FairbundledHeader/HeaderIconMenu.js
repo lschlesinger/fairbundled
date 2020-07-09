@@ -11,21 +11,23 @@ export default class HeaderIconMenu extends React.Component {
 
     renderAnonymous() {
         return (
-            <Link to="/login">
-                <Button size="large" type="link">
-                    Anmelden
-                </Button>
-            </Link>
+            <Row align="middle" justify="end">
+                <Link to="/login">
+                    <Button size="large" type="link">
+                        Anmelden
+                    </Button>
+                </Link>
+            </Row>
         );
     }
 
     renderAuthenticated() {
         return (
-            <Row align="middle" className="padding-right--lg padding-top--sm">
-                <Col className="margin--xs">
+            <Row align="middle" justify="end">
+                <Col span={12}>
                     <h4>{'Hallo ' + this.props.entityName + '!'}</h4>
                 </Col>
-                <Col className="margin--xs">
+                <Col span={4}>
                     <Link to="/account">
                         <Badge count={this.props.openFairbundles}
                                style={{backgroundColor: 'gold'}}
@@ -37,8 +39,8 @@ export default class HeaderIconMenu extends React.Component {
                         </Badge>
                     </Link>
                 </Col>
-                <Col className="margin--xs">
-                    {this.props.isMunicipality ?
+                {this.props.isMunicipality ?
+                    <Col span={4}>
                         <Link to="/checkout">
                             <Badge
                                 count={this.props.positions}
@@ -46,19 +48,19 @@ export default class HeaderIconMenu extends React.Component {
                                 title="Bestellpositionen"
                                 offset={[-7, 7]}>
                                 <Tooltip title="Warenkorb">
-                                    <Button size="large" type="link"
-                                            icon={<ShoppingCartOutlined style={{fontSize: '24px'}}/>}/>
+                                    <Button type="link"
+                                            size="large"
+                                            icon={<ShoppingCartOutlined style={{fontSize: '27px'}}/>}/>
                                 </Tooltip>
                             </Badge>
                         </Link>
-                        : ""}
-                </Col>
-                <Col className="margin--xs">
+                    </Col>
+                    : ""}
+                <Col span={4}>
                     <Tooltip title="Abmelden">
                         <Button size="large"
                                 onClick={this.props.onLogout}
                                 type="link"
-
                                 icon={<LogoutOutlined style={{fontSize: '24px'}}/>}
                         />
                     </Tooltip>
@@ -70,9 +72,11 @@ export default class HeaderIconMenu extends React.Component {
 
     render() {
         return (
-            <Row justify="end" align="middle">
+            <Row className="margin-horizontal--lg" align="end">
                 {this.props.isAuthenticated ? this.renderAuthenticated() : this.renderAnonymous()}
             </Row>
+
+
         );
     }
 }
