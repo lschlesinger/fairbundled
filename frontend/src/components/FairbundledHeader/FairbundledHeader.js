@@ -50,7 +50,7 @@ class FairbundledHeader extends React.Component {
             // render all child components composing the header and pass on state variables if required
             <div>
                 <Row justify="space-around" align="middle">
-                    <Col span={6}>
+                    <Col span={7}>
                         <Row align="middle" justify="start">
                             <a href="/">
                                 <img className="header__logo"
@@ -58,7 +58,7 @@ class FairbundledHeader extends React.Component {
                             </a>
                         </Row>
                     </Col>
-                    <Col span={12}>
+                    <Col span={10}>
                         <SearchBar
                             categories={this.props.categories}
                             currentSearchString={this.state.currentSearchString}
@@ -66,7 +66,7 @@ class FairbundledHeader extends React.Component {
                             currentSubCategory={this.state.currentSubCategory}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col span={7}>
                         <HeaderIconMenu
                             openFairbundles={this.props.openFairbundles}
                             positions={this.props.positions}

@@ -13,23 +13,25 @@ export default class HeaderIconMenu extends React.Component {
 
     renderAnonymous() {
         return (
-            <Row align="middle" justify="end">
-                <Link to="/login">
-                    <Button size="large" type="link">
-                        Anmelden
-                    </Button>
-                </Link>
+            <Row align="middle" justify="end" className="header__icon-menu padding-top--sm">
+                <Col className="padding-left--md">
+                    <Link to="/login">
+                        <Button size="large" type="link">
+                            Anmelden
+                        </Button>
+                    </Link>
+                </Col>
             </Row>
         );
     }
 
     renderAuthenticated() {
         return (
-            <Row align="middle" justify="end" className="header__icon-menu padding-left--md padding-top--md">
-                <Col span={12} flex>
-                    <Paragraph strong ellipsis> {'Hallo ' + this.props.entityName + '!'}</Paragraph>
-                </Col>
-                <Col span={4}>
+            <Row gutter={16} align="middle" justify="end" className="header__icon-menu padding-top--md">
+                    <Col span={15}>
+                        <Paragraph strong ellipsis> {'Hallo ' + this.props.entityName + '!'}</Paragraph>
+                    </Col>
+                <Col span={3}>
                     <Link to="/account">
                         <Badge count={this.props.openFairbundles}
                                style={{backgroundColor: 'gold'}}
@@ -42,7 +44,7 @@ export default class HeaderIconMenu extends React.Component {
                     </Link>
                 </Col>
                 {this.props.isMunicipality ?
-                    <Col span={4}>
+                    <Col span={3}>
                         <Link to="/checkout">
                             <Badge
                                 count={this.props.positions}
@@ -58,7 +60,7 @@ export default class HeaderIconMenu extends React.Component {
                         </Link>
                     </Col>
                     : ""}
-                <Col span={4}>
+                <Col span={3}>
                     <Tooltip title="Abmelden">
                         <Button size="large"
                                 onClick={this.props.onLogout}
@@ -74,7 +76,7 @@ export default class HeaderIconMenu extends React.Component {
 
     render() {
         return (
-            <Row className="margin-horizontal--lg" align="end">
+            <Row className="margin-right--xl" align="end">
                 {this.props.isAuthenticated ? this.renderAuthenticated() : this.renderAnonymous()}
             </Row>
 
