@@ -1,6 +1,7 @@
 import React from 'react';
 import {Form, Modal, Row, Upload} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
+import UploadService from "../../services/UploadService";
 
 const ALLOWED_IMAGE_NUMBER = 4;
 
@@ -9,9 +10,9 @@ export default class ProductImageUpload extends React.Component {
         super(props);
         this.state = {
             previewVisible: false,
-            previewImage: '',
-            previewTitle: '',
-            fileList:  this.props.product.fileList
+            previewImage: null,
+            previewTitle: null,
+            fileList: this.props.product.fileList
         };
     }
 
@@ -19,7 +20,7 @@ export default class ProductImageUpload extends React.Component {
 
     handlePreview = async file => {
         if (!file.url && !file.preview) {
-            file.preview = await this.getBase64(file.originFileObj);
+            file.preview = await UploadService.getBase64(file.originFileObj);
         }
 
         this.setState({
@@ -34,15 +35,6 @@ export default class ProductImageUpload extends React.Component {
         console.log(this.state.fileList);
     };
 
-    getBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        });
-    };
-
     render() {
         const {previewVisible, previewImage, fileList, previewTitle} = this.state;
         const uploadButton = (
@@ -54,21 +46,21 @@ export default class ProductImageUpload extends React.Component {
         return (
             <div>
                 <h3 className="margin-vertical--md">Fügen Sie bis zu vier Produktbilder hinzu</h3>
-                <Row justify="space-around">
+                <Row justify="center">
                     <Form.Item name="images"
                                value={this.state.fileList}
                     >
                         <Upload
-                            // TODO: think about coming up with customRequest here...
-                            action="/api/product/image"
                             listType="picture-card"
                             fileList={this.state.fileList}
                             onPreview={this.handlePreview}
                             onChange={this.handleChange}
+                            customRequest={UploadService.customRequest}
                             multiple
                         >
                             {fileList?.length >= ALLOWED_IMAGE_NUMBER ? null : uploadButton}
                         </Upload>
+
                     </Form.Item>
                 </Row>
                 <Modal

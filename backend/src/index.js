@@ -37,7 +37,7 @@ mongoose
     })
     .then(() => {
         // start server once db connection is established
-        server.listen(config.server.port, () => {
+        server.listen(config.server.port,"127.0.0.1", () => {
             const {
                 address,
                 port
@@ -47,19 +47,17 @@ mongoose
             console.log(`Server is listening at http://${address}:${port}`);
 
             // start job to submit fairbundle if their expiration is reached
-            setInterval(()=>{
+            setInterval(() => {
                 FairbundleService.submitFairbundles();
             }, 1000);
 
-            // create initial data with bootstrap service
-            if (config.env !== 'production') {
-                BootstrapService.loadInitialData().then(() => {
-                    console.log('Created initial data.')
-                }).catch((err) => {
-                    console.log(err);
-                    console.log('Failed to initialize data.')
-                })
-            }
+            // create initial data (categories and certificates) with bootstrap service
+            BootstrapService.loadInitialData().then(() => {
+                console.log('Created initial data.')
+            }).catch((err) => {
+                console.log(err);
+                console.log('Failed to initialize data.')
+            })
         });
     })
     .catch((err) => {

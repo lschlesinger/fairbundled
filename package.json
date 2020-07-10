@@ -8,8 +8,8 @@
     },
     "author": "",
     "license": "MIT",
-    "devDependencies": {
-    },
+    "devDependencies": {},
     "dependencies": {
+        "@ant-design/icons": "^4.2.1"
     }
 }
