@@ -1,7 +1,9 @@
 import React from 'react';
-import {Badge, Button, Col, Row, Tooltip} from 'antd';
+import {Badge, Button, Col, Row, Tooltip, Typography} from 'antd';
 import {LogoutOutlined, ShoppingCartOutlined, UserOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
+
+const {Paragraph} = Typography;
 
 export default class HeaderIconMenu extends React.Component {
 
@@ -23,10 +25,10 @@ export default class HeaderIconMenu extends React.Component {
 
     renderAuthenticated() {
         return (
-            <Row align="middle" justify="end" className="header__icon-menu padding-left--xl padding-top--md">
-                    <Col span={12} flex>
-                        <h4>{'Hallo ' + this.props.entityName + '!'}</h4>
-                    </Col>
+            <Row align="middle" justify="end" className="header__icon-menu padding-left--md padding-top--md">
+                <Col span={12} flex>
+                    <Paragraph strong ellipsis> {'Hallo ' + this.props.entityName + '!'}</Paragraph>
+                </Col>
                 <Col span={4}>
                     <Link to="/account">
                         <Badge count={this.props.openFairbundles}
