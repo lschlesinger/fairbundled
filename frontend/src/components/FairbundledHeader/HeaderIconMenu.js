@@ -28,20 +28,9 @@ export default class HeaderIconMenu extends React.Component {
     renderAuthenticated() {
         return (
             <Row gutter={16} align="middle" justify="end" className="header__icon-menu padding-top--md">
-                    <Col span={15}>
-                        <Paragraph strong ellipsis> {'Hallo ' + this.props.entityName + '!'}</Paragraph>
-                    </Col>
-                <Col span={3}>
-                    <Link to="/account">
-                        <Badge count={this.props.openFairbundles}
-                               style={{backgroundColor: 'gold'}}
-                               title="Offene Fairbundle"
-                               offset={[-7, 7]}>
-                            <Tooltip title="Kontoübersicht">
-                                <Button size="large" type="link" icon={<UserOutlined style={{fontSize: '24px'}}/>}/>
-                            </Tooltip>
-                        </Badge>
-                    </Link>
+                <Col span={15}>
+                    <Paragraph strong ellipsis
+                               className="header__greeting"> {'Hallo ' + this.props.entityName + '!'}</Paragraph>
                 </Col>
                 {this.props.isMunicipality ?
                     <Col span={3}>
@@ -54,20 +43,39 @@ export default class HeaderIconMenu extends React.Component {
                                 <Tooltip title="Warenkorb">
                                     <Button type="link"
                                             size="large"
-                                            icon={<ShoppingCartOutlined style={{fontSize: '27px'}}/>}/>
+                                            icon={<ShoppingCartOutlined style={{fontSize: '24px'}}/>}/>
                                 </Tooltip>
                             </Badge>
                         </Link>
                     </Col>
                     : ""}
                 <Col span={3}>
-                    <Tooltip title="Abmelden">
-                        <Button size="large"
-                                onClick={this.props.onLogout}
-                                type="link"
-                                icon={<LogoutOutlined style={{fontSize: '24px'}}/>}
-                        />
-                    </Tooltip>
+                    <Link to="/account">
+                        <Badge count={this.props.openFairbundles}
+                               style={{backgroundColor: 'gold'}}
+                               title="Offene Fairbundle"
+                               offset={[-7, 7]}>
+                            <Tooltip title="Kontoübersicht">
+                                <Button size="large"
+                                        type="link" icon={<UserOutlined style={{fontSize: '24px'}}/>}/>
+                            </Tooltip>
+                        </Badge>
+                    </Link>
+                </Col>
+                <Col span={3}>
+                    <Badge
+                        count={0}
+                        style={{backgroundColor: 'gold'}}
+                        title="Bestellpositionen"
+                        offset={[-7, 7]}>
+                        <Tooltip title="Abmelden">
+                            <Button size="large"
+                                    onClick={this.props.onLogout}
+                                    type="link"
+                                    icon={<LogoutOutlined style={{fontSize: '24px'}}/>}
+                            />
+                        </Tooltip>
+                    </Badge>
                 </Col>
             </Row>
 
