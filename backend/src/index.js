@@ -37,7 +37,7 @@ mongoose
     })
     .then(() => {
         // start server once db connection is established
-        server.listen(config.server.port,"127.0.0.1", () => {
+        server.listen(config.server.port, () => {
             const {
                 address,
                 port
