@@ -1,11 +1,9 @@
 import HttpService from "./HttpService";
 
 export default class FairbundleService {
+    static BASE_URL = "/api/fairbundle";
 
-    static BASE_URL = '/api/fairbundle';
-
-    constructor() {
-    }
+    constructor() {}
 
     static async getFairbundles() {
         return HttpService.get(`${this.BASE_URL}/`);
@@ -22,7 +20,10 @@ export default class FairbundleService {
             product.hasFairbundle = false;
             for (const f in fairbundles) {
                 const fairbundle = fairbundles[f];
-                if (new Date(fairbundle.expiration) > new Date() && fairbundle.product?._id === product._id) {
+                if (
+                    new Date(fairbundle.expiration) > new Date() &&
+                    fairbundle.product?._id === product._id
+                ) {
                     product.hasFairbundle = true;
                     break;
                 }
@@ -32,11 +33,35 @@ export default class FairbundleService {
         return flaggedProducts;
     }
 
-    static async joinFairbundle(fairbundleId, qty) {
-        return HttpService.put(`${this.BASE_URL}/${fairbundleId}`, {qty});
+    static getPresentedFairbundle(fairbundles) {
+        let PresentedFairbundle;
+        let max_bundlers = -Infinity;
+        fairbundles.forEach((fairbundle) => {
+            if (fairbundle.bundlers.length > max_bundlers) {
+                max_bundlers = fairbundle.bundlers.length;
+                PresentedFairbundle = fairbundle;
+            }
+        });
+        return PresentedFairbundle;
     }
 
-    static async createFairbundle(qty, productId, expiration, expirationAction, targetPrice) {
-        return HttpService.post(`${this.BASE_URL}/`, {qty, productId, expiration, expirationAction, targetPrice});
+    static async joinFairbundle(fairbundleId, qty) {
+        return HttpService.put(`${this.BASE_URL}/${fairbundleId}`, { qty });
+    }
+
+    static async createFairbundle(
+        qty,
+        productId,
+        expiration,
+        expirationAction,
+        targetPrice
+    ) {
+        return HttpService.post(`${this.BASE_URL}/`, {
+            qty,
+            productId,
+            expiration,
+            expirationAction,
+            targetPrice,
+        });
     }
 }

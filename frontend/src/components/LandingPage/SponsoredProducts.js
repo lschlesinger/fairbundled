@@ -8,13 +8,13 @@ export default class SponsoredProducts extends React.Component {
         super(props);
     }
 
-    
-
     render() {
         return (
             <Row>
                 <Col span={16}>
-                    <PresentedProduct />
+                    <PresentedProduct
+                        fairbundle={this.props.presentedFairbundle}
+                    />
                 </Col>
                 <Col span={8}>
                     <ProductRecommendations />
