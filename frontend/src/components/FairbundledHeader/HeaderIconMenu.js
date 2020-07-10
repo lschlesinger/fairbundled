@@ -23,10 +23,10 @@ export default class HeaderIconMenu extends React.Component {
 
     renderAuthenticated() {
         return (
-            <Row align="middle" justify="end">
-                <Col span={12}>
-                    <h4>{'Hallo ' + this.props.entityName + '!'}</h4>
-                </Col>
+            <Row align="middle" justify="end" className="header__icon-menu padding-left--xl padding-top--md">
+                    <Col span={12} flex>
+                        <h4>{'Hallo ' + this.props.entityName + '!'}</h4>
+                    </Col>
                 <Col span={4}>
                     <Link to="/account">
                         <Badge count={this.props.openFairbundles}
