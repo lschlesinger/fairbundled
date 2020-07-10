@@ -1,23 +1,25 @@
 import React from "react";
-import {Row} from "antd";
-import "./FairbundlePrinciple.less";
+import { Col, Row } from "antd";
+import PresentedProduct from "./PresentedProduct";
+import ProductRecommendations from "./ProductRecommendations";
 
-
-export default class FairbundlePrinciple extends React.Component {
-
+export default class SponsoredProducts extends React.Component {
     constructor(props) {
         super(props);
     }
 
+    
 
     render() {
-
         return (
             <Row>
-                <h2>
-                    Hier kommen das vorgeschlagene Fairbundle und das Werbe-Carousel!
-                </h2>
+                <Col span={16}>
+                    <PresentedProduct />
+                </Col>
+                <Col span={8}>
+                    <ProductRecommendations />
+                </Col>
             </Row>
-        )
+        );
     }
 }

@@ -98,7 +98,7 @@ export class LandingView extends React.Component {
 
     renderSponsoredProducts() {
         if (this.state.sponsoredProducts && this.state.introducedFairbundle) {
-            return (<SponsoredProducts sponsoredProducts={this.state.sponsoredProducts} introducedFairbundle={this.state.introducedFairbundle} f/>)
+            return (<SponsoredProducts sponsoredProducts={this.state.sponsoredProducts} introducedFairbundle={this.state.introducedFairbundle}/>)
         } else {
             return (this.renderSpinner());
         }
@@ -124,6 +124,9 @@ export class LandingView extends React.Component {
                     <img className="landing__banner"
                          src={Banner} alt="Fairtrade"/>
                 </Row>
+                <Divider>
+                    <h1> Unsere Produkte </h1>
+                </Divider>
                 <Row justify="center" className="padding--md">
                     {this.renderSponsoredProducts()}
                 </Row>
