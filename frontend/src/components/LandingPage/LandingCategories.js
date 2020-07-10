@@ -4,9 +4,7 @@ import {Button, Col, Row} from "antd";
 import {Link} from "react-router-dom";
 
 
-const catExplanation = ['Bestens ausgestattet - für jeden Job', 'Noch nie etwas von Green IT gehört?', 'Sorgen Sie vor in diesen Zeiten', ''
-
-];
+const catExplanation = ['Bestens ausgestattet - für jeden Job', 'Noch nie etwas von Green IT gehört?', 'Sorgen Sie vor in diesen Zeiten', ''];
 
 export default class LandingCategories extends React.Component {
 
@@ -24,7 +22,7 @@ export default class LandingCategories extends React.Component {
                         <p className="copy">{catExplanation[index]}</p>
                     </Row>
                     <Link to={`/product?category=${cat._id}`}>
-                        <Button className="btn" type="primary" >Jetzt suchen</Button>
+                        <Button className="btn" type="primary">Jetzt suchen</Button>
                     </Link>
 
                 </Row>
