@@ -16,7 +16,7 @@ export default class SponsoredProducts extends React.Component {
                         fairbundle={this.props.presentedFairbundle}
                     />
                 </Col>
-                <Col span={1}>
+                <Col style={{marginRight:15, width:1}}>
                     <Divider type="vertical" style={{ height: "100%" }} />
                 </Col>
                 <Col span={7}>
