@@ -3,7 +3,7 @@ import {Badge, Button, Col, Row, Tooltip, Typography} from 'antd';
 import {LogoutOutlined, ShoppingCartOutlined, UserOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
 
-const {Paragraph} = Typography;
+const {Text} = Typography;
 
 export default class HeaderIconMenu extends React.Component {
 
@@ -13,7 +13,7 @@ export default class HeaderIconMenu extends React.Component {
 
     renderAnonymous() {
         return (
-            <Row align="middle" justify="end" className="header__icon-menu padding-top--sm">
+            <Row align="middle" justify="end" className="header__icon-menu">
                 <Col className="padding-left--md">
                     <Link to="/login">
                         <Button size="large" type="link">
@@ -27,10 +27,9 @@ export default class HeaderIconMenu extends React.Component {
 
     renderAuthenticated() {
         return (
-            <Row gutter={16} align="middle" justify="end" className="header__icon-menu padding-top--md">
-                <Col span={15}>
-                    <Paragraph strong ellipsis
-                               className="header__greeting"> {'Hallo ' + this.props.entityName + '!'}</Paragraph>
+            <Row gutter={16} align="middle" justify="end" className="header__icon-menu">
+                <Col span={15} className="header__greeting">
+                    <Text strong ellipsis> {'Hallo ' + this.props.entityName + '!'}</Text>
                 </Col>
                 {this.props.isMunicipality ?
                     <Col span={3}>
@@ -84,7 +83,7 @@ export default class HeaderIconMenu extends React.Component {
 
     render() {
         return (
-            <Row className="margin-right--xl" align="end">
+            <Row>
                 {this.props.isAuthenticated ? this.renderAuthenticated() : this.renderAnonymous()}
             </Row>
 

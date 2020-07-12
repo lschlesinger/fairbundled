@@ -1,8 +1,11 @@
 import React from "react";
 import {SmileTwoTone} from '@ant-design/icons';
-import {Col, Row} from "antd";
+import {Col, Row, Typography} from "antd";
 import Principle from "../../assets/principle.png";
 import "./FairbundlePrinciple.less";
+
+
+const {Title} = Typography;
 
 const principles = [{
     buzzword: "Faire Preise",
@@ -42,7 +45,7 @@ export default class FairbundlePrinciple extends React.Component {
                     />
                 </Row>
                 <Row justify="center">
-                    <h4>{p.buzzword}</h4>
+                    <Title level={4}>{p.buzzword}</Title>
                 </Row>
                 <Row justify="center" className="fairbundle-principle__explanation-text">
                     {p.explanation}

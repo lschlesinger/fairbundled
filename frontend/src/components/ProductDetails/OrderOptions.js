@@ -28,6 +28,12 @@ export default class OrderOptions extends React.Component {
     onCreateFairbundle = (evt) => {
         this.createDOM.blur();
 
+        if (!AuthService.isAuthenticatedMunicipality()) {
+            window.location = `/login?product=${this.props.product._id}`;
+            
+            return;
+        }
+
         if (this.state.qty && this.state.qty > 0) {
             this.props.onCreateFairbundle({
                 productId: this.props.productId,
@@ -39,6 +45,12 @@ export default class OrderOptions extends React.Component {
     onJoinFairbundle = (fairbundleId) => {
         this.joinDOM.blur();
 
+        if (!AuthService.isAuthenticatedMunicipality()) {
+            window.location = `/login?product=${this.props.product._id}`;
+            
+            return;
+        }
+
         if (this.state.qty && this.state.qty > 0) {
             this.props.onJoinFairbundle({
                 fairbundleId: fairbundleId,
@@ -49,6 +61,12 @@ export default class OrderOptions extends React.Component {
 
     onCreateOrder = (evt) => {
         this.orderDOM.blur();
+
+        if (!AuthService.isAuthenticatedMunicipality()) {
+            window.location = `/login?product=${this.props.product._id}`;
+            
+            return;
+        }
 
         if (this.state.qty && this.state.qty > 0) {
             this.props.onCreateOrder(this.state.qty);
@@ -169,7 +187,6 @@ export default class OrderOptions extends React.Component {
                     <Button
                         type="primary"
                         className="order-options__buttons margin-top--md"
-                        disabled={!AuthService.isAuthenticatedMunicipality()}
                         ref={(buttonDOM) => {
                             this.joinDOM = buttonDOM;
                         }}
@@ -230,7 +247,6 @@ export default class OrderOptions extends React.Component {
                             <Button
                                 type="primary"
                                 block
-                                disabled={!AuthService.isAuthenticatedMunicipality()}
                                 className="order-options__buttons"
                                 ref={(buttonDOM) => {
                                     this.createDOM = buttonDOM;

@@ -12,6 +12,9 @@ import LandingCertificates from "../../components/LandingPage/LandingCertificate
 import SponsoredProducts from "../../components/LandingPage/SponsoredProducts";
 import FairbundleService from "../../services/FairbundleService";
 
+const LANDINGCATS = ["Feuerwehruniformen", "Computer & Endgeräte", "Coronakrise"];
+const EXCLUDEDLANDINGCERTS = ["Fair Labor Association (FLA)", "OEKO-TEX 100", "Ethical Trading Initiative (ETI)", "Business Social Compliance Initiative (BSCI)"];
+
 export class LandingView extends React.Component {
     constructor(props) {
         super(props);
@@ -57,6 +60,10 @@ export class LandingView extends React.Component {
     async getCertificates() {
         try {
             let certificates = await CertificateService.getCertificates();
+            //filter labels with bad quality picture
+            certificates = certificates.filter((c) => (EXCLUDEDLANDINGCERTS.indexOf(c.name)) < 0);
+            //randomize output
+            certificates.sort(() => Math.random() - 0.5);
             //set state variables
             this.setState({
                 certificates: certificates,
@@ -69,18 +76,11 @@ export class LandingView extends React.Component {
     async getCategories() {
         try {
             let categories = await CategoryService.getCategories();
-            const flatCategories = categories.flatMap((c) => [
-                c,
-                ...c.subcategories.map((s) => {
-                    return { ...s, parent: c._id };
-                }),
-            ]);
-            let topCategories = flatCategories.filter(
-                (c) =>
-                    (c.name === "Computer & Endgeräte") |
-                    (c.name === "Coronakrise") |
-                    (c.name === "Feuerwehruniformen")
-            );
+            const flatCategories = categories
+                .flatMap((c) => [c, ...(c.subcategories.map((s) => {
+                    return {...s, parent: c._id}
+                }))]);
+            let topCategories = flatCategories.filter((c) => (LANDINGCATS.indexOf(c.name)) > -1);
             //set state variables
             this.setState({
                 topCategories: topCategories,

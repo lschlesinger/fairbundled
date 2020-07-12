@@ -24,7 +24,7 @@ class CertificateService {
                         }
                         sectors[sector]++;
                         const cert = {
-                            name: certificate.name.de,
+                            name: certificate.name.de ? certificate.name.de : certificate.name.en,
                             description: certificate.description.de,
                             url: certificate.url,
                             logo: certificate.logo,
