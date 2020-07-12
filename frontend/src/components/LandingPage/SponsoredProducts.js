@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row } from "antd";
+import { Col, Row, Divider } from "antd";
 import PresentedProduct from "./PresentedProduct";
 import ProductRecommendations from "./ProductRecommendations";
 
@@ -10,13 +10,16 @@ export default class SponsoredProducts extends React.Component {
 
     render() {
         return (
-            <Row>
+            <Row gutter={[24, 0]} justify="center" className="padding--md">
                 <Col span={16}>
                     <PresentedProduct
                         fairbundle={this.props.presentedFairbundle}
                     />
                 </Col>
-                <Col span={8}>
+                <Col span={1}>
+                    <Divider type="vertical" style={{ height: "100%" }} />
+                </Col>
+                <Col span={7}>
                     <ProductRecommendations />
                 </Col>
             </Row>

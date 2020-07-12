@@ -10,7 +10,7 @@ export default class PresentedProduct extends React.Component {
     render() {
         return (
             <Card>
-                <Col span={12}>
+                <Col span={12} className="padding-vertical--sm">
                     {console.log(this.props.fairbundle)}
                     <img
                         src={
@@ -22,7 +22,7 @@ export default class PresentedProduct extends React.Component {
                         width="100%"
                     />
                 </Col>
-                <Col span={12}></Col>
+                <Col span={12} className="padding-left--md"></Col>
             </Card>
         );
     }

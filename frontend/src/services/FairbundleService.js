@@ -37,7 +37,10 @@ export default class FairbundleService {
         let PresentedFairbundle;
         let max_bundlers = -Infinity;
         fairbundles.forEach((fairbundle) => {
-            if (fairbundle.bundlers.length > max_bundlers) {
+            if (
+                fairbundle.bundlers.length > max_bundlers &&
+                fairbundle.submission === null
+            ) {
                 max_bundlers = fairbundle.bundlers.length;
                 PresentedFairbundle = fairbundle;
             }
