@@ -14,6 +14,15 @@ class LoginView extends React.Component {
         const {email, password} = values;
         AuthService.login(email, password)
             .then(() => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const product = urlParams.get('product');
+                
+                if (product) {
+                    window.location = `/product/${product}`;
+
+                    return;
+                }
+
                 window.location = "/";
             })
             .catch((err) => {
