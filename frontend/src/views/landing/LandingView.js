@@ -154,9 +154,7 @@ export class LandingView extends React.Component {
                 <Divider>
                     <h1> Unsere Produkte </h1>
                 </Divider>
-
                 {this.renderSponsoredProducts()}
-
                 <Divider>
                     <h1> Unsere Zertifikate </h1>
                 </Divider>
