@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, Col, Row } from "antd";
+import { Card, Layout, Row } from "antd";
+import "./ProductRecommendations.less";
 
 export default class PresentedProduct extends React.Component {
     constructor(props) {
@@ -8,9 +9,18 @@ export default class PresentedProduct extends React.Component {
 
     render() {
         return (
-            <Card>
-                Product Recommendation Carousel
-            </Card>
+            <Layout style={{height:"100%"}}>
+                <Row className="presented-product-row" style={{height:"50%"}}>
+                    <Card style={{width:"100%"}}>
+                        Product Recommendation Carousel
+                    </Card>
+                </Row>
+                <Row style={{height:"50%"}}>
+                    <Card style={{width:"100%"}}>
+                        Product Recommendation Carousel
+                    </Card>
+                </Row>
+            </Layout>
         );
     }
 }
