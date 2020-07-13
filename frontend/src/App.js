@@ -206,9 +206,9 @@ export default class App extends React.Component {
                 </Header>
                 <Content className="app__content">
                     {/*dynamically load `Content` through router*/}
-                    <Switch>
+                    <Switch spinner={this.renderSpinner}>
                         {this.state.routes.map((route, i) => (
-                            <Route key={i} {...route} />
+                            <Route key={i} {...route} spinner={this.renderSpinner} />
                         ))}
                     </Switch>
                 </Content>
@@ -219,9 +219,8 @@ export default class App extends React.Component {
         );
     }
 
-    renderSpinner() {
+    renderSpinner = () => {
         const antIcon = <LoadingOutlined style={{fontSize: 36}} spin/>;
-
         return (
             <Row
                 justify="center"
@@ -231,7 +230,7 @@ export default class App extends React.Component {
                 <Spin size="large" indicator={antIcon}/>
             </Row>
         );
-    }
+    };
 
     render() {
         return (
@@ -239,7 +238,7 @@ export default class App extends React.Component {
                 <ConfigProvider locale={deDE}>
                     {this.state.categories && this.state.categories.length > 0
                         ? this.renderContent()
-                        : this.renderSpinner()}
+                        : this.renderSpinner}
                 </ConfigProvider>
             </Layout>
         );
