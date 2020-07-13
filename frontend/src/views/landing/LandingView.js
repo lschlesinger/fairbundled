@@ -37,7 +37,7 @@ export class LandingView extends React.Component {
         try {
             // get all product
             let products = await ProductService.getProducts();
-            // TODO: filter somehow to select?
+            products = products.sort(() => Math.random() - 0.5).slice(0, 10);
 
             let fairbundles = await FairbundleService.getFairbundles();
             // TODO: filter somehow to select?

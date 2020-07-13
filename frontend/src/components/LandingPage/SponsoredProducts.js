@@ -20,7 +20,7 @@ export default class SponsoredProducts extends React.Component {
                     <Divider type="vertical" style={{ height: "100%" }} />
                 </Col>
                 <Col span={7}>
-                    <ProductRecommendations />
+                    <ProductRecommendations products={this.props.sponsoredProducts} />
                 </Col>
             </Row>
         );
