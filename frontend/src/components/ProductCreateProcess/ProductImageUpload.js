@@ -32,7 +32,6 @@ export default class ProductImageUpload extends React.Component {
 
     handleChange = (res) => {
         this.setState({fileList: res.fileList});
-        console.log(this.state.fileList);
     };
 
     render() {

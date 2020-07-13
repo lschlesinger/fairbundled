@@ -175,9 +175,9 @@ export class ProductDetailView extends React.Component {
         });
     };
 
-    renderBreadcrumb = (parent, child) => {
+    renderBreadcrumb = (parent, child, index) => {
         return (
-            <Row key={parent._id}>
+            <Row key={parent._id + index}>
                 <Breadcrumb separator=">">
                     <Breadcrumb.Item key={parent._id}>
                         <Link to={`/product?category=${parent._id}`}>
@@ -225,8 +225,8 @@ export class ProductDetailView extends React.Component {
             }
             return (
                 <Col className="padding--md">
-                    {breadcrumbs.map((b) =>
-                        this.renderBreadcrumb(b.parent, b.child)
+                    {breadcrumbs.map((b, index) =>
+                        this.renderBreadcrumb(b.parent, b.child, index)
                     )}
                 </Col>
             );
@@ -263,6 +263,10 @@ export class ProductDetailView extends React.Component {
     }
 
     render() {
+        const product = this.state.product;
+        const fairbundles = this.state.fairbundles;
+        let productDetailComponent = this.props.spinner;
+        console.log(this.props.spinner);
         return (
             <Col>
                 <Row>{this.renderBreadcrumbs()}</Row>
