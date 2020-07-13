@@ -12,11 +12,14 @@ export default class PresentedProduct extends React.Component {
     }
 
     getFairbundleProgress() {
-        let currentQty = this.props.fairbundle.positions.reduce((temp, p) => {
-            return temp + p.qty;
-        }, 0);
-        let targetQty = this.props.fairbundle.product.priceLevel.find(
-            (pl) => pl.unitPrice === this.props.fairbundle.targetPrice
+        let currentQty = this.props.presentedFairbundle.positions.reduce(
+            (temp, p) => {
+                return temp + p.qty;
+            },
+            0
+        );
+        let targetQty = this.props.presentedFairbundle.product.priceLevel.find(
+            (pl) => pl.unitPrice === this.props.presentedFairbundle.targetPrice
         ).minQty;
         let progressPercentage = (currentQty / targetQty) * 100;
         return (
@@ -43,7 +46,7 @@ export default class PresentedProduct extends React.Component {
     getRemainingDays() {
         let currentDate = new Date();
         let diffTime =
-            Date.parse(this.props.fairbundle.expiration) -
+            Date.parse(this.props.presentedFairbundle.expiration) -
             currentDate.getTime();
         let remainingDays = Math.round(diffTime / 3600 / 24 / 1000);
         return (
@@ -62,7 +65,7 @@ export default class PresentedProduct extends React.Component {
         return (
             <div className="padding-top--md">
                 <Title className="presented-products__bold-text" level={4}>
-                    {this.props.fairbundle.bundlers.length}
+                    {new Set(this.props.presentedFairbundle.bundlers).size}
                 </Title>
                 <Text className="presented-products__text">
                     Teilnehmende Gemeinden
@@ -73,24 +76,24 @@ export default class PresentedProduct extends React.Component {
 
     getPriceInfo() {
         let maxPrice = Math.max(
-            ...this.props.fairbundle.product.priceLevel.map(
+            ...this.props.presentedFairbundle.product.priceLevel.map(
                 (pl) => pl.unitPrice
             )
         );
         let savings = (
             1 -
-            this.props.fairbundle.targetPrice / maxPrice
+            this.props.presentedFairbundle.targetPrice / maxPrice
         ).toLocaleString(undefined, {
             style: "percent",
             minimumFractionDigits: 2,
         });
         return (
-            <Col span={16}>
+            <div className="padding-top--md">
                 <Title className="presented-products__bold-text" level={4}>
                     {new Intl.NumberFormat("de-DE", {
                         style: "currency",
                         currency: "EUR",
-                    }).format(this.props.fairbundle.targetPrice)}
+                    }).format(this.props.presentedFairbundle.targetPrice)}
                 </Title>
                 <Text className="presented-products__text">
                     statt{" "}
@@ -100,7 +103,7 @@ export default class PresentedProduct extends React.Component {
                     }).format(maxPrice)}{" "}
                     · {savings} sparen
                 </Text>
-            </Col>
+            </div>
         );
     }
 
@@ -109,12 +112,13 @@ export default class PresentedProduct extends React.Component {
             <Card>
                 <Row gutter={[36, 0]} className="padding--sm">
                     <Col span={12}>
-                        {console.log(this.props.fairbundle)}
+                        {console.log(this.props.presentedFairbundle)}
                         <img
                             src={
-                                this.props.fairbundle?.product.images?.length >
-                                0
-                                    ? this.props.fairbundle.product.images[0]
+                                this.props.presentedFairbundle?.product.images
+                                    ?.length > 0
+                                    ? this.props.presentedFairbundle.product
+                                          .images[0]
                                     : placeholder
                             }
                             alt="bild"
@@ -124,23 +128,21 @@ export default class PresentedProduct extends React.Component {
                     <Col span={12}>
                         <Row>
                             <Title level={3}>
-                                {this.props.fairbundle?.product.name}
+                                {this.props.presentedFairbundle?.product.name}
                             </Title>
                         </Row>
                         {this.getFairbundleProgress()}
                         {this.getRemainingDays()}
                         {this.getParticipatingMunicipalities()}
+                        {this.getPriceInfo()}{" "}
                         <Row className="padding-top--md" align="bottom">
-                            {this.getPriceInfo()}{" "}
-                            <Col span={8}>
-                                <Link
-                                    to={`/product/${this.props.fairbundle.product._id}`}
-                                >
-                                    <Button size="middle" type="primary" block>
-                                        Details
-                                    </Button>
-                                </Link>
-                            </Col>
+                            <Link
+                                to={`/product/${this.props.presentedFairbundle.product._id}`}
+                            >
+                                <Button size="middle" type="primary" block>
+                                    Zum Produkt
+                                </Button>
+                            </Link>
                         </Row>
                     </Col>
                 </Row>

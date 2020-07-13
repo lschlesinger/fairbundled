@@ -13,7 +13,7 @@ export default class SponsoredProducts extends React.Component {
             <Row gutter={[24, 0]} justify="center" className="padding--md">
                 <Col span={16}>
                     <PresentedProduct
-                        fairbundle={this.props.presentedFairbundle}
+                        presentedFairbundle={this.props.presentedFairbundle}
                     />
                 </Col>
                 <Col span={1}>
