@@ -49,6 +49,7 @@ So don't hesitate:
 
 Check out the [Fairbundled](https://fairbundled.herokuapp.com/)
 
+Regarding acknowledgement, find more information [here](./docs/Acknowledgement.md).
 
 ### Built With
 
