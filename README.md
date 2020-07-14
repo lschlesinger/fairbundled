@@ -76,23 +76,29 @@ Frontend implementation covers a well designed and functioning frontend interact
 
 **UC_II**: Search a product
 
-**UC_III**: Create Fairbundle for specific product as municipality
+**UC_III-I**: Create Fairbundle for specific product as municipality
 
-**UC_IV**: Join existing Fairbundle for a specific product as municipality
+**UC_III-II**: Join existing Fairbundle for a specific product as municipality
 
-**UC_GENERAL**: general functionality, required for prototype
+ **UC_IV**: Analyze Municipality Activity
+
+**UC_GENERAL**: General functionality, required for prototype
+
+**UC_ADDITIONAL**: Regular Order Checkout (no collective / Fairbundle) order
 
 | FrontendURL       | UC           | Associated View incl. Modal                                  | Frontend Implementation | Backend Implementation |
 | ----------------- | ------------ | ------------------------------------------------------------ | ----------------------- | -------------------- |
-| `/`               | UC_II        | `LandingView`                                                | In Progress             | In Progress          |
+| `/`               | UC_GENREAL        | `LandingView`                                                | Done       | Done       |
 | `/register`       | UC_GENERAL   | `RegisterView`                                               | Done                    | Done                 |
 | `/login`          | UC_GENERAL   | `LoginView`                                                  | Done                    | Done                 |
+| `/edit`          | UC_GENERAL   | `UserEditView`                                                  | Dummie                    | Dummie                    |
+| `/checkout`          | UC_ADDITIONAL   | `CheckoutView`                                                  | Done                    | Done                 |
 | `/product`        | UC_II, UC_IV | `ProductListView`                                            | Done                    | Done                 |
-| `/product/:id`     | UC_III       | `ProductDetailView`  `CreateFairbundleModalView` ` FairbundleCreatedModalView` | In Progress       | Done                 |
-|                   | UC_IV        | `ProductDetailView`  `JoinFairbundleModalView`  `FairbundleJoinedModalView` | In Progress       | Done                 |
+| `/product/:id`     | UC_III-I       | `ProductDetailView`  `CreateFairbundleModalView` ` FairbundleCreatedModalView` | Done       | Done                 |
+|                   | UC_III-II        | `ProductDetailView`  `JoinFairbundleModalView`  `FairbundleJoinedModalView` | Done      | Done                 |
 | `/product/create` | UC_I         | `ProductCreateView`  `ProductPreviewModalView`                | Done              | Done                 |
-| `/account`        | UC_I         | `AccountView` for supplier                                   | In Progress             | In Progress          |
-|                   | UC_GENERAL   | `AccountView` for municipality                               | Planned                 | Planned              |
+| `/account`        | UC_I         | `AccountView` for supplier                                   | Done          |  Done       |
+|                   | UC_IV   | `AccountView` for municipality                               | Done                 | Done              |
 
 
 ### General implementation tasks
