@@ -22,9 +22,9 @@
 * [About the Project](#about-the-project)
   * [Description](#description)
   * [Built With](#built-with)
-* [Project Status](#project-status)
 * [Technical Documentation](#technical-documentation)
 * [Getting Started](#getting-started)
+* [Project Status](#project-status)
 * [License](#license)
 
 <!-- ABOUT THE PROJECT -->
@@ -61,6 +61,25 @@ Check out the [Fairbundled](https://fairbundled.herokuapp.com/)
 * [Docker](https://www.docker.com/)
 
 
+<!-- TECHNICAL DOCUMENTATION -->
+
+## Technical Documentation
+
+Additional material documenting technical decisions, such as the UML Class Diagram, are collected in the [`docs`](./docs) folder on the project's top level and explained in the respective [`README.md`](./docs/README.md) file.
+
+<!-- GETTING STARTED -->
+
+## Getting Started
+
+To get a local copy up and running follow these simple steps.
+
+1. Clone the repo
+
+```sh
+git clone git@github.com:lschlesinger/fairbundled.git
+```
+
+2. Navigate into subfolders to find out about requirements and further installation steps
 
 <!-- PROJECT STATUS -->
 
@@ -116,26 +135,6 @@ Frontend implementation covers a well designed and functioning frontend interact
 - Documentation (ongoing)
 - Deployment on Heroku (done)
 
-
-<!-- TECHNICAL DOCUMENTATION -->
-
-## Technical Documentation
-
-Additional material documenting technical decisions, such as the UML Class Diagram, are collected in the [`docs`](./docs) folder on the project's top level and explained in the respective [`README.md`](./docs/README.md) file.
-
-<!-- GETTING STARTED -->
-
-## Getting Started
-
-To get a local copy up and running follow these simple steps.
-
-1. Clone the repo
-
-```sh
-git clone git@github.com:lschlesinger/fairbundled.git
-```
-
-2. Navigate into subfolders to find out about requirements and further installation steps
 
 <!-- LICENSE -->
 
