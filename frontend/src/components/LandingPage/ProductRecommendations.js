@@ -69,7 +69,7 @@ export default class PresentedProduct extends React.Component {
 
     getProductCards = (productGroup) => {
         return (
-            <div>
+            <div key={productGroup}>
                 <Row className="presented-product-row" style={{height: "50%"}}>
                     <Card style={{width: "99%"}}>
                         {this.getProductCard(productGroup[0])}
@@ -91,7 +91,6 @@ export default class PresentedProduct extends React.Component {
             groups[i] = [products[2 * i], products[2 * i + 1]];
         }
 
-        console.log(groups);
         return (
             <Carousel autoplay>
                 {groups.map(g => this.getProductCards(g))}

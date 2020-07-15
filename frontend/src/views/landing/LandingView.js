@@ -121,7 +121,6 @@ export class LandingView extends React.Component {
         }
 
         if (presentedFairbundle && sponsoredProducts) {
-            console.log(sponsoredProducts);
 
             sponsoredProductsComponent = <SponsoredProducts sponsoredProducts={sponsoredProducts}
                                                             presentedFairbundle={presentedFairbundle}/>
