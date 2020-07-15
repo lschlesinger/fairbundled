@@ -4,14 +4,14 @@ const Product = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: [true, 'Es wurde kein Produktname angegeben.']
+            validate: [valueExistance, 'Es wurde kein Produktname angegeben.']
         },
         description: String,
         ean: String,
         images: [String],
         deliveryDays: {
             type: Number,
-            required: [true, 'Es wurde kein Lieferzeitraum angegeben.']
+            validate: [valueExistance, 'Es wurde kein Lieferzeitraum angegeben.']
         },
         priceLevel: {
             type: [{
@@ -54,6 +54,10 @@ function categoryArrayLimit(val) {
 
 function priceLevelExistance(val) {
     return val.length > 0;
+}
+
+function valueExistance(val) {
+    return !val;
 }
 
 export default mongoose.model("Product", Product);

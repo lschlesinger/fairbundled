@@ -104,7 +104,6 @@ export default class MySupplierData extends React.Component {
                         </Row>
                         <Row>
                             <Col span={6}>
-                                {console.log(this.props.supplier.bestseller)}
                                 <img
                                     src={
                                         this.props.supplier.bestseller

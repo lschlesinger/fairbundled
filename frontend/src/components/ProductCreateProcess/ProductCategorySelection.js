@@ -46,7 +46,7 @@ export default class ProductCategorySelection extends React.Component {
         );
     }
 
-    onChange(categories) {
+    onChange = (categories) => {
         // check if any of selected IDs is child ID and parent is not in state.categories
         const flatCategories = this.props.categories
             .flatMap((c) => [c, ...(c.subcategories.map((s) => {
@@ -70,7 +70,7 @@ export default class ProductCategorySelection extends React.Component {
         this.setState({
             categories
         })
-    }
+    };
 
     render() {
         return (
@@ -83,7 +83,7 @@ export default class ProductCategorySelection extends React.Component {
                     <TreeSelect
                         dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
                         placeholder="Wählen Sie eine oder mehrere Kategorien"
-                        onChange={this.onChange.bind(this)}
+                        onChange={this.onChange}
                         multiple
                     >
                         {this.props.categories.map((c) => this.getTreeNodes(c))}

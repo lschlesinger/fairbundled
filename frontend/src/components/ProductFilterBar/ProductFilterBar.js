@@ -1,10 +1,9 @@
 import React from "react";
-import {Avatar, Checkbox, Form, Menu, Row, Typography} from 'antd';
-import "./ProductFilterBarStyles.less"
+import {Avatar, Checkbox, Form, Menu, Row} from 'antd';
+import "./ProductFilterBar.less"
 import {withRouter} from "react-router-dom";
 
 const {SubMenu} = Menu;
-const {Paragraph} = Typography;
 
 class FilterBar extends React.Component {
     constructor(props, context) {
@@ -59,11 +58,11 @@ class FilterBar extends React.Component {
     }
 
     getGroupedCertificates(certs) {
-        if (certs == null) {
+        if (certs === null) {
             return []
         }
 
-        certs = certs.sort((a,b) => (a.sector > b.sector) ? 1 : ((b.sector > a.sector) ? -1 : 0));
+        certs = certs.sort((a, b) => (a.sector > b.sector) ? 1 : ((b.sector > a.sector) ? -1 : 0));
 
         let groupedCerts = certs.reduce(function (r, a) {
             r[a.sector] = r[a.sector] || [];

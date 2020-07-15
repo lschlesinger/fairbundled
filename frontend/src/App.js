@@ -1,6 +1,6 @@
 import React from "react";
 import {BrowserRouter as Router, Redirect, Route, Switch,} from "react-router-dom";
-import {ConfigProvider, Layout, Row, Spin} from "antd";
+import {ConfigProvider, Layout} from "antd";
 import deDE from "antd/es/locale/de_DE";
 // override style
 import "./App.less";
@@ -16,11 +16,11 @@ import {AccountView} from "./views/account/AccountView";
 import FairbundledHeader from "./components/FairbundledHeader/FairbundledHeader";
 import CategoryService from "./services/CategoryService";
 import FairbundledFooter from "./components/FairbundledFooter/FairbundledFooter";
-import {LoadingOutlined} from "@ant-design/icons";
 import FairbundleService from "./services/FairbundleService";
 import OrderService from "./services/OrderService";
 import UserEditView from "./views/account/UserEditView";
 import CheckoutView from "./views/account/municipality-account/CheckoutView";
+import {Spinner} from "./components/Functional/Spinner";
 
 // decide on overall layout structure (ANT)
 const {Header, Footer, Content} = Layout;
@@ -206,9 +206,9 @@ export default class App extends React.Component {
                 </Header>
                 <Content className="app__content">
                     {/*dynamically load `Content` through router*/}
-                    <Switch spinner={this.renderSpinner}>
+                    <Switch>
                         {this.state.routes.map((route, i) => (
-                            <Route key={i} {...route} spinner={this.renderSpinner} />
+                            <Route key={i} {...route}/>
                         ))}
                     </Switch>
                 </Content>
@@ -219,26 +219,16 @@ export default class App extends React.Component {
         );
     }
 
-    renderSpinner = () => {
-        const antIcon = <LoadingOutlined style={{fontSize: 36}} spin/>;
-        return (
-            <Row
-                justify="center"
-                align="middle"
-                className="app__spinner-container"
-            >
-                <Spin size="large" indicator={antIcon}/>
-            </Row>
-        );
-    };
-
     render() {
+        const categories = this.state.categories;
+        let contentComponent = <Spinner/>;
+        if (categories && categories.length > 0) {
+            contentComponent = this.renderContent();
+        }
         return (
             <Layout>
                 <ConfigProvider locale={deDE}>
-                    {this.state.categories && this.state.categories.length > 0
-                        ? this.renderContent()
-                        : this.renderSpinner}
+                    {contentComponent}
                 </ConfigProvider>
             </Layout>
         );

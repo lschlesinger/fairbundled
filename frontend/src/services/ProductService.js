@@ -38,7 +38,7 @@ export default class ProductService {
         let products = await this.getProducts("");
         for (const p in products) {
             const product = products[p];
-            if (product.supplier == supplier._id) {
+            if (product.supplier === supplier._id) {
                 activeProducts++;
             }
         }

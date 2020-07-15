@@ -3,13 +3,13 @@ import ProductDetails from "../../components/ProductDetails/ProductDetails";
 import ProductService from "../../services/ProductService";
 import PositionService from "../../services/PositionService";
 import FairbundleService from "../../services/FairbundleService";
-import {Breadcrumb, Col, message, notification, Row, Spin} from "antd";
+import {Breadcrumb, Col, message, notification, Row} from "antd";
 import ValidationError from "../../services/ValidationError";
 import JoinFairbundleModalView from "./FairbundledJoinedModalView";
 import CreateFairbundleModalView from "./FairbundleCreatedModalView";
 import FairbundleSuccessView from "./FairbundleSuccessView";
-import { Link } from "react-router-dom";
-import {LoadingOutlined} from "@ant-design/icons";
+import {Link} from "react-router-dom";
+import {Spinner} from "../../components/Functional/Spinner";
 
 export class ProductDetailView extends React.Component {
     constructor(props) {
@@ -60,12 +60,12 @@ export class ProductDetailView extends React.Component {
         }
     }
 
-    onShowCreateFairbundle = ({ qty }) => {
-        this.setState({ qty: qty });
+    onShowCreateFairbundle = ({qty}) => {
+        this.setState({qty: qty});
         this.showModal(false);
     };
 
-    onShowJoinFairbundle = ({ fairbundleId, qty }) => {
+    onShowJoinFairbundle = ({fairbundleId, qty}) => {
         this.setState({
             qty: qty,
             joinedFairbundle: this.state.fairbundles.find(
@@ -128,7 +128,7 @@ export class ProductDetailView extends React.Component {
     };
 
     onCreateOrder = (qty) => {
-        this.setState({ qty: qty });
+        this.setState({qty: qty});
 
         PositionService.addPosition(qty, this.state.product._id)
             .then((product) => {
@@ -215,12 +215,12 @@ export class ProductDetailView extends React.Component {
                     rc.subcategories.find((sc) => sc._id === childC._id)
                 );
                 parentsWithChildren.push(parent);
-                breadcrumbs.push({ parent: parent, child: childC });
+                breadcrumbs.push({parent: parent, child: childC});
             }
             for (let rc in rootCategories) {
                 const rootC = rootCategories[rc];
                 if (!parentsWithChildren.find((c) => c._id === rootC._id)) {
-                    breadcrumbs.push({ parent: rootC });
+                    breadcrumbs.push({parent: rootC});
                 }
             }
             return (
@@ -234,45 +234,26 @@ export class ProductDetailView extends React.Component {
         return null;
     };
 
-    renderProductDetails() {
-        if (this.state.product) {
-            return (<ProductDetails
+    render() {
+        const product = this.state.product;
+        const fairbundles = this.state.fairbundles;
+        let productDetailComponent = <Spinner/>;
+        if (product && fairbundles) {
+            productDetailComponent = <ProductDetails
                 product={this.state.product}
                 fairbundles={this.state.fairbundles}
                 onCreateFairbundle={this.onShowCreateFairbundle}
                 onJoinFairbundle={this.onShowJoinFairbundle}
                 onCreateOrder={this.onCreateOrder}
-            />)
-        } else {
-            return (this.renderSpinner)
+            />
         }
 
-    }
-
-    renderSpinner() {
-        const antIcon = <LoadingOutlined style={{fontSize: 36}} spin/>;
-        return (
-            <Row
-                justify="center"
-                align="middle"
-                className="app__spinner-container"
-            >
-                <Spin size="large" indicator={antIcon}/>
-            </Row>
-        );
-    }
-
-    render() {
-        const product = this.state.product;
-        const fairbundles = this.state.fairbundles;
-        let productDetailComponent = this.props.spinner;
-        console.log(this.props.spinner);
         return (
             <Col>
                 <Row>{this.renderBreadcrumbs()}</Row>
                 <Row>
-                    <div style={{ width: "100%" }}>
-                        {this.renderProductDetails()}
+                    <div style={{width: "100%"}}>
+                        {productDetailComponent}
                         <JoinFairbundleModalView
                             quantity={this.state.qty}
                             fairbundle={this.state.joinedFairbundle}

@@ -29,7 +29,7 @@ export default class JoinFairbundle extends React.Component {
     };
 
     getMaxPriceLevel = () => {
-        if (this.props.fairbundle?.product == null) {
+        if (this.props.fairbundle?.product === null) {
             return null;
         }
 
