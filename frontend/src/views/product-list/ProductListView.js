@@ -37,6 +37,7 @@ export default class ProductListView extends React.Component {
     onSelectedCertsChanged = (selectedCerts) => {
         this.setState(prevState => ({
             ...prevState,
+            
             selectedCerts: selectedCerts
         }));
 

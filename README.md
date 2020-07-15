@@ -22,9 +22,9 @@
 * [About the Project](#about-the-project)
   * [Description](#description)
   * [Built With](#built-with)
-* [Project Status](#project-status)
 * [Technical Documentation](#technical-documentation)
 * [Getting Started](#getting-started)
+* [Project Status](#project-status)
 * [License](#license)
 
 <!-- ABOUT THE PROJECT -->
@@ -49,6 +49,7 @@ So don't hesitate:
 
 Check out the [Fairbundled](https://fairbundled.herokuapp.com/)
 
+Regarding acknowledgement, find more information [here](./docs/Acknowledgement.md).
 
 ### Built With
 
@@ -59,56 +60,6 @@ Check out the [Fairbundled](https://fairbundled.herokuapp.com/)
 * [MongoDB](https://www.mongodb.com/de)
 * [Heroku](https://www.heroku.com/)
 * [Docker](https://www.docker.com/)
-
-
-
-<!-- PROJECT STATUS -->
-
-## Project Status
-
-### Specific implementation tasks
-
-The following table summarizes the status of specific implementation tasks structured by the app's URL's, associated Use Cases (see below) and Views.
-
-Frontend implementation covers a well designed and functioning frontend interaction of a user whereas backend implementation covers the existence of respective endpoints, triggering the retrieval of well defined data from the database.
-
-**UC_I**: Offer a product as supplier
-
-**UC_II**: Search a product
-
-**UC_III**: Create Fairbundle for specific product as municipality
-
-**UC_IV**: Join existing Fairbundle for a specific product as municipality
-
-**UC_GENERAL**: general functionality, required for prototype
-
-| FrontendURL       | UC           | Associated View incl. Modal                                  | Frontend Implementation | Backend Implementation |
-| ----------------- | ------------ | ------------------------------------------------------------ | ----------------------- | -------------------- |
-| `/`               | UC_II        | `LandingView`                                                | In Progress             | In Progress          |
-| `/register`       | UC_GENERAL   | `RegisterView`                                               | Done                    | Done                 |
-| `/login`          | UC_GENERAL   | `LoginView`                                                  | Done                    | Done                 |
-| `/product`        | UC_II, UC_IV | `ProductListView`                                            | Done                    | Done                 |
-| `/product/:id`     | UC_III       | `ProductDetailView`  `CreateFairbundleModalView` ` FairbundleCreatedModalView` | In Progress       | Done                 |
-|                   | UC_IV        | `ProductDetailView`  `JoinFairbundleModalView`  `FairbundleJoinedModalView` | In Progress       | Done                 |
-| `/product/create` | UC_I         | `ProductCreateView`  `ProductPreviewModalView`                | Done              | Done                 |
-| `/account`        | UC_I         | `AccountView` for supplier                                   | In Progress             | In Progress          |
-|                   | UC_GENERAL   | `AccountView` for municipality                               | Planned                 | Planned              |
-
-
-### General implementation tasks
-
-- Header / Footer Design (done)
-- Authorization (done)
-- Data validation (done for product creation)
-- Database setup (done)
-- Database enrichment with mock data (done to a very limited degree)
-
-### Organizational tasks
-
-- Project structure / repo organization (done)
-- Task and issue management (done)
-- Documentation (ongoing)
-- Deployment on Heroku (done)
 
 
 <!-- TECHNICAL DOCUMENTATION -->
@@ -130,6 +81,61 @@ git clone git@github.com:lschlesinger/fairbundled.git
 ```
 
 2. Navigate into subfolders to find out about requirements and further installation steps
+
+<!-- PROJECT STATUS -->
+
+## Project Status
+
+### Specific implementation tasks
+
+The following table summarizes the status of specific implementation tasks structured by the app's URL's, associated Use Cases (see below) and Views.
+
+Frontend implementation covers a well designed and functioning frontend interaction of a user whereas backend implementation covers the existence of respective endpoints, triggering the retrieval of well defined data from the database.
+
+**UC_I**: Offer a product as supplier
+
+**UC_II**: Search a product
+
+**UC_III-I**: Create Fairbundle for specific product as municipality
+
+**UC_III-II**: Join existing Fairbundle for a specific product as municipality
+
+ **UC_IV**: Analyze Municipality Activity
+
+**UC_GENERAL**: General functionality, required for prototype
+
+**UC_ADDITIONAL**: Regular Order Checkout (no collective / Fairbundle) order
+
+| FrontendURL       | UC           | Associated View incl. Modal                                  | Frontend Implementation | Backend Implementation |
+| ----------------- | ------------ | ------------------------------------------------------------ | ----------------------- | -------------------- |
+| `/`               | UC_GENREAL        | `LandingView`                                                | Done       | Done       |
+| `/register`       | UC_GENERAL   | `RegisterView`                                               | Done                    | Done                 |
+| `/login`          | UC_GENERAL   | `LoginView`                                                  | Done                    | Done                 |
+| `/edit`          | UC_GENERAL   | `UserEditView`                                                  | Dummie                    | Dummie                    |
+| `/checkout`          | UC_ADDITIONAL   | `CheckoutView`                                                  | Done                    | Done                 |
+| `/product`        | UC_II, UC_IV | `ProductListView`                                            | Done                    | Done                 |
+| `/product/:id`     | UC_III-I       | `ProductDetailView`  `CreateFairbundleModalView` ` FairbundleCreatedModalView` | Done       | Done                 |
+|                   | UC_III-II        | `ProductDetailView`  `JoinFairbundleModalView`  `FairbundleJoinedModalView` | Done      | Done                 |
+| `/product/create` | UC_I         | `ProductCreateView`  `ProductPreviewModalView`                | Done              | Done                 |
+| `/account`        | UC_I         | `AccountView` for supplier                                   | Done          |  Done       |
+|                   | UC_IV   | `AccountView` for municipality                               | Done                 | Done              |
+
+
+### General implementation tasks
+
+- Header / Footer Design (done)
+- Authorization (done)
+- Data validation (done for product creation)
+- Database setup (done)
+- Database enrichment with mock data (done to a very limited degree)
+
+### Organizational tasks
+
+- Project structure / repo organization (done)
+- Task and issue management (done)
+- Documentation (ongoing)
+- Deployment on Heroku (done)
+
 
 <!-- LICENSE -->
 
