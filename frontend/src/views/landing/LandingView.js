@@ -29,7 +29,6 @@ export class LandingView extends React.Component {
         this.state = {
             sponsoredProducts: null,
             presentedFairbundle: null,
-            introducedFairbundle: null,
             certificates: null,
             topCategories: null,
         };
@@ -48,10 +47,7 @@ export class LandingView extends React.Component {
             products = ProductService.getSmallestPrice(products);
             products = products.sort(() => Math.random() - 0.5).slice(0, 10);
 
-
             let fairbundles = await FairbundleService.getFairbundles();
-            // TODO: filter somehow to select?
-
             let presentedFairbundle = FairbundleService.getPresentedFairbundle(
                 fairbundles
             );
@@ -60,7 +56,6 @@ export class LandingView extends React.Component {
             this.setState({
                 presentedFairbundle: presentedFairbundle,
                 sponsoredProducts: products,
-                introducedFairbundle: fairbundles,
             });
         } catch (e) {
             message.error("Error fetching products and fairbundles.");
@@ -112,7 +107,7 @@ export class LandingView extends React.Component {
         const certificates = this.state.certificates;
         const categories = this.state.topCategories;
         const sponsoredProducts = this.state.sponsoredProducts;
-        const introducedFairbundle = this.state.introducedFairbundle;
+        const presentedFairbundle = this.state.presentedFairbundle;
         let sponsoredProductsComponent = <Spinner/>;
         let certificateComponent = <Spinner/>;
         let categoriesComponent = <Spinner/>;
@@ -125,9 +120,11 @@ export class LandingView extends React.Component {
             categoriesComponent = <LandingCategories topCategories={categories}/>
         }
 
-        if (introducedFairbundle && sponsoredProducts) {
+        if (presentedFairbundle && sponsoredProducts) {
+            console.log(sponsoredProducts);
+
             sponsoredProductsComponent = <SponsoredProducts sponsoredProducts={sponsoredProducts}
-                                                            introducedFairbundle={introducedFairbundle}/>
+                                                            presentedFairbundle={presentedFairbundle}/>
         }
 
         return (
@@ -136,9 +133,8 @@ export class LandingView extends React.Component {
                     <img alt="Fairbundled"
                          src={Banner}/>
                 </Row>
-                <Row justify="center" className="padding--md">
+                <Divider><h1> Unsere Produkte </h1></Divider>
                     {sponsoredProductsComponent}
-                </Row>
                 <Divider><h1> Unsere Zertifikate </h1></Divider>
                     {certificateComponent}
                 <Divider><h1> Unsere Top Kategorien </h1></Divider>
