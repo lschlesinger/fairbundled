@@ -28,6 +28,12 @@ export default class OrderOptions extends React.Component {
     onCreateFairbundle = (evt) => {
         this.createDOM.blur();
 
+        if (!AuthService.isAuthenticatedMunicipality()) {
+            window.location = `/login?product=${this.props.product._id}`;
+
+            return;
+        }
+
         if (this.state.qty && this.state.qty > 0) {
             this.props.onCreateFairbundle({
                 productId: this.props.productId,
@@ -39,6 +45,12 @@ export default class OrderOptions extends React.Component {
     onJoinFairbundle = (fairbundleId) => {
         this.joinDOM.blur();
 
+        if (!AuthService.isAuthenticatedMunicipality()) {
+            window.location = `/login?product=${this.props.product._id}`;
+
+            return;
+        }
+
         if (this.state.qty && this.state.qty > 0) {
             this.props.onJoinFairbundle({
                 fairbundleId: fairbundleId,
@@ -49,6 +61,12 @@ export default class OrderOptions extends React.Component {
 
     onCreateOrder = (evt) => {
         this.orderDOM.blur();
+
+        if (!AuthService.isAuthenticatedMunicipality()) {
+            window.location = `/login?product=${this.props.product._id}`;
+
+            return;
+        }
 
         if (this.state.qty && this.state.qty > 0) {
             this.props.onCreateOrder(this.state.qty);
@@ -161,15 +179,14 @@ export default class OrderOptions extends React.Component {
                 </Row>
                 <Tooltip
                     title={`
-                    ${!AuthService.isAuthenticatedMunicipality() 
-                        ? "Nur angemeldete Nutzer von Kommunen können Fairbundle beitreten" 
-                        : "Bestehendem Fairbundle beitreten"
+                    ${!AuthService.isAuthenticatedMunicipality()
+                        ? "Nur angemeldete Nutzer von Kommunen können Fairbundle beitreten"
+                        : "Weiter zu Konditionen"
                     }`}
                 >
                     <Button
                         type="primary"
                         className="order-options__buttons margin-top--md"
-                        disabled={!AuthService.isAuthenticatedMunicipality()}
                         ref={(buttonDOM) => {
                             this.joinDOM = buttonDOM;
                         }}
@@ -222,15 +239,14 @@ export default class OrderOptions extends React.Component {
                     <Card className="order-options__card margin-vertical--sm">
                         <Tooltip
                             title={`
-                            ${!AuthService.isAuthenticatedMunicipality() 
-                                ? "Nur angemeldete Nutzer von Kommunen können Fairbundle erstellen" 
-                                : "Neues Fairbundle erstellen"
+                            ${!AuthService.isAuthenticatedMunicipality()
+                                ? "Nur angemeldete Nutzer von Kommunen können Fairbundle erstellen"
+                                : "Weiter zur Konfiguration"
                             }`}
                         >
                             <Button
                                 type="primary"
                                 block
-                                disabled={!AuthService.isAuthenticatedMunicipality()}
                                 className="order-options__buttons"
                                 ref={(buttonDOM) => {
                                     this.createDOM = buttonDOM;
@@ -255,14 +271,14 @@ export default class OrderOptions extends React.Component {
                 <Card className="order-options__card margin-vertical--sm">
                     <Tooltip
                         title={`
-                        ${!AuthService.isAuthenticatedMunicipality() 
-                            ? "Nur angemeldete Nutzer von Kommunen können Artikel bestellen" 
-                            : !this.state.canBuy 
+                        ${!AuthService.isAuthenticatedMunicipality()
+                            ? "Nur angemeldete Nutzer von Kommunen können Artikel bestellen"
+                            : !this.state.canBuy
                                 ? "Mindestbestellmenge von " +
                                     this.props.minQty + " " +
                                     this.props.product?.priceLevel[0].unit +
                                     " nicht erreicht"
-                                : "Sofort bestellen"
+                                : "In den Warenkorb"
                         }`}
                     >
                         <Button type="primary"

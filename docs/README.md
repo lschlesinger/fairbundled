@@ -196,20 +196,22 @@ Routes are protected by the specific middleware functions.  See section [Middlew
 |          |                 | `/:id`                    | GET       |                                               |
 |          |                 | `/`                       | POST      | checkAuthentication<br>checkSupplier          |
 |          | `/fairbundle`   | `/?product=productId`     | GET       |                                               |
-|          |                 | `/:id` (*fairbundleId*)      | GET       |                                               |
+|          |                 | `/:id`      | GET       |                                               |
 |          |                 | `/`                       | POST      | checkAuthentication<br/>checkMunicipality     |
-|          |                 | `/:id` (*fairbundleId*)   | PUT       | checkAuthentication<br/>checkMunicipality     |
+|          |                 | `/:id`  | PUT       | checkAuthentication<br/>checkMunicipality     |
 |          | `/order`        | `/` | GET       | checkAuthentication<br/>checkMunicipality     |
-|          |                 | `/:id` (*orderId*)        | GET       | checkAuthentication<br/>checkMunicipality     |
+|          |                 | `/:id`       | GET       | checkAuthentication<br/>checkMunicipality     |
 |          |                 | `/`                       | POST      | checkAuthentication<br/>checkMunicipality     |
 |          |                 | `/`                       | PUT       | checkAuthentication<br/>checkMunicipality |
-|          | `/positions`    | `/`     | GET       | checkAuthentication<br/>checkSupplier         |
+|          | `/position`    | `/`     | GET       | checkAuthentication<br/>checkSupplier         |
 |          |                 | `/`     | POST       | checkAuthentication<br/>checkMunicipality         |
 |          | `/auth`         | `/login`                  | POST      |                                               |
 |          |                 | `/register`               | POST      |                                               |
 |          | `/municipatliy` | `/`                       | GET       |                                               |
 |          | `/supplier`     | `/`                       | GET       |                                               |
 |          | `/user`     | `/`                       | GET       | checkAuthentication                                               |
+|          | `/certificate`     | `/`                       | GET       |                                                |
+|          | `/category`     | `/`                       | GET       |                                               |
 
 Note:
 
