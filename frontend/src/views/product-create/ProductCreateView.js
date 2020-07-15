@@ -90,7 +90,7 @@ class ProductCreateView extends React.Component {
      * those values that haven't been changed will receive the value of their previous state
      * @param values
      */
-    onChange(values) {
+    onChange = (values) => {
         const {
             categories,
             name,
@@ -129,7 +129,7 @@ class ProductCreateView extends React.Component {
                     : prevState.product.categories,
             },
         }));
-    }
+    };
 
     getThumbUrls(images) {
         // helper function for getting the base64encoded image out of the value `images` retrieved onChange
@@ -164,7 +164,7 @@ class ProductCreateView extends React.Component {
         notification.open(args);
     };
 
-    publishProduct() {
+    publishProduct = () => {
         ProductService.createProduct(this.state.product)
             .then((product) => {
                 message.success("Produkt erfolgreich veröffentlicht");
@@ -177,7 +177,7 @@ class ProductCreateView extends React.Component {
                     });
                 }
             });
-    }
+    };
 
     render() {
         return (
@@ -186,9 +186,9 @@ class ProductCreateView extends React.Component {
                     categories={this.state.categories}
                     certificates={this.state.certificates}
                     product={this.state.product}
-                    onChange={this.onChange.bind(this)}
+                    onChange={this.onChange}
                     onPreview={this.showModal}
-                    onPublish={this.publishProduct.bind(this)}
+                    onPublish={this.publishProduct}
                 />
                 <ProductPreviewModalView
                     entityName={this.state.entityName}

@@ -204,6 +204,7 @@ export default class ProductListCard extends React.Component {
                         >
                             <Cascader
                                 options={options}
+                                allowClear={false}
                                 onChange={this.handleOrdering}
                                 ordering={this.state.ordering}
                                 placeholder="Bitte auswählen"

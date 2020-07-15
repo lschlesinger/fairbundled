@@ -1,7 +1,5 @@
-import React from "react";
-import { Divider, Layout, message, Row, Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import "./LandingView.less";
+import React from 'react';
+import {Divider, Layout, message, Row} from "antd";
 import ProductService from "../../services/ProductService";
 import Banner from "../../assets/banner.png";
 import CertificateService from "../../services/CertificateService";
@@ -11,6 +9,7 @@ import FairbundlePrinciple from "../../components/LandingPage/FairbundlePrincipl
 import LandingCertificates from "../../components/LandingPage/LandingCertificates";
 import SponsoredProducts from "../../components/LandingPage/SponsoredProducts";
 import FairbundleService from "../../services/FairbundleService";
+import {Spinner} from "../../components/Functional/Spinner";
 
 const LANDINGCATS = [
     "Feuerwehruniformen",
@@ -30,7 +29,6 @@ export class LandingView extends React.Component {
         this.state = {
             sponsoredProducts: null,
             presentedFairbundle: null,
-            introducedFairbundle: null,
             certificates: null,
             topCategories: null,
         };
@@ -49,10 +47,7 @@ export class LandingView extends React.Component {
             products = ProductService.getSmallestPrice(products);
             products = products.sort(() => Math.random() - 0.5).slice(0, 10);
 
-
             let fairbundles = await FairbundleService.getFairbundles();
-            // TODO: filter somehow to select?
-
             let presentedFairbundle = FairbundleService.getPresentedFairbundle(
                 fairbundles
             );
@@ -61,7 +56,6 @@ export class LandingView extends React.Component {
             this.setState({
                 presentedFairbundle: presentedFairbundle,
                 sponsoredProducts: products,
-                introducedFairbundle: fairbundles,
             });
         } catch (e) {
             message.error("Error fetching products and fairbundles.");
@@ -107,83 +101,47 @@ export class LandingView extends React.Component {
         }
     }
 
-    renderLandingCategories() {
-        if (this.state.topCategories) {
-            return (
-                <LandingCategories topCategories={this.state.topCategories} />
-            );
-        } else {
-            return this.renderSpinner;
-        }
-    }
-
-    renderLandingCertificates() {
-        if (this.state.certificates) {
-            return (
-                <LandingCertificates certificates={this.state.certificates} />
-            );
-        } else {
-            return this.renderSpinner();
-        }
-    }
-
-    renderSponsoredProducts() {
-        if (
-            this.state.sponsoredProducts &&
-            this.state.introducedFairbundle &&
-            this.state.presentedFairbundle
-        ) {
-            return (
-                <SponsoredProducts
-                    sponsoredProducts={this.state.sponsoredProducts}
-                    introducedFairbundle={this.state.introducedFairbundle}
-                    presentedFairbundle={this.state.presentedFairbundle}
-                />
-            );
-        } else {
-            return this.renderSpinner();
-        }
-    }
-
-    renderSpinner() {
-        const antIcon = <LoadingOutlined style={{ fontSize: 36 }} spin />;
-        return (
-            <Row
-                justify="center"
-                align="middle"
-                className="app__spinner-container"
-            >
-                <Spin size="large" indicator={antIcon} />
-            </Row>
-        );
-    }
 
     render() {
+
+        const certificates = this.state.certificates;
+        const categories = this.state.topCategories;
+        const sponsoredProducts = this.state.sponsoredProducts;
+        const presentedFairbundle = this.state.presentedFairbundle;
+        let sponsoredProductsComponent = <Spinner/>;
+        let certificateComponent = <Spinner/>;
+        let categoriesComponent = <Spinner/>;
+
+        if (certificates) {
+            certificateComponent = <LandingCertificates certificates={certificates}/>
+        }
+
+        if (categories) {
+            categoriesComponent = <LandingCategories topCategories={categories}/>
+        }
+
+        if (presentedFairbundle && sponsoredProducts) {
+
+            sponsoredProductsComponent = <SponsoredProducts sponsoredProducts={sponsoredProducts}
+                                                            presentedFairbundle={presentedFairbundle}/>
+        }
+
         return (
             <Layout className="padding--md">
                 <Row justify="center" className="padding--md">
-                    <img
-                        className="landing__banner"
-                        src={Banner}
-                        alt="Fairtrade"
-                    />
+                    <img alt="Fairbundled"
+                         src={Banner}/>
                 </Row>
-                <Divider>
-                    <h1> Unsere Produkte </h1>
-                </Divider>
-                {this.renderSponsoredProducts()}
-                <Divider>
-                    <h1> Unsere Zertifikate </h1>
-                </Divider>
-                {this.renderLandingCertificates()}
-                <Divider>
-                    <h1> Unsere Top Kategorien </h1>
-                </Divider>
+                <Divider><h1> Unsere Produkte </h1></Divider>
+                    {sponsoredProductsComponent}
+                <Divider><h1> Unsere Zertifikate </h1></Divider>
+                    {certificateComponent}
+                <Divider><h1> Unsere Top Kategorien </h1></Divider>
                 <Row justify="center" className="padding--md">
-                    {this.renderLandingCategories()}
+                    {categoriesComponent}
                 </Row>
                 <Divider>
-                    <h1> Unser Prinzip </h1>
+                    <h1>Unser Prinzip</h1>
                 </Divider>
                 <FairbundlePrinciple />
             </Layout>

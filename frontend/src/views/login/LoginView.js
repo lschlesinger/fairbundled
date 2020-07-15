@@ -10,13 +10,13 @@ class LoginView extends React.Component {
         super(props);
     }
 
-    onFinish(values) {
+    onFinish = (values) => {
         const {email, password} = values;
         AuthService.login(email, password)
             .then(() => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const product = urlParams.get('product');
-                
+
                 if (product) {
                     window.location = `/product/${product}`;
 
@@ -28,14 +28,14 @@ class LoginView extends React.Component {
             .catch((err) => {
                 message.error('Login fehlgeschlagen!');
             });
-    }
+    };
 
     render() {
         return (
             <Row className="padding--md"
                  justify="center"
                  align="middle">
-                <LoginForm onFinish={this.onFinish.bind(this)}/>
+                <LoginForm onFinish={this.onFinish}/>
             </Row>
 
         );

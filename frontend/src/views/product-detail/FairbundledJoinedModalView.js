@@ -13,7 +13,7 @@ export default class FairbundleJoinedModalView extends React.Component {
     }
 
     render() {
-        if (this.props.fairbundle == null) {
+        if (this.props.fairbundle === null) {
             return (<p/>);
         }
 

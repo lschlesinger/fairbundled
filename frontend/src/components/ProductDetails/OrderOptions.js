@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Col, InputNumber, Progress, Row, Tooltip } from "antd";
+import {Button, Card, Col, InputNumber, Progress, Row, Tooltip} from "antd";
 import {CalendarOutlined, CheckCircleOutlined, TeamOutlined} from '@ant-design/icons';
 import AuthService from "../../services/AuthService";
 import './OrderOptions.less';
@@ -145,7 +145,7 @@ export default class OrderOptions extends React.Component {
                     showInfo={false}
                 />
                 <Row align="middle" className="margin-bottom--md">
-                    <Col style={{ color: "#78A262" }}>
+                    <Col style={{color: "#78A262"}}>
                         <b>{currentQuantity}</b>
                     </Col>
                     <Col className="padding-horizontal--sm">
@@ -153,48 +153,50 @@ export default class OrderOptions extends React.Component {
                         erreicht
                     </Col>
                 </Row>
-                <Row className="margin-vertical--md">
-                    <Row align="middle">
-                        <Col>
-                            <CalendarOutlined style={{ fontSize: 25 }} />
-                        </Col>
-                        <Col className="padding-horizontal--sm padding-vertical--xs">
-                            noch <b>{remainingDays}</b>{" "}
-                            {`Tag${
-                                remainingDays > 1 ? "e" : ""
-                            } bis zur Bestellung`}
-                        </Col>
-                    </Row>
-                    <Row align="middle">
-                        <Col>
-                            <TeamOutlined style={{ fontSize: 25 }} />
-                        </Col>
-                        <Col className="padding-horizontal--sm padding-vertical--xs">
-                            aktuell <b>{new Set(fairbundle.bundlers).size}</b>{" "}
-                            {`teilnehmende Kommune${
-                                new Set(fairbundle.bundlers).size > 1 ? "n" : ""
-                            }`}
-                        </Col>
-                    </Row>
+                <Row align="middle">
+                    <Col>
+                        <CalendarOutlined style={{fontSize: 25}}/>
+                    </Col>
+                    <Col className="padding-horizontal--sm padding-vertical--xs">
+                        noch <b>{remainingDays}</b>{" "}
+                        {`Tag${
+                            remainingDays > 1 ? "e" : ""
+                        } bis zur Bestellung`}
+                    </Col>
                 </Row>
-                <Tooltip
-                    title={`
+                <Row align="middle">
+                    <Col>
+                        <TeamOutlined style={{fontSize: 25}}/>
+                    </Col>
+                    <Col className="padding-horizontal--sm padding-vertical--xs">
+                        aktuell <b>{new Set(fairbundle.bundlers).size}</b>{" "}
+                        {`teilnehmende Kommune${
+                            new Set(fairbundle.bundlers).size > 1 ? "n" : ""
+                        }`}
+                    </Col>
+                </Row>
+                <Row justify="center" align="middle">
+                    <Col span={24}>
+                        <Tooltip
+                            title={`
                     ${!AuthService.isAuthenticatedMunicipality()
-                        ? "Nur angemeldete Nutzer von Kommunen können Fairbundle beitreten"
-                        : "Weiter zu Konditionen"
-                    }`}
-                >
-                    <Button
-                        type="primary"
-                        className="order-options__buttons margin-top--md"
-                        ref={(buttonDOM) => {
-                            this.joinDOM = buttonDOM;
-                        }}
-                        onClick={(evt) => this.onJoinFairbundle(fairbundle._id)}
-                    >
-                        Fairbundle beitreten
-                    </Button>
-                </Tooltip>
+                                ? "Nur angemeldete Nutzer von Kommunen können Fairbundle beitreten"
+                                : "Weiter zu Konditionen"
+                            }`}
+                        >
+                            <Button
+                                type="primary"
+                                className="order-options__buttons margin-top--md"
+                                ref={(buttonDOM) => {
+                                    this.joinDOM = buttonDOM;
+                                }}
+                                onClick={(evt) => this.onJoinFairbundle(fairbundle._id)}
+                            >
+                                Fairbundle beitreten
+                            </Button>
+                        </Tooltip>
+                    </Col>
+                </Row>
             </Card>
         );
     };
@@ -216,7 +218,7 @@ export default class OrderOptions extends React.Component {
                     <Row>
                         <Col>Lieferbar</Col>
                         <Col className="padding-horizontal--sm">
-                            <CheckCircleOutlined /> -{" "}
+                            <CheckCircleOutlined/> -{" "}
                             <b>{this.props.product?.deliveryDays}</b>
                         </Col>
                         <Col>Werktage</Col>
@@ -237,25 +239,29 @@ export default class OrderOptions extends React.Component {
                 {/*only render "Neues Fairbundle" Button if bundling is possible (more than 1 price level)*/}
                 {this.props.product?.priceLevel.length > 1 ? (
                     <Card className="order-options__card margin-vertical--sm">
-                        <Tooltip
-                            title={`
+                        <Row justify="center" align="middle">
+                            <Col span={24}>
+                                <Tooltip
+                                    title={`
                             ${!AuthService.isAuthenticatedMunicipality()
-                                ? "Nur angemeldete Nutzer von Kommunen können Fairbundle erstellen"
-                                : "Weiter zur Konfiguration"
-                            }`}
-                        >
-                            <Button
-                                type="primary"
-                                block
-                                className="order-options__buttons"
-                                ref={(buttonDOM) => {
-                                    this.createDOM = buttonDOM;
-                                }}
-                                onClick={this.onCreateFairbundle}
-                            >
-                                Neues Fairbundle
-                            </Button>
-                        </Tooltip>
+                                        ? "Nur angemeldete Nutzer von Kommunen können Fairbundle erstellen"
+                                        : "Weiter zur Konfiguration"
+                                    }`}
+                                >
+                                    <Button
+                                        type="primary"
+                                        block
+                                        className="order-options__buttons"
+                                        ref={(buttonDOM) => {
+                                            this.createDOM = buttonDOM;
+                                        }}
+                                        onClick={this.onCreateFairbundle}
+                                    >
+                                        Neues Fairbundle
+                                    </Button>
+                                </Tooltip>
+                            </Col>
+                        </Row>
                     </Card>
                 ) : (
                     <Row className="order-options__card margin-vertical--sm">
@@ -269,30 +275,34 @@ export default class OrderOptions extends React.Component {
                     this.createFairbundleCard(fb, this.props.product)
                 )}
                 <Card className="order-options__card margin-vertical--sm">
-                    <Tooltip
-                        title={`
+                    <Row justify="center" align="middle">
+                        <Col span={24}>
+                            <Tooltip
+                                title={`
                         ${!AuthService.isAuthenticatedMunicipality()
-                            ? "Nur angemeldete Nutzer von Kommunen können Artikel bestellen"
-                            : !this.state.canBuy
-                                ? "Mindestbestellmenge von " +
-                                    this.props.minQty + " " +
-                                    this.props.product?.priceLevel[0].unit +
-                                    " nicht erreicht"
-                                : "In den Warenkorb"
-                        }`}
-                    >
-                        <Button type="primary"
-                            className="order-options__buttons"
-                            block
-                            disabled={!this.state.canBuy}
-                            ref={(buttonDOM) => {
-                                this.orderDOM = buttonDOM;
-                            }}
-                            onClick={this.onCreateOrder}
-                        >
-                            Direktbestellung
-                        </Button>
-                    </Tooltip>
+                                    ? "Nur angemeldete Nutzer von Kommunen können Artikel bestellen"
+                                    : !this.state.canBuy
+                                        ? "Mindestbestellmenge von " +
+                                        this.props.minQty + " " +
+                                        this.props.product?.priceLevel[0].unit +
+                                        " nicht erreicht"
+                                        : "In den Warenkorb"
+                                }`}
+                            >
+                                <Button type="primary"
+                                        className="order-options__buttons"
+                                        block
+                                        disabled={!this.state.canBuy}
+                                        ref={(buttonDOM) => {
+                                            this.orderDOM = buttonDOM;
+                                        }}
+                                        onClick={this.onCreateOrder}
+                                >
+                                    Direktbestellung
+                                </Button>
+                            </Tooltip>
+                        </Col>
+                    </Row>
                 </Card>
             </Col>
         );

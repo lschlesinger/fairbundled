@@ -28,7 +28,7 @@ export default class LandingCertificates extends React.Component {
     render() {
         return (
             <Row>
-                <Carousel>
+                <Carousel autoplay>
                     {this.props.certificates.map((c) => this.getSlide(c))}
                 </Carousel>
             </Row>

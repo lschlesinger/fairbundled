@@ -44,7 +44,7 @@ class RegisterView extends React.Component {
         }
     }
 
-    onFinish(values) {
+    onFinish = (values) => {
         const {email, password, municipality, supplier} = values;
         AuthService.register(email, password, municipality, supplier)
             .then(() => {
@@ -54,14 +54,14 @@ class RegisterView extends React.Component {
             .catch((err) => {
                 message.error('Registrierung fehlgeschlagen!');
             });
-    }
+    };
 
     render() {
         return (
             <Row className="padding--md"
                  justify="center"
                  align="middle">
-                <RegisterForm onFinish={this.onFinish.bind(this)}
+                <RegisterForm onFinish={this.onFinish}
                               municipalities={this.state.municipalities}
                               suppliers={this.state.suppliers}/>
             </Row>

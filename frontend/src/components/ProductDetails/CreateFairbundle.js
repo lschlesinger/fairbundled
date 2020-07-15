@@ -48,7 +48,7 @@ export default class CreateFairbundle extends React.Component {
     onDateChange = (date, dateString) => {
         this.setState({
             expirationDate: date,
-            canNotSubmit: date == null,
+            canNotSubmit: date === null,
         });
     };
 

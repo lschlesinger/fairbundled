@@ -28,12 +28,6 @@ export default class ProductPriceLevelInput extends React.Component {
                     <p><InfoCircleOutlined/> Geben Sie je Stufe den Preis je angebener Produkteinheit und einer
                         mindestens
                         abzunehmenden Menge an.</p>
-                    <p><i> Beachten Sie, dass die kleinste hier angegebene Menge an Mindesteinheiten der kleinsten
-                        bestellbaren Menge für Ihr Produkt entspricht.
-                        Wenn Sie keine Preisstufe für eine Mindestmenge von 1 angeben, wird ihr Produkt in jedem Fall
-                        nur in Bestellmengen > 1 verfügbar sein.
-                        Wenn Sie nur eine Preisstufe angeben, wird Ihr Produkt als "nicht im Fairbundle verfügbar"
-                        angezeigt</i></p>
                 </Row>
                 <Form.List
                     label="Preisstufen"
@@ -115,6 +109,12 @@ export default class ProductPriceLevelInput extends React.Component {
                         );
                     }}
                 </Form.List>
+                <Row>
+                    <p><i> Zu Beachten:
+                        Wenn keine Preisstufe für eine Mindestmenge von einer Einheit angeben wird, ist das Produkt in jedem Fall
+                        nur in größeren Bestellmengen verfügbar (keine Einzelbestellung).
+                        Wenn nur eine Preisstufe angeben wird, ist das Produkt "nicht im Fairbundle verfügbar".</i></p>
+                </Row>
             </div>
         );
     };

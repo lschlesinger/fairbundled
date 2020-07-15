@@ -110,12 +110,11 @@ export default class PresentedProduct extends React.Component {
     render() {
         return (
             <Card>
-                <Row gutter={[36, 0]} className="padding--sm">
+                <Row gutter={[36, 0]} className="padding--md">
                     <Col span={12}>
-                        {console.log(this.props.presentedFairbundle)}
                         <img
                             src={
-                                this.props.presentedFairbundle?.product.images
+                                this.props.presentedFairbundle.product.images
                                     ?.length > 0
                                     ? this.props.presentedFairbundle.product
                                           .images[0]
@@ -126,7 +125,7 @@ export default class PresentedProduct extends React.Component {
                         />
                     </Col>
                     <Col span={12}>
-                        <Row>
+                        <Row className="margin-bottom--lg">
                             <Title level={3}>
                                 {this.props.presentedFairbundle?.product.name}
                             </Title>
@@ -139,7 +138,7 @@ export default class PresentedProduct extends React.Component {
                             <Link
                                 to={`/product/${this.props.presentedFairbundle.product._id}`}
                             >
-                                <Button size="middle" type="primary" block>
+                                <Button size="middle" type="primary" block className="margin-vertical--lg">
                                     Zum Produkt
                                 </Button>
                             </Link>

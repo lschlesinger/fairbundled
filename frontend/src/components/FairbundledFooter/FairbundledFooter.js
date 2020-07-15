@@ -14,7 +14,7 @@ export default class FairbundledFooter extends React.Component {
                  justify="center"
                  align="middle">
                 <Divider className="footer__custom-divider"/>
-                Made with&nbsp; <span style={{color: "#4E1C1B"}}>&#9829;</span> &nbsp;for 🌍 in Munich ©2020
+                Made with <span style={{color: "#4E1C1B"}}>&nbsp; &#9829; &nbsp;</span> for<span> &nbsp; 🌍 &nbsp; </span> in Munich ©2020
             </Row>
         );
     }

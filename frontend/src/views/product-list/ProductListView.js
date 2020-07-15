@@ -6,9 +6,10 @@ import {Layout, message} from 'antd';
 import ProductListCard from "../../components/ProductListCard/ProductListCard";
 import ProductFilterBar from "../../components/ProductFilterBar/ProductFilterBar"
 import './ProductListView.less';
+import {Spinner} from "../../components/Functional/Spinner";
 
 // decide on overall layout structure (ANT)
-const { Sider, Content } = Layout;
+const {Sider, Content} = Layout;
 
 export default class ProductListView extends React.Component {
     constructor(props) {
@@ -33,7 +34,7 @@ export default class ProductListView extends React.Component {
         }
     }
 
-    onSelectedCertsChanged(selectedCerts) {
+    onSelectedCertsChanged = (selectedCerts) => {
         this.setState(prevState => ({
             ...prevState,
             
@@ -41,12 +42,12 @@ export default class ProductListView extends React.Component {
         }));
 
         this.getProductsAndFairbundles();
-    }
+    };
 
     async getProductsAndFairbundles() {
         try {
             const {
-                location: { search },
+                location: {search},
             } = this.props;
             // get fairbundles
             let fairbundles = await FairbundleService.getFairbundles();
@@ -88,23 +89,25 @@ export default class ProductListView extends React.Component {
     }
 
     render() {
+        const fairbundles = this.state.fairbundles;
+        const products = this.state.products;
+        let productListCardComponent = <Spinner/>;
+
+        if (fairbundles && products) {
+            productListCardComponent = <ProductListCard fairbundles={fairbundles} products={products}/>;
+        }
         return (
             <Layout className="product-list-view__layout">
                 <Sider width="30%" className="product-list-view__sider" style={{
                     overflow: 'auto',
                     position: 'relative',
-                    left: 0}}>
-                    <ProductFilterBar certificates={this.state.certificates} onSelectedCertsChanged={this.onSelectedCertsChanged.bind(this)} />
+                    left: 0
+                }}>
+                    <ProductFilterBar certificates={this.state.certificates}
+                                      onSelectedCertsChanged={this.onSelectedCertsChanged}/>
                 </Sider>
                 <Content className="product-list-view__content">
-                    {this.state.products && this.state.fairbundles ? (
-                        <ProductListCard
-                            fairbundles={this.state.fairbundles}
-                            products={this.state.products}
-                        />
-                    ) : (
-                        ""
-                    )}
+                    {productListCardComponent}
                 </Content>
             </Layout>
         );
