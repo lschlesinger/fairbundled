@@ -30,7 +30,7 @@ export default class OrderOptions extends React.Component {
 
         if (!AuthService.isAuthenticatedMunicipality()) {
             window.location = `/login?product=${this.props.product._id}`;
-            
+
             return;
         }
 
@@ -47,7 +47,7 @@ export default class OrderOptions extends React.Component {
 
         if (!AuthService.isAuthenticatedMunicipality()) {
             window.location = `/login?product=${this.props.product._id}`;
-            
+
             return;
         }
 
@@ -64,7 +64,7 @@ export default class OrderOptions extends React.Component {
 
         if (!AuthService.isAuthenticatedMunicipality()) {
             window.location = `/login?product=${this.props.product._id}`;
-            
+
             return;
         }
 
@@ -179,9 +179,9 @@ export default class OrderOptions extends React.Component {
                 </Row>
                 <Tooltip
                     title={`
-                    ${!AuthService.isAuthenticatedMunicipality() 
-                        ? "Nur angemeldete Nutzer von Kommunen können Fairbundle beitreten" 
-                        : "Bestehendem Fairbundle beitreten"
+                    ${!AuthService.isAuthenticatedMunicipality()
+                        ? "Nur angemeldete Nutzer von Kommunen können Fairbundle beitreten"
+                        : "Weiter zu Konditionen"
                     }`}
                 >
                     <Button
@@ -239,9 +239,9 @@ export default class OrderOptions extends React.Component {
                     <Card className="order-options__card margin-vertical--sm">
                         <Tooltip
                             title={`
-                            ${!AuthService.isAuthenticatedMunicipality() 
-                                ? "Nur angemeldete Nutzer von Kommunen können Fairbundle erstellen" 
-                                : "Neues Fairbundle erstellen"
+                            ${!AuthService.isAuthenticatedMunicipality()
+                                ? "Nur angemeldete Nutzer von Kommunen können Fairbundle erstellen"
+                                : "Weiter zur Konfiguration"
                             }`}
                         >
                             <Button
@@ -271,14 +271,14 @@ export default class OrderOptions extends React.Component {
                 <Card className="order-options__card margin-vertical--sm">
                     <Tooltip
                         title={`
-                        ${!AuthService.isAuthenticatedMunicipality() 
-                            ? "Nur angemeldete Nutzer von Kommunen können Artikel bestellen" 
-                            : !this.state.canBuy 
+                        ${!AuthService.isAuthenticatedMunicipality()
+                            ? "Nur angemeldete Nutzer von Kommunen können Artikel bestellen"
+                            : !this.state.canBuy
                                 ? "Mindestbestellmenge von " +
                                     this.props.minQty + " " +
                                     this.props.product?.priceLevel[0].unit +
                                     " nicht erreicht"
-                                : "Sofort bestellen"
+                                : "In den Warenkorb"
                         }`}
                     >
                         <Button type="primary"

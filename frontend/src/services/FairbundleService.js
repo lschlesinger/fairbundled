@@ -34,18 +34,18 @@ export default class FairbundleService {
     }
 
     static getPresentedFairbundle(fairbundles) {
-        let PresentedFairbundle;
+        let presentedFairbundle;
         let max_bundlers = -Infinity;
         fairbundles.forEach((fairbundle) => {
             if (
-                fairbundle.bundlers.length > max_bundlers &&
+                new Set(fairbundle.bundlers).size > max_bundlers &&
                 fairbundle.submission === null
             ) {
-                max_bundlers = fairbundle.bundlers.length;
-                PresentedFairbundle = fairbundle;
+                max_bundlers = new Set(fairbundle.bundlers).size;
+                presentedFairbundle = fairbundle;
             }
         });
-        return PresentedFairbundle;
+        return presentedFairbundle;
     }
 
     static async joinFairbundle(fairbundleId, qty) {
