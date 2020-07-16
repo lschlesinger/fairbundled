@@ -121,7 +121,7 @@ export default class PresentedProduct extends React.Component {
                                     : placeholder
                             }
                             alt="bild"
-                            width="100%"
+                            width="80%"
                         />
                     </Col>
                     <Col span={12}>
