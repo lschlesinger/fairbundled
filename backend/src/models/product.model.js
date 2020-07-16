@@ -57,7 +57,7 @@ function priceLevelExistance(val) {
 }
 
 function valueExistance(val) {
-    return !val;
+    return !!val;
 }
 
 export default mongoose.model("Product", Product);
