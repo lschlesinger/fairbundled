@@ -3,6 +3,7 @@ import { Button, Card, Col, Progress, Row, Typography } from "antd";
 import { Link } from "react-router-dom";
 import placeholder from "../../assets/placeholder.png";
 import "./PresentedProducts.less";
+import FairbundleService from "../../services/FairbundleService";
 
 const { Text, Title } = Typography;
 
@@ -11,30 +12,20 @@ export default class PresentedProduct extends React.Component {
         super(props);
     }
 
-    getFairbundleProgress() {
-        let currentQty = this.props.presentedFairbundle.positions.reduce(
-            (temp, p) => {
-                return temp + p.qty;
-            },
-            0
-        );
-        let targetQty = this.props.presentedFairbundle.product.priceLevel.find(
-            (pl) => pl.unitPrice === this.props.presentedFairbundle.targetPrice
-        ).minQty;
-        let progressPercentage = (currentQty / targetQty) * 100;
+    getFairbundleProgress(fairbundleCharacteristics) {
         return (
             <Row className="padding-top--md">
                 <Row align="middle">
                     <Title className="presented-products__qty" level={4}>
-                        {currentQty}
+                        {fairbundleCharacteristics.currentQuantity}
                     </Title>
                     <Text className="padding-left--sm presented-products__text">
                         {" "}
-                        von {targetQty} erreicht
+                        von {fairbundleCharacteristics.requiredQuantity} erreicht
                     </Text>
                 </Row>
                 <Progress
-                    percent={progressPercentage}
+                    percent={fairbundleCharacteristics.bundleCompletion}
                     strokeColor="#78A262"
                     showInfo={false}
                     status="active"
@@ -43,50 +34,33 @@ export default class PresentedProduct extends React.Component {
         );
     }
 
-    getRemainingDays() {
-        let currentDate = new Date();
-        let diffTime =
-            Date.parse(this.props.presentedFairbundle.expiration) -
-            currentDate.getTime();
-        let remainingDays = Math.round(diffTime / 3600 / 24 / 1000);
+    getRemainingDays(fairbundleCharacteristics) {
         return (
             <div className="padding-top--md">
                 <Title className="presented-products__bold-text" level={4}>
-                    {remainingDays}
+                    {fairbundleCharacteristics.remainingTime}
                 </Title>
                 <Text className="presented-products__text">
-                    Tage verbleibend
+                    verbleibende Laufzeit
                 </Text>
             </div>
         );
     }
 
-    getParticipatingMunicipalities() {
+    getParticipatingMunicipalities(fairbundleCharacteristics) {
         return (
             <div className="padding-top--md">
                 <Title className="presented-products__bold-text" level={4}>
-                    {new Set(this.props.presentedFairbundle.bundlers).size}
+                    {fairbundleCharacteristics.bundlerStatus.split(' ')[0]}
                 </Title>
                 <Text className="presented-products__text">
-                    Teilnehmende Gemeinden
+                    Teilnehmende Kommunen
                 </Text>
             </div>
         );
     }
 
-    getPriceInfo() {
-        let maxPrice = Math.max(
-            ...this.props.presentedFairbundle.product.priceLevel.map(
-                (pl) => pl.unitPrice
-            )
-        );
-        let savings = (
-            1 -
-            this.props.presentedFairbundle.targetPrice / maxPrice
-        ).toLocaleString(undefined, {
-            style: "percent",
-            minimumFractionDigits: 2,
-        });
+    getPriceInfo(fairbundleCharacteristics) {
         return (
             <div className="padding-top--md">
                 <Title className="presented-products__bold-text" level={4}>
@@ -100,14 +74,15 @@ export default class PresentedProduct extends React.Component {
                     {new Intl.NumberFormat("de-DE", {
                         style: "currency",
                         currency: "EUR",
-                    }).format(maxPrice)}{" "}
-                    · {savings} sparen
+                    }).format(fairbundleCharacteristics.maxPrice)}{" "}
+                    · {fairbundleCharacteristics.savings} sparen
                 </Text>
             </div>
         );
     }
 
     render() {
+        let fairbundleCharacteristics = FairbundleService.getFairbundleCharacteristics(this.props.presentedFairbundle);
         return (
             <Card>
                 <Row gutter={[36, 0]} className="padding--md">
@@ -130,10 +105,10 @@ export default class PresentedProduct extends React.Component {
                                 {this.props.presentedFairbundle?.product.name}
                             </Title>
                         </Row>
-                        {this.getFairbundleProgress()}
-                        {this.getRemainingDays()}
-                        {this.getParticipatingMunicipalities()}
-                        {this.getPriceInfo()}{" "}
+                        {this.getFairbundleProgress(fairbundleCharacteristics)}
+                        {this.getRemainingDays(fairbundleCharacteristics)}
+                        {this.getParticipatingMunicipalities(fairbundleCharacteristics)}
+                        {this.getPriceInfo(fairbundleCharacteristics)}{" "}
                         <Row className="padding-top--md" align="bottom">
                             <Link
                                 to={`/product/${this.props.presentedFairbundle.product._id}`}

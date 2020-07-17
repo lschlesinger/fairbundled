@@ -81,6 +81,7 @@ export default class ActivityOverview extends React.Component {
             const expirationAction = fbp.order.expirationAction;
             let entry = {
                 key: fbp.product._id + idx,
+                productId: fbp.product._id,
                 product: fbp.product.name,
                 qty: fbp.qty + " " + targetPriceLevel.unit,
                 price: targetprice + " | " + currentPrice,

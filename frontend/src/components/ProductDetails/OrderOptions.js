@@ -3,6 +3,8 @@ import {Button, Card, Col, InputNumber, Progress, Row, Tooltip} from "antd";
 import {CalendarOutlined, CheckCircleOutlined, TeamOutlined} from '@ant-design/icons';
 import AuthService from "../../services/AuthService";
 import './OrderOptions.less';
+import FairbundleService from "../../services/FairbundleService";
+import ProductService from "../../services/ProductService";
 
 export default class OrderOptions extends React.Component {
     constructor(props) {
@@ -12,18 +14,6 @@ export default class OrderOptions extends React.Component {
             canBuy: this.props.minQty <= 1
         };
     }
-
-    getMaxPriceLevel = () => {
-        if (this.props.product === null) {
-            return null;
-        }
-
-        let max = Math.max(
-            ...this.props.product.priceLevel.map((p) => p.unitPrice)
-        );
-
-        return this.props.product.priceLevel.find((p) => p.unitPrice === max);
-    };
 
     onCreateFairbundle = (evt) => {
         this.createDOM.blur();
@@ -84,29 +74,8 @@ export default class OrderOptions extends React.Component {
         });
     };
 
-    createFairbundleCard = (fairbundle, product) => {
-        let savings = (
-            1 -
-            fairbundle.targetPrice / this.getMaxPriceLevel()?.unitPrice
-        ).toLocaleString(undefined, {
-            style: "percent",
-            minimumFractionDigits: 2,
-        });
-
-        let requiredQuantity = product.priceLevel.find(
-            (l) => l.unitPrice === fairbundle.targetPrice
-        ).minQty;
-        let currentQuantity = fairbundle.positions.reduce(function (r, a) {
-            return r + a.qty;
-        }, 0);
-
-        let completedBundle = (currentQuantity / requiredQuantity) * 100;
-
-        let currentDate = new Date();
-        let diffTime =
-            Date.parse(fairbundle.expiration) - currentDate.getTime();
-        let remainingDays = Math.round(diffTime / 3600 / 24 / 1000);
-
+    createFairbundleCard = (fairbundle) => {
+        let fairbundleCharacteristics = FairbundleService.getFairbundleCharacteristics(fairbundle);
         return (
             <Card
                 className="order-options__card margin-bottom--sm"
@@ -118,11 +87,11 @@ export default class OrderOptions extends React.Component {
                             style: "currency",
                             currency: "EUR",
                         }).format(fairbundle.targetPrice)}{" "}
-                        / {this.getMaxPriceLevel()?.unit}
+                        / {fairbundle.product.priceLevel[0].unit}
                     </Col>
                 </Row>
                 {fairbundle.targetPrice ===
-                this.getMaxPriceLevel()?.unitPrice ? (
+                fairbundleCharacteristics.maxPrice ? (
                     ""
                 ) : (
                     <Row>
@@ -130,26 +99,26 @@ export default class OrderOptions extends React.Component {
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
                                 currency: "EUR",
-                            }).format(this.getMaxPriceLevel()?.unitPrice)}
+                            }).format(fairbundleCharacteristics.maxPrice)}
                         </Col>
                         <Col>
-                            <i>{savings} sparen</i>
+                            <i>{fairbundleCharacteristics.savings} sparen</i>
                         </Col>
                     </Row>
                 )}
                 <Progress
                     className="margin-top--md"
-                    percent={completedBundle}
+                    percent={fairbundleCharacteristics.bundleCompletion}
                     strokeWidth={3}
                     strokeColor="#78A262"
                     showInfo={false}
                 />
                 <Row align="middle" className="margin-bottom--md">
                     <Col style={{color: "#78A262"}}>
-                        <b>{currentQuantity}</b>
+                        <b>{fairbundleCharacteristics.currentQuantity}</b>
                     </Col>
                     <Col className="padding-horizontal--sm">
-                        von {requiredQuantity} {this.getMaxPriceLevel()?.unit}{" "}
+                        von {fairbundleCharacteristics.requiredQuantity} {fairbundle.product.priceLevel[0].unit}{" "}
                         erreicht
                     </Col>
                 </Row>
@@ -158,10 +127,8 @@ export default class OrderOptions extends React.Component {
                         <CalendarOutlined style={{fontSize: 25}}/>
                     </Col>
                     <Col className="padding-horizontal--sm padding-vertical--xs">
-                        noch <b>{remainingDays}</b>{" "}
-                        {`Tag${
-                            remainingDays > 1 ? "e" : ""
-                        } bis zur Bestellung`}
+                        noch <b>{fairbundleCharacteristics.remainingTime}</b>{" "}
+                        bis zur Bestellung
                     </Col>
                 </Row>
                 <Row align="middle">
@@ -169,10 +136,7 @@ export default class OrderOptions extends React.Component {
                         <TeamOutlined style={{fontSize: 25}}/>
                     </Col>
                     <Col className="padding-horizontal--sm padding-vertical--xs">
-                        aktuell <b>{new Set(fairbundle.bundlers).size}</b>{" "}
-                        {`teilnehmende Kommune${
-                            new Set(fairbundle.bundlers).size > 1 ? "n" : ""
-                        }`}
+                        aktuell <b>{fairbundleCharacteristics.bundlerStatus}</b>
                     </Col>
                 </Row>
                 <Row justify="center" align="middle">
@@ -202,7 +166,6 @@ export default class OrderOptions extends React.Component {
     };
 
     render() {
-        // language=HTML
         return (
             <Col>
                 <Card className="order-options__card" key="order-head">
@@ -211,8 +174,8 @@ export default class OrderOptions extends React.Component {
                             {new Intl.NumberFormat("de-DE", {
                                 style: "currency",
                                 currency: "EUR",
-                            }).format(this.getMaxPriceLevel()?.unitPrice)}{" "}
-                            / {this.getMaxPriceLevel()?.unit}
+                            }).format(ProductService.getMaxPriceLevel(this.props.product)?.unitPrice)}{" "}
+                            / {this.props.product.priceLevel[0].unit}
                         </h1>
                     </Row>
                     <Row>
@@ -233,7 +196,7 @@ export default class OrderOptions extends React.Component {
                                 onChange={this.onInputNumberChanged}
                             />
                         </Col>
-                        <Col>{this.getMaxPriceLevel()?.unit}</Col>
+                        <Col>{this.props.product.priceLevel[0].unit}</Col>
                     </Row>
                 </Card>
                 {/*only render "Neues Fairbundle" Button if bundling is possible (more than 1 price level)*/}
@@ -272,7 +235,7 @@ export default class OrderOptions extends React.Component {
                     </Row>
                 )}
                 {this.props.fairbundles?.map((fb) =>
-                    this.createFairbundleCard(fb, this.props.product)
+                    this.createFairbundleCard(fb)
                 )}
                 <Card className="order-options__card margin-vertical--sm">
                     <Row justify="center" align="middle">

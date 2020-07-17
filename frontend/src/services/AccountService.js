@@ -55,7 +55,7 @@ export default class AccountService {
                 dataIndex: 'product',
                 key: 'product',
                 render: (product, record) => (
-                    <Link to={`/product/${record.key}`}> {product}
+                    <Link to={`/product/${record.productId}`}> {product}
                     </Link>
                 ),
             },

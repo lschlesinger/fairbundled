@@ -33,6 +33,18 @@ export default class ProductService {
         return smallestPriceProducts;
     }
 
+    static getMaxPriceLevel(product) {
+        if (product === null) {
+            return null;
+        }
+
+        let max = Math.max(
+            ...product.priceLevel.map((p) => p.unitPrice)
+        );
+
+        return product.priceLevel.find((p) => p.unitPrice === max);
+    }
+
     static async getActiveSupplierProducts(supplier) {
         let activeProducts = 0;
         let products = await this.getProducts("");
