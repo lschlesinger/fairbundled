@@ -46,7 +46,7 @@ export default class PositionService {
                     productsSold++;
                     qtySold += position.qty;
                     let price = position.order.finalUnitPrice;
-                    if (position.order.finalUnitPrice == null) {
+                    if (!position.order.finalUnitPrice) {
                         let priceL = 0;
                         for (
                             let i = 0;

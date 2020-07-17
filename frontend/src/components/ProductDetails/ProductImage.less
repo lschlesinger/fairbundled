@@ -1,14 +1,14 @@
 @import "../../App.less";
 
+@small-image-size: 50px;
 .product-image__small-container {
     max-width: @small-image-size;
+    margin: @sizes[xs] @sizes[xs] 0 0;
     flex: 1 1 0;
 }
 
-@small-image-size: 50px;
 .product-image__small-img {
     padding: @sizes[xs];
-    margin: @sizes[xs] @sizes[xs] 0 0;
     width: 100%;
     cursor: pointer;
 
@@ -18,7 +18,7 @@
     }
 }
 
-@current-image-size: calc(4 * @small-image-size + (4 * @sizes[xs]) + (3 * 2px) - 8px);
+@current-image-size: calc(4 * @small-image-size + (3 * @sizes[xs]));
 .product_image__current-img {
     padding: @sizes[sm];
     width: @current-image-size;

@@ -39,7 +39,7 @@ export default class PresentedProduct extends React.Component {
     getRemainingDays(fairbundleCharacteristics) {
         return (
             <div className="padding-top--md">
-                <Title className="presented-products__bold-text" level={4}>
+                <Title className={fairbundleCharacteristics.remainingTime.includes("Std.") ? `presented-products__bold-text presented-products__remaining-hours` : "presented-products__bold-text"} level={4}>
                     {fairbundleCharacteristics.remainingTime}
                 </Title>
                 <Text className="presented-products__text">

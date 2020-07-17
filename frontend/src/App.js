@@ -21,6 +21,7 @@ import OrderService from "./services/OrderService";
 import UserEditView from "./views/account/UserEditView";
 import CheckoutView from "./views/account/municipality-account/CheckoutView";
 import {Spinner} from "./components/Functional/Spinner";
+import ScrollToTop from "./components/Functional/ScrollToTop";
 
 // decide on overall layout structure (ANT)
 const {Header, Footer, Content} = Layout;
@@ -192,29 +193,31 @@ export default class App extends React.Component {
     renderContent() {
         return (
             <Router>
-                <Header className="app__header">
-                    <FairbundledHeader
-                        openFairbundles={this.state.openFairbundles}
-                        positions={this.state.positionsInCart}
-                        categories={this.state.categories}
-                        isAuthenticated={AuthService.isAuthenticated()}
-                        isMunicipality={AuthService.isAuthenticatedMunicipality()}
-                        entityName={AuthService.getEntityName()}
-                        isSupplier={AuthService.isAuthenticatedSupplier()}
-                        onLogout={AuthService.logout}
-                    />
-                </Header>
-                <Content className="app__content">
-                    {/*dynamically load `Content` through router*/}
-                    <Switch>
-                        {this.state.routes.map((route, i) => (
-                            <Route key={i} {...route}/>
-                        ))}
-                    </Switch>
-                </Content>
-                <Footer className="app__footer">
-                    <FairbundledFooter/>
-                </Footer>
+                <ScrollToTop>
+                    <Header className="app__header">
+                        <FairbundledHeader
+                            openFairbundles={this.state.openFairbundles}
+                            positions={this.state.positionsInCart}
+                            categories={this.state.categories}
+                            isAuthenticated={AuthService.isAuthenticated()}
+                            isMunicipality={AuthService.isAuthenticatedMunicipality()}
+                            entityName={AuthService.getEntityName()}
+                            isSupplier={AuthService.isAuthenticatedSupplier()}
+                            onLogout={AuthService.logout}
+                        />
+                    </Header>
+                    <Content className="app__content">
+                        {/*dynamically load `Content` through router*/}
+                        <Switch>
+                            {this.state.routes.map((route, i) => (
+                                <Route key={i} {...route}/>
+                            ))}
+                        </Switch>
+                    </Content>
+                    <Footer className="app__footer">
+                        <FairbundledFooter/>
+                    </Footer>
+                </ScrollToTop>
             </Router>
         );
     }

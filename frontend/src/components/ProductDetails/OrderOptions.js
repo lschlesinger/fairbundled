@@ -126,8 +126,8 @@ export default class OrderOptions extends React.Component {
                     <Col>
                         <CalendarOutlined style={{fontSize: 25}}/>
                     </Col>
-                    <Col className="padding-horizontal--sm padding-vertical--xs">
-                        noch <b>{fairbundleCharacteristics.remainingTime}</b>{" "}
+                    <Col className="order-options__remaining-time padding-horizontal--sm padding-vertical--xs">
+                        noch <b className={fairbundleCharacteristics.remainingTime.includes("Std.") ? `order-options__remaining-hours` : ""} >{fairbundleCharacteristics.remainingTime}</b>{" "}
                         bis zur Bestellung
                     </Col>
                 </Row>
@@ -229,8 +229,7 @@ export default class OrderOptions extends React.Component {
                 ) : (
                     <Row className="order-options__card margin-vertical--sm">
                         <i>
-                            Der Hersteller bietet dieses Produkt leider nicht im
-                            Fairbundle an.
+                            Dieses Produkt ist leider nicht im Fairbundle erhältlich.
                         </i>
                     </Row>
                 )}
