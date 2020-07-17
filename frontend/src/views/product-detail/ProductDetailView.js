@@ -87,7 +87,7 @@ export class ProductDetailView extends React.Component {
                 this.setState({
                     successVisible: true,
                     successMessage: "Fairbundle beigetreten",
-                    successLink: false,
+                    successLink: true,
                     joinModalVisible: false,
                 });
             })
