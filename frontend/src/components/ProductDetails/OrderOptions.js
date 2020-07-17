@@ -175,7 +175,7 @@ export default class OrderOptions extends React.Component {
                                 style: "currency",
                                 currency: "EUR",
                             }).format(ProductService.getMaxPriceLevel(this.props.product)?.unitPrice)}{" "}
-                            / {this.props.product.priceLevel[0].unit}
+                            / {ProductService.getMaxPriceLevel(this.props.product)?.unit}
                         </h1>
                     </Row>
                     <Row>

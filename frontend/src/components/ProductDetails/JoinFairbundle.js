@@ -1,6 +1,7 @@
 import React from "react";
 import {Button, Card, Col, Row, Typography} from "antd";
 import './JoinFairbundle.less';
+import ProductService from "../../services/ProductService";
 
 const {Text} = Typography;
 
@@ -28,16 +29,6 @@ export default class JoinFairbundle extends React.Component {
         this.props.joinFairbundle();
     };
 
-    getMaxPriceLevel = () => {
-        if (this.props.fairbundle?.product === null) {
-            return null;
-        }
-
-        let max = Math.max(...this.props.fairbundle.product.priceLevel.map(p => p.unitPrice));
-
-        return this.props.fairbundle.product.priceLevel.find(p => p.unitPrice === max);
-    };
-
     render() {
         let priceLevel = this.props.fairbundle.product.priceLevel.find(p => p.unitPrice === this.props.fairbundle.targetPrice);
         let date = Date.parse(this.props.fairbundle.expiration);
@@ -45,9 +36,9 @@ export default class JoinFairbundle extends React.Component {
         let maxPrice = new Intl.NumberFormat("de-DE", {
             style: "currency",
             currency: "EUR",
-        }).format(this.getMaxPriceLevel().unitPrice);
+        }).format(ProductService.getMaxPriceLevel(this.props.fairbundle.product).unitPrice);
 
-        let expirationAction = "Ihre zum Fairbundle gehörende Bestellung trotzdem zum nächsthöheren Preis von bis zu " + maxPrice + " / " + this.getMaxPriceLevel().unit + " bestellt.";
+        let expirationAction = "Ihre zum Fairbundle gehörende Bestellung trotzdem zum nächsthöheren Preis von bis zu " + maxPrice + " / " + ProductService.getMaxPriceLevel(this.props.fairbundle.product).unit + " bestellt.";
 
         if (this.props.fairbundle.expirationAction === "cancel") {
             expirationAction = "Ihre zum Fairbundle gehörende Bestellung nicht durchgeführt. Es entstehen keine Kosten.";

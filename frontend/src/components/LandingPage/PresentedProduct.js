@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import placeholder from "../../assets/placeholder.png";
 import "./PresentedProducts.less";
 import FairbundleService from "../../services/FairbundleService";
+import ProductService from "../../services/ProductService";
 
 const { Text, Title } = Typography;
 
@@ -21,7 +22,8 @@ export default class PresentedProduct extends React.Component {
                     </Title>
                     <Text className="padding-left--sm presented-products__text">
                         {" "}
-                        von {fairbundleCharacteristics.requiredQuantity} erreicht
+                        von {fairbundleCharacteristics.requiredQuantity} {" "}
+                        {ProductService.getMaxPriceLevel(this.props.presentedFairbundle.product)?.unit} erreicht
                     </Text>
                 </Row>
                 <Progress
