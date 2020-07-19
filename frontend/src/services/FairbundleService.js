@@ -61,7 +61,7 @@ export default class FairbundleService {
         fairbundles.forEach((fairbundle) => {
             if (
                 new Set(fairbundle.bundlers).size > max_bundlers &&
-                fairbundle.submission === null
+                fairbundle.submission === null && fairbundle.cancellation === null
             ) {
                 max_bundlers = new Set(fairbundle.bundlers).size;
                 presentedFairbundle = fairbundle;

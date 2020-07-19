@@ -196,7 +196,7 @@ export default class OrderOptions extends React.Component {
                                 onChange={this.onInputNumberChanged}
                             />
                         </Col>
-                        <Col>{this.props.product.priceLevel[0].unit}</Col>
+                        <Col>{this.props.product.priceLevel[0]?.unit}</Col>
                     </Row>
                 </Card>
                 {/*only render "Neues Fairbundle" Button if bundling is possible (more than 1 price level)*/}
@@ -246,7 +246,7 @@ export default class OrderOptions extends React.Component {
                                     : !this.state.canBuy
                                         ? "Mindestbestellmenge von " +
                                         this.props.minQty + " " +
-                                        this.props.product?.priceLevel[0].unit +
+                                        this.props.product?.priceLevel[0]?.unit +
                                         " nicht erreicht"
                                         : "In den Warenkorb"
                                 }`}

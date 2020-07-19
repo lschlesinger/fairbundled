@@ -9,12 +9,12 @@ const {Text} = Typography;
 // start week mondays
 moment.locale('de', {
     week: {
-        dow: 0,
+        dow: 1,
     },
 });
 // show German weekdays and months
 moment.updateLocale('de', {
-    weekdaysMin : ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"],
+    weekdaysMin : ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
     monthsShort: ["Jan", "Feb", "März", "Apr", "Mai", "Jun", "Jul", "Aug", "Sept", "Okt", "Nov", "Dez"]
 });
 
