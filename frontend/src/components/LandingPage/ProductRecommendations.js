@@ -73,8 +73,6 @@ export default class PresentedProduct extends React.Component {
 
     getProductCards = (productGroup) => {
         let visibility = productGroup.length > 1 ? "visible" : "hidden";
-        console.log(visibility);
-
         return (
             <div key={productGroup}>
                 <Row className="presented-product-row" style={{height: "50%"}}>
