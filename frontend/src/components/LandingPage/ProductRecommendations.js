@@ -25,6 +25,10 @@ export default class PresentedProduct extends React.Component {
     }
 
     getProductCard = (product) => {
+        if (product == null) {
+            return("");
+        }
+
         const price = this.getLowestPrice(product);
         return (
             <Layout>
@@ -68,6 +72,9 @@ export default class PresentedProduct extends React.Component {
     };
 
     getProductCards = (productGroup) => {
+        let visibility = productGroup.length > 1 ? "visible" : "hidden";
+        console.log(visibility);
+
         return (
             <div key={productGroup}>
                 <Row className="presented-product-row" style={{height: "50%"}}>
@@ -75,7 +82,7 @@ export default class PresentedProduct extends React.Component {
                         {this.getProductCard(productGroup[0])}
                     </Card>
                 </Row>
-                <Row style={{height: "50%"}}>
+                <Row style={{height: "50%", visibility:visibility}}>
                     <Card style={{width: "99%"}}>
                         {this.getProductCard(productGroup[1])}
                     </Card>
@@ -85,10 +92,15 @@ export default class PresentedProduct extends React.Component {
     };
 
     render() {
-        let groups = new Array(this.props.sponsoredProducts.length / 2);
+        let groups = new Array(Math.ceil(this.props.sponsoredProducts.length / 2));
         let products = this.props.sponsoredProducts;
         for (let i = 0; i < groups.length; i++) {
-            groups[i] = [products[2 * i], products[2 * i + 1]];
+            let secondIndex = 2 * i + 1;
+            if (secondIndex < products.length) {
+                groups[i] = [products[2 * i], products[secondIndex]];
+            } else {
+                groups[i] = [products[2 * i]];
+            }
         }
 
         return (
