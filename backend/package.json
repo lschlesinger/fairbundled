@@ -26,6 +26,6 @@
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.9.14",
         "mongoose-extend-schema": "^1.0.0",
-        "node-fetch": "^2.6.0"
+        "node-fetch": "^2.6.7"
     }
 }
